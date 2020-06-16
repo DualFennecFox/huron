@@ -6,7 +6,7 @@ module.exports.run = async (client , message, args) => {
     if(!message.guild.me.hasPermission(["MANAGE_ROLES", "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para añadir roles");
     let mutee = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
     if(mutee.hasPermission("KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR")) return message.channel.send("Esta persona no puede ser muteada!");
-    let mReason = args.join(" ").slice(22);
+    let mReason = args.slice(1).join(" ");
     if(!mReason) mReason = "No se específico una Razón"
 
     let muterole = message.guild.roles.cache.find(r => r.name === "Muteado")
@@ -47,6 +47,8 @@ let muteEmbed = new Discord.MessageEmbed()
 
 module.exports.help = {
     name : 'mute',
-    description : 'Este comando Mutea al usuario mencionado con su ID o mención Ej: `!mute @Firulais`, `!mute 556540723235651584` También puedes dar una razón de ello',
-    aliases: ['Mute', 'MUTE']
+    aliases: ['Mute', 'MUTE'],
+    description : 'Este comando Mutea al usuario mencionado con su ID o mención, también puedes dar una razón de ello',
+    usage: '!mute',
+    examples: ['!mute @Firulais', '!mute 556540723235651584', '!mute @Firulais Razon']
 }
