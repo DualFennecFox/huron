@@ -28,7 +28,7 @@ const info = client.categories
 }
  
 function getCMD(client, message, input) {
-    const embed = new RichEmbed()
+    const embed = new MessageEmbed()
 
     // Get the cmd by the name or alias
     const cmd = client.commands.get(input.toLowerCase()) || client.commands.get(client.aliases.get(input.toLowerCase()));
