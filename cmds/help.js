@@ -7,8 +7,11 @@ module.exports.help = {
     description: 'Te dice todos los comandos del bot o uno en específico',
     usage: '!help',
     run: async (client, message, args) => {
+        if(args[0]) {
+            return getCMD(client, message, args[0])
         getAll(client, message);
     }
+}
 }
 
 function getAll(client, message) {
