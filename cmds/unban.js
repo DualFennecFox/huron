@@ -29,7 +29,7 @@ module.exports.run = async (client , message, args) => {
     return;
 };
 
-module.exports.help = {
+module.exports = {
     name : 'unban',
     description : 'Este comando Desbanea al usuario mencionado con su ID Ej: `!unban 556540723235651584` También puedes dar una razón de ello',
     aliases: ['Unban', 'UNBAN'],

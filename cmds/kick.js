@@ -21,7 +21,7 @@ module.exports.run = async (client , message, args) => {
     return;
 }
 
-module.exports.help = {
+module.exports = {
     name : 'kick',
     description : 'Este comando kickea al usuario mencionado con su ID o mención, también puedes dar una razón de ello',
     aliases: ['Kick', 'KICK'],

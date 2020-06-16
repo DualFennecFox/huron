@@ -21,7 +21,7 @@ module.exports.run = async (client , message, args) => {
     return;
 }
 
-module.exports.help = {
+module.exports = {
     name : 'ban',
     description : 'Este comando banea al usuario mencionado con su ID o mención, también puedes dar una razón de ello',
     aliases: ['Ban', 'BAN'],

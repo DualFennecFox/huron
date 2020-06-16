@@ -24,7 +24,7 @@ module.exports.run = async (client , message, args) => {
     message.channel.send( unmuteEmbed )
 }
 
-module.exports.help = {
+module.exports = {
     name : 'unmute',
     description : 'Este comando Desmutea al usuario mencionado con su ID o mención Ej: `!unmute @Firulais`, `!unmute 556540723235651584` También puedes dar una razón de ello',
     aliases: ['Unmute', 'UNMUTE'],

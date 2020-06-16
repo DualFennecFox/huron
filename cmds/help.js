@@ -52,7 +52,7 @@ function getCMD(client, message, input) {
     return message.channel.send(embed.setColor("GREEN").setDescription(info));
 }
 
-module.exports.help = {
+module.exports = {
     name: "help",
     aliases: ['Help', 'HELP'],
     description: 'Te dice todos los comandos del bot o uno en específico',

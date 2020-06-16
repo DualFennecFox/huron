@@ -4,7 +4,7 @@ module.exports.run = async (client, message, args) => {
     
 }
 
-module.exports.help = {
+module.exports = {
     name : 'ping',
     description : 'Un comando básico que sirve para probar el bot, si escribes "!ping" este dira "Pong"',
     aliases: ['Ping', 'PING'],
