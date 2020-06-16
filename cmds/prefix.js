@@ -1,0 +1,22 @@
+module.exports.run = async (client,message,args,db,prefix) => {
+    if (args.length === 0){
+        message.channel.send(`Mi prefix en este server es ${prefix}`);
+    } else if (args.length === 1){
+        let nPrefix = args[0];
+
+        db.collection('guilds').doc(message.guild.id).update({
+            'prefix' : nPrefix
+        }).then(() => {
+            message.channel.send(`Su nuevo Prefix es ${nPrefix}`);
+        });
+    }
+
+}
+
+
+
+module.exports.help = {
+    name: "prefix",
+    description : "Con este comando puedes ver tu prefix o cambiarlo elijiendo uno Ej: `!prefix -`",
+    aliases: ['Prefix', 'PREFIX']
+}
