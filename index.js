@@ -7,6 +7,9 @@ const admin = require('firebase-admin');
 const serviceAccount = require('./serviceAccount.json')
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
+client.aliases = new Discord.Collection();
+
+client.categories = fs.readdirSync('/.cmds/');
 
 let prefix;
 const token = process.env.TOKEN;

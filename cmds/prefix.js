@@ -17,6 +17,8 @@ module.exports.run = async (client,message,args,db,prefix) => {
 
 module.exports.help = {
     name: "prefix",
-    description : "Con este comando puedes ver tu prefix o cambiarlo elijiendo uno Ej: `!prefix -`",
-    aliases: ['Prefix', 'PREFIX']
+    description : "Con este comando puedes ver tu prefix o cambiarlo elijiendo uno",
+    aliases: ['Prefix', 'PREFIX'],
+    usage: '!prefix',
+    examples: ['!prefix -', '!prefix --=']
 }

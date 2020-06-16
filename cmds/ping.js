@@ -6,6 +6,7 @@ module.exports.run = async (client, message, args) => {
 
 module.exports.help = {
     name : 'ping',
-    description : 'Un comando básico que sirve para probar el bot, si escribes "ping" este dira "pong" Ej: `!ping`',
-    aliases: ['Ping', 'PING']
+    description : 'Un comando básico que sirve para probar el bot, si escribes "!ping" este dira "Pong"',
+    aliases: ['Ping', 'PING'],
+    usage: '!ping'
 }

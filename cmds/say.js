@@ -16,6 +16,8 @@ module.exports.run = async (client, message, args) => {
 
 module.exports.help = {
     name : 'say',
-    description : 'El bot envia un mensaje escrito por un usuario, también puedes elegir un canal a donde enviarlo Ej: `!say Hola Mundo`, `!say #canal Hola Mundo`',
-    aliases: ['Say', 'SAY']
+    description : 'El bot envia un mensaje escrito por un usuario, también puedes elegir un canal a donde enviarlo',
+    aliases: ['Say', 'SAY'],
+    usage: '!say',
+    examples: ['!say Hola Mundo', '!say #Canal Hola Mundo']
 }

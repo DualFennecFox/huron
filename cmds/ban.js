@@ -23,6 +23,8 @@ module.exports.run = async (client , message, args) => {
 
 module.exports.help = {
     name : 'ban',
-    description : 'Este comando banea al usuario mencionado con su ID o mención Ej: `!ban @Firulais`, `!ban 556540723235651584` También puedes dar una razón de ello',
-    aliases: ['Ban', 'BAN']
+    description : 'Este comando banea al usuario mencionado con su ID o mención, también puedes dar una razón de ello',
+    aliases: ['Ban', 'BAN'],
+    usage: '!ban',
+    examples: ['!ban @Firulais', '!ban 556540723235651584', '!ban @Firulais Razon']
 }

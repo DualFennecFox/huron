@@ -14,6 +14,8 @@ module.exports.run = async (client, message, args) => {
 
 module.exports.help = {
     name : 'avatar',
-    description : 'Se envia la imagen del avatar del usuario o del usuario mencionado al canal Ej: `!avatar`, `!avatar @Firulais`',
-    aliases: ['Avatar', 'AVATAR']
+    description : 'Se envia la imagen del avatar del usuario o del usuario mencionado al canal',
+    aliases: ['Avatar', 'AVATAR'],
+    usage: '!avatar',
+    examples: ['!avatar', '!avatar @Firulais']
 }
