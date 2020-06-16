@@ -1,6 +1,13 @@
 const Discord = require('discord.js');
 
-module.exports.run = async (client, message, args) => {
+
+module.exports = {
+    name : 'say',
+    description : 'El bot envia un mensaje escrito por un usuario, también puedes elegir un canal a donde enviarlo',
+    aliases: ['Say', 'SAY'],
+    usage: '!say',
+    examples: ['!say Hola Mundo', '!say #Canal Hola Mundo'],
+    run: async (client, message, args) => {
     let argsresult;
     let mChannel = message.mentions.channels.first();
 
@@ -13,11 +20,4 @@ module.exports.run = async (client, message, args) => {
         message.channel.send(argsresult)
     }
 } 
-
-module.exports = {
-    name : 'say',
-    description : 'El bot envia un mensaje escrito por un usuario, también puedes elegir un canal a donde enviarlo',
-    aliases: ['Say', 'SAY'],
-    usage: '!say',
-    examples: ['!say Hola Mundo', '!say #Canal Hola Mundo']
 }
