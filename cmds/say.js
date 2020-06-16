@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 
-module.exports = {
+module.exports.help = {
     name : 'say',
     description : 'El bot envia un mensaje escrito por un usuario, también puedes elegir un canal a donde enviarlo',
     aliases: ['Say', 'SAY'],

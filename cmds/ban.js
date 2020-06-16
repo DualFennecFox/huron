@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 
-module.exports = {
+module.exports.help = {
     name : 'ban',
     description : 'Este comando banea al usuario mencionado con su ID o mención, también puedes dar una razón de ello',
     aliases: ['Ban', 'BAN'],

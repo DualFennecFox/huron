@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 
-module.exports = {
+module.exports.help = {
     name : 'mute',
     aliases: ['Mute', 'MUTE'],
     description : 'Este comando Mutea al usuario mencionado con su ID o mención, también puedes dar una razón de ello',
@@ -13,7 +13,7 @@ module.exports = {
     if(!message.guild.me.hasPermission(["MANAGE_ROLES", "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para añadir roles");
     let mutee = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
     if(mutee.hasPermission("KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR")) return message.channel.send("Esta persona no puede ser muteada!");
-    
+
     let mReason = args.slice(1).join(" ");
     if(!mReason) mReason = "No se específico una Razón"
 
