@@ -13,6 +13,7 @@ let prefix;
 const token = process.env.TOKEN;
 const owner = process.env.OWNER
 
+client.categories = fs.readdirSync("./cmds/");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
