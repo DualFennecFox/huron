@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const settings = require('./config.json');
 const fs = require('fs');
 require('dotenv/config');
 const firebase = require('firebase/app');
