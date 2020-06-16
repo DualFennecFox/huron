@@ -17,7 +17,7 @@ const commands = (category) => {
 } 
 
 const info = client.categories
-        map(cat => stripIndents`**${cat[0].toUpperCase() + cat.slice(1)}** \n${commands(cat)}`)
+        .map(cat => stripIndents`**${cat[0].toUpperCase() + cat.slice(1)}** \n${commands(cat)}`)
         .reduce((string, categories) => string + "\n" + category);
 
     return message.channel.send(embed.setDescription(info));
@@ -28,4 +28,5 @@ module.exports.help = {
     aliases: ['Help', 'HELP'],
     description: 'Te dice todos los comandos del bot o uno en específico',
     usage: '!help',
+    examples: ["!help", "!help ping"]
 }
