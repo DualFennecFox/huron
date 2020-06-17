@@ -39,7 +39,7 @@ fs.readdir('./cmds', (err,files) => {
   cmdFiles.forEach((f,i) => {
       let props = require(`./cmds/${f}`);
       console.log(`${i+1}: ${f} loaded`);
-      client.commands.set(props.help, props);
+      client.commands.set(props.help.name, props);
   })
 })
 
