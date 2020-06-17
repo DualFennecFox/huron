@@ -48,16 +48,6 @@ client.on('ready', () => {
   
 });
 
-client.on('message', async (message) => {
-  const arg2s = message.content.slice(prefix.lenght).trim().split(/ +/g);
-  const cmd = arg2s.shift().toLowerCase();
-
-  if (cmd.lenght === 0) return;
-
-  let commande = client.commands.get(cmd)
-  if (!commande) commande = client.commands.get(client.aliases.get(cmd));
-})
-
 client.on('message', (message) => {
   db.collection('guilds').doc(message.guild.id).get().then((q) => {
     if (q.exists){
@@ -74,11 +64,14 @@ client.on('message', (message) => {
  
    if (!command.startsWith(prefix)) return;
 
-           if (commande){
-               commande.run(client,message,args,db,prefix);
+   if (client.commands.get(command.slice(prefix.length))){
+       let cmd = client.commands.get(command.slice(prefix.length));
+           if (cmd){
+               cmd.run(client,message,args,db,prefix);
            }
-          })
+ }
 })
+});
 
 client.on('guildCreate', async gData => {
   db.collection('guilds').doc(gData.id).set({
