@@ -1,12 +1,6 @@
 const Discord = require('discord.js');
 
-module.exports.help = {
-    name : 'ban',
-    description : 'Este comando banea al usuario mencionado con su ID o mención, también puedes dar una razón de ello',
-    aliases: ['Ban', 'BAN'],
-    usage: '!ban',
-    examples: ['!ban @Firulais', '!ban 556540723235651584', '!ban @Firulais Razon'],
-    run: async (client , message, args) => {
+    module.exports.run = async (client , message, args) => {
 
     let bUser = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
     if(!bUser) return message.channel.send("Debes mencionar a un usuario o darme su id");
@@ -30,4 +24,10 @@ module.exports.help = {
 
     return;
 }
+module.exports.help = {
+    name : 'ban',
+    description : 'Este comando banea al usuario mencionado con su ID o mención, también puedes dar una razón de ello',
+    aliases: ['Ban', 'BAN'],
+    usage: '!ban',
+    examples: ['!ban @Firulais', '!ban 556540723235651584', '!ban @Firulais Razon']
 }

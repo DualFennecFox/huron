@@ -1,18 +1,12 @@
 const { MessageEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags"); 
 
-module.exports.help = {
-    name: "help",
-    aliases: ['Help', 'HELP'],
-    description: 'Te dice todos los comandos del bot o uno en específico',
-    usage: '!help',
-    examples: ["!help", "!help ping"],
+
     run: async (client, message, args) => {
     if (args[0]) {
         return getCMD(client, message, args[0]);
     } else {
     getAll(client, message);
-}
 }
 }
 function getAll(client, message) {
@@ -56,4 +50,11 @@ function getCMD(client, message, input) {
     }
 
     return message.channel.send(embed.setColor("GREEN").setDescription(info));
+}
+module.exports.help = {
+    name: "help",
+    aliases: ['Help', 'HELP'],
+    description: 'Te dice todos los comandos del bot o uno en específico',
+    usage: '!help',
+    examples: ["!help", "!help ping"]
 }

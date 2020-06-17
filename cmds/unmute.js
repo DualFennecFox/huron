@@ -1,12 +1,6 @@
 const Discord = require('discord.js');
 
-module.exports.help = {
-    name : 'unmute',
-    description : 'Este comando Desmutea al usuario mencionado con su ID o mención Ej: `!unmute @Firulais`, `!unmute 556540723235651584` También puedes dar una razón de ello',
-    aliases: ['Unmute', 'UNMUTE'],
-    usage: '!unmute',
-    examples: ['!unmute @Firulais', '!unmute 556540723235651584', '!unmute @Firulais Razon'],
-    run: async (client , message, args) => {
+    module.exports.run = async (client , message, args) => {
 
     if(!message.member.hasPermission("KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!")
     if(!message.guild.me.hasPermission(["MANAGE_ROLES", "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para añadir roles");
@@ -29,4 +23,10 @@ module.exports.help = {
 
     message.channel.send( unmuteEmbed )
 }
+module.exports.help = {
+    name : 'unmute',
+    description : 'Este comando Desmutea al usuario mencionado con su ID o mención Ej: `!unmute @Firulais`, `!unmute 556540723235651584` También puedes dar una razón de ello',
+    aliases: ['Unmute', 'UNMUTE'],
+    usage: '!unmute',
+    examples: ['!unmute @Firulais', '!unmute 556540723235651584', '!unmute @Firulais Razon']
 }

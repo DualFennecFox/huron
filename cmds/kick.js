@@ -1,13 +1,6 @@
 const Discord = require('discord.js');
 
-
-module.exports.help = {
-    name : 'kick',
-    description : 'Este comando kickea al usuario mencionado con su ID o mención, también puedes dar una razón de ello',
-    aliases: ['Kick', 'KICK'],
-    usage: '!kick',
-    examples: ['!kick @Firulais', '!kick 556540723235651584', '!kick @Firulais Razon'],
-    run: async (client , message, args) => {
+    module.exports.run = async (client , message, args) => {
 
     let kUser = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
     if(!kUser) return message.channel.send("Debes mencionar a un usuario o darme su id");
@@ -31,4 +24,10 @@ module.exports.help = {
 
     return;
 }
+module.exports.help = {
+    name : 'kick',
+    description : 'Este comando kickea al usuario mencionado con su ID o mención, también puedes dar una razón de ello',
+    aliases: ['Kick', 'KICK'],
+    usage: '!kick',
+    examples: ['!kick @Firulais', '!kick 556540723235651584', '!kick @Firulais Razon']
 }
