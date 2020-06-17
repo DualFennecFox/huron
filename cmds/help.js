@@ -2,13 +2,14 @@ const { MessageEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags"); 
 
 
-    run: async (client, message, args) => {
+    module.exports.run = async (client, message, args) => {
     if (args[0]) {
         return getCMD(client, message, args[0]);
     } else {
     getAll(client, message);
 }
 }
+
 function getAll(client, message) {
     const embed = new MessageEmbed()
         .setColor("RANDOM")
