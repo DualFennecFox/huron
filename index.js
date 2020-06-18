@@ -56,7 +56,8 @@ client.on('message', (message) => {
    if (!command.startsWith(prefix)) return;
 
    if (client.commands.get(command.slice(prefix.length))){
-       let cmd = client.commands.get(command.slice(prefix.length));
+       let cmd = client.commands.get(cmd);
+       if(!cmd) cmd = client.commands.get(client.aliases.get(cmd))
            if (cmd){
                cmd.run(client,message,args,db,prefix);
            }
