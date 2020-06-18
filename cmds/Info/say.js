@@ -11,10 +11,10 @@ module.exports = {
     let argsresult;
     let mChannel = message.mentions.channels.first();
 
-    message.delete()
     if (args.length === 0) {
-        return;
-    } else if(args.length === 1){
+        return
+    } else if (args.length === 1) {
+    message.delete()
     if(mChannel) {
         argsresult = args.slice(1).join(" ")
         mChannel.send(argsresult)
