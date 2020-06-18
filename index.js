@@ -52,15 +52,13 @@ client.on('message', (message) => {
    let message_array = message.content.split(" ");
    let command = message_array[0];
    let args = message_array.slice(1);
-   const cmd = args.shift().toLowerCase();
  
    if (!command.startsWith(prefix)) return;
 
    if (client.commands.get(command.slice(prefix.length))){
-       let command = client.commands.get(cmd);
-       if(!command) command = client.commands.get(client.aliases.get(cmd))
-           if (command){
-               command.run(client,message,args,db,prefix);
+       let cmd = client.commands.get(command.slice(prefix.length));
+           if (cmd){
+               cmd.run(client,message,args,db,prefix);
            }
  }
 })
