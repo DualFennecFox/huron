@@ -45,7 +45,14 @@ fs.readdir('./cmds', (err,files) => {
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  
+  var scount = client.guilds.size
+  client.user.setPresence({
+    status: "online",
+    game: {
+        name: `Estoy en ${scount} Servidores!`,
+        type: "WATCHING"
+    }
+}); 
 });
 
 client.on('message', (message) => {
