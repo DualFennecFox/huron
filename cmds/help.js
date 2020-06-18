@@ -26,9 +26,7 @@ const commands = (category) => {
         .join("\n");
 } 
 
-const info = client.categories
-        .map(cat => stripIndents`**${cat[0].toUpperCase() + cat.slice(1)}** \n${commands(cat)}`)
-        .reduce((string, category) => string + "\n" + category);
+const info = client.commands.get(client.name.get())
 
     return message.channel.send(embed.setDescription(info));
 }
