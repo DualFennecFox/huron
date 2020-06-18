@@ -53,6 +53,7 @@ function getCMD(client, message, input) {
     if (cmd.description) info += `\n**Descripción**: ${cmd.description}`;
     if (cmd.usage) {
         info += `\n**Uso**: ${cmd.usage}`;
+    if (cmd.examples) info += `\n**Ejemplos**: ${cmd.examples.map(a => `\`${a}\``).join(", ")}`;
     }
 
     return message.channel.send(embed.setColor("GREEN").setDescription(info));
