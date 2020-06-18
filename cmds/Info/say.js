@@ -12,12 +12,16 @@ module.exports = {
     let mChannel = message.mentions.channels.first();
 
     message.delete()
+    if(args.lenght === 0) {
+        return;
+    } else if(args.lenght === 1){
     if(mChannel) {
         argsresult = args.slice(1).join(" ")
         mChannel.send(argsresult)
     } else {
         argsresult = args.join(" ")
         message.channel.send(argsresult)
+    }
     }
 } 
 }
