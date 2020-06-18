@@ -25,34 +25,8 @@ let db = admin.firestore();
 
 
 
-fs.readdir('./cmds', (err,files) => {
-  if (err) {
-      console.log(err);
-  }
-
-  let cmdFiles = files.filter(f => f.split(".").pop() === "js");
-
-  if (cmdFiles.length === 0){
-      console.log("No files found");
-      return;
-  }
-
-  cmdFiles.forEach((f,i) => {
-      let props = require(`./cmds/${f}`);
-      console.log(`${i+1}: ${f} loaded`);
-      client.commands.set(props.help.name, props);
-  })
-})
-
-client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
-  client.user.setPresence({
-    status: "online",
-    activity: {
-        name: `Estoy en ${scount} Servidores!`,
-        type: "WATCHING"
-    }
-}); 
+["command"].forEach(handler => {
+  require(`./handlers/${handler}`)(client);
 });
 
 client.on('message', (message) => {
