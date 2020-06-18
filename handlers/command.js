@@ -7,10 +7,10 @@ table.setHeading("Command", "Load status");
 
 module.exports = (client) => {
     readdirSync("./cmds/").forEach(dir => {
-        const commands = readdirSync(`./cmds/`).filter(file => file.endsWith(".js"));
+        const commands = readdirSync(`./cmds/${dir}`).filter(file => file.endsWith(".js"));
     
         for (let file of commands) {
-            let pull = require(`../cmds/${file}`);
+            let pull = require(`../cmds/${dir}/${file}`);
     
             if (pull.name) {
                 client.commands.set(pull.name, pull);
