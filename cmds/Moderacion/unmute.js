@@ -13,6 +13,7 @@ module.exports = {
     if(!message.guild.me.hasPermission(["MANAGE_ROLES", "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para añadir roles");
     let unmutee = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
     if(!unmutee) return message.channel.send("Debe mencionar un usuario muteado o darme su id");
+    if (!unmutee.roles.cache.some((role) => role.name === 'Muteado')) return message.channel.send("Esta persona no esta muteada");
     let umReason = args.slice(1).join(" ");
     if(!umReason) umReason = "No se específico una Razón"
 

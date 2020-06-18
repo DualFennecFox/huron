@@ -12,6 +12,7 @@ const Discord = require('discord.js');
     if(!mutee) return message.channel.send("Debes mencionar a un usuario o darme su id");
     if(!message.member.hasPermission("KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!")
     if(!message.guild.me.hasPermission(["MANAGE_ROLES", "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para añadir roles");
+    if (mutee.roles.cache.some((role) => role.name === 'Muteado')) return message.channel.send("Esta persona ya esta muteada");
     if(mutee.hasPermission("KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR")) return message.channel.send("Esta persona no puede ser muteada!");
 
     let mReason = args.slice(1).join(" ");
