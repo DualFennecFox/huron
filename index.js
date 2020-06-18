@@ -52,6 +52,7 @@ client.on('message', (message) => {
    let message_array = message.content.split(" ");
    let command = message_array[0];
    let args = message_array.slice(1);
+   const cmd = args.shift().toLowerCase();
  
    if (!command.startsWith(prefix)) return;
 
