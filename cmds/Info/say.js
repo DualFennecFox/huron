@@ -12,9 +12,9 @@ module.exports = {
     let mChannel = message.mentions.channels.first();
 
     message.delete()
-    if(args.lenght === 0) {
+    if(args[0]) {
         return;
-    } else if(args.lenght === 1){
+    } else if(args[1]){
     if(mChannel) {
         argsresult = args.slice(1).join(" ")
         mChannel.send(argsresult)
