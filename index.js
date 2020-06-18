@@ -53,7 +53,7 @@ client.on('message', (message) => {
    if (message.channel.type === "dm") return;
    if (message.author.bot) return;
  
-   let args = message.content.slice(prefix.length).trim().split(" ");
+   let args = command.slice(prefix.length).trim().split(" ");
    let cmd = args.shift().toLowerCase();
    let command;
 
