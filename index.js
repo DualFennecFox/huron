@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-require('dotenv/config');
 const firebase = require('firebase/app');
 const FieldValue = require('firebase-admin').firestore.fieldValue;
 const admin = require('firebase-admin');
