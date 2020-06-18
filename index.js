@@ -61,7 +61,6 @@ client.on('message', (message) => {
 
    if (!message.content.startsWith(prefix)) return;
 
-  // if (client.commands.get(command.slice(prefix.length))){
     if (client.commands.has(cmd)) {
 
       command = client.commands.get(cmd);
@@ -71,11 +70,6 @@ client.on('message', (message) => {
 
        
       if (command) command.run(client, message, args, db, prefix);
-    
-    // let cmd = client.commands.get(command.slice(prefix.length));
-         //   if (cmd){
-            //   cmd.run(client,message,args,db,prefix);
-        //   }
   })
 });
 
