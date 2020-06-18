@@ -26,6 +26,10 @@ let db = admin.firestore();
 
 ["command"].forEach(handler => {
     require(`./handlers/${handler}`)(client);
+    client.commands.set(props.help.name, props);
+    props.help.aliases.forEach(alias => {
+    client.commands.set(alias, props.help.name);
+    });
 });
     
 client.on('ready', () => {
@@ -49,19 +53,27 @@ client.on('message', (message) => {
    if (message.channel.type === "dm") return;
    if (message.author.bot) return;
  
-   let message_array = message.content.split(" ");
-   let command = message_array[0];
-   let args = message_array.slice(1);
- 
-   if (!command.startsWith(prefix)) return;
+   let args = message.content.slice(prefix.length).trim().split(" ");
+   let cmd = args.shift().toLowerCase();
+   let command;
+
+   if (!message.content.startsWith(prefix)) return;
 
    if (client.commands.get(command.slice(prefix.length))){
-       let cmd = client.commands.get(command.slice(prefix.length));
-           if (cmd){
-               cmd.run(client,message,args,db,prefix);
-           }
- }
-})
+
+      command = client.commands.get(cmd);
+    } else {
+      command = client.commands.get(client.aliases.get(cmd));
+    }
+
+       
+      if (command) command.run(client, message, args, db, prefix);
+    
+    // let cmd = client.commands.get(command.slice(prefix.length));
+         //   if (cmd){
+            //   cmd.run(client,message,args,db,prefix);
+        //   }
+  })
 });
 
 client.on('guildCreate', async gData => {
