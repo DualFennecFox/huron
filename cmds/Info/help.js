@@ -1,9 +1,10 @@
 const { MessageEmbed } = require("discord.js");
-const { stripIndents } = require("common-tags"); 
+const { stripIndents } = require("common-tags");
 
     module.exports = {
     name: "help",
     aliases: ['Help', 'HELP'],
+    category: "Info",
     description: 'Te dice todos los comandos del bot o uno en específico',
     usage: '!help',
     examples: ["!help", "!help ping"],

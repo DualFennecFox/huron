@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 
 module.exports = {
     name : 'unban',
+    category: "Moderacion",
     description : 'Este comando Desbanea al usuario mencionado con su ID Ej: `!unban 556540723235651584` También puedes dar una razón de ello',
     aliases: ['Unban', 'UNBAN'],
     usage: '!unban',

@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 module.exports = {
   name : 'avatar',
   description : 'Se envia la imagen del avatar del usuario o del usuario mencionado al canal',
+  category: "Info",
   aliases: ['Avatar', 'AVATAR'],
   usage: '!avatar',
   examples: ['!avatar', '!avatar @Firulais'],

@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 
 module.exports = {
     name : 'unmute',
+    category: "Moderacion",
     description : 'Este comando Desmutea al usuario mencionado con su ID o mención Ej: `!unmute @Firulais`, `!unmute 556540723235651584` También puedes dar una razón de ello',
     aliases: ['Unmute', 'UNMUTE'],
     usage: '!unmute',

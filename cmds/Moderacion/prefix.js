@@ -1,5 +1,6 @@
 module.exports = {
     name: "prefix",
+    category: "Moderacion",
     description : "Con este comando puedes ver tu prefix o cambiarlo elijiendo uno",
     aliases: ['Prefix', 'PREFIX'],
     usage: '!prefix',

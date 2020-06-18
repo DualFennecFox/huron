@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 
     module.exports = {
     name : 'mute',
+    category: "Moderacion",
     aliases: ['Mute', 'MUTE'],
     description : 'Este comando Mutea al usuario mencionado con su ID o mención, también puedes dar una razón de ello',
     usage: '!mute',
