@@ -9,7 +9,7 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 
-const scount = client.guilds.size
+const scount = client.guilds.cache.size
 let prefix;
 const token = process.env.TOKEN;
 const owner = process.env.OWNER
