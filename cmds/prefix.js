@@ -1,5 +1,10 @@
-
-    module.exports.run = async (client,message,args,db,prefix) => {
+module.exports.help = {
+    name: "prefix",
+    description : "Con este comando puedes ver tu prefix o cambiarlo elijiendo uno",
+    aliases: ['Prefix', 'PREFIX'],
+    usage: '!prefix',
+    examples: ['!prefix -', '!prefix --='],
+    run: async (client,message,args,db,prefix) => {
     if (args.length === 0){
         message.channel.send(`Mi prefix en este server es ${prefix}`);
     } else if (args.length === 1){
@@ -13,10 +18,4 @@
     }
 
 }
-module.exports.help = {
-    name: "prefix",
-    description : "Con este comando puedes ver tu prefix o cambiarlo elijiendo uno",
-    aliases: ['Prefix', 'PREFIX'],
-    usage: '!prefix',
-    examples: ['!prefix -', '!prefix --=']
 }

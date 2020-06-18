@@ -1,6 +1,12 @@
 const Discord = require('discord.js');
 
-    module.exports.run = async (client , message, args) => {
+module.exports.help = {
+    name : 'unban',
+    description : 'Este comando Desbanea al usuario mencionado con su ID Ej: `!unban 556540723235651584` También puedes dar una razón de ello',
+    aliases: ['Unban', 'UNBAN'],
+    usage: '!unban',
+    examples: ['!unban @Firulais', '!unban 556540723235651584', '!unban @Firulais Razon'],
+    run: async (client , message, args) => {
    
     let bannedMember = await client.users.fetch(args[0])
         if(!bannedMember) return message.channel.send("Este usuario no esta baneado o solo no existe")
@@ -28,10 +34,4 @@ const Discord = require('discord.js');
 
     return;
 }
-module.exports.help = {
-    name : 'unban',
-    description : 'Este comando Desbanea al usuario mencionado con su ID Ej: `!unban 556540723235651584` También puedes dar una razón de ello',
-    aliases: ['Unban', 'UNBAN'],
-    usage: '!unban',
-    examples: ['!unban @Firulais', '!unban 556540723235651584', '!unban @Firulais Razon']
 }
