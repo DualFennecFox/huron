@@ -9,6 +9,8 @@ const Discord = require('discord.js');
     examples: ['!mute @Firulais', '!mute 556540723235651584', '!mute @Firulais Razon'],
     run: async (client , message, args) => {
 
+    let mutee = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+    if(!mutee) return message.channel.send("Debes mencionar a un usuario o darme su id");
     if(!message.member.hasPermission("KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!")
     if(!message.guild.me.hasPermission(["MANAGE_ROLES", "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para añadir roles");
     let mutee = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
