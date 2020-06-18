@@ -26,9 +26,13 @@ let db = admin.firestore();
 
 ["command"].forEach(handler => {
     require(`./handlers/${handler}`)(client);
-    client.commands.set(props.help.name, props);
-    props.help.aliases.forEach(alias => {
-    client.commands.set(alias, props.help.name);
+    jsfiles.forEach((f, i) => {
+      let props = require(`./cmds/${dir}/${f}`)
+      client.commands.set(props.help.name, props);
+      props.help.aliases.forEach(alias => {
+      client.commands.set(alias, props.help.name);
+    })
+   
     });
 });
     
