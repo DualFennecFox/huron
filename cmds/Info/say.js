@@ -14,9 +14,11 @@ module.exports = {
     message.delete()
     if(mChannel) {
         argsresult = args.slice(1).join(" ")
+        if(!argsresult) return;
         mChannel.send(argsresult)
     } else {
         argsresult = args.join(" ")
+        if(!argsresult) return;
         message.channel.send(argsresult)
     }
 } 
