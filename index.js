@@ -53,9 +53,10 @@ client.on('message', (message) => {
    if (message.channel.type === "dm") return;
    if (message.author.bot) return;
  
+   let command;
    let args = command.slice(prefix.length).trim().split(" ");
    let cmd = args.shift().toLowerCase();
-   let command;
+   
 
    if (!message.content.startsWith(prefix)) return;
 
