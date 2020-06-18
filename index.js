@@ -54,13 +54,14 @@ client.on('message', (message) => {
    if (message.author.bot) return;
  
    
-   let args = message.content.slice(prefix.length).trim().split(/ +/g);
+   let args = message.content.slice(prefix.length).trim().split(" ");
    let cmd = args.shift().toLowerCase();
    let command;
 
    if (!message.content.startsWith(prefix)) return;
 
-   if (client.commands.get(command.slice(prefix.length))){
+  // if (client.commands.get(command.slice(prefix.length))){
+    if (client.command.has(cmd)) {
 
       command = client.commands.get(cmd);
     } else {
