@@ -24,8 +24,15 @@ admin.initializeApp({
 let db = admin.firestore();
 
 
+
 ["command"].forEach(handler => {
     require(`./handlers/${handler}`)(client);
+    
+    let jsfile = files.filter(f => f.split(".").pop() === "js") 
+    if(jsfile.length <= 0) {
+         return console.log("[LOGS] Couldn't Find Commands!");
+    }
+
     jsfiles.forEach((f, i) => {
       let props = require(`./cmds/${dir}/${f}`)
       client.commands.set(props.help.name, props);
