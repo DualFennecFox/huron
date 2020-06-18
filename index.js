@@ -50,7 +50,7 @@ client.on('ready', () => {
     status: "online",
     game: {
         name: `Estoy en ${scount} Servidores!`,
-        type: "WATCHING"
+        type: "STREAMING"
     }
 }); 
 });
