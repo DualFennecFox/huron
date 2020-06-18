@@ -13,7 +13,7 @@ module.exports = {
 
     if (args.length === 0) {
         return
-    } else if (args.length === 1) {
+    } else if ((args.length === 1) || message.mentions.channel.first() || message.mentions.users.first()) {
     message.delete()
     if(mChannel) {
         argsresult = args.slice(1).join(" ")
