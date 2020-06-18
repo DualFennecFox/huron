@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 
-    module.exports.help = {
+    module.exports = {
     name : 'mute',
     aliases: ['Mute', 'MUTE'],
     description : 'Este comando Mutea al usuario mencionado con su ID o mención, también puedes dar una razón de ello',

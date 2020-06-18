@@ -1,4 +1,4 @@
-module.exports.help = {
+module.exports = {
     name: "prefix",
     description : "Con este comando puedes ver tu prefix o cambiarlo elijiendo uno",
     aliases: ['Prefix', 'PREFIX'],
