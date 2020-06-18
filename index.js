@@ -51,14 +51,15 @@ client.on('message', (message) => {
  
    let message_array = message.content.split(" ");
    let command = message_array[0];
-   let args = message_array.slice(1);
+   const args = message.content.slice(prefix.length).trim().split(/ +/g);
+   const cmd = args.shift().toLowerCase();
  
    if (!command.startsWith(prefix)) return;
 
-   if (client.commands.get(command.slice(prefix.length))){
-       let cmd = client.commands.get(command.slice(prefix.length));
-           if (cmd){
-               cmd.run(client,message,args,db,prefix);
+   if (client.commands.get(cmd)){
+       let command = client.commands.get(client.aliases.get(cmd));
+           if (command){
+               command.run(client,message,args,db,prefix);
            }
  }
 })
