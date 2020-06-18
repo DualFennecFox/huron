@@ -9,6 +9,7 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 
+const scount = client.guilds.size
 let prefix;
 const token = process.env.TOKEN;
 const owner = process.env.OWNER
@@ -45,7 +46,6 @@ fs.readdir('./cmds', (err,files) => {
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  var scount = client.guilds.size
   client.user.setPresence({
     status: "online",
     game: {
