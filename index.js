@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const fs = require('fs');
+require('dotenv/config');
 const firebase = require('firebase/app');
 const FieldValue = require('firebase-admin').firestore.fieldValue;
 const admin = require('firebase-admin');
@@ -23,9 +24,19 @@ admin.initializeApp({
 let db = admin.firestore();
 
 
-
 ["command"].forEach(handler => {
-  require(`./handlers/${handler}`)(client);
+    require(`./handlers/${handler}`)(client);
+});
+    
+client.on('ready', () => {
+  console.log(`Logged in as ${client.user.tag}!`);
+  client.user.setPresence({
+    status: "online",
+    activity: {
+        name: `Estoy en ${scount} Servidores!`,
+        type: "WATCHING"
+    }
+}); 
 });
 
 client.on('message', (message) => {
