@@ -26,7 +26,9 @@ const commands = (category) => {
         .join("\n");
 } 
 
-const info = client.commands.get(client.name.get())
+const info = client.categories
+            .map(cat => stripIndents`**${cat[0].toUpperCase() + cat.slice(1)}** \n${commands(cat)}`)
+            .reduce((string, category) => string + "\n" + category);
 
     return message.channel.send(embed.setDescription(info));
 }
@@ -37,7 +39,7 @@ function getCMD(client, message, input) {
     // Get the cmd by the name or alias
     const cmd = client.commands.get(input.toLowerCase()) || client.commands.get(client.aliases.get(input.toLowerCase()));
     
-    let info = `No information found for command **${input.toLowerCase()}**`;
+    let info = `No hay información para el comando **${input.toLowerCase()}**`;
 
     // If no cmd is found, send not found embed
     if (!cmd) {
@@ -45,12 +47,11 @@ function getCMD(client, message, input) {
     }
 
     // Add all cmd info to the embed
-    if (cmd.name) info = `**Command name**: ${cmd.name}`;
+    if (cmd.name) info = `**Nombre del comando**: ${cmd.name}`;
     if (cmd.aliases) info += `\n**Aliases**: ${cmd.aliases.map(a => `\`${a}\``).join(", ")}`;
-    if (cmd.description) info += `\n**Description**: ${cmd.description}`;
+    if (cmd.description) info += `\n**Descripción**: ${cmd.description}`;
     if (cmd.usage) {
-        info += `\n**Usage**: ${cmd.usage}`;
-        embed.setFooter(`Syntax: <> = required, [] = optional`);
+        info += `\n**Uso**: ${cmd.usage}`;
     }
 
     return message.channel.send(embed.setColor("GREEN").setDescription(info));
