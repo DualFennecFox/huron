@@ -5,7 +5,7 @@ module.exports = {
   description : 'Se envia la imagen del avatar del usuario o del usuario mencionado al canal',
   category: "Info",
   aliases: ['Avatar', 'AVATAR'],
-  usage: '!avatar',
+  usage: `!avatar`,
   examples: ['!avatar', '!avatar @Firulais'],
   run: async (client, message, args) => {
     let user = message.mentions.users.first();

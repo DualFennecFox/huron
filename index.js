@@ -8,6 +8,7 @@ const serviceAccount = require('./serviceAccount.json')
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
+const mongoose = require("mongoose");
 
 
 let prefix;
