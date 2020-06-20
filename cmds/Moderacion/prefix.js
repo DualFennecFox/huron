@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const Prefix = require("./models/prefix.js");
+const Prefix = require(".../models/prefix.js");
 const mongoose = require('mongoose');
 
 module.exports = {
