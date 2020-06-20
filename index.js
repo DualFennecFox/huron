@@ -55,11 +55,11 @@ client.on('message', (message) => {
    if (message.author.bot) return;
  
    
-   let args = message.content.slice(prefix.length || message.mentions.guild.me.first()).trim().split(/ +/g);
+   let args = message.content.slice(prefix.length).trim().split(/ +/g);
    let cmd = args.shift().toLowerCase();
    let command;
 
-   if (!message.content.startsWith(prefix || message.mentions.guild.me.first())) return;
+   if (!message.content.startsWith(prefix)) return;
 
     if (client.commands.has(cmd)) {
 
