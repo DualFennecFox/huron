@@ -55,7 +55,7 @@ client.on('message', (message) => {
    if (message.author.bot) return;
  
    
-   let args = message.content.slice(prefix.length).trim().split(/ +/g);
+   let args = message.content.slice(prefix.length || message.mentions.guild.me.first()).trim().split(/ +/g);
    let cmd = args.shift().toLowerCase();
    let command;
 
