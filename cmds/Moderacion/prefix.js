@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const Prefix = require(".../models/prefix.js");
+const Prefix = require("../models/prefix.js");
 const mongoose = require('mongoose');
 
 module.exports = {
@@ -16,6 +16,7 @@ module.exports = {
             if(!message.member.hasPermission("KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!")
             let nPrefix = args[0];
     const prefixes = new prefixes({
+        _id: mongoose.Types.ObjectId(),
         prefix: nPrefix
     });
 
