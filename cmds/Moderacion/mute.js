@@ -46,7 +46,7 @@ const Discord = require('discord.js');
     }
 }
 
-if (message.guild.me.highestRole.comparePositionTo(muterole) < 1) {
+if (message.guild.me.roles.highest.comparePositionTo(muterole) < 1) {
     return message.channel.send("Mi rol es muy bajo para asignar el rol mute!");
 }
 

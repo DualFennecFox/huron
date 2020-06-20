@@ -16,7 +16,7 @@ const Discord = require('discord.js');
     let bReason = args.slice(1).join(" ");
     if(!bReason) bReason = "No se específico una razón"
 
-    let role = bUser.highestRole
+    let role = bUser.roles.highest;
     
     if(!message.member.hasPermission("KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
     if(!message.guild.me.hasPermission(["KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para Banear miembros");
