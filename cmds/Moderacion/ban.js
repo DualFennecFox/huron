@@ -23,7 +23,7 @@ const Discord = require('discord.js');
     if(bUser.hasPermission("KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR")) return message.channel.send("Esta persona no puede ser baneada!");
 
     if (message.guild.me.roles.highest.comparePositionTo(role) < 1) {
-        return message.channel.send("Mi rol es muy bajo para asignar el rol mute!");
+        return message.channel.send("Mi rol es muy bajo para banearlo!");
     }
 
     let banEmbed = new Discord.MessageEmbed()
