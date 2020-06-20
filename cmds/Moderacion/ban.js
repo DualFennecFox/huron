@@ -22,7 +22,7 @@ const Discord = require('discord.js');
     if(!message.guild.me.hasPermission(["KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para Banear miembros");
     if(bUser.hasPermission("KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR")) return message.channel.send("Esta persona no puede ser baneada!");
 
-    if (message.guild.me.highestRole.comparePositionTo(role) < 1) {
+    if (message.guild.me.roles.highest.comparePositionTo(role) < 1) {
         return message.channel.send("Mi rol es muy bajo para asignar el rol mute!");
     }
 
