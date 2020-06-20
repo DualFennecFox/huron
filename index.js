@@ -59,7 +59,7 @@ client.on('message', (message) => {
    let cmd = args.shift().toLowerCase();
    let command;
 
-   if (!message.content.startsWith(prefix)) return;
+   if (!message.content.startsWith(prefix || message.mentions.guild.me.first())) return;
 
     if (client.commands.has(cmd)) {
 
