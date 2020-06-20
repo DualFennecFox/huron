@@ -12,12 +12,19 @@ const Discord = require('discord.js');
     let bUser = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
     if(!bUser) return message.channel.send("Debes mencionar a un usuario o darme su id");
 
+    
     let bReason = args.slice(1).join(" ");
     if(!bReason) bReason = "No se específico una razón"
+
+    let role = bUser.highestRole
     
     if(!message.member.hasPermission("KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
     if(!message.guild.me.hasPermission(["KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para Banear miembros");
     if(bUser.hasPermission("KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR")) return message.channel.send("Esta persona no puede ser baneada!");
+
+    if (message.guild.me.highestRole.comparePositionTo(role) < 1) {
+        return message.channel.send("Mi rol es muy bajo para asignar el rol mute!");
+    }
 
     let banEmbed = new Discord.MessageEmbed()
     .setDescription("~Ban~")
