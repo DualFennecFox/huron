@@ -11,7 +11,6 @@ const Discord = require('discord.js');
     if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send("No tienes permisos para usar este comando!");
     if(!message.guild.me.hasPermission("MANAGE_MESSAGES")) return message.channel.send("No tengo permisos para borrar mensajes!");
     if(!args[0]) return message.channel.send("Dime cuantos mensajes quieres borrar!");
-    let messagesDeleted = await clearChannel(message.channel);
 
     let collected = await channel.messages.fetch();
   if (collected.size > 0) {
