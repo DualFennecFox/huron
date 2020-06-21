@@ -7,7 +7,7 @@
     usage: '!p2ng',
    run: async (client, message, args) => {
 
-    let gUser = message.guild.member(client.users.Fetch(args[0]))
+    let gUser = client.users.fetch(args[0])
 
     message.channel.send(`<@${gUser.id}> ID ${gUser.id}`);
     
