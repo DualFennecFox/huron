@@ -1,7 +1,5 @@
 const Discord = require('discord.js');
-const Prefix = require("/app/models/prefix.js");
 const mongoose = require('mongoose');
-mongoose.connect('el-perro-bot-kawaii-mk0by.gcp.mongodb.net:27017/el-perro-bot-kawaii.prefix');
 
 module.exports = {
     name: "prefix",
