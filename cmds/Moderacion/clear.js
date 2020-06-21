@@ -18,11 +18,11 @@ const Discord = require('discord.js');
 }
 
 async function clearChannel(channel, n = 0, old = false) {
-  let collected = await channel.fetchMessages();
+  let collected = await channel.messages.fetch();
   if (collected.size > 0) {
     if (old) {
-      for (let msg of collected.array()) {
-        await msg.delete();
+      for (let message of collected.array()) {
+        await message.delete();
         n++;
       }
     } else {
