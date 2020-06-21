@@ -11,8 +11,26 @@ const Discord = require('discord.js');
     if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send("No tienes permisos para usar este comando!");
     if(!message.guild.me.hasPermission("MANAGE_MESSAGES")) return message.channel.send("No tengo permisos para borrar mensajes!");
     if(!args[0]) return message.channel.send("Dime cuantos mensajes quieres borrar!");
-    message.channel.bulkDelete(args[0]).then(() => {
-        message.channel.send(`Borrados ${args[0]} mensajes`).then(message => message.delete({ timeout: 5000 }));
-    })
+    let messagesDeleted = await clearChannel(message.channel);
+
+    message.channel.sendMessage(`Se han borrado ${messagesDeleted} mensages`);
+  }
+}
+
+async function clearChannel(channel, n = 0, old = false) {
+  let collected = await channel.fetchMessages();
+  if (collected.size > 0) {
+    if (old) {
+      for (let msg of collected.array()) {
+        await msg.delete();
+        n++;
+      }
+    } else {
+      let deleted = await channel.bulkDelete(100, true);
+      if (deleted.size < collected.size) old = true;
+      n += deleted;
     }
+
+    return n + await clearChannel(channel, old);
+  } else return 0;
 }
