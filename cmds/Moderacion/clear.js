@@ -12,8 +12,11 @@ const Discord = require('discord.js');
     if(!message.guild.me.hasPermission("MANAGE_MESSAGES")) return message.channel.send("No tengo permisos para borrar mensajes!");
     if(!args[0]) return message.channel.send("Dime cuantos mensajes quieres borrar!");
 
-    let clearChannel = (channel, n = 0, old = false)
-    let collected = await channel.messages.fetch();
+  }
+}
+
+async function clearChannel(channel, n = 0, old = false, message) {
+  let collected = await channel.messages.fetch();
   if (collected.size > 0) {
     if (old) {
       for (let message of collected.array()) {
@@ -25,7 +28,8 @@ const Discord = require('discord.js');
       if (deleted.size < collected.size) old = true;
       n += deleted;
     }
+
+    message.channel.send(`Se han borrado ${deleted} mensages`);
     return n + await clearChannel(channel, old);
-  } else return n = 0;
+  } else return 0;
 }
-    }
