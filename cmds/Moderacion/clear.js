@@ -13,6 +13,8 @@ const Discord = require('discord.js');
     if(!args[0]) return message.channel.send("Dime cuantos mensajes quieres borrar!");
     let messagesDeleted = await clearChannel(message.channel);
 
+    messagesDeleted.channel.send(`Se han borrado${messagesDeleted.content}`)
+
   }
 }
 
@@ -29,8 +31,6 @@ async function clearChannel(channel, n = 0, old = false) {
       if (deleted.size < collected.size) old = true;
       n += deleted;
     }
-
-    message.channel.send(`Se han borrado ${deleted} mensages`);
     return n + await clearChannel(channel, old);
   } else return 0;
 }
