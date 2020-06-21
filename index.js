@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const fs = require('fs');
 require('dotenv/config');
 const firebase = require('firebase/app');
-const FieldValue = require('firebase-admin').firestore.fieldValue;
+const FieldValue = require('firebase-admin').firestore.FieldValue;
 const admin = require('firebase-admin');
 const serviceAccount = require('./serviceAccount.json')
 const client = new Discord.Client();
@@ -25,7 +25,6 @@ admin.initializeApp({
 let db = admin.firestore();
 
 fs.readdir("./cmds/", (files) => {
-
 
 
 ["command"].forEach(handler => {
