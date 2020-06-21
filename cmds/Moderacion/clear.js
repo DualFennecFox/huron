@@ -12,7 +12,7 @@ const Discord = require('discord.js');
     if(!message.guild.me.hasPermission("MANAGE_MESSAGES")) return message.channel.send("No tengo permisos para borrar mensajes!");
     if(!args[0]) return message.channel.send("Dime cuantos mensajes quieres borrar!");
     message.channel.bulkDelete(args[0]).then(() => {
-        message.channel.send(`Borrados ${args[0]} mensajes`).then(msg => msg.delete(5000));
+        message.channel.send(`Borrados ${args[0]} mensajes`).then(message => message.delete(5000));
     })
     }
 }
