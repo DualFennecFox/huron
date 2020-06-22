@@ -18,7 +18,7 @@ const Discord = require('discord.js');
   }
 }
 
-async function clearChannel(channel, n = 0, old = false, message) {
+async function clearChannel(channel, n = 0, old = false) {
   let collected = await channel.messages.fetch();
   if (collected.size > 0) {
     if (old) {
@@ -32,7 +32,6 @@ async function clearChannel(channel, n = 0, old = false, message) {
       n += deleted;
     }
 
-    message.channel.send(`Se han borrado ${deleted} mensages`);
     return n + await clearChannel(channel, old);
   } else return 0;
 }
