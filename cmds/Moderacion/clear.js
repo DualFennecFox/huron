@@ -29,9 +29,8 @@ const Discord = require('discord.js');
       
       }
   
-      return n + await clearChannel(channel, old);;
+      return n + await clearChannel(channel, old);
     }
-    
   }
 }
     }
