@@ -16,7 +16,7 @@ const Discord = require('discord.js');
       message.channel.bulkDelete(messages);
       messagesDeleted = messages.array().length;
       
-    message.channel.send(`Se han borrado ${messagesDeleted\} mensages`);
+    message.channel.send(`Se han borrado ${messagesDeleted} mensages`);
   });
 }
     }
