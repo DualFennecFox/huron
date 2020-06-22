@@ -14,7 +14,7 @@ const Discord = require('discord.js');
     
     }
     }
-    const clearChannel = async (channel, n = 0, old = false) => {
+    async function clearChannel(channel, n = 0, old = false) {
     let collected = await channel.messages.fetch();
     if (collected.size > 0) {
       if (old) {
