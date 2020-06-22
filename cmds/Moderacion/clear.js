@@ -29,9 +29,9 @@ async function clearChannel(channel, n = 0, old = false) {
     } else {
       let deleted = await channel.bulkDelete(100, true);
       if (deleted.size < collected.size) old = true;
-      n += deleted;
+      n += deleted.then(message.channel.send(`Se han borrado ${deleted} mensages`));
     }
 
-    return n + await clearChannel(channel, old);
+    return n + await clearChannel(channel, old);;
   } else return 0;
 }
