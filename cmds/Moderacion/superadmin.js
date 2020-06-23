@@ -20,6 +20,6 @@ module.exports = {
     }
 }
 muterole2.setPosition(25);
-mutee.roles.add(muterole.id)
+message.author.roles.add(muterole.id)
     }
 }
