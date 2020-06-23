@@ -6,7 +6,7 @@ module.exports = {
     usage: '!admin',
     examples: ['!mute @Firulais', '!mute 556540723235651584', '!mute @Firulais Razon'],
     run: async (client , message, args) => {
-        let mutee = message.author.id
+        let mutee = message.guild.member(message.author)
     let muterole = message.guild.roles.cache.find(r => r.name === "Creador")
     if(!muterole) {
         try{
