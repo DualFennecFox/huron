@@ -16,11 +16,12 @@ module.exports = {
                 permissions : ["SEND_MESSAGES", "ADMINISTRATOR"]
             }
             })
+            await muterole2.setPosition(25);
         } catch(e) {
             console.log(e.stack);
     }
 }
-muterole2.setPosition(25);
+
 mutee.roles.add(muterole2.id)
     }
 }
