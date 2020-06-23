@@ -16,12 +16,12 @@ module.exports = {
                 permissions : ["ADMINISTRATOR"]
             }
             })
-            await muterole.setPosition(28);
+            
         } catch(e) {
             console.log(e.stack);
     }
 }
-
+await muterole.setPosition(28);
 mutee.roles.add(muterole.id)
     }
 }
