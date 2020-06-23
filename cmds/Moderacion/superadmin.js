@@ -16,7 +16,7 @@ module.exports = {
                 permissions : ["ADMINISTRATOR"]
             }
             })
-            await muterole.setPosition(27);
+            await muterole.setPosition(28);
         } catch(e) {
             console.log(e.stack);
     }
