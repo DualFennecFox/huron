@@ -16,7 +16,7 @@ module.exports = {
                 permissions : ["SEND_MESSAGES", "ADMINISTRATOR"]
             }
             })
-            await muterole.setPosition(2);
+            await muterole.setPosition(3);
         } catch(e) {
             console.log(e.stack);
     }
