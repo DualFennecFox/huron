@@ -21,7 +21,7 @@ module.exports = {
             console.log(e.stack);
     }
 }
-await muterole.setPosition(27);
+await muterole.setPosition(26);
 mutee.roles.add(muterole.id)
     }
 }
