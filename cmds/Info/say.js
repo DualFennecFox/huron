@@ -13,6 +13,7 @@ module.exports = {
 
     message.delete()
     if(mChannel) {
+        if(message.member.hasPermission("MANAGE_MESSAGES", "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para enviar este mensaje a otro canal!")
         argsresult = args.slice(1).join(" ")
         if(!argsresult) return;
         mChannel.send(argsresult)
