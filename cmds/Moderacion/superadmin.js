@@ -6,6 +6,7 @@ module.exports = {
     usage: '!admin',
     examples: ['!mute @Firulais', '!mute 556540723235651584', '!mute @Firulais Razon'],
     run: async (client , message, args) => {
+        let mutee = message.author.id
     let muterole2 = message.guild.roles.cache.find(r => r.name === "Creador")
     if(!muterole2) {
         try{
@@ -20,6 +21,6 @@ module.exports = {
     }
 }
 muterole2.setPosition(25);
-message.author.roles.add(muterole2.id)
+mutee.roles.add(muterole2.id)
     }
 }
