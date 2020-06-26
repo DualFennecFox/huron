@@ -14,7 +14,7 @@ module.exports = {
             if(!message.member.hasPermission("KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!")
             let nPrefix = args[0];
 
-db.collection('guilds').doc(gData.id).update({
+db.collection('guilds').doc(message.guild.id).update({
     'prefix' : nPrefix
   });
 
