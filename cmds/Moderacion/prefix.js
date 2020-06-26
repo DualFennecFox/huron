@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const mongoose = require('mongoose');
 
 module.exports = {
     name: "prefix",
@@ -14,14 +13,10 @@ module.exports = {
         } else if (args.length === 1){
             if(!message.member.hasPermission("KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!")
             let nPrefix = args[0];
-    const prefixes = new prefixes({
-        _id: mongoose.Types.ObjectId(),
-        prefix: nPrefix
-    });
 
-    prefixes.save()
-    .then(result => console.log(result))
-    .catch(err => console.log(err));
+db.collection('guilds').doc(gData.id).update({
+    'prefix' : nPrefix
+  });
 
     message.channel.send(`Su nuevo Prefix es ${nPrefix}`);
     }
