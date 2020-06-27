@@ -50,13 +50,15 @@ client.on('message', (message) => {
       prefix = q.data().prefix;
       
     }
-    else if(!q.exists) {
-      prefix = '!'
-    }
   }).then(() => {
 
    if (message.channel.type === "dm") return;
    if (message.author.bot) return;
+
+   if (message.content.startsWith("leave")) {
+     
+    client.guilds.cache.get(message.guild.id).leave()
+   }
  
    
    let args = message.content.slice(prefix.length).trim().split(/ +/g);
