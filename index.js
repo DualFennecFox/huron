@@ -50,8 +50,9 @@ client.on('message', (message) => {
       prefix = q.data().prefix;
       
     }
-    else if(!q.exists)
+    else if(!q.exists) {
       prefix = '!'
+    }
   }).then(() => {
 
    if (message.channel.type === "dm") return;
