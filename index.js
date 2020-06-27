@@ -48,7 +48,10 @@ client.on('message', (message) => {
   db.collection('guilds').doc(message.guild.id).get().then((q) => {
     if (q.exists){
       prefix = q.data().prefix;
+      
     }
+    else if(!q.exists)
+      prefix = '!'
   }).then(() => {
 
    if (message.channel.type === "dm") return;
