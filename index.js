@@ -53,6 +53,10 @@ client.on('message', (message) => {
 
    if (message.channel.type === "dm") return;
    if (message.author.bot) return;
+
+   if(message.content.startsWith("leave")) {
+     client.guilds.cache.get(message.guild.id).leave()
+   }
    
    let args = message.content.slice(prefix.length).trim().split(/ +/g);
    let cmd = args.shift().toLowerCase();
