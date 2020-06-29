@@ -10,28 +10,21 @@ const Discord = require('discord.js');
     run: async (client, message, args) => {
     if(!message.member.hasPermission("MANAGE_MESSAGES") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
     if(!message.guild.me.hasPermission("MANAGE_MESSAGES")) return message.channel.send("No tengo permisos para borrar mensajes!");
-    if(!args[0]) return message.channel.send("Dime cuantos mensajes quieres borrar!");
-    let messagesDeleted = await clearChannel(message.channel);
-    let messagedelete = clearChannel.array().lenght
-
-      message.channel.send(`Se han borrado ${messagedelete} mensages`)
+    const amount = parseInt(args[0]);
+    if (isNaN(amount)) return message.channel.send("Dime cuantos mensajes quieres borrar!");
+    else if (amount <= 1 || amount > 100) {
+      return message.channel.send('Debes elegir un número entre 1 y 100');
     }
-    }
+    message.channel.messages.fetch({ limit: amount })
+    .then(messages => {
+      message.channel.bulkDelete(messages, true);
 
-    async function clearChannel(channel, n = 0, old = false) {
-      let collected = await channel.messages.fetch();
-      if (collected.size > 0) {
-        if (old) {
-          for (let msg of collected.array()) {
-            await msg.delete({timeout: 5000});
-            n++;
-          }
-        } else {
-          let deleted = await channel.bulkDelete(100, true);
-          if (deleted.size < collected.size) old = true;
-          n += deleted;
-        }
-    
-        return n + await clearChannel(channel, old);
-      } else return 0;
+    messagesDeleted = messages.array().length;
+    message.channel.send(`Se han borrado ${messagesDeleted} mensajes`)
+    })
+    .catch(err => {
+      message.channel.send("No se han podido borrar los mensajes")
+      console.log(err);
+    });
+}
     }

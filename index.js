@@ -39,7 +39,8 @@ client.on('ready', () => {
     status: "online",
     activity: {
         name: `Estoy en ${scount} Servidores!`,
-        type: "WATCHING"
+        type: "WATCHING",
+        url: "https://www.twitch.tv/unfirulais"
     }
 }); 
 });
