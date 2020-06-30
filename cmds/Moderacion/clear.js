@@ -12,8 +12,8 @@ const Discord = require('discord.js');
     if(!message.guild.me.hasPermission("MANAGE_MESSAGES")) return message.channel.send("No tengo permisos para borrar mensajes!");
     const amount = parseInt(args[0]) + 1;
     if (isNaN(amount)) return message.channel.send("Dime cuantos mensajes quieres borrar!");
-    else if (amount <= 1 || amount > 101) {
-      return message.channel.send('Debes elegir un número entre 1 y 100');
+    else if (amount <= 1 || amount > 100) {
+      return message.channel.send('Debes elegir un número entre 1 y 99');
     }
     message.channel.messages.fetch({ limit: amount })
     .then(messages => {
