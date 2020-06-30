@@ -71,7 +71,6 @@ client.on('message', (message) => {
     } else {
       command = client.commands.get(client.aliases.get(cmd));
     }
-
        
       if (command) command.run(client, message, args, db, prefix);
   })
