@@ -20,10 +20,10 @@ const Discord = require('discord.js');
       message.channel.bulkDelete(messages, true);
 
     messagesDeleted = messages.array().length;
-    message.channel.send(`Se han borrado ${messagesDeleted} mensajes`)
+    message.channel.send(`Se han borrado ${messagesDeleted} mensajes`).then(message => message.delete({timeout: 5000}))
     })
     .catch(err => {
-      message.channel.send("No se han podido borrar los mensajes")
+      message.channel.send("No se han podido borrar los mensajes").then(message => message.delete({timeout: 5000}))
       console.log(err);
     });
 }
