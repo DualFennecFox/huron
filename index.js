@@ -10,7 +10,6 @@ client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 const mongoose = require("mongoose");
 
-
 let prefix;
 const token = process.env.TOKEN;
 const owner = process.env.OWNER
@@ -20,7 +19,6 @@ client.categories = fs.readdirSync("./cmds/");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 })
-
 
 let db = admin.firestore();
 
