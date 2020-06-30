@@ -56,7 +56,10 @@ function getCMD(client, message, input) {
     if (cmd.examples) info += `\n**Ejemplos**: ${cmd.examples.map(a => `\`${a}\``).join(", ")}`;
     }
 
-    return message.channel.send(embed.setColor("GREEN").setDescription(info));
+    return message.channel.send(embed.setColor("GREEN").setDescription(info))
+    .catch(err => {
+        console.log(err)
+    })
 }
     }
 }

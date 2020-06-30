@@ -35,7 +35,8 @@ const Discord = require('discord.js');
     message.guild.member(bUser).ban(bReason);
 
     message.channel.send( banEmbed )
-
-    return;
+    .catch(err => {
+        console.log(err)
+    })
 }
 }

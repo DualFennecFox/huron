@@ -28,7 +28,8 @@ const Discord = require('discord.js');
     message.guild.member(kUser).kick(kReason);
 
     message.channel.send( kickEmbed )
-
-    return;
+    .catch(err => {
+        console.log(err);
+    })
 }
 }

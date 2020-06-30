@@ -17,10 +17,16 @@ module.exports = {
         argsresult = args.slice(1).join(" ")
         if(!argsresult) return;
         mChannel.send(argsresult)
+        .catch(err => {
+            console.log(err);
+        })
     } else {
         argsresult = args.join(" ")
         if(!argsresult) return;
         message.channel.send(argsresult)
+        .catch(err => {
+            console.log(err);
+        })
     }
-} 
+}
 }

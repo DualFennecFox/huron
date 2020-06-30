@@ -30,5 +30,8 @@ module.exports = {
     .addField("Razón de Desmute", umReason);
 
     message.channel.send( unmuteEmbed )
+    .catch(err => {
+        console.log(err);
+    })
 }
 }

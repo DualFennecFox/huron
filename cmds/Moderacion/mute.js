@@ -58,5 +58,8 @@ let muteEmbed = new Discord.MessageEmbed()
     .addField("Razón de Mute", mReason);
 
     message.channel.send( muteEmbed )
+    .catch(err => {
+        console.log(err);
+    })
 }
 }

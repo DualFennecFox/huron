@@ -16,9 +16,11 @@ module.exports = {
 
 db.collection('guilds').doc(message.guild.id).update({
     'prefix' : nPrefix
-  });
-
-    message.channel.send(`Su nuevo Prefix es ${nPrefix}`);
+  })
+    message.channel.send(`Su nuevo Prefix es ${nPrefix}`)
+    .catch(err => {
+        console.log(err);
+    })
     }
 }
 }

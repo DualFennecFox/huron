@@ -32,7 +32,8 @@ module.exports = {
     .addField("Razón de Desbaneo", ubReason);
     
     message.channel.send( unbanEmbed )
-
-    return;
+    .catch(err => {
+        console.log(err);
+    })
 }
 }
