@@ -54,7 +54,7 @@ client.on('message', (message) => {
 
     if (message.content = "EPBK") {
       message.channel.send(`Mi prefix en este server es ${prefix}, si es la primera vez que me usa escriba ${prefix}help`)
-    } else
+    }
     
 
    if (message.channel.type === "dm") return;
