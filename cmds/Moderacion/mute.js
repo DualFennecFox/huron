@@ -17,8 +17,6 @@ const Discord = require('discord.js');
     if(mutee.hasPermission("KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR")) return message.channel.send("Esta persona no puede ser muteada!");
     
 
-    
-
     let mReason = args.slice(1).join(" ");
     if(!mReason) mReason = "No se específico una Razón"
 
