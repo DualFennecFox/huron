@@ -52,11 +52,10 @@ client.on('message', (message) => {
     }
   }).then(() => {
 
-    if (message.content = "EPBK") {
+    if (message.content === "EPBK") {
       message.channel.send(`Mi prefix en este server es ${prefix}, si es la primera vez que me usa escriba ${prefix}help`)
     }
     
-
    if (message.channel.type === "dm") return;
    if (message.author.bot) return;
    
