@@ -4,7 +4,7 @@ const Discord = require('discord.js');
     name : 'clear',
     category: "Moderacion",
     description : 'Este comando borra un número de mensajes seleccionados por el usuario',
-    aliases: ['Clear', 'CLEAR'],
+    aliases: ['Clear', 'CLEAR', 'purge', 'Purge', 'PURGE'],
     usage: '!clear',
     examples: ['!clear 50'],
     run: async (client, message, args) => {
