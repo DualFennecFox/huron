@@ -8,10 +8,10 @@ const Discord = require('discord.js');
     usage: '!clear',
     examples: ['!clear 50'],
     run: async (client, message, args) => {
-    if(!message.member.hasPermission("MANAGE_MESSAGES") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
-    if(!message.guild.me.hasPermission("MANAGE_MESSAGES")) return message.channel.send("No tengo permisos para borrar mensajes!");
+    if(!message.member.hasPermission("MANAGE_MESSAGES") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!").then(message => message.delete({timeout: 5000}))
+    if(!message.guild.me.hasPermission("MANAGE_MESSAGES")) return message.channel.send("No tengo permisos para borrar mensajes!").then(message => message.delete({timeout: 5000}))
     const amount = parseInt(args[0]) + 1;
-    if (isNaN(amount)) return message.channel.send("Dime cuantos mensajes quieres borrar!");
+    if (isNaN(amount)) return message.channel.send("Dime cuantos mensajes quieres borrar!").then(message => message.delete({timeout: 5000}))
     else if (amount <= 1 || amount > 100) {
       return message.channel.send('Debes elegir un número entre 1 y 99');
     }
