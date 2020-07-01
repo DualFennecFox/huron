@@ -8,7 +8,7 @@ const { stripIndents } = require("common-tags");
     description: 'Te dice todos los comandos del bot o uno en específico',
     usage: '!help',
     examples: ["!help", "!help ping"],
-    run: async (client, message, args) => {
+    run: async (client, message, args, prefix) => {
     if (args[0]) {
         return getCMD(client, message, args[0]);
     } else {
@@ -21,6 +21,7 @@ function getAll(client, message) {
         .setColor("RANDOM")
         .addField('Invite', '[Server de Soporte](https://discord.gg/EnWH5HG),  [Invitar al Bot](https://discord.com/oauth2/authorize?client_id=708377742340653137&permissions=-8&scope=bot),  [Invitar al Bot Beta](https://discord.com/oauth2/authorize?client_id=725129316790173767&permissions=-8&scope=bot)')
         .setThumbnail(client.user.displayAvatarURL())
+        .setFooter(`Use ${prefix} antes de cada comando`)
         
 const commands = (category) => {
     return client.commands
