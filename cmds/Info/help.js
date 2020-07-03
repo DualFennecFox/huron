@@ -43,7 +43,7 @@ function getCMD(client, message, input) {
     // Get the cmd by the name or alias
     const cmd = client.commands.get(input.toLowerCase()) || client.commands.get(client.aliases.get(input.toLowerCase()));
     
-    let info = `No hay información para el comando **${input.toLowerCase()}**`;
+    let info = `**${input.toLowerCase()}** no es un comando valido`;
 
     // If no cmd is found, send not found embed
     if (!cmd) {
