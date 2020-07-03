@@ -18,6 +18,11 @@ module.exports = {
     let memberMention = message.mentions.members.first() || message.member;
        let rolesOfTheMember = memberMention.roles.cache.filter(r => r.name !== '@everyone').map(role => `<@&${role.id}>`).join('\n')
 
+  if (args[1] === 'roles') {
+        let embed = new Discord.MessageEmbed()
+        await message.channel.send(embed.setColor("RANDOM").setDescription(rolesOfTheMember).setAuthor(`Roles de ${user.username}`, user.displayAvatarURL()).setThumbnail(user.displayAvatarURL()))
+        return;
+    }
     if (!args[0]) {
     let myInfo = new Discord.MessageEmbed()
         .setAuthor(user.username, user.displayAvatarURL())
@@ -34,10 +39,6 @@ module.exports = {
         console.log(err);
         })
     }
-    else if (args[0] === 'roles') {
-        let embed = new Discord.MessageEmbed()
-        await message.channel.send(embed.setColor("RANDOM").setDescription(rolesOfTheMember).setAuthor(`Roles de ${user.username}`, user.displayAvatarURL()).setThumbnail(user.displayAvatarURL()))
-        return;
-    }
+    
     }
 }
