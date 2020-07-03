@@ -19,7 +19,7 @@ const { stripIndents } = require("common-tags");
 function getAll(client, message) {
     const embed = new MessageEmbed()
         .setColor("RANDOM")
-        .addField('Invite', '[Server de Soporte](https://discord.gg/EnWH5HG),  [Invitar al Bot](https://discord.com/oauth2/authorize?client_id=708377742340653137&permissions=-8&scope=bot),  [Invitar al Bot Beta](https://discord.com/oauth2/authorize?client_id=725129316790173767&permissions=-8&scope=bot)')
+        .addField('Invite', '[Server de Soporte](https://discord.gg/EnWH5HG) | [Invitar al Bot](https://discord.com/oauth2/authorize?client_id=708377742340653137&permissions=-8&scope=bot) | [Invitar al Bot Beta](https://discord.com/oauth2/authorize?client_id=725129316790173767&permissions=-8&scope=bot)')
         .setThumbnail(client.user.displayAvatarURL())
         .setFooter(`Use ${prefix} antes de cada comando`)
         

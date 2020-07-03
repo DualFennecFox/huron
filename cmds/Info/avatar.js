@@ -12,7 +12,8 @@ module.exports = {
     if(!user) user = message.author;
     const embed = new Discord.MessageEmbed()
     .setAuthor(`Avatar de ${user.tag}`)
-		.setTitle('')
+    .setTitle('')
+    .addField('Formato de Imagen', `[png](${user.displayAvatarURL({ format: "png", size: 2048})}) | [jpg](${user.displayAvatarURL({ format: "jpg", size: 2048})}) | [webm](${user.displayAvatarURL({size: 2048})})`)
 		.setTimestamp()
 		.setImage(user.displayAvatarURL({ format: "png", dynamic: true, size: 2048}))
     .setColor('RANDOM')
