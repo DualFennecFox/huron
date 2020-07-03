@@ -34,7 +34,7 @@ module.exports = {
         console.log(err);
         })
     }
-    else if (args[0] || args[1] === 'roles') {
+    else if (args[0] === 'roles') {
         let embed = new Discord.MessageEmbed()
         await message.channel.send(embed.setColor("RANDOM").setDescription(rolesOfTheMember).setAuthor(`Roles de ${user.username}`, user.displayAvatarURL()).setThumbnail(user.displayAvatarURL()))
         return;
