@@ -6,7 +6,7 @@ module.exports = {
     description : 'Este comando muestra la información del usuario, su creación, el id, sus roles, Etc... \nSi quiere ver los roles del usuario escriba "roles", despues del comando o usuario mencionado',
     aliases: ['User-info', 'USER-INFO', 'userinfo'],
     usage: '!user-info',
-    examples: ['!user-info', '!user-info @Firulais', '!userinfo roles @Firulais', '!userinfo @Firulais roles'],
+    examples: ['!user-info', '!user-info @Firulais', '!userinfo roles @Firulais'],
     run: async (client , message, args) => {
     function checkDays(date) {
         let now = new Date();
