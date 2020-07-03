@@ -3,10 +3,10 @@ const Discord = require("discord.js");
 module.exports = {
     name : 'user-info',
     category: "Info",
-    description : 'Este comando muestra la información del usuario, su creación, el id, sus roles, Etc... \nSi quiere ver los roles del usuario escriba "roles", "r" o "role", despues del comando o usuario mencionado',
+    description : 'Este comando muestra la información del usuario, su creación, el id, sus roles, Etc...',
     aliases: ['User-info', 'USER-INFO', 'userinfo'],
     usage: '!user-info',
-    examples: ['!user-info', '!user-info @Firulais', '!userinfo roles @Firulais', '!userinfo @Firulais roles'],
+    examples: ['!user-info', '!user-info @Firulais'],
     run: async (client , message, args) => {
     function checkDays(date) {
         let now = new Date();
@@ -16,9 +16,11 @@ module.exports = {
         };
     let user = message.mentions.users.first() || message.author
     let memberMention = message.mentions.members.first() || message.member;
-    let rolesOfTheMember = memberMention.roles.cache.filter(r => r.name !== '@everyone').map(role => `<@&${role.id}>`).join('\n')
-    if(args[0]) { 
-        return getargs(args[0] === 'roles' || 'role' || 'r')
+       let rolesOfTheMember = memberMention.roles.cache.filter(r => r.name !== '@everyone').map(role => `<@&${role.id}>`).join('\n')
+    if(args[0] === 'roles' || 'role') {
+        let embed = new Discord.MessageEmbed()
+        await message.channel.send(embed.setColor("RANDOM").setDescription(rolesOfTheMember).setAuthor(`Roles de ${user.username}`, user.displayAvatarURL()).setThumbnail(user.displayAvatarURL()))
+        return;
     }
 
     let myInfo = new Discord.MessageEmbed()
@@ -35,9 +37,5 @@ module.exports = {
     .catch(err => {
         console.log(err);
         })
-function getargs(client, message, input)
-    const embed = new Discord.MessageEmbed()
-    message.channel.send(embed.setColor("RANDOM").setDescription(rolesOfTheMember).setAuthor(`Roles de ${user.username}`, user.displayAvatarURL()).setThumbnail(user.displayAvatarURL()))
-    return;
     }
 }
