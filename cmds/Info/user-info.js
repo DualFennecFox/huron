@@ -18,7 +18,7 @@ module.exports = {
     let memberMention = message.mentions.members.first() || message.member;
        let rolesOfTheMember = memberMention.roles.cache.filter(r => r.name !== '@everyone').map(role => `<@&${role.id}>`).join('\n')
 
-    if (!args.lenght) {
+    if (!args[0]) {
     let myInfo = new Discord.MessageEmbed()
         .setAuthor(user.username, user.displayAvatarURL())
         .setColor('RANDOM')
