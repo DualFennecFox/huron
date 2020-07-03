@@ -36,7 +36,7 @@ module.exports = {
         console.log(err);
         })
 function getargs(client, message, input)
-    let embed = new Discord.MessageEmbed()
+    const embed = new Discord.MessageEmbed()
     message.channel.send(embed.setColor("RANDOM").setDescription(rolesOfTheMember).setAuthor(`Roles de ${user.username}`, user.displayAvatarURL()).setThumbnail(user.displayAvatarURL()))
     return;
     }
