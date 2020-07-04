@@ -44,7 +44,7 @@ module.exports = {
         .setColor("RANDOM")
         .addField("Nombre", message.guild.name, true)
         .addField("ID", message.guild.id, true)
-        .addField("Dueño", `${message.guild.owner.user.username}#${message.guild.owner.user.discriminator}`, true)
+        .addField("Dueñ@", `${message.guild.owner.user.username}#${message.guild.owner.user.discriminator}`, true)
         .addField("Región", region[message.guild.region], true)
         .addField("Miembros", `${message.guild.members.cache.size}`, true)
         .addField("Nivel de Verificación", verifLevels[message.guild.verificationLevel], true)
