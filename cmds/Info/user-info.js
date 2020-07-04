@@ -31,6 +31,7 @@ module.exports = {
         .addField("Discriminador", user.discriminator, true)
         .addField("Usuario", user.tag, true)    
         .addField("Creado A las", `${user.createdAt.toUTCString().substr(0, 16)} (${checkDays(user.createdAt)})`, true)
+        .addField("Miembro desde", `${memberMention.joinedAt.toUTCString().substr(0, 16)} (${checkDays(memberMention.joinedAt)})`, true)
         .addField("ID", user.id, true)
         .addField("Roles", memberMention.roles.cache.size, true)
         .setThumbnail(user.displayAvatarURL())
