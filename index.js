@@ -50,7 +50,7 @@ client.on('message', (message) => {
     }
   }).then(() => {
 
-    if (message.content === "EPBK") {
+    if (message.content === "<@725129316790173767>" || message.content === "<@!725129316790173767>") {
       message.channel.send(`Mi prefix en este server es ${prefix}, si es la primera vez que me usa escriba ${prefix}help`)
     }
     
