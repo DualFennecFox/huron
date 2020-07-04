@@ -83,12 +83,30 @@ client.on('guildCreate', async gData => {
     'guildMemberCount' : gData.memberCount,
     'prefix' : '!'
   });
+  const scount = client.guilds.cache.size
+client.user.setPresence({
+  status: "online",
+  activity: {
+      name: `Estoy en ${scount} Servidores!`,
+      type: "STREAMING",
+      url: "https://www.twitch.tv/unfirulais"
+  }
+})
 })
 client.on('guildDelete', async gData => {
 db.collection("guilds").doc(gData.id).delete().then(function() {
   console.log("Document successfully deleted!");
 }).catch(function(error) {
   console.error("Error removing document: ", error);
+})
+const scount = client.guilds.cache.size
+client.user.setPresence({
+  status: "online",
+  activity: {
+      name: `Estoy en ${scount} Servidores!`,
+      type: "STREAMING",
+      url: "https://www.twitch.tv/unfirulais"
+  }
 })
 });
 
