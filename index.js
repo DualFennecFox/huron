@@ -50,9 +50,7 @@ client.on('message', (message) => {
     }
   }).then(() => {
 
-    if (message.content === "<@728100449047019534>" || message.content === "<@!728100449047019534>") {
-      message.channel.send(`Mi prefix en este server es ${prefix}, si es la primera vez que me usa escriba ${prefix}help`)
-    }
+  
     
    if (message.channel.type === "dm") return;
    if (message.author.bot) return;
@@ -61,6 +59,10 @@ client.on('message', (message) => {
    let cmd = args.shift().toLowerCase();
    let command;
 
+   if (message.content === "<@728100449047019534>" || message.content === "<@!728100449047019534>") {
+    message.channel.send(`Mi prefix en este server es ${prefix}, si es la primera vez que me usa escriba ${prefix}help`)
+  }
+  
    if (!message.content.startsWith(prefix)) return;
 
     if (client.commands.has(cmd)) {
