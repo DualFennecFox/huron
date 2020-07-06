@@ -38,7 +38,7 @@ client.on('ready', () => {
     activity: {
         name: `Estoy en ${scount} Servidores!`,
         type: "WATCHING",
-        url: "https://www.twitch.tv/unfirulais",
+        url: "https://www.twitch.tv/unfirulais"
     }
     });
   });
