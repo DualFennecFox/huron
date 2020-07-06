@@ -38,10 +38,10 @@ client.on('ready', () => {
     activity: {
         name: `Estoy en ${scount} Servidores!`,
         type: "WATCHING",
-        url: "https://www.twitch.tv/unfirulais"
+        url: "https://www.twitch.tv/unfirulais",
     }
-}); 
-});
+    });
+  });
 
 client.on('message', (message) => {
   db.collection('guilds').doc(message.guild.id).get().then((q) => {
@@ -50,8 +50,6 @@ client.on('message', (message) => {
     }
   }).then(() => {
 
-  
-    
    if (message.channel.type === "dm") return;
    if (message.author.bot) return;
    
@@ -90,7 +88,7 @@ client.user.setPresence({
   status: "online",
   activity: {
       name: `Estoy en ${scount} Servidores!`,
-      type: "STREAMING",
+      type: "WATCHING",
       url: "https://www.twitch.tv/unfirulais"
   }
 })
@@ -106,7 +104,7 @@ client.user.setPresence({
   status: "online",
   activity: {
       name: `Estoy en ${scount} Servidores!`,
-      type: "STREAMING",
+      type: "WATCHING",
       url: "https://www.twitch.tv/unfirulais"
   }
 })
