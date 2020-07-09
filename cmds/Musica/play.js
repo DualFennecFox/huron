@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const ytdl = require('ytdl-core-discord');
+const ytdl = require('ytdl-core');
 const Youtube = require('simple-youtube-api');
 youtube = new Youtube(process.env.YOUTUBE_API_KEY)
 
