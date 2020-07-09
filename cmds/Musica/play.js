@@ -15,6 +15,7 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                     let musicData = {
                         queue: [],
                         isPlaying: false,
+                        songDispatcher: null
                       };
                      function formatDuration(durationObj) {
                         const duration = `${durationObj.hours ? durationObj.hours + ':' : ''}${
@@ -37,6 +38,7 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                             .play(await ytdl(queue[0].url), {type: 'opus' }, {highWaterMark: 50, volume: false})
                         
                         .on('start', () => {
+                            musicData.songDispatcher = dispatcher;
                             musicData.isPlaying = true;
             
                             const videoEmbed = new Discord.MessageEmbed()
