@@ -156,7 +156,7 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                                 let videoIndex = parseInt(response.first().content);
                                 let video = await youtube.getVideo(videoID[videoIndex - 1])                 
 
-                          const url = `https://www.youtube.com/watch?v=${video.raw.id}`;
+                          const url = `https://www.youtube.com/watch?v=${video.id}`;
                           const title = video.title;
                           let duration = formatDuration(video.duration);
                           const thumbnail = video.thumbnails.high.url;         
