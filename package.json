@@ -8,6 +8,7 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "@discordjs/opus": "^0.3.2",
     "@firebase/app": "^0.6.4",
     "ascii-table": "0.0.9",
     "common-tags": "^1.8.0",
