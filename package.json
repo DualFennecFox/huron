@@ -19,10 +19,14 @@
     "fs": "^0.0.2",
     "http": "^0.0.0",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "mongoose": "^5.9.19",
     "ytdl-core-discord": "^1.2.1",
     "simple-youtube-api": "^5.2.1",
     "node-opus": "^0.3.3"
+=======
+    "mongoose": "^5.9.19"
+>>>>>>> parent of 92cb8f7... Music finally
 =======
     "mongoose": "^5.9.19"
 >>>>>>> parent of 92cb8f7... Music finally
