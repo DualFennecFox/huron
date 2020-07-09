@@ -7,21 +7,12 @@ const admin = require('firebase-admin');
 const serviceAccount = require('./serviceAccount.json')
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
-const ytdl = require('ytdl-core-discord')
-const Youtube = require("simple-youtube-api");
-youtube = new Youtube(process.env.YOUTUBE_API_KEY)
-queuee = new Map()
 client.aliases = new Discord.Collection();
 const mongoose = require("mongoose");
 
 let prefix;
 const token = process.env.TOKEN;
 const owner = process.env.OWNER
-
-var opts = {
-  maxResults: 10,
-  key: process.env.YOUTUBE_API_KEY
-}
 
 client.categories = fs.readdirSync("./cmds/");
 

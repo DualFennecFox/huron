@@ -77,6 +77,39 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                       } 
                       
                     if (!message.member.voice.channel) return message.channel.send("Debes estar en un canal de voz para usar este comando")
+                    if (args[0].match(/^(?!.*\?.*\bv=)https:\/\/www\.youtube\.com\/.*\?.*\blist=.*$/)) {
+                              
+                              const playlist = await youtube.getPlaylist(args[0])
+                              const videosObj = await playlist.getVideos();
+            
+                              for (let i = 0; i < videosObj.length; i++) {
+                                  const video = await videosObj[i].fetch();
+            
+                                  const url = `https://www.youtube.com/watch?v=${playlist.id}`;
+                                  const title = video.title;
+                                  let duration = formatDuration(video.duration);
+                                  const thumbnail = video.thumbnails.high.url;
+                                  if (duration == '00:00') duration = 'Transmitiendo en Vivo';
+                                  const voiceChannel = message.member.voice.channel
+                                  const song = {
+                                      url,
+                                      title,
+                                      duration,
+                                      thumbnail,
+                                      voiceChannel
+                                  };
+                                  
+                                  musicData.queue.push(song)
+                                
+                            
+                                  if (musicData.isPlaying == false) {
+                                      musicData.isPlaying = true;
+                                      return playSong(musicData.queue, message);
+                                  } else if (musicData.isPlaying == true) {
+                                      return message.channel.send(`**${playlist.title}** Se ha añadido a la cola`)
+                                  };
+                              }
+                      }
             
                       if (args[0].match(/^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+/)) {
                           
@@ -156,7 +189,7 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                                 let videoIndex = parseInt(response.first().content);
                                 let video = await youtube.getVideo(videoID[videoIndex - 1])                 
 
-                          const url = `https://www.youtube.com/watch?v=${video.id}`;
+                          const url = `https://www.youtube.com/watch?v=${video.raw.id}`;
                           const title = video.title;
                           let duration = formatDuration(video.duration);
                           const thumbnail = video.thumbnails.high.url;         
