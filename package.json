@@ -18,7 +18,9 @@
     "firebase-admin": "^8.12.1",
     "fs": "^0.0.2",
     "http": "^0.0.0",
-    "mongoose": "^5.9.19"
+    "mongoose": "^5.9.19",
+    "ytdl-core-discord": "^1.2.1",
+    "simple-youtube-api": "^5.2.1"
   },
   "engines": {
     "node": "12.x"
