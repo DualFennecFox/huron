@@ -35,7 +35,7 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                         .join()
                         .then(async connection => {
                             const dispatcher = connection
-                            .play(await ytdl(queue[0].url), {type: 'opus' }, {highWaterMark: 50, volume: false})
+                            .play(await ytdl(queue[0].url, {filter: 'audioonly' }, {highWaterMark: 50, volume: false}))
                         
                         .on('start', () => {
                             musicData.songDispatcher = dispatcher;
