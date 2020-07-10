@@ -9,8 +9,8 @@ module.exports = {
     examples: ['!unmute @Firulais', '!unmute 556540723235651584', '!unmute @Firulais Razon'],
     run: async (client , message, args) => {
 
-    if(!message.member.hasPermission("KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!")
-    if(!message.guild.me.hasPermission(["MANAGE_ROLES", "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para añadir roles");
+    if(!message.member.hasPermission("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!")
+    if(!message.guild.me.hasPermission(["MANAGE_ROLES" || "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para añadir roles");
     let unmutee = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
     if(!unmutee) return message.channel.send("Debe mencionar un usuario muteado o darme su id");
     if (!unmutee.roles.cache.some((role) => role.name === 'Muteado')) return message.channel.send("Esta persona no esta muteada");
