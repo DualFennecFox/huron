@@ -34,7 +34,7 @@ const info = client.categories
             .map(cat => stripIndents`**${cat[0].toUpperCase() + cat.slice(1)}** \n${commands(cat)}`)
             .reduce((string, category) => string + "\n" + category);
 
-    return message.channel.send(embed.setDescription(info));
+    return message.channel.send(embed.setDescription(`Estos son todos los comandos, si necesita ayuda vea la sección **Invite**.\n\n ${info}`));
 }
  
 function getCMD(client, message, input) {
