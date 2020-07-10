@@ -15,9 +15,15 @@ const Discord = require('discord.js');
     let kReason = args.slice(1).join(" ");
     if(!kReason) kReason = "No se específico una razón"
 
-    if(!message.member.hasPermission("KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
-    if(!message.guild.me.hasPermission(["KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para banear miembros");
-    if(kUser.hasPermission("KICK_MEMBERS", "BAN_MEMBERS", "ADMINISTRATOR")) return message.channel.send("Esta persona no puede ser expulsada!");
+    if(!message.member.hasPermission("KICK_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
+    if(!message.guild.me.hasPermission(["KICK_MEMBERS" || "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para banear miembros");
+    if(kUser.hasPermission("KICK_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("Esta persona no puede ser expulsada!");
+    if (kUser.id === message.author.id) return message.channel.send("No te puedes kickear a ti mismo")
+
+    if (message.guild.me.roles.highest.comparePositionTo(role) < 1) {
+        return message.channel.send("Mi rol es muy bajo para banearlo!");
+    }
+    
 
     let kickEmbed = new Discord.MessageEmbed()
     .setDescription("~Kick~")
