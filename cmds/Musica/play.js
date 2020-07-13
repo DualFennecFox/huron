@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const search = require('youtube-search');
 const ytdl = require('ytdl-core');
 const Youtube = require('simple-youtube-api');
 youtube = new Youtube(process.env.YOUTUBE_API_KEY)
@@ -11,12 +12,13 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
             description : 'Este comando busca una musica en Youtube para escucharla en un chat de voz',
             usage: '!play',
             examples: ['!play Musica', '!play "URL de YT"'],
-            run: async(client, message, args) => {
-                    let musicData = {
-                        queue: [],
-                        isPlaying: false,
-                        songDispatcher: null
-                      };
+            run: async(client, message, args) => {    
+               let musicData = {
+                    queue: [],
+                    isPlaying: false,
+                    songDispatcher: null
+                  }
+                
                      function formatDuration(durationObj) {
                         const duration = `${durationObj.hours ? durationObj.hours + ':' : ''}${
                           durationObj.minutes ? durationObj.minutes : '00'
@@ -30,44 +32,39 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                         return duration;
                       }
                      function playSong(queue, message) {
-                        let voiceChannel;
                         message.member.voice.channel
                         .join()
                         .then(async connection => {
                             const dispatcher = connection
-                            .play(await ytdl(queue[0].url, {filter: 'audioonly' }, {highWaterMark: 50, volume: false}))
+                            .play(await ytdl(queue.url, {filter: 'audioonly' }, {highWaterMark: 50, volume: false}))
                         
                         .on('start', () => {
                             musicData.songDispatcher = dispatcher;
                             musicData.isPlaying = true;
             
                             const videoEmbed = new Discord.MessageEmbed()
-                            .setThumbnail(queue[0].thumbnail)
+                            .setThumbnail(queue.thumbnail)
                             .setColor('#FF0000')
-                            .addField('Escuchando', `[${queue[0].title}](${queue[0].url})`)
-                            .addField('Duración', queue[0].duration);
+                            .addField('Escuchando', `[${queue.title}](${queue.url})`)
+                            .addField('Duración', queue.duration);
                             
                             if (queue[1]) videoEmbed.addField('Siguiente Canción', `[${queue[1].title}](${queue[1].url})`);
                             message.channel.send(videoEmbed);
-                            return queue.shift();
+                            return musicData.queue.shift();
                         })
                         .on('finish', () => {
-                            if(!queue[0]) return message.member.voice.channel.leave();
-                            if (queue.length >= 1) {
-                                
-                            return playSong(queue, message);
-                                
-                                
-                            } else {
-                                musicData.isPlaying = false;
-                                return message.member.voice.channel.leave();
-                            }
-                        })
+                          if (queue.length > 0) {
+                             playSong(queue[0], message)
+                          } else {
+                              musicData.isPlaying = false
+                              message.channel.send("Se han terminado todas las canciones")
+                          }
+                            })
                         .on('error', e => {
                             message.channel.send('No se puede escuchar esa canción');
                             musicData.queue.length = 0;
                             musicData.isPlaying = false;
-                            musicData.nowPlaying = null;
+                            musicData.songDispatcher = null;
                             console.error(e);
                             return message.member.voice.channel.leave();
                         });
@@ -76,11 +73,11 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                             console.error(e)
                             return message.member.voice.channel.leave();
                         })    
-                      } 
+                    }
                       
                     if (!message.member.voice.channel) return message.channel.send("Debes estar en un canal de voz para usar este comando")
                     if (args[0].match(/^(?!.*\?.*\bv=)https:\/\/www\.youtube\.com\/.*\?.*\blist=.*$/)) {
-                              
+                              try {
                               const playlist = await youtube.getPlaylist(args[0])
                               const videosObj = await playlist.getVideos();
             
@@ -106,15 +103,19 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                             
                                   if (musicData.isPlaying == false) {
                                       musicData.isPlaying = true;
-                                      return playSong(musicData.queue, message);
+                                      return playSong(musicData.queue[0], message);
                                   } else if (musicData.isPlaying == true) {
                                       return message.channel.send(`**${playlist.title}** Se ha añadido a la cola`)
                                   };
                               }
+                      } catch (err) {
+                          console.error(err)
+                          return message.channel.send("Esta Playlist es privada o no existe")
                       }
+                    }
             
                       if (args[0].match(/^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+/)) {
-                          
+                          try {
                           const url = args[0];
                               args[0] = args[0]
                               .replace(/(>|<)/gi, '')
@@ -139,11 +140,16 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                                 typeof musicData.isPlaying == 'undefined'
                             ) {
                                 musicData.isPlaying == true;
-                                return playSong(musicData.queue, message);
+                                return playSong(musicData.queue[0], message);
                             } else if (musicData.isPlaying == true) {
                                 return message.channel.send(`**${song.title}** Se ha añadido a la cola`)
                             }
+                      } catch (err) {
+                          console.error(err)
+                          message.channel.send("Algo salio mal vuelva a intentarlo")
                       }
+                    }
+                    try {
                           const videos = await youtube.searchVideos(args, 10);
                           if (videos.length < 10) {
                               return message.channel.send("Muy pocos videos tienen ese nombre asegurate de haberlo escrito bien")
@@ -156,7 +162,7 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                           }
             
                           for (let i = 0; i < videos.length; i++) {
-                              vidNameArr.push(`${i + 1}: ${videos[i].title}`);
+                          vidNameArr.push(`${i + 1}: ${videos[i].title}`);
                           }
                           vidNameArr.push('exit');
             
@@ -174,22 +180,24 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                           .addField("\`9\`", vidNameArr[8])
                           .addField("\`10\`", vidNameArr[9])
                           .setFooter('Escribe "exit" para salir')
-                          let songEmbed = await message.channel.send({ embed });
-                              let response = await message.channel.awaitMessages(
-                                  msg => (msg.content > 0 && msg.content < 11) || msg.content === 'exit', 
-                                  
-                                   
-                                  {
-                                      max: 1,
-                                      maxProcessed: 1,
-                                      time: 60000,
-                                      errors: ['time']
-                                  }
-                                )                                
-
-                                if (response.first().content === "exit") return songEmbed.delete()
-                                let videoIndex = parseInt(response.first().content);
-                                let video = await youtube.getVideo(videoID[videoIndex - 1])                 
+                          var songEmbed = await message.channel.send({ embed });
+                          try {
+                              var response = await message.channel.awaitMessages(
+                                  msg => (msg.content > 0 && msg.content < 11 ) && msg.author.id === message.author.id || msg.content === 'exit' && msg.author.id === message.author.id, {max: 1, maxProcessed: 1, time: 60000, errors: ['time', 'filter']})
+                                var videoIndex = parseInt(response.first().content);
+                              } catch (err) {
+                                  console.error(err)
+                                 if (songEmbed) songEmbed.delete()
+                                 return message.channel.send("Parece que los argumentos no son válidos elige un número del 1 al 10")
+                              }
+                              if (response.first().content === 'exit') return songEmbed.delete() 
+                              try {
+                                var video = await youtube.getVideo(videoID[videoIndex - 1])       
+                              } catch (err) {
+                                  console.error(err)
+                                  if (songEmbed) songEmbed.delete()
+                                  return message.channel.send("Hubo un error al obtener el video de Youtube")
+                              }       
 
                           const url = `https://www.youtube.com/watch?v=${video.raw.id}`;
                           const title = video.title;
@@ -209,11 +217,16 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                             if(musicData.isPlaying == false) {
                                 musicData.isPlaying = true;
                                 songEmbed.delete();
-                                playSong(musicData.queue, message);
+                                playSong(musicData.queue[0], message);
                             } else if (musicData.isPlaying == true) {
                                 songEmbed.delete();
             
                                 return message.channel.send(`${song.title} Se ha añadido a la cola`);
                             }  
+                        } catch (err) {
+                            console.error(err)
+                            if (songEmbed) songEmbed.delete()
+                            return message.channel.send("Hubo un error al buscar el video en Youtube")
                         }
                 }
+            }
