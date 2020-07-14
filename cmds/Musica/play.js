@@ -3,7 +3,6 @@ const ytdl = require('ytdl-core');
 const Youtube = require('simple-youtube-api');
 youtube = new Youtube(process.env.YOUTUBE_API_KEY)
 
-
     module.exports = {
             name : 'play',
             category: "Musica",
@@ -181,13 +180,12 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                           .setFooter('Escribe "exit" para salir')
                           var songEmbed = await message.channel.send({ embed });
                           try {
-                              var response = await message.channel.awaitMessages(
-                                  msg => (msg.content > 0 && msg.content < 11 ) && msg.author.id === message.author.id || msg.content === 'exit' && msg.author.id === message.author.id, {max: 1, maxProcessed: 1, time: 60000, errors: ['time', 'filter']})
-                                var videoIndex = parseInt(response.first().content);
+                              var response = await message.channel.awaitMessages(msg => (msg.content > 0 && msg.content < 11 || msg.content === 'exit') && msg.author.id === message.author.id, {max: 1, time: 60000, errors: ['time']})
+                              var videoIndex = parseInt(response.first().content);
                               } catch (err) {
                                   console.error(err)
                                  if (songEmbed) songEmbed.delete()
-                                 return message.channel.send("Parece que los argumentos no son válidos elige un número del 1 al 10")
+                                 return message.channel.send("No respondiste a tiempo, asegurate de elegir un número del 1 al 10")
                               }
                               if (response.first().content === 'exit') return songEmbed.delete() 
                               try {
