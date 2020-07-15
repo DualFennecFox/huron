@@ -8,7 +8,7 @@ module.exports = {
   usage: `!avatar`,
   examples: ['!avatar', '!avatar @Firulais'],
   run: async (client, message, args) => {
-    let user = message.guild.member(message.mentions.users.first() || client.users.cache.get(args[0]));
+    let user = message.mentions.users.first() || client.users.cache.get(args[0]);
     let member = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]))
     if (user != member) user = message.author
     if(!user) user = message.author;
