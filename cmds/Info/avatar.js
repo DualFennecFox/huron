@@ -8,8 +8,7 @@ module.exports = {
   usage: `!avatar`,
   examples: ['!avatar', '!avatar @Firulais'],
   run: async (client, message, args) => {
-    let user = message.mentions.users.first() || client.users.cache.get(args[0]);
-    if (client.users.cache.get(args[0]) != message.guild.members.cache.get(args[0])) user = message.author
+    let user = client.users.fetch(message.mentions.users.first() || client.users.cache.get(args[0]));
     if(!user) user = message.author;
     const embed = new Discord.MessageEmbed()
     .setAuthor(`Avatar de ${user.tag}`)
