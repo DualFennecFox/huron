@@ -48,10 +48,9 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                             
                             if (queue[1]) videoEmbed.addField('Siguiente Canción', `[${queue[1].title}](${queue[1].url})`);
                             message.channel.send(videoEmbed);
-                            return musicData.queue.shift();
                         })
                         .on('finish', () => {
-                          if (queue.length > 0) {
+                          if (queue.length >= 1) {
                              playSong(queue[0], message)
                           } else {
                               musicData.isPlaying = false
@@ -82,7 +81,7 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                               for (let i = 0; i < videosObj.length; i++) {
                                   const video = await videosObj[i].fetch();
             
-                                  const url = `https://www.youtube.com/watch?v=${playlist.id}`;
+                                  const url = `https://www.youtube.com/watch?v=${video.id}`;
                                   const title = video.title;
                                   let duration = formatDuration(video.duration);
                                   const thumbnail = video.thumbnails.high.url;
@@ -185,7 +184,7 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                               } catch (err) {
                                   console.error(err)
                                  if (songEmbed) songEmbed.delete()
-                                 return message.channel.send("No respondiste a tiempo, asegurate de elegir un número del 1 al 10")
+                                 return message.channel.send("No respondiste a tiempo asegurate de elegir un número del 1 al 10")
                               }
                               if (response.first().content === 'exit') return songEmbed.delete() 
                               try {
@@ -217,6 +216,7 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                                 playSong(musicData.queue[0], message);
                             } else if (musicData.isPlaying == true) {
                                 songEmbed.delete();
+                                musicData.queue.shift();
             
                                 return message.channel.send(`${song.title} Se ha añadido a la cola`);
                             }  
