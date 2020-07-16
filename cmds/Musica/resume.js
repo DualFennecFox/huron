@@ -3,7 +3,7 @@ const musicData = require("./requirements/musicData")
     module.exports = {
             name : 'resume',
             category: "Musica",
-            aliases: ['Resume', 'RESUME', 'continue', 'Continue', 'CONTINUE', 'stop', 'Stop', 'STOP'],
+            aliases: ['Resume', 'RESUME', 'continue', 'Continue', 'CONTINUE'],
             description : 'Este comando continua la canción que se haya pausado',
             usage: '!resume',
             examples: ['!resume'],
