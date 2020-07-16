@@ -13,6 +13,7 @@ const ytdl = require('ytdl-core');
 const opus = require('node-opus')
 const Youtube = require("simple-youtube-api");
 youtube = new Youtube(process.env.YOUTUBE_API_KEY)
+const musicData = require('./cmds/Musica/requirements/musicData')
 
 let prefix;
 const token = process.env.TOKEN;
@@ -41,6 +42,7 @@ fs.readdir("./cmds/", (files) => {
     
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
+  musicData.queue.length = 0
   const scount = client.guilds.cache.size
   client.user.setPresence({
     status: "online",

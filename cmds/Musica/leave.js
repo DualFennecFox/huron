@@ -14,9 +14,8 @@ module.exports = {
         if (!message.guild.me.voice.channel) return message.channel.send("No estoy en un canal de voz")
         if (message.guild.me.voice.channel.id !== message.member.voice.channel.id) return message.channel.send("Debes estar conectado a mi canal de voz para usar este comando")
 
-        if (musicData.queue.length > 0) {
-            musicData.queue.length = 0
-        }
+musicData.queue.length = 0
+        
     message.guild.me.voice.channel.leave()
     message.channel.send("Dejando el canal de voz")
     }
