@@ -2,8 +2,56 @@ const Discord = require('discord.js');
 const ytdl = require('ytdl-core');
 const Youtube = require('simple-youtube-api');
 youtube = new Youtube(process.env.YOUTUBE_API_KEY)
-const active = new Map()
 const musicData = require("./requirements/musicData")
+function playSong(queue, message) {
+    message.member.voice.channel
+    .join()
+    .then(connection => {
+       const dispatcher = connection
+       .play(ytdl(queue[0].url, {filter: 'audioonly' }, {highWaterMark: 50, volume: false}))
+        
+        .on('start', () => {
+            musicData.songDispatcher = dispatcher
+            musicData.pause = false
+            const videoEmbed = new Discord.MessageEmbed()
+            .setThumbnail(queue[0].thumbnail)
+            .setColor('#FF0000')
+            .addField('Escuchando', `[${queue[0].title}](${queue[0].url})`)
+            .addField('Duración', queue[0].duration);
+            
+            if (queue[1]) videoEmbed.addField('Siguiente Canción', `[${queue[1].title}](${queue[1].url})`);
+            message.channel.send(videoEmbed);
+        })
+        .on('disconnect', () => {
+            musicData.queue.length = 0
+            musicData.isPlaying = false
+            musicData.pause = false
+            musicData.dispatcher = null
+        })
+        .on('finish', () => {
+            musicData.queue.shift();
+                
+            if (musicData.queue.length >= 1) {
+                playSong(musicData.queue, message)
+            } else {
+                musicData.isPlaying = false
+                message.channel.send("Se han terminado todas las canciones")
+            }
+            })
+        .on('error', e => {
+            message.channel.send('No se puede escuchar esa canción');
+            musicData.queue.length = 0;
+            musicData.isPlaying = false;
+            musicData.pause = false
+            musicData.dispatcher = null
+            console.error(e);
+            return message.member.voice.channel.leave();
+            })
+    }).catch(e => {
+        console.error(e)
+        return message.member.voice.channel.leave();
+    })
+}
     module.exports = {
             name : 'play',
             category: "Musica",
@@ -11,6 +59,7 @@ const musicData = require("./requirements/musicData")
             description : 'Este comando busca una musica en Youtube para escucharla en un chat de voz',
             usage: '!play',
             examples: ['!play Musica', '!play "URL de YT"'],
+            playSong,
             run: async(client, message, args) => {    
                 
                      function formatDuration(durationObj) {
@@ -25,50 +74,18 @@ const musicData = require("./requirements/musicData")
                         }`;
                         return duration;
                       }
-                     function playSong(queue, message) {
-                        message.member.voice.channel
-                        .join()
-                        .then(connection => {
-                            const dispatcher = connection
-                            .play(ytdl(queue[0].url, {filter: 'audioonly' }, {highWaterMark: 50, volume: false}))
-                        
-                        .on('start', () => {
-                            musicData.songDispatcher = dispatcher;
-            
-                            const videoEmbed = new Discord.MessageEmbed()
-                            .setThumbnail(queue[0].thumbnail)
-                            .setColor('#FF0000')
-                            .addField('Escuchando', `[${queue[0].title}](${queue[0].url})`)
-                            .addField('Duración', queue[0].duration);
-                            
-                            if (queue[1]) videoEmbed.addField('Siguiente Canción', `[${queue[1].title}](${queue[1].url})`);
-                            message.channel.send(videoEmbed);
-                        })
-                        .on('finish', () => {
-                            queue.shift();
-                          if (queue.length >= 1) {
-                             playSong(queue, message)
-                          } else {
-                             musicData.isPlaying = false
-                              message.channel.send("Se han terminado todas las canciones")
-                          }
-                            })
-                        .on('error', e => {
-                            message.channel.send('No se puede escuchar esa canción');
-                            musicData.queue.length = 0;
-                            musicData.isPlaying = false;
-                            musicData.songDispatcher = null;
-                            console.error(e);
-                            return message.member.voice.channel.leave();
-                        });
-                        })    
-                        .catch(e => {
-                            console.error(e)
-                            return message.member.voice.channel.leave();
-                        })    
-                    }
+                    
                       
                     if (!message.member.voice.channel) return message.channel.send("Debes estar en un canal de voz para usar este comando")
+                    if (message.guild.me.voice.channel) {
+                        if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.channel.send("Debes estar conectado a mi canal de voz para usar este comando")
+                        }
+                    if (!message.guild.me.voice.channel) {
+                        musicData.queue.length = 0
+                        musicData.songDispatcher = null
+                        musicData.isPlaying = false
+                    }
+
                     if (args[0].match(/^(?!.*\?.*\bv=)https:\/\/www\.youtube\.com\/.*\?.*\blist=.*$/)) {
                               try {
                               const playlist = await youtube.getPlaylist(args[0])
@@ -219,5 +236,6 @@ const musicData = require("./requirements/musicData")
                             if (songEmbed) songEmbed.delete()
                             return message.channel.send("Hubo un error al buscar el video en Youtube")
                         }
-                }
+                        
             }
+        }

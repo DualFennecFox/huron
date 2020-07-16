@@ -1,5 +1,10 @@
+let pause = false
+let queue = []
+let isPlaying = false
+let songDispatcher = null
 module.exports = {
-    queue: [],
-    isPlaying: false,
-    songDispatcher: null
+    pause,
+    isPlaying,
+    queue,
+    songDispatcher
 }
