@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const ytdl = require('ytdl-core')
-
+const musicData = require("./requirements/musicData")
 module.exports = {
     name : 'leave',
     category: "Musica",
