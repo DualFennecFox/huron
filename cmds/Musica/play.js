@@ -212,7 +212,7 @@ const musicData = require("./requirements/musicData")
                             } else if (musicData.isPlaying == true) {
                                if (songEmbed) songEmbed.delete();
             
-                                return message.channel.send(`${song.title} Se ha añadido a la cola`);
+                                return message.channel.send(`**${song.title}** Se ha añadido a la cola`);
                             }  
                         } catch (err) {
                             console.error(err)
