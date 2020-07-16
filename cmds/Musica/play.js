@@ -1,8 +1,10 @@
 const Discord = require('discord.js');
+const search = require('youtube-search');
 const ytdl = require('ytdl-core');
 const Youtube = require('simple-youtube-api');
 youtube = new Youtube(process.env.YOUTUBE_API_KEY)
-
+const active = new Map()
+const musicData = require("./requirements/musicData")
     module.exports = {
             name : 'play',
             category: "Musica",
@@ -11,11 +13,6 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
             usage: '!play',
             examples: ['!play Musica', '!play "URL de YT"'],
             run: async(client, message, args) => {    
-               let musicData = {
-                    queue: [],
-                    isPlaying: false,
-                    songDispatcher: null
-                  }
                 
                      function formatDuration(durationObj) {
                         const duration = `${durationObj.hours ? durationObj.hours + ':' : ''}${
@@ -32,28 +29,28 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                      function playSong(queue, message) {
                         message.member.voice.channel
                         .join()
-                        .then(async connection => {
+                        .then(connection => {
                             const dispatcher = connection
-                            .play(await ytdl(queue.url, {filter: 'audioonly' }, {highWaterMark: 50, volume: false}))
+                            .play(ytdl(queue[0].url, {filter: 'audioonly' }, {highWaterMark: 50, volume: false}))
                         
                         .on('start', () => {
                             musicData.songDispatcher = dispatcher;
-                            musicData.isPlaying = true;
             
                             const videoEmbed = new Discord.MessageEmbed()
-                            .setThumbnail(queue.thumbnail)
+                            .setThumbnail(queue[0].thumbnail)
                             .setColor('#FF0000')
-                            .addField('Escuchando', `[${queue.title}](${queue.url})`)
-                            .addField('Duración', queue.duration);
+                            .addField('Escuchando', `[${queue[0].title}](${queue[0].url})`)
+                            .addField('Duración', queue[0].duration);
                             
                             if (queue[1]) videoEmbed.addField('Siguiente Canción', `[${queue[1].title}](${queue[1].url})`);
                             message.channel.send(videoEmbed);
                         })
                         .on('finish', () => {
+                            queue.shift();
                           if (queue.length >= 1) {
-                             playSong(queue[0], message)
+                             playSong(queue, message)
                           } else {
-                              musicData.isPlaying = false
+                             musicData.isPlaying = false
                               message.channel.send("Se han terminado todas las canciones")
                           }
                             })
@@ -81,7 +78,7 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                               for (let i = 0; i < videosObj.length; i++) {
                                   const video = await videosObj[i].fetch();
             
-                                  const url = `https://www.youtube.com/watch?v=${video.id}`;
+                                  const url = `https://www.youtube.com/watch?v=${playlist.id}`;
                                   const title = video.title;
                                   let duration = formatDuration(video.duration);
                                   const thumbnail = video.thumbnails.high.url;
@@ -100,7 +97,7 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                             
                                   if (musicData.isPlaying == false) {
                                       musicData.isPlaying = true;
-                                      return playSong(musicData.queue[0], message);
+                                      return playSong(musicData.queue, message);
                                   } else if (musicData.isPlaying == true) {
                                       return message.channel.send(`**${playlist.title}** Se ha añadido a la cola`)
                                   };
@@ -133,11 +130,10 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                             };
                             musicData.queue.push(song);
                             if (
-                                musicData.isPlaying == false ||
-                                typeof musicData.isPlaying == 'undefined'
+                                 musicData.isPlaying == false
                             ) {
-                                musicData.isPlaying == true;
-                                return playSong(musicData.queue[0], message);
+                               musicData.isPlaying = true;
+                                return playSong(musicData.queue, message);
                             } else if (musicData.isPlaying == true) {
                                 return message.channel.send(`**${song.title}** Se ha añadido a la cola`)
                             }
@@ -184,7 +180,7 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                               } catch (err) {
                                   console.error(err)
                                  if (songEmbed) songEmbed.delete()
-                                 return message.channel.send("No respondiste a tiempo asegurate de elegir un número del 1 al 10")
+                                 return message.channel.send("No respondiste a tiempo, asegurate de elegir un número del 1 al 10")
                               }
                               if (response.first().content === 'exit') return songEmbed.delete() 
                               try {
@@ -210,13 +206,12 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
                             };
                             musicData.queue.push(song);
             
-                            if(musicData.isPlaying == false) {
-                                musicData.isPlaying = true;
-                                songEmbed.delete();
-                                playSong(musicData.queue[0], message);
+                            if (musicData.isPlaying == false) {
+                             musicData.isPlaying = true
+                               if (songEmbed) songEmbed.delete();
+                               return playSong(musicData.queue, message);
                             } else if (musicData.isPlaying == true) {
-                                songEmbed.delete();
-                                musicData.queue.shift();
+                               if (songEmbed) songEmbed.delete();
             
                                 return message.channel.send(`${song.title} Se ha añadido a la cola`);
                             }  
