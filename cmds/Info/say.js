@@ -9,13 +9,13 @@ module.exports = {
     examples: ['!say Hola Mundo', '!say #Canal Hola Mundo'],
     run: async (client, message, args) => {
     let argsresult;
-    let mChannel = message.mentions.channels.first();
+    let mChannel = args[0].mentions.channels.first();
 
     message.delete()
     if(mChannel) {
         const Channel = await message.guild.channel.find(channel => mChannel.id === channel.id)
         if(!Channel) mChannel = message.channel 
-        if(!message.member.hasPermission("MANAGE_MESSAGES", "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para enviar este mensaje a otro canal!")
+        if(!message.member.hasPermission("MANAGE_MESSAGES", "ADMINISTRATOR") || !message.guild.owner) mChannel = message.channel
         argsresult = args.slice(1).join(" ")
         if(!argsresult) return;
         mChannel.send(argsresult)
