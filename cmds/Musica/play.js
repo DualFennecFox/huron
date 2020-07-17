@@ -2,7 +2,8 @@ const Discord = require('discord.js');
 const ytdl = require('ytdl-core');
 const Youtube = require('simple-youtube-api');
 youtube = new Youtube(process.env.YOUTUBE_API_KEY)
-const musicData = require("./requirements/musicData")
+const musicData = require("./requirements/musicData");
+const loop = require('./loop');
 function playSong(queue, message) {
     message.member.voice.channel
     .join()
@@ -13,27 +14,39 @@ function playSong(queue, message) {
         .on('start', () => {
             musicData.songDispatcher = dispatcher
             musicData.pause = false
+
+            if(musicData.loop == false) {
             const videoEmbed = new Discord.MessageEmbed()
             .setThumbnail(queue[0].thumbnail)
             .setColor('#FF0000')
             .addField('Escuchando', `[${queue[0].title}](${queue[0].url})`)
             .addField('Duración', queue[0].duration);
+            let url = queue[0].url
+            const loopURL = {
+                url
+            };
+            musicData.looped.push(loopURL)
             
             if (queue[1]) videoEmbed.addField('Siguiente Canción', `[${queue[1].title}](${queue[1].url})`);
             message.channel.send(videoEmbed);
+            musicData.queue.shift();
+            }
         })
         .on('disconnect', () => {
             musicData.queue.length = 0
+            musicData.looped.length = 0
             musicData.isPlaying = false
             musicData.pause = false
+            musicData.loop = false
             musicData.dispatcher = null
         })
         .on('finish', () => {
-            musicData.queue.shift();
-                
-            if (musicData.queue.length >= 1) {
+         if (musicData.loop == true) { 
+             playSong(musicData.looped, message)
+            
+        } else if (musicData.queue.length >= 1) {
                 playSong(musicData.queue, message)
-            } else {
+        } else {
                 musicData.isPlaying = false
                 message.channel.send("Se han terminado todas las canciones")
             }
@@ -43,6 +56,8 @@ function playSong(queue, message) {
             musicData.queue.length = 0;
             musicData.isPlaying = false;
             musicData.pause = false
+            musicData.loop = false
+            musicData.looped.length = 0
             musicData.dispatcher = null
             console.error(e);
             return message.member.voice.channel.leave();
@@ -84,6 +99,8 @@ function playSong(queue, message) {
                         musicData.queue.length = 0
                         musicData.songDispatcher = null
                         musicData.isPlaying = false
+                        musicData.loop = false
+                        musicData.looped.length = 0
                     }
 
                     if (args[0].match(/^(?!.*\?.*\bv=)https:\/\/www\.youtube\.com\/.*\?.*\blist=.*$/)) {

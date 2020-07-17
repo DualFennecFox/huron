@@ -17,6 +17,8 @@ const { playSong }= require("./play")
                 if (musicData.queue.length <= 1) return message.channel.send("No hay ninguna otra canción en la cola")
 
                 musicData.queue.shift();
+                musicData.loop = false
+                musicData.looped.length = 0
                 return playSong(musicData.queue, message)
             }
         }

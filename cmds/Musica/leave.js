@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const search = require('youtube-search');
 const ytdl = require('ytdl-core')
 const musicData = require("./requirements/musicData")
 module.exports = {
@@ -17,6 +18,9 @@ module.exports = {
     musicData.queue.length = 0
     musicData.isPlaying = false
     musicData.pause = false
+    musicData.loop = false
+    musicData.looped.length = 0
+    musicData.songDispatcher = null
     message.guild.me.voice.channel.leave()
     message.channel.send("Dejando el canal de voz")
     }
