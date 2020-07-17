@@ -44,8 +44,10 @@ function playSong(queue, message) {
              playSong(musicData.looped, message)
             
         } else if (musicData.queue.length >= 1) {
+                musicData.looped.length = 0
                 playSong(musicData.queue, message)
         } else {
+                musicData.looped.length = 0
                 musicData.isPlaying = false
                 message.channel.send("Se han terminado todas las canciones")
             }
