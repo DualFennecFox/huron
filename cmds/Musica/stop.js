@@ -4,7 +4,7 @@ const musicData = require("./requirements/musicData")
             name : 'stop',
             category: "Musica",
             aliases: ['Stop', 'STOP'],
-            description : 'Este comando termina borra todas las canciones de la cola',
+            description : 'Este comando termina y borra todas las canciones de la cola',
             usage: '!stop',
             examples: ['!stop'],
             run: async(client, message, args) => {
