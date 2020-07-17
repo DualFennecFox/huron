@@ -9,7 +9,7 @@ module.exports = {
     examples: ['!say Hola Mundo', '!say #Canal Hola Mundo'],
     run: async (client, message, args) => {
     let argsresult;
-    let mChannel = args[0].mentions.channels.first();
+    let mChannel = message.mentions.channels.first();
 
     message.delete()
     if(mChannel) {
