@@ -3,7 +3,6 @@ const ytdl = require('ytdl-core');
 const Youtube = require('simple-youtube-api');
 youtube = new Youtube(process.env.YOUTUBE_API_KEY)
 const musicData = require("./requirements/musicData");
-const loop = require('./loop');
 function playSong(queue, message) {
     message.member.voice.channel
     .join()

@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const search = require('youtube-search');
 const ytdl = require('ytdl-core')
 const musicData = require("./requirements/musicData")
 module.exports = {
