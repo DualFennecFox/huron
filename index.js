@@ -41,7 +41,7 @@ client.on('ready', () => {
     status: "online",
     activity: {
         name: `Estoy en ${scount} Servidores!`,
-        type: "STREAMING",
+        type: "WATCHING",
         url: "https://www.twitch.tv/unfirulais"
     }
 
@@ -60,7 +60,7 @@ client.on('message', (message) => {
     let cmd = args.shift().toLowerCase();
   
  
-    if (message.content === "<@725129316790173767>" || message.content === "<@!725129316790173767>") {
+    if (message.content === "<@728100449047019534>" || message.content === "<@728100449047019534>") {
      message.channel.send(`Mi prefix en este server es ${prefix}, si es la primera vez que me usa escriba ${prefix}help`)
    }
  
@@ -85,7 +85,7 @@ client.on('guildCreate', async gData => {
     status: "online",
     activity: {
         name: `Estoy en ${scount} Servidores!`,
-        type: "STREAMING",
+        type: "WATCHING",
         url: "https://www.twitch.tv/unfirulais"
     }
 })
@@ -97,7 +97,7 @@ client.user.setPresence({
   status: "online",
   activity: {
       name: `Estoy en ${scount} Servidores!`,
-      type: "STREAMING",
+      type: "WATCHING",
       url: "https://www.twitch.tv/unfirulais"
   }
 })
