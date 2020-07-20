@@ -1,19 +1,18 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-require('dotenv/config');
-const firebase = require('firebase/app');
-const FieldValue = require('firebase-admin').firestore.FieldValue;
-const admin = require('firebase-admin');
-const serviceAccount = require('./serviceAccount.json')
+require('dotenv-flow').config();
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 const mongoose = require("mongoose");
 const ytdl = require('ytdl-core');
-const opus = require('node-opus')
 const Youtube = require("simple-youtube-api");
 youtube = new Youtube(process.env.YOUTUBE_API_KEY)
-const musicData = require('./cmds/Musica/requirements/musicData')
+const musicData = require("./cmds/Musica/requirements/musicData")
+const Guild = require('./cmds/Moderacion/models/Guild')
+const config = require('./cmds/Moderacion/models/config');
+const { getGuild, updateGuild, createGuild } = require('./cmds/Moderacion/models/functions');
+mongoose.connect(`${process.env.MONGOURI}/Guild`, { useNewUrlParser: true, useUnifiedTopology: true })
 
 let prefix;
 const token = process.env.TOKEN;
@@ -26,18 +25,12 @@ var opts = {
 
 client.categories = fs.readdirSync("./cmds/");
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-})
-
-let db = admin.firestore();
 
 fs.readdir("./cmds/", (files) => {
 
-
 ["command"].forEach(handler => {
     require(`./handlers/${handler}`)(client);
-});
+}); 
 });
     
 client.on('ready', () => {
@@ -48,77 +41,71 @@ client.on('ready', () => {
     status: "online",
     activity: {
         name: `Estoy en ${scount} Servidores!`,
-        type: "WATCHING",
+        type: "STREAMING",
         url: "https://www.twitch.tv/unfirulais"
     }
-    });
-  });
 
-client.on('message', (message) => {
-  db.collection('guilds').doc(message.guild.id).get().then((q) => {
-    if (q.exists){
-      prefix = q.data().prefix; 
-    }
-  }).then(() => {
-
-   if (message.channel.type === "dm") return;
-   if (message.author.bot) return;
-   
-   let args = message.content.slice(prefix.length).trim().split(/ +/g);
-   let cmd = args.shift().toLowerCase();
-   let command;
-
-   if (message.content === "<@728100449047019534>" || message.content === "<@!728100449047019534>") {
-    message.channel.send(`Mi prefix en este server es ${prefix}, si es la primera vez que me usa escriba ${prefix}help`)
-  }
-  
-   if (!message.content.startsWith(prefix)) return;
-
-    if (client.commands.has(cmd)) {
-
-      command = client.commands.get(cmd);
-    } else {
-      command = client.commands.get(client.aliases.get(cmd));
-    }
-       
-      if (command) command.run(client, message, args, db, prefix);
-  })
+}); 
 });
 
-client.on('guildCreate', async gData => {
-  db.collection('guilds').doc(gData.id).set({
-    'guildID' : gData.id,
-    'guildName' : gData.name,
-    'guildOwner' : gData.owner.user.username,
-    'guildOwnerID' : gData.owner.id,
-    'guildMemberCount' : gData.memberCount,
-    'prefix' : '!'
+client.on('message', (message) => {
+  if (message.channel.type === "dm") return;
+  getGuild(message.guild).then(() => {
+    Guild.findOne({ guildID: message.guild.id }).then((result) => {
+      prefix = result.prefix
+     }).then(() => {
+    if (message.author.bot) return;
+    
+    let args = message.content.slice(prefix.length).trim().split(/ +/g);
+    let cmd = args.shift().toLowerCase();
+  
+ 
+    if (message.content === "<@725129316790173767>" || message.content === "<@!725129316790173767>") {
+     message.channel.send(`Mi prefix en este server es ${prefix}, si es la primera vez que me usa escriba ${prefix}help`)
+   }
+ 
+    if (!message.content.startsWith(prefix)) return;
+ 
+     if (client.commands.has(cmd)) {
+ 
+       command = client.commands.get(cmd);
+     } else {
+       command = client.commands.get(client.aliases.get(cmd));
+     }
+        
+       if (command) command.run(client, message, args, prefix);
   });
+  })
+   });
+ 
+
+client.on('guildCreate', async gData => {
   const scount = client.guilds.cache.size
-client.user.setPresence({
-  status: "online",
-  activity: {
-      name: `Estoy en ${scount} Servidores!`,
-      type: "WATCHING",
-      url: "https://www.twitch.tv/unfirulais"
-  }
+  client.user.setPresence({
+    status: "online",
+    activity: {
+        name: `Estoy en ${scount} Servidores!`,
+        type: "STREAMING",
+        url: "https://www.twitch.tv/unfirulais"
+    }
 })
+getGuild(gData)
 })
 client.on('guildDelete', async gData => {
-db.collection("guilds").doc(gData.id).delete().then(function() {
-  console.log("Document successfully deleted!");
-}).catch(function(error) {
-  console.error("Error removing document: ", error);
-})
 const scount = client.guilds.cache.size
 client.user.setPresence({
   status: "online",
   activity: {
       name: `Estoy en ${scount} Servidores!`,
-      type: "WATCHING",
+      type: "STREAMING",
       url: "https://www.twitch.tv/unfirulais"
   }
 })
+let data = Guild.findOne({ guildID: gData.id }).then((result) => {
+  if (!result) return;
+  else return result.remove()
+})
 });
+
 
 client.login(process.env.TOKEN);

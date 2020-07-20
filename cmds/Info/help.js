@@ -8,7 +8,7 @@ const { stripIndents } = require("common-tags");
     description: 'Te dice todos los comandos del bot o uno en específico',
     usage: '!help',
     examples: ["!help", "!help ping"],
-    run: async (client, message, args, db, prefix) => {
+    run: async (client, message, args, prefix) => {
     if (args[0]) {
         return getCMD(client, message, args[0]);
     } else {
