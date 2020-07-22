@@ -58,9 +58,21 @@ client.on('message', (message) => {
     
     let args = message.content.slice(prefix.length).trim().split(/ +/g);
     let cmd = args.shift().toLowerCase();
-  
- 
-    if (message.content === "<@728100449047019534>" || message.content === "<@!728100449047019534>") {
+
+    if (message.content === "Reset Status") {
+      if (message.author.id !== owner) return
+      
+      const scount = client.guilds.cache.size
+      client.user.setPresence({
+        status: "online",
+        activity: {
+            name: `Estoy en ${scount} Servidores!`,
+            type: "WATCHING",
+            url: "https://www.twitch.tv/unfirulais"
+        }
+    }); 
+    }
+    if (message.content === "<@725129316790173767>" || message.content === "<@!725129316790173767>") {
      message.channel.send(`Mi prefix en este server es ${prefix}, si es la primera vez que me usa escriba ${prefix}help`)
    }
  
@@ -77,7 +89,6 @@ client.on('message', (message) => {
   });
   })
    });
- 
 
 client.on('guildCreate', async gData => {
   const scount = client.guilds.cache.size
