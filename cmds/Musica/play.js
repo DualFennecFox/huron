@@ -131,20 +131,22 @@ function playSong(queue, message) {
                                   const video = await videosObj[i].fetch();
             
                                   const url = `https://www.youtube.com/watch?v=${playlist.id}`;
+                                  const channelURL =  `https://www.youtube.com/channel/${video.channel.id}`
                                   const title = video.title;
                                   let duration = formatDuration(video.duration);
-                                  const thumbnail = video.thumbnails.high.url;
-                                  if (duration == '00:00') duration = 'Transmitiendo en Vivo';
-                                  const voiceChannel = message.member.voice.channel
-                                  const channel = video.channel.title
-                                  const song = {
-                                      url,
-                                      title,
-                                      duration,
-                                      thumbnail,
-                                      voiceChannel,
-                                      channel
-                                  };
+                                const thumbnail = video.thumbnails.high.url;         
+                                if (duration == '00:00') duration = 'Transmitiendo en Vivo';
+                                const voiceChannel = message.member.voice.channel
+                                const channel = video.channel.title
+                                const song = {
+                                url,
+                                title,
+                                duration,
+                                thumbnail,
+                                voiceChannel,
+                                channel,
+                                channelURL
+                                };
                                   
                                   musicData.server[message.guild.id].queue.push(song)
                                 
@@ -168,20 +170,23 @@ function playSong(queue, message) {
                               args[0] = args[0]
                               .replace(/(>|<)/gi, '')
                               .split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
-                            const video = await youtube.getVideoByID(args[0]);
-                            const title = video.title;
-                            let duration = formatDuration(video.duration);
-                            const thumbnail = video.thumbnails.high.url;
-                            if (duration == '00:00') duration = 'Transmitiendo en Vivo';
-                            const voiceChannel = message.member.voice.channel
-                            
-                            const song = {
-                                url,
-                                title,
-                                duration,
-                                thumbnail,
-                                voiceChannel
-                            };
+                              const video = await youtube.getVideoByID(args[0]);
+                              const channelURL =  `https://www.youtube.com/channel/${video.channel.id}`
+                              const title = video.title;
+                              let duration = formatDuration(video.duration);
+                              const thumbnail = video.thumbnails.high.url;         
+                                if (duration == '00:00') duration = 'Transmitiendo en Vivo';
+                                const voiceChannel = message.member.voice.channel
+                                const channel = video.channel.title
+                                const song = {
+                                    url,
+                                    title,
+                                    duration,
+                                    thumbnail,
+                                    voiceChannel,
+                                    channel,
+                                    channelURL
+                                };
                             musicData.server[message.guild.id].queue.push(song);
                             if (
                                  musicData.server[message.guild.id].isPlaying == false
