@@ -243,10 +243,11 @@ function playSong(queue, message) {
                             if (musicData.isPlaying == false) {
                              musicData.isPlaying = true
                                if (songEmbed) songEmbed.delete();
+                            
                                return playSong(musicData.queue, message);
                             } else if (musicData.isPlaying == true) {
                                if (songEmbed) songEmbed.delete();
-            
+                            musicData.loop = false
                                 return message.channel.send(`**${song.title}** Se ha añadido a la cola`);
                             }  
                         } catch (err) {
