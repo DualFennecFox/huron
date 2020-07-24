@@ -155,6 +155,7 @@ function playSong(queue, message) {
                                       musicData.server[message.guild.id].isPlaying = true;
                                       return playSong(musicData.server[message.guild.id].queue, message);
                                   } else if (musicData.server[message.guild.id].isPlaying == true) {
+                                    musicData.server[message.guild.id].loop = false
                                       return message.channel.send(`**${playlist.title}** Se ha añadido a la cola`)
                                   };
                               }
@@ -194,6 +195,7 @@ function playSong(queue, message) {
                                musicData.server[message.guild.id].isPlaying = true;
                                 return playSong(musicData.server[message.guild.id].queue, message);
                             } else if (musicData.server[message.guild.id].isPlaying == true) {
+                                musicData.server[message.guild.id].loop = false
                                 return message.channel.send(`**${song.title}** Se ha añadido a la cola`)
                             }
                       } catch (err) {
@@ -282,6 +284,7 @@ function playSong(queue, message) {
                                return playSong(musicData.server[message.guild.id].queue, message);
                             } else if (musicData.server[message.guild.id].isPlaying == true) {
                                if (songEmbed) songEmbed.delete();
+                               musicData.server[message.guild.id].loop = false
             
                                 return message.channel.send(`**${song.title}** Se ha añadido a la cola`);
                             }  
