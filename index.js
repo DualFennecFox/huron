@@ -35,7 +35,6 @@ fs.readdir("./cmds/", (files) => {
     
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  musicData.queue.length = 0
   const scount = client.guilds.cache.size
   client.user.setPresence({
     status: "online",
