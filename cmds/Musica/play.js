@@ -3,7 +3,17 @@ const ytdl = require('ytdl-core');
 const Youtube = require('simple-youtube-api');
 youtube = new Youtube(process.env.YOUTUBE_API_KEY)
 const musicData = require("./requirements/musicData");
+const loop = require('./loop');
 function playSong(queue, message) {
+    if (!musicData.server[message.guild.id]) musicData.server[message.guild.id] = {
+        queue: [],
+        loop: false,
+        isPlaying: false,
+        looped: [],
+        songDispatcher: null,
+        pause: false,
+        awaiting: false
+    }
     message.member.voice.channel
     .join()
     .then(connection => {
@@ -11,55 +21,54 @@ function playSong(queue, message) {
        .play(ytdl(queue[0].url, {filter: 'audioonly' }, {highWaterMark: 50, volume: false}))
         
         .on('start', () => {
-            musicData.songDispatcher = dispatcher
-            musicData.pause = false
+            musicData.server[message.guild.id].songDispatcher = dispatcher
+            musicData.server[message.guild.id].pause = false
 
-            if(musicData.loop == false) {
+            if(musicData.server[message.guild.id].loop == false) {
             const videoEmbed = new Discord.MessageEmbed()
             .setThumbnail(queue[0].thumbnail)
             .setColor('#FF0000')
             .addField('Escuchando', `[${queue[0].title}](${queue[0].url})`)
-            .addField('Duración', queue[0].duration);
+            .addField('Duración', queue[0].duration)
+            .addField('Canal', `[${queue[0].channel}](${queue[0].channelURL})`)
             let url = queue[0].url
             const loopURL = {
                 url
             };
-            musicData.looped.push(loopURL)
+            musicData.server[message.guild.id].looped.push(loopURL)
             
             if (queue[1]) videoEmbed.addField('Siguiente Canción', `[${queue[1].title}](${queue[1].url})`);
             message.channel.send(videoEmbed);
-            musicData.queue.shift();
+            musicData.server[message.guild.id].queue.shift();
             }
         })
         .on('disconnect', () => {
-            musicData.queue.length = 0
-            musicData.looped.length = 0
-            musicData.isPlaying = false
-            musicData.pause = false
-            musicData.loop = false
-            musicData.dispatcher = null
+            musicData.server[message.guild.id].queue.length = 0
+            musicData.server[message.guild.id].looped.length = 0
+            musicData.server[message.guild.id].isPlaying = false
+            musicData.server[message.guild.id].pause = false
+            musicData.server[message.guild.id].loop = false
+            musicData.server[message.guild.id].songDispatcher = null
         })
         .on('finish', () => {
-         if (musicData.loop == true) { 
-             playSong(musicData.looped, message)
+         if (musicData.server[message.guild.id].loop == true) { 
+             playSong(musicData.server[message.guild.id].looped, message)
             
-        } else if (musicData.queue.length >= 1) {
-                musicData.looped.length = 0
-                playSong(musicData.queue, message)
+        } else if (musicData.server[message.guild.id].queue.length >= 1) {
+                playSong(musicData.server[message.guild.id].queue, message)
         } else {
-                musicData.looped.length = 0
-                musicData.isPlaying = false
+                musicData.server[message.guild.id].isPlaying = false
                 message.channel.send("Se han terminado todas las canciones")
             }
             })
         .on('error', e => {
             message.channel.send('No se puede escuchar esa canción');
-            musicData.queue.length = 0;
-            musicData.isPlaying = false;
-            musicData.pause = false
-            musicData.loop = false
-            musicData.looped.length = 0
-            musicData.dispatcher = null
+            musicData.server[message.guild.id].queue.length = 0;
+            musicData.server[message.guild.id].isPlaying = false;
+            musicData.server[message.guild.id].pause = false
+            musicData.server[message.guild.id].loop = false
+            musicData.server[message.guild.id].looped.length = 0
+            musicData.server[message.guild.id].songDispatcher = null
             console.error(e);
             return message.member.voice.channel.leave();
             })
@@ -96,12 +105,21 @@ function playSong(queue, message) {
                     if (message.guild.me.voice.channel) {
                         if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.channel.send("Debes estar conectado a mi canal de voz para usar este comando")
                         }
+                    if (!musicData.server[message.guild.id]) musicData.server[message.guild.id] = {
+                        queue: [],
+                        loop: false,
+                        isPlaying: false,
+                        looped: [],
+                        songDispatcher: null,
+                        pause: false,
+                        awaiting: false
+                    }
                     if (!message.guild.me.voice.channel) {
-                        musicData.queue.length = 0
-                        musicData.songDispatcher = null
-                        musicData.isPlaying = false
-                        musicData.loop = false
-                        musicData.looped.length = 0
+                        musicData.server[message.guild.id].queue.length = 0
+                        musicData.server[message.guild.id].songDispatcher = null
+                        musicData.server[message.guild.id].isPlaying = false
+                        musicData.server[message.guild.id].loop = false
+                        musicData.server[message.guild.id].looped.length = 0
                     }
 
                     if (args[0].match(/^(?!.*\?.*\bv=)https:\/\/www\.youtube\.com\/.*\?.*\blist=.*$/)) {
@@ -118,21 +136,23 @@ function playSong(queue, message) {
                                   const thumbnail = video.thumbnails.high.url;
                                   if (duration == '00:00') duration = 'Transmitiendo en Vivo';
                                   const voiceChannel = message.member.voice.channel
+                                  const channel = video.channel.title
                                   const song = {
                                       url,
                                       title,
                                       duration,
                                       thumbnail,
-                                      voiceChannel
+                                      voiceChannel,
+                                      channel
                                   };
                                   
-                                  musicData.queue.push(song)
+                                  musicData.server[message.guild.id].queue.push(song)
                                 
                             
-                                  if (musicData.isPlaying == false) {
-                                      musicData.isPlaying = true;
-                                      return playSong(musicData.queue, message);
-                                  } else if (musicData.isPlaying == true) {
+                                  if (musicData.server[message.guild.id].isPlaying == false) {
+                                      musicData.server[message.guild.id].isPlaying = true;
+                                      return playSong(musicData.server[message.guild.id].queue, message);
+                                  } else if (musicData.server[message.guild.id].isPlaying == true) {
                                       return message.channel.send(`**${playlist.title}** Se ha añadido a la cola`)
                                   };
                               }
@@ -162,13 +182,13 @@ function playSong(queue, message) {
                                 thumbnail,
                                 voiceChannel
                             };
-                            musicData.queue.push(song);
+                            musicData.server[message.guild.id].queue.push(song);
                             if (
-                                 musicData.isPlaying == false
+                                 musicData.server[message.guild.id].isPlaying == false
                             ) {
-                               musicData.isPlaying = true;
-                                return playSong(musicData.queue, message);
-                            } else if (musicData.isPlaying == true) {
+                               musicData.server[message.guild.id].isPlaying = true;
+                                return playSong(musicData.server[message.guild.id].queue, message);
+                            } else if (musicData.server[message.guild.id].isPlaying == true) {
                                 return message.channel.send(`**${song.title}** Se ha añadido a la cola`)
                             }
                       } catch (err) {
@@ -181,9 +201,10 @@ function playSong(queue, message) {
                           if (videos.length < 10) {
                               return message.channel.send("Muy pocos videos tienen ese nombre asegurate de haberlo escrito bien")
                           }
+                          if (musicData.server[message.guild.id].awaiting == true) return message.channel.send("Ya se está esperando la respuesta")
                           const vidNameArr = []
                           const videoID = []
-
+                          musicData.server[message.guild.id].awaiting = true
                           for (let v = 0; v < videos.length; v++) {
                               videoID.push(`https://www.youtube.com/watch?v=${videos[v].id}`)
                           }
@@ -210,49 +231,60 @@ function playSong(queue, message) {
                           var songEmbed = await message.channel.send({ embed });
                           try {
                               var response = await message.channel.awaitMessages(msg => (msg.content > 0 && msg.content < 11 || msg.content === 'exit') && msg.author.id === message.author.id, {max: 1, time: 60000, errors: ['time']})
+                              if (response.first().content) musicData.server[message.guild.id].awaiting = false
                               var videoIndex = parseInt(response.first().content);
                               } catch (err) {
                                   console.error(err)
+                                  musicData.server[message.guild.id].awaiting = false
                                  if (songEmbed) songEmbed.delete()
                                  return message.channel.send("No respondiste a tiempo, asegurate de elegir un número del 1 al 10")
                               }
-                              if (response.first().content === 'exit') return songEmbed.delete() 
+                              if (response.first().content === 'exit') {
+                                musicData.server[message.guild.id].awaiting = false
+                                  return songEmbed.delete() 
+                              }
                               try {
                                 var video = await youtube.getVideo(videoID[videoIndex - 1])       
                               } catch (err) {
+                                  musicData.server[message.guild.id].awaiting = true
                                   console.error(err)
                                   if (songEmbed) songEmbed.delete()
                                   return message.channel.send("Hubo un error al obtener el video de Youtube")
                               }       
 
                           const url = `https://www.youtube.com/watch?v=${video.raw.id}`;
+                          const channelURL =  `https://www.youtube.com/channel/${video.channel.id}`
                           const title = video.title;
                           let duration = formatDuration(video.duration);
                           const thumbnail = video.thumbnails.high.url;         
                             if (duration == '00:00') duration = 'Transmitiendo en Vivo';
                             const voiceChannel = message.member.voice.channel
+                            const channel = video.channel.title
                             const song = {
                                 url,
                                 title,
                                 duration,
                                 thumbnail,
-                                voiceChannel
+                                voiceChannel,
+                                channel,
+                                channelURL
                             };
-                            musicData.queue.push(song);
+                            musicData.server[message.guild.id].queue.push(song);
             
-                            if (musicData.isPlaying == false) {
-                             musicData.isPlaying = true
+                            if (musicData.server[message.guild.id].isPlaying == false) {
+                             musicData.server[message.guild.id].isPlaying = true
                                if (songEmbed) songEmbed.delete();
-                            
-                               return playSong(musicData.queue, message);
-                            } else if (musicData.isPlaying == true) {
+                               return playSong(musicData.server[message.guild.id].queue, message);
+                            } else if (musicData.server[message.guild.id].isPlaying == true) {
                                if (songEmbed) songEmbed.delete();
-                            musicData.loop = false
+            
                                 return message.channel.send(`**${song.title}** Se ha añadido a la cola`);
                             }  
                         } catch (err) {
                             console.error(err)
+                            musicData.server[message.guild.id].awaiting = false
                             if (songEmbed) songEmbed.delete()
+                            musicData.server[message.guild.id].loop = false
                             return message.channel.send("Hubo un error al buscar el video en Youtube")
                         }
                         

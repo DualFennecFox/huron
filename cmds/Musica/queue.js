@@ -9,17 +9,18 @@ module.exports = {
     examples: ['!queue'],
     run: async(client, message, args) => {   
 
+                if (!musicData.server[message.guild.id]) return message.channel.send("No se esta escuchando ninguna canción")
                 if (!message.member.voice.channel) return message.channel.send("Debes estar en un canal de voz para usar este comando")
                 if (!message.guild.me.voice.channel) return message.channel.send("No estoy en un canal de voz")
                 if (message.guild.me.voice.channel.id !== message.member.voice.channel.id) return message.channel.send("Debes estar conectado a mi canal de voz para usar este comando")
-                if (musicData.isPlaying == false) return message.channel.send("No se esta escuchando ninguna canción")
-                if (musicData.queue.length < 1) return message.channel.send("No hay ninguna canción en la cola")
+                if (musicData.server[message.guild.id].isPlaying == false) return message.channel.send("No se esta escuchando ninguna canción")
+                if (musicData.server[message.guild.id].queue.length < 1) return message.channel.send("No hay ninguna canción en la cola")
                 
                 let Songs = []
 
                 const embed = new Discord.MessageEmbed()
-                for (let v = 0; v < musicData.queue.length; v++) {
-                   Songs.push(`${v + 1}: ${musicData.queue[v].title}`);
+                for (let v = 0; v < musicData.server[message.guild.id].queue.length; v++) {
+                   Songs.push(`${v + 1}: ${musicData.server[message.guild.id].queue[v].title}`);
                 }      
               const SongsMapped =  Songs.map(queue => queue)
                    .join("\n");      
