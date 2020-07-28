@@ -4,13 +4,19 @@ const mongoose = require('mongoose');
 let getGuild = async (guild) => {
     let data = Guild.findOne({ guildID: guild.id }).then(result => {
    if (result) defaultSettings.prefix = result.prefix
-    else if (!result) {
+    else {
       const newGuild = {
         guildID: guild.id,
         guildName: guild.name,
         guildOwner: guild.owner.user.username,
         guildOwnerID: guild.ownerID,
-        prefix: '!'
+        prefix: '!',
+        JoinMsg: "",
+        JoinBool: false,
+        LeaveMsg: "",
+        LeaveBool: false,
+        WelcomeChannel: "",
+        LeaveChannel: "",
       };
       try {
         createGuild(newGuild);

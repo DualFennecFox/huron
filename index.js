@@ -117,5 +117,47 @@ let data = Guild.findOne({ guildID: gData.id }).then((result) => {
 })
 });
 
+client.on('guildMemberAdd', member => {
+  Guild.findOne({ guildID: member.guild.id }).then(doc => {
+  if (!doc) return
+  if (doc.JoinBool == false) return
+  if (!doc.JoinMsg.includes("{user}")) return
+  if (!doc.WelcomeChannel) return
+  let Channel = member.guild.channels.cache.get(doc.WelcomeChannel)
+  if (!Channel) return
+  if (!Channel.permissionsFor(member.guild.me).has("SEND_MESSAGES")) return
+  
+  let edit = doc.JoinMsg.replace("{user}", member)
+  let msg = edit
+  let msage
+  if (doc.JoinMsg.includes("{server}")) msage = edit.replace("{server}", member.guild.name), msg = msage
+ 
+ Channel.send(msg)
+}).catch(err => {
+  console.error(err)
+})
+ })
+
+client.on('guildMemberRemove', member => {
+  Guild.findOne({ guildID: member.guild.id }).then(doc => {
+    if (!doc) return
+    if (doc.LeaveBool == false) return
+    if (!doc.LeaveMsg.includes("{user}")) return
+    if (!doc.LeaveChannel) return
+    let Channel = member.guild.channels.cache.get(doc.LeaveChannel)
+    if (!Channel) return
+    if (!Channel.permissionsFor(member.guild.me).has("SEND_MESSAGES")) return
+
+    let edit = doc.LeaveMsg.replace("{user}", member)
+    let msg = edit
+    let msage
+    if (doc.LeaveMsg.includes("{server}")) msage = edit.replace("{server}", member.guild.name), msg = msage
+
+    Channel.send(msg)
+  }).catch(err => {
+    console.error(err)
+  })
+})
+
 
 client.login(process.env.TOKEN);
