@@ -28,7 +28,7 @@ module.exports = {
         if(!argsresult) return;
         if(!message.member.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR") || !message.guild.owner) {
                let replace = argsresult.replace("@everyone", "everyone").replace("@here", "here").replace(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|com)|discordapp\.com\/invite)\/.+[A-z0-9]/, "")
-                mChannel.send(replace)
+                message.channel.send(replace)
             } else  message.channel.send(argsresult)
         }
     }
