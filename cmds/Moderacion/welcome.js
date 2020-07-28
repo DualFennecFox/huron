@@ -12,7 +12,7 @@ module.exports = {
     examples: ['!welcome #canal "Bienvenido {user} a {server}"'],
     run: async (client, message, args) => {
         if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_MEMBERS") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando")
-        let welcomeMsg = args.join(" ")
+        let welcomeMsg = args.slice(1).join(" ")
         let welcomeChannel = message.mentions.channels.first();
         if (!welcomeChannel) return message.channel.send("Debes especificar un canal para enviar el mensaje")
         if (!welcomeChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para hablar en ese canal")
