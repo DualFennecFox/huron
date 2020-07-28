@@ -16,7 +16,6 @@ const { playSong }= require("./play")
                 if (musicData.server[message.guild.id].isPlaying == false) return message.channel.send("No se esta escuchando ninguna canción")
                 if (musicData.server[message.guild.id].queue.length < 1) return message.channel.send("No hay ninguna otra canción en la cola")
 
-                musicData.server[message.guild.id].queue.shift();
                 musicData.server[message.guild.id].loop = false
                 musicData.server[message.guild.id].looped.length = 0
                 return playSong(musicData.server[message.guild.id].queue, message)

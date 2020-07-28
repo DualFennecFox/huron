@@ -130,7 +130,7 @@ function playSong(queue, message) {
                               for (let i = 0; i < videosObj.length; i++) {
                                   const video = await videosObj[i].fetch();
             
-                                  const url = `https://www.youtube.com/watch?v=${playlist.id}`;
+                                  const url = `https://www.youtube.com/watch?v=${video.id}`;
                                   const channelURL =  `https://www.youtube.com/channel/${video.channel.id}`
                                   const title = video.title;
                                   let duration = formatDuration(video.duration);
