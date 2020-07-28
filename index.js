@@ -120,6 +120,7 @@ let data = Guild.findOne({ guildID: gData.id }).then((result) => {
 client.on('guildMemberAdd', member => {
   Guild.findOne({ guildID: member.guild.id }).then(doc => {
   if (!doc) return
+  if (!doc.JoinBool) return
   if (doc.JoinBool == false) return
   if (!doc.JoinMsg.includes("{user}")) return
   if (!doc.WelcomeChannel) return
