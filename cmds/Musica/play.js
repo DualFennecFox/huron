@@ -166,12 +166,12 @@ function playSong(queue, message) {
                       }
                     }
             
-                    else  if (args[0].match(/^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+/)) {
+                    else if (args[0].match(/^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+/)) {
                           try {
                           const url = args[0];
                         ytScrapper.videoInfo(args[0]).then((video) => {
                             const title = video.title
-                            let duration = formatDuration(video.duration)
+                            let duration = formatDuration(video.length)
                             const thumbnail = video.thumbnails[0].url;
                             const channel = video.channel.name
                             const channelURL = video.channel.url
