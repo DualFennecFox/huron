@@ -167,9 +167,11 @@ function playSong(queue, message) {
                              ytsr(args[0], { limit: 1 }).then(video => {
                             
                                 console.log(video)
-                            const title = video.title;
+                            const title = video.items[0].title;
                             let duration = video.items[0].duration;
                             const thumbnail = video.items[0].thumbnail;
+                            const channel = video.items[0].author.name;
+                            const channelURL = video.items[0].author.ref
                             if (duration == '00:00') duration = 'Transmitiendo en Vivo';
                             const voiceChannel = message.member.voice.channel
                             
@@ -178,6 +180,8 @@ function playSong(queue, message) {
                                 title,
                                 duration,
                                 thumbnail,
+                                channel,
+                                channelURL,
                                 voiceChannel
                             };
                             musicData.server[message.guild.id].queue.push(song);
@@ -195,7 +199,7 @@ function playSong(queue, message) {
                           console.error(err)
                           message.channel.send("Algo salio mal vuelva a intentarlo")
                       }
-                    }
+                    } else {
                     try {
                         const videos = await ytsr(args, { limit: 10 });
                         if (videos.items.length < 10) {
@@ -282,6 +286,6 @@ function playSong(queue, message) {
                             musicData.server[message.guild.id].loop = false
                             return message.channel.send("Hubo un error al buscar el video en Youtube")
                         }
-                        
+                    }
             }
         }
