@@ -257,7 +257,7 @@ function playSong(queue, message) {
                                   return songEmbed.delete() 
                               }
                               try {
-                                var video = await videos.items[videoIndex - 1]       
+                                var video = videos.items[videoIndex - 1]       
                               } catch (err) {
                                   console.error(err)
                                   if (songEmbed) songEmbed.delete()
