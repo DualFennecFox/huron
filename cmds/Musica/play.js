@@ -171,8 +171,8 @@ function playSong(queue, message) {
                           try {
                           const url = args[0];
                             let ID = getVideoId(args[0]).id;
-                            ytsr(ID).then(video => {
-                            const title = video.title
+                            ytsr(ID, { limit: 1 }).then(video => {
+                            const title = video.items[0].title
                             const duration = video.items[0].duration
                             const thumbnail = video.items[0].thumbnail;
                             const channel = video.items[0].author.name
