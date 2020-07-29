@@ -160,6 +160,8 @@ function playSong(queue, message) {
                                       return message.channel.send(`**${playlist.title}** Se ha añadido a la cola`)
                                   };
                               }
+                            }).catch(err => {
+                                console.error(err)
                             })
                       } catch (err) {
                           console.error(err)
@@ -199,6 +201,8 @@ function playSong(queue, message) {
                                 musicData.server[message.guild.id].loop = false
                                 return message.channel.send(`**${song.title}** Se ha añadido a la cola`)
                             }
+                        }).catch(err => {
+                            console.error(err)
                         })
                       } catch (err) {
                           console.error(err)
