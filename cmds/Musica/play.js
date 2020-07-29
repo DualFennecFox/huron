@@ -211,6 +211,7 @@ function playSong(queue, message) {
                         }
                     
                        let videos = ytsr(filter, options)
+                       console.log(videos)
                         if (videos.items.length < 10) {
                             return message.channel.send("Muy pocos videos tienen ese nombre asegurate de haberlo escrito bien")
                         }
