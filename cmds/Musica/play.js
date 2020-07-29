@@ -201,7 +201,8 @@ function playSong(queue, message) {
                       }
                     } else {
                     try {
-                        const videos = await ytsr(args, { limit: 10 });
+                        let argsresult = args.join(" ")
+                        const videos = await ytsr(argsresult, { limit: 10 });
                         if (videos.items.length < 10) {
                             return message.channel.send("Muy pocos videos tienen ese nombre asegurate de haberlo escrito bien")
                         }
