@@ -131,26 +131,18 @@ function playSong(queue, message) {
                     if (args[0].match(/^(?!.*\?.*\bv=)https:\/\/www\.youtube\.com\/.*\?.*\blist=.*$/)) {
                               try {
                                 ytpl(args[0]).then(playlist => {
-                                    for (let i = 0; i < playlist.items.length; i++) {
-                                    const url = `https://www.youtube.com/watch?v=${playlist.items[i].id}`;
-                                    const title = playlist.items[i].title;
-                                    let duration = playlist.items[i].duration;
-                                    const thumbnail = playlist.items[i].thumbnail;
-                                    const channel = playlist.items[i].author.name;
-                                    const channelURL = playlist.items[i].author.ref
-                                    if (duration == '00:00') duration = 'Transmitiendo en Vivo';
-                                    const voiceChannel = message.member.voice.channel
-                                    const song = {
-                                        url,
-                                        title,
-                                        duration,
-                                        thumbnail,
-                                        channel,
-                                        channelURL,
-                                        voiceChannel
-                                    };
-                                    
-                                    musicData.server[message.guild.id].queue.push(song);
+                                    var i = 0
+                                    do {
+                                        musicData.server[message.guild.id].queue.push({
+                                            url: playlist.items[i].url,
+                                            title: playlist.items[i].title,
+                                            duration: playlist.items[i].duration,
+                                            thumbnail: playlist.items[i].thumbnail,
+                                            channel: playlist.items[i].author.name,
+                                            channelURL: playlist.items[i].author.channel_url,
+                                            voiceChannel: message.member.voice.channel
+                                        });
+                                    } while (i < playlist.items.length)
 
                                   if (musicData.server[message.guild.id].isPlaying == false) {
                                       musicData.server[message.guild.id].isPlaying = true;
@@ -159,14 +151,13 @@ function playSong(queue, message) {
                                     musicData.server[message.guild.id].loop = false
                                       return message.channel.send(`**${playlist.title}** Se ha añadido a la cola`)
                                   };
-                              }
-                            }).catch(err => {
+                              }).catch(err => {
                                 console.error(err)
                             })
-                      } catch (err) {
-                          console.error(err)
-                          return message.channel.send("Esta Playlist es privada o no existe")
-                      }
+                            } catch (err) {
+                                console.error(err)
+                                return message.channel.send("Esta Playlist es privada o no existe")
+                            }       
                     }
             
                     else if (args[0].match(/^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+/)) {
