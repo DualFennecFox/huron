@@ -210,12 +210,10 @@ function playSong(queue, message) {
                         const videoID = []
 
                         for (let v = 0; v < videos.items.length; v++) {
-                            videoID.push(videos.items[v].link)
+                             videoID.push(videos.items[v].link)
+                             vidNameArr.push(`${i + 1}: ${videos.items[i].title}`);
                         }
-          
-                        for (let i = 0; i < videos.items.length; i++) {
-                        vidNameArr.push(`${i + 1}: ${videos.items[i].title}`);
-                        }
+
                         vidNameArr.push('exit');
             
                           const embed = new Discord.MessageEmbed()
@@ -234,7 +232,7 @@ function playSong(queue, message) {
                           .setFooter('Escribe "exit" para salir')
                           var songEmbed = message.channel.send({ embed });
                           try {
-                              var response = message.channel.awaitMessages(msg => (msg.content > 0 && msg.content < 11 || msg.content === 'exit') && msg.author.id === message.author.id, {max: 1, time: 60000, errors: ['time']})
+                              var response = await message.channel.awaitMessages(msg => (msg.content > 0 && msg.content < 11 || msg.content === 'exit') && msg.author.id === message.author.id, {max: 1, time: 60000, errors: ['time']})
                               if (response.first().content) musicData.server[message.guild.id].awaiting = false
                               var videoIndex = parseInt(response.first().content);
                               } catch (err) {
@@ -248,7 +246,7 @@ function playSong(queue, message) {
                                   return songEmbed.delete() 
                               }
                               try {
-                                var video = videos.items[videoIndex - 1]       
+                                var video = await videos.items[videoIndex - 1]       
                               } catch (err) {
                                   console.error(err)
                                   if (songEmbed) songEmbed.delete()
