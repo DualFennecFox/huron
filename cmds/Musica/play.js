@@ -164,12 +164,8 @@ function playSong(queue, message) {
                       if (args[0].match(/^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+/)) {
                           try {
                           const url = args[0];
-                          args[0] = args[0]
-                              .replace(/(>|<)/gi, '')
-                              .split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
-                             ytsr(args[0], { limit: 1 }).then(video => {
+                             ytsr(args[0]).then(video => {
                             
-                                console.log(video)
                             const title = video.items[0].title;
                             let duration = video.items[0].duration;
                             const thumbnail = video.items[0].thumbnail;
