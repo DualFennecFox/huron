@@ -134,6 +134,8 @@ function playSong(queue, message) {
                                     const title = playlist.items[i].title;
                                     let duration = playlist.items[i].duration;
                                     const thumbnail = playlist.items[i].thumbnail;
+                                    const channel = video.items[i].author.name;
+                                    const channelURL = video.items[i].author.ref
                                     if (duration == '00:00') duration = 'Transmitiendo en Vivo';
                                     const voiceChannel = message.member.voice.channel
                                     const song = {
@@ -141,6 +143,8 @@ function playSong(queue, message) {
                                         title,
                                         duration,
                                         thumbnail,
+                                        channel,
+                                        channelURL,
                                         voiceChannel
                                     };
                                     
@@ -161,7 +165,7 @@ function playSong(queue, message) {
                       }
                     }
             
-                      if (args[0].match(/^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+/)) {
+                    else  if (args[0].match(/^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+/)) {
                           try {
                           const url = args[0];
                              ytsr(args[0]).then(video => {
