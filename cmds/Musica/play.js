@@ -211,7 +211,6 @@ function playSong(queue, message) {
                         }
                     
                        ytsr(filter, options).then(async (videos) => {
-                       console.log(videos)
                         if (videos.items.length < 10) {
                             return message.channel.send("Muy pocos videos tienen ese nombre asegurate de haberlo escrito bien")
                         }
@@ -223,7 +222,6 @@ function playSong(queue, message) {
                              videoID.push(videos.items[v].link)
                              vidNameArr.push(`${v + 1}: ${videos.items[v].title}`);
                         }
-                    
 
                         vidNameArr.push('exit');
             
@@ -242,6 +240,7 @@ function playSong(queue, message) {
                           .addField("\`10\`", vidNameArr[9])
                           .setFooter('Escribe "exit" para salir')
                           var songEmbed = await message.channel.send({ embed });
+                          musicData.server[message.guild.id].awaiting = true
                           try {
                               var response = await message.channel.awaitMessages(msg => (msg.content > 0 && msg.content < 11 || msg.content === 'exit') && msg.author.id === message.author.id, {max: 1, time: 60000, errors: ['time']})
                               if (response.first().content) musicData.server[message.guild.id].awaiting = false
