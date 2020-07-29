@@ -7,6 +7,7 @@ const loop = require('./loop');
 const ytpl = require('ytpl')
 const ytsr = require('ytsr')
 const ytScrapper = require('yt-scraper')
+const getVideoId = require('get-video-id')
 function playSong(queue, message) {
     if (!musicData.server[message.guild.id]) musicData.server[message.guild.id] = {
         queue: [],
@@ -169,12 +170,13 @@ function playSong(queue, message) {
                     else if (args[0].match(/^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+/)) {
                           try {
                           const url = args[0];
-                        ytScrapper.videoInfo(args[0]).then((video) => {
+                            let ID = getVideoId(args[0]).id;
+                            ytsr(ID).then(video => {
                             const title = video.title
-                            let duration = formatDuration(video.length)
-                            const thumbnail = video.thumbnails[0].url;
-                            const channel = video.channel.name
-                            const channelURL = video.channel.url
+                            const duration = video.items[0].duration
+                            const thumbnail = video.items[0].thumbnail;
+                            const channel = video.items[0].author.name
+                            const channelURL = video.items[0].author.ref
                             if (duration == '00:00') duration = 'Transmitiendo en Vivo';
                             const voiceChannel = message.member.voice.channel
                             
