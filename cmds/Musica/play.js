@@ -211,7 +211,7 @@ function playSong(queue, message) {
 
                         for (let v = 0; v < videos.items.length; v++) {
                              videoID.push(videos.items[v].link)
-                             vidNameArr.push(`${i + 1}: ${videos.items[i].title}`);
+                             vidNameArr.push(`${v + 1}: ${videos.items[v].title}`);
                         }
 
                         vidNameArr.push('exit');
