@@ -210,7 +210,7 @@ function playSong(queue, message) {
                             nextpageRef: filter.ref
                         }
                     
-                       ytsr(filter, options).then((videos) => {
+                       ytsr(filter, options).then(async (videos) => {
                        console.log(videos)
                         if (videos.items.length < 10) {
                             return message.channel.send("Muy pocos videos tienen ese nombre asegurate de haberlo escrito bien")
