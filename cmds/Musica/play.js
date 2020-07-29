@@ -128,8 +128,8 @@ function playSong(queue, message) {
 
                     if (args[0].match(/^(?!.*\?.*\bv=)https:\/\/www\.youtube\.com\/.*\?.*\blist=.*$/)) {
                               try {
-                              for (let i = 0; i < videosObj.length; i++) {
                                 ytpl(args[0]).then(playlist => {
+                                    for (let i = 0; i < playlist.items.length; i++) {
                                     const url = `https://www.youtube.com/watch?v=${playlist.items[i].id}`;
                                     const title = playlist.items[i].title;
                                     let duration = playlist.items[i].duration;
@@ -214,7 +214,7 @@ function playSong(queue, message) {
                         if (videos.items.length < 10) {
                             return message.channel.send("Muy pocos videos tienen ese nombre asegurate de haberlo escrito bien")
                         }
-                        console.log(videos)
+                        if (musicData.server[message.guild.id].awaiting == true) return message.channel.send("Ya se está esperando la respuesta")
                         const vidNameArr = []
                         const videoID = []
 
