@@ -167,7 +167,7 @@ function playSong(queue, message) {
                               args[0] = args[0]
                               .replace(/(>|<)/gi, '')
                               .split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
-                             ytsr(url, { limit: 1 }, function (err, video) {
+                           let video = ytsr(args[0], { limit: 1 })
                                 if (err) throw err
                             
                             const title = video.items[0].title;
@@ -193,7 +193,6 @@ function playSong(queue, message) {
                                 musicData.server[message.guild.id].loop = false
                                 return message.channel.send(`**${song.title}** Se ha añadido a la cola`)
                             }
-                        })
                       } catch (err) {
                           console.error(err)
                           message.channel.send("Algo salio mal vuelva a intentarlo")
