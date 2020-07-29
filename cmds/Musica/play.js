@@ -232,9 +232,9 @@ function playSong(queue, message) {
                           .addField("\`9\`", vidNameArr[8])
                           .addField("\`10\`", vidNameArr[9])
                           .setFooter('Escribe "exit" para salir')
-                          var songEmbed = await message.channel.send({ embed });
+                          var songEmbed = message.channel.send({ embed });
                           try {
-                              var response = await message.channel.awaitMessages(msg => (msg.content > 0 && msg.content < 11 || msg.content === 'exit') && msg.author.id === message.author.id, {max: 1, time: 60000, errors: ['time']})
+                              var response = message.channel.awaitMessages(msg => (msg.content > 0 && msg.content < 11 || msg.content === 'exit') && msg.author.id === message.author.id, {max: 1, time: 60000, errors: ['time']})
                               if (response.first().content) musicData.server[message.guild.id].awaiting = false
                               var videoIndex = parseInt(response.first().content);
                               } catch (err) {
@@ -258,7 +258,9 @@ function playSong(queue, message) {
                           const url = video.link;
                           const title = video.title
                           let duration = video.duration;
-                          const thumbnail = video.thumbnail         
+                          const thumbnail = video.thumbnail;
+                          const channel = video.author.name;
+                            const channelURL = video.author.ref
                             if (duration == '00:00') duration = 'Transmitiendo en Vivo';
                             const voiceChannel = message.member.voice.channel
                             const song = {
@@ -266,6 +268,8 @@ function playSong(queue, message) {
                                 title,
                                 duration,
                                 thumbnail,
+                                channel,
+                                channelURL,
                                 voiceChannel
                             };
                             musicData.server[message.guild.id].queue.push(song);
