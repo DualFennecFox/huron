@@ -4,6 +4,8 @@ const Youtube = require('simple-youtube-api');
 youtube = new Youtube(process.env.YOUTUBE_API_KEY)
 const musicData = require("./requirements/musicData");
 const loop = require('./loop');
+const ytpl = require('ytpl')
+const ytsr = require('ytsr')
 function playSong(queue, message) {
     if (!musicData.server[message.guild.id]) musicData.server[message.guild.id] = {
         queue: [],
@@ -55,9 +57,11 @@ function playSong(queue, message) {
              playSong(musicData.server[message.guild.id].looped, message)
             
         } else if (musicData.server[message.guild.id].queue.length >= 1) {
+                musicData.server[message.guild.id].looped.shift();
                 playSong(musicData.server[message.guild.id].queue, message)
         } else {
                 musicData.server[message.guild.id].isPlaying = false
+                musicData.server[message.guild.id].looped.length = 0
                 message.channel.send("Se han terminado todas las canciones")
             }
             })
@@ -124,33 +128,24 @@ function playSong(queue, message) {
 
                     if (args[0].match(/^(?!.*\?.*\bv=)https:\/\/www\.youtube\.com\/.*\?.*\blist=.*$/)) {
                               try {
-                              const playlist = await youtube.getPlaylist(args[0])
-                              const videosObj = await playlist.getVideos();
-            
                               for (let i = 0; i < videosObj.length; i++) {
-                                  const video = await videosObj[i].fetch();
-            
-                                  const url = `https://www.youtube.com/watch?v=${video.id}`;
-                                  const channelURL =  `https://www.youtube.com/channel/${video.channel.id}`
-                                  const title = video.title;
-                                  let duration = formatDuration(video.duration);
-                                const thumbnail = video.thumbnails.high.url;         
-                                if (duration == '00:00') duration = 'Transmitiendo en Vivo';
-                                const voiceChannel = message.member.voice.channel
-                                const channel = video.channel.title
-                                const song = {
-                                url,
-                                title,
-                                duration,
-                                thumbnail,
-                                voiceChannel,
-                                channel,
-                                channelURL
-                                };
-                                  
-                                  musicData.server[message.guild.id].queue.push(song)
-                                
-                            
+                                ytpl(args[0]).then(playlist => {
+                                    const url = `https://www.youtube.com/watch?v=${playlist.items[i].id}`;
+                                    const title = playlist.items[i].title;
+                                    let duration = playlist.items[i].duration;
+                                    const thumbnail = playlist.items[i].thumbnail;
+                                    if (duration == '00:00') duration = 'Transmitiendo en Vivo';
+                                    const voiceChannel = message.member.voice.channel
+                                    const song = {
+                                        url,
+                                        title,
+                                        duration,
+                                        thumbnail,
+                                        voiceChannel
+                                    };
+                                    
+                                    musicData.server[message.guild.id].queue.push(song);
+
                                   if (musicData.server[message.guild.id].isPlaying == false) {
                                       musicData.server[message.guild.id].isPlaying = true;
                                       return playSong(musicData.server[message.guild.id].queue, message);
@@ -158,7 +153,8 @@ function playSong(queue, message) {
                                     musicData.server[message.guild.id].loop = false
                                       return message.channel.send(`**${playlist.title}** Se ha añadido a la cola`)
                                   };
-                              }
+                              })
+                            }
                       } catch (err) {
                           console.error(err)
                           return message.channel.send("Esta Playlist es privada o no existe")
@@ -171,23 +167,22 @@ function playSong(queue, message) {
                               args[0] = args[0]
                               .replace(/(>|<)/gi, '')
                               .split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
-                              const video = await youtube.getVideoByID(args[0]);
-                              const channelURL =  `https://www.youtube.com/channel/${video.channel.id}`
-                              const title = video.title;
-                              let duration = formatDuration(video.duration);
-                              const thumbnail = video.thumbnails.high.url;         
-                                if (duration == '00:00') duration = 'Transmitiendo en Vivo';
-                                const voiceChannel = message.member.voice.channel
-                                const channel = video.channel.title
-                                const song = {
-                                    url,
-                                    title,
-                                    duration,
-                                    thumbnail,
-                                    voiceChannel,
-                                    channel,
-                                    channelURL
-                                };
+                             ytsr(url, { limit: 1 }, function (err, video) {
+                                if (err) throw err
+                            
+                            const title = video.items[0].title;
+                            let duration = video.items[0].duration;
+                            const thumbnail = video.items[0].thumbnail;
+                            if (duration == '00:00') duration = 'Transmitiendo en Vivo';
+                            const voiceChannel = message.member.voice.channel
+                            
+                            const song = {
+                                url,
+                                title,
+                                duration,
+                                thumbnail,
+                                voiceChannel
+                            };
                             musicData.server[message.guild.id].queue.push(song);
                             if (
                                  musicData.server[message.guild.id].isPlaying == false
@@ -198,28 +193,28 @@ function playSong(queue, message) {
                                 musicData.server[message.guild.id].loop = false
                                 return message.channel.send(`**${song.title}** Se ha añadido a la cola`)
                             }
+                        })
                       } catch (err) {
                           console.error(err)
                           message.channel.send("Algo salio mal vuelva a intentarlo")
                       }
                     }
                     try {
-                          const videos = await youtube.searchVideos(args, 10);
-                          if (videos.length < 10) {
-                              return message.channel.send("Muy pocos videos tienen ese nombre asegurate de haberlo escrito bien")
-                          }
-                          if (musicData.server[message.guild.id].awaiting == true) return message.channel.send("Ya se está esperando la respuesta")
-                          const vidNameArr = []
-                          const videoID = []
-                          musicData.server[message.guild.id].awaiting = true
-                          for (let v = 0; v < videos.length; v++) {
-                              videoID.push(`https://www.youtube.com/watch?v=${videos[v].id}`)
-                          }
-            
-                          for (let i = 0; i < videos.length; i++) {
-                          vidNameArr.push(`${i + 1}: ${videos[i].title}`);
-                          }
-                          vidNameArr.push('exit');
+                        const videos = await ytsr(args, { limit: 10 });
+                        if (videos.items.length < 10) {
+                            return message.channel.send("Muy pocos videos tienen ese nombre asegurate de haberlo escrito bien")
+                        }
+                        const vidNameArr = []
+                        const videoID = []
+
+                        for (let v = 0; v < videos.items.length; v++) {
+                            videoID.push(videos.items[v].link)
+                        }
+          
+                        for (let i = 0; i < videos.items.length; i++) {
+                        vidNameArr.push(`${i + 1}: ${videos.items[i].title}`);
+                        }
+                        vidNameArr.push('exit');
             
                           const embed = new Discord.MessageEmbed()
                           .setColor('#FF0000')
@@ -251,30 +246,25 @@ function playSong(queue, message) {
                                   return songEmbed.delete() 
                               }
                               try {
-                                var video = await youtube.getVideo(videoID[videoIndex - 1])       
+                                var video = videos.items[videoIndex - 1]       
                               } catch (err) {
-                                  musicData.server[message.guild.id].awaiting = true
                                   console.error(err)
                                   if (songEmbed) songEmbed.delete()
                                   return message.channel.send("Hubo un error al obtener el video de Youtube")
                               }       
 
-                          const url = `https://www.youtube.com/watch?v=${video.raw.id}`;
-                          const channelURL =  `https://www.youtube.com/channel/${video.channel.id}`
-                          const title = video.title;
-                          let duration = formatDuration(video.duration);
-                          const thumbnail = video.thumbnails.high.url;         
+                          const url = video.link;
+                          const title = video.title
+                          let duration = video.duration;
+                          const thumbnail = video.thumbnail         
                             if (duration == '00:00') duration = 'Transmitiendo en Vivo';
                             const voiceChannel = message.member.voice.channel
-                            const channel = video.channel.title
                             const song = {
                                 url,
                                 title,
                                 duration,
                                 thumbnail,
-                                voiceChannel,
-                                channel,
-                                channelURL
+                                voiceChannel
                             };
                             musicData.server[message.guild.id].queue.push(song);
             

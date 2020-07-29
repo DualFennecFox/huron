@@ -16,7 +16,9 @@
     "fs": "^0.0.2",
     "mongoose": "^5.9.19",
     "simple-youtube-api": "^5.2.1",
-    "ytdl-core": "^2.1.7"
+    "ytdl-core": "^2.1.7",
+    "ytpl": "^0.2.2",
+    "ytsr": "^0.1.19"
   },
   "engines": {
     "node": "12.x"
