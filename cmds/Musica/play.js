@@ -203,9 +203,9 @@ function playSong(queue, message) {
                     try {
                         let argsresult = args.join(" ")
                         
-                        ytsr.getFilters(argsresult, function(err, filters) {
+                     ytsr.getFilters(argsresult).then(filters => {
                         if(err) console.error(err);
-                        filter = filters.get('Type').find(o => o.name === 'Video');
+                      let filter = filters.get('Type').find(o => o.name === 'Video');
                         var options = {
                             limit: 10,
                             nextpageRef: filter.ref
