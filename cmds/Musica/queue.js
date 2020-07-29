@@ -19,7 +19,7 @@ module.exports = {
                 let Songs = []
 
                 const embed = new Discord.MessageEmbed()
-                for (let v = 0; v < musicData.server[message.guild.id].queue.length; v++) {
+                for (let v = 0; v < 15; v++) {
                    Songs.push(`${v + 1}: ${musicData.server[message.guild.id].queue[v].title}`);
                 }      
               const SongsMapped =  Songs.map(queue => queue)

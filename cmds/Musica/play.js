@@ -91,21 +91,7 @@ function playSong(queue, message) {
             usage: '!play',
             examples: ['!play Musica', '!play "URL de YT"'],
             playSong,
-            run: async(client, message, args) => {    
-                
-                     function formatDuration(durationObj) {
-                        const duration = `${durationObj.hours ? durationObj.hours + ':' : ''}${
-                          durationObj.minutes ? durationObj.minutes : '00'
-                        }:${
-                          durationObj.seconds < 10
-                            ? '0' + durationObj.seconds
-                            : durationObj.seconds
-                            ? durationObj.seconds
-                            : '00'
-                        }`;
-                        return duration;
-                      }
-                    
+            run: async(client, message, args) => {   
                       
                     if (!message.member.voice.channel) return message.channel.send("Debes estar en un canal de voz para usar este comando")
                     if (message.guild.me.voice.channel) {
@@ -142,13 +128,14 @@ function playSong(queue, message) {
                                             voiceChannel: message.member.voice.channel
                                         });
                                     }
-
+                                    
                                   if (musicData.server[message.guild.id].isPlaying == false) {
                                       musicData.server[message.guild.id].isPlaying = true;
+                                      message.channel.send(`Se han añadido a la cola **${playlist.items.length}** canciones`)
                                       return playSong(musicData.server[message.guild.id].queue, message);
                                   } else if (musicData.server[message.guild.id].isPlaying == true) {
                                     musicData.server[message.guild.id].loop = false
-                                      return message.channel.send(`**${playlist.title}** Se ha añadido a la cola`)
+                                      return message.channel.send(`**${playlist.title}** Se ha añadido a la cola con ${playlist.items.length} videos`)
                                   };
                               }).catch(err => {
                                 console.error(err)
