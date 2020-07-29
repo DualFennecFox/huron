@@ -131,8 +131,7 @@ function playSong(queue, message) {
                     if (args[0].match(/^(?!.*\?.*\bv=)https:\/\/www\.youtube\.com\/.*\?.*\blist=.*$/)) {
                               try {
                                 ytpl(args[0]).then(playlist => {
-                                    var i = 0
-                                    do {
+                                    for (let i = 0; i < playlist.items.length; i++) {
                                         musicData.server[message.guild.id].queue.push({
                                             url: playlist.items[i].url,
                                             title: playlist.items[i].title,
@@ -142,7 +141,7 @@ function playSong(queue, message) {
                                             channelURL: playlist.items[i].author.channel_url,
                                             voiceChannel: message.member.voice.channel
                                         });
-                                    } while (i < playlist.items.length)
+                                    }
 
                                   if (musicData.server[message.guild.id].isPlaying == false) {
                                       musicData.server[message.guild.id].isPlaying = true;
