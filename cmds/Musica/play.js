@@ -202,7 +202,7 @@ function playSong(queue, message) {
                     } else {
                     try {
                         let argsresult = args.join(" ")
-                        const videos = await ytsr(argsresult, { limit: 10 });
+                        await ytsr(argsresult, { limit: 10 }).then(videos => {
                         if (videos.items.length < 10) {
                             return message.channel.send("Muy pocos videos tienen ese nombre asegurate de haberlo escrito bien")
                         }
@@ -280,6 +280,7 @@ function playSong(queue, message) {
             
                                 return message.channel.send(`**${song.title}** Se ha añadido a la cola`);
                             }  
+                        })
                         } catch (err) {
                             console.error(err)
                             musicData.server[message.guild.id].awaiting = false
