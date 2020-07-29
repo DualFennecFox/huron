@@ -204,14 +204,14 @@ function playSong(queue, message) {
                         let argsresult = args.join(" ")
                         
                         ytsr.getFilters(argsresult, function(err, filters) {
-                        if(err) throw err;
+                        if(err) console.error(err);
                         filter = filters.get('Type').find(o => o.name === 'Video');
                         var options = {
                             limit: 10,
                             nextpageRef: filter.ref
                         }
                     
-                       let videos = ytsr(argsresult, options)
+                       let videos = ytsr(filter, options)
                         if (videos.items.length < 10) {
                             return message.channel.send("Muy pocos videos tienen ese nombre asegurate de haberlo escrito bien")
                         }
