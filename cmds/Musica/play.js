@@ -171,7 +171,7 @@ function playSong(queue, message) {
                           const url = args[0];
                         ytScrapper.videoInfo(args[0]).then((video) => {
                             const title = video.title
-                            let duration = video.length;
+                            let duration = formatDuration(video.duration)
                             const thumbnail = video.thumbnails[0].url;
                             const channel = video.channel.name
                             const channelURL = video.channel.url
