@@ -168,7 +168,6 @@ function playSong(queue, message) {
                               .replace(/(>|<)/gi, '')
                               .split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
                            let video = ytsr(args[0], { limit: 1 })
-                                if (err) throw err
                             
                             const title = video.items[0].title;
                             let duration = video.items[0].duration;
