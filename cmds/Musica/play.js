@@ -210,7 +210,7 @@ function playSong(queue, message) {
                             nextpageRef: filter.ref
                         }
                     
-                       let videos = ytsr(filter, options)
+                       ytsr(filter, options).then((videos) => {
                        console.log(videos)
                         if (videos.items.length < 10) {
                             return message.channel.send("Muy pocos videos tienen ese nombre asegurate de haberlo escrito bien")
@@ -297,6 +297,9 @@ function playSong(queue, message) {
                         }).catch(err => {
                             console.error(err)
                         })
+                    }).catch(err => {
+                        console.error(err)
+                    })
                         } catch (err) {
                             console.error(err)
                             musicData.server[message.guild.id].awaiting = false
