@@ -202,11 +202,16 @@ function playSong(queue, message) {
                     } else {
                     try {
                         let argsresult = args.join(" ")
-                        ytsr.getFilters(argsresult, function(err, filters) { 
-                            if (err) throw err
-                            filter = filters.get('Type').find(o => o.name === 'Video')
-                        })
-                       let videos = await ytsr(argsresult, { limit: 10, type: "video" })
+                        
+                        ytsr.getFilters(argsresult, function(err, filters) {
+                        if(err) throw err;
+                        filter = filters.get('Type').find(o => o.name === 'Video');
+                        var options = {
+                            limit: 10,
+                            nextpageRef: filter.ref
+                        }
+                    
+                       let videos = await ytsr(null, options)
                         if (videos.items.length < 10) {
                             return message.channel.send("Muy pocos videos tienen ese nombre asegurate de haberlo escrito bien")
                         }
@@ -276,6 +281,7 @@ function playSong(queue, message) {
                                 channelURL,
                                 voiceChannel
                             };
+                            
                             musicData.server[message.guild.id].queue.push(song);
             
                             if (musicData.server[message.guild.id].isPlaying == false) {
@@ -288,6 +294,7 @@ function playSong(queue, message) {
             
                                 return message.channel.send(`**${song.title}** Se ha añadido a la cola`);
                             }
+                        })
                         } catch (err) {
                             console.error(err)
                             musicData.server[message.guild.id].awaiting = false
