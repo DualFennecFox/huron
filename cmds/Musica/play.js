@@ -204,7 +204,6 @@ function playSong(queue, message) {
                         let argsresult = args.join(" ")
                         
                      ytsr.getFilters(argsresult).then(filters => {
-                        if(err) console.error(err);
                       let filter = filters.get('Type').find(o => o.name === 'Video');
                         var options = {
                             limit: 10,
@@ -294,6 +293,8 @@ function playSong(queue, message) {
             
                                 return message.channel.send(`**${song.title}** Se ha añadido a la cola`);
                             }
+                        }).catch(err => {
+                            console.error(err)
                         })
                         } catch (err) {
                             console.error(err)
