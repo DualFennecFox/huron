@@ -153,8 +153,8 @@ function playSong(queue, message) {
                                     musicData.server[message.guild.id].loop = false
                                       return message.channel.send(`**${playlist.title}** Se ha añadido a la cola`)
                                   };
-                              })
-                            }
+                              }
+                            })
                       } catch (err) {
                           console.error(err)
                           return message.channel.send("Esta Playlist es privada o no existe")
