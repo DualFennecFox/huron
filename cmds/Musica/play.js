@@ -202,7 +202,11 @@ function playSong(queue, message) {
                     } else {
                     try {
                         let argsresult = args.join(" ")
-                       let videos = await ytsr(argsresult, { limit: 10 })
+                        ytsr.getFilters(argsresult, function(err, filters) { 
+                            if (err) throw err
+                            filter = filters.get('Type').find(o => o.name === 'Video')
+                        })
+                       let videos = await ytsr(argsresult, { limit: 10, type: "video" })
                         if (videos.items.length < 10) {
                             return message.channel.send("Muy pocos videos tienen ese nombre asegurate de haberlo escrito bien")
                         }
@@ -214,6 +218,7 @@ function playSong(queue, message) {
                              videoID.push(videos.items[v].link)
                              vidNameArr.push(`${v + 1}: ${videos.items[v].title}`);
                         }
+                    
 
                         vidNameArr.push('exit');
             
