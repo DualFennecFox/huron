@@ -22,7 +22,7 @@ module.exports = {
                 for (let v = 0; v < 15; v++) {
                    Songs.push(`${v + 1}: ${musicData.server[message.guild.id].queue[v].title}`);
                 }      
-              const SongsMapped =  Songs.map(queue => queue)
+              const SongsMapped = Songs.map(queue => queue)
                    .join("\n\n");      
                    message.channel.send(embed.setDescription(SongsMapped))         
     }

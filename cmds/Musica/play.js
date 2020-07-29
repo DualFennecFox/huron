@@ -46,14 +46,6 @@ function playSong(queue, message) {
             musicData.server[message.guild.id].queue.shift();
             }
         })
-        .on('disconnect', () => {
-            musicData.server[message.guild.id].queue.length = 0
-            musicData.server[message.guild.id].looped.length = 0
-            musicData.server[message.guild.id].isPlaying = false
-            musicData.server[message.guild.id].pause = false
-            musicData.server[message.guild.id].loop = false
-            musicData.server[message.guild.id].songDispatcher = null
-        })
         .on('finish', () => {
          if (musicData.server[message.guild.id].loop == true) { 
              playSong(musicData.server[message.guild.id].looped, message)
