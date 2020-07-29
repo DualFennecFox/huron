@@ -166,7 +166,7 @@ function playSong(queue, message) {
                           const url = args[0]
                               .replace(/(>|<)/gi, '')
                               .split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
-                             ytsr(url, { limit: 1 }).then(video => {
+                             ytsr(url[0], { limit: 1 }).then(video => {
                             
                                 console.log(video)
                             const title = video.items[0].title;
