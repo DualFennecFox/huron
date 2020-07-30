@@ -17,12 +17,12 @@ module.exports = {
                 .setAuthor("Configuración", client.user.displayAvatarURL())
                 .setColor("#FFFF00")
                 .setDescription("Estos son los comandos de configuración:")
-                .addField("Prefix", "Para cambiar el prefix eliga uno diciendo \"prefix\"\n Ejemplo: config prefix - \n")
-                .addField("WelcomeMsg", "Para cambiar el mensaje de bienvenida diga \"welcomemsg\"\n Ejemplo: config welcomemsg \`#Canal-mencionado\` Bienvenido {user} a {server}\n")
-                .addField("Leavemsg", "Para cambiar el mensaje de despedida diga \"welcomemsg\"\n Ejemplo: config leavemsg \`#Canal-mencionado\` {user} a dejado {server}\n")
+                .addField("Prefix", `Para cambiar el prefix eliga uno diciendo \"prefix\"\nEjemplo: ${prefix}config prefix - \n`)
+                .addField("WelcomeMsg", `Para cambiar el mensaje de bienvenida diga \"welcomemsg\"\nEjemplo: ${prefix}config welcomemsg \`#Canal-mencionado\` Bienvenido {user} a {server}\n`)
+                .addField("Leavemsg", `Para cambiar el mensaje de despedida diga \"welcomemsg\"\nEjemplo: ${prefix}config leavemsg \`#Canal-mencionado\` {user} a dejado {server}\n`)
                 .addField("DisableWelcome", "Elimina el mensaje de bienvenida, si es que esta activado\n")
                 .addField("DisableLeave", "Elimina el mensaje de despedida, si es que esta activado\n")
-                .addField("Tags", "Los tags para los mensajes de bienvenida y despedida son:\n {user} : Menciona al usuario\n {username} : Muestra el nombre y el tag del usuario\n {server} : Muestra el nombre del servidor\n {owner} : Nombra al Owner del servidor con su tag\n {members} : Muestra el número de miembros desde que el usuario se unio o dejo el server.")
+                .addField("Tags", "Los tags para los mensajes de bienvenida y despedida son:\n\n**{user}** : Menciona al usuario\n**{username}** : Muestra el nombre y el tag del usuario\n**{server}** : Muestra el nombre del servidor\n**{owner}** : Nombra al Owner del servidor con su tag\n**{members}** : Muestra el número de miembros desde que el usuario se unio o dejo el server.")
 
                 message.channel.send({ embed })
                 return
@@ -38,7 +38,7 @@ module.exports = {
             case "welcomemsg" || "WelcomeMsg" || "Welcomemsg" || "WELCOMEMSG":
                 let welcomeMsg = args.slice(2).join(" ")
                 let welcomeChannel = message.mentions.channels.first();
-                if (!welcomeChannel || welcomeChannel !== args[1]) return message.channel.send("Debes especificar un canal primero para enviar el mensaje")
+                if (!welcomeChannel || welcomeChannel != args[1]) return message.channel.send("Debes especificar un canal primero para enviar el mensaje")
                 if (!welcomeChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para hablar en ese canal")
                 if (!welcomeMsg) return message.channel.send("Debes especificar un mensaje de bienvenida")
 
@@ -49,7 +49,7 @@ module.exports = {
             case "leavemsg" || "LeaveMsg" || "Leavemsg" || "LEAVEMSG":
                 let leaveMsg = args.slice(2).join(" ")
                 let leaveChannel = message.mentions.channels.first();
-                if (!leaveChannel || welcomeChannel !== args[1]) return message.channel.send("Debes especificar un canal para enviar el mensaje")
+                if (!leaveChannel || leaveChannel != args[1]) return message.channel.send("Debes especificar un canal primero para enviar el mensaje")
                 if (!leaveChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para hablar en ese canal")
                 if (!leaveMsg) return message.channel.send("Debes especificar un mensaje de despedida")
         
