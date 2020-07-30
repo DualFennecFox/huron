@@ -6,7 +6,7 @@ const { updateGuild } = require('./models/functions')
 module.exports = {
     name : 'leave',
     category: "Moderacion",
-    description : 'El Bot envia a un canal específico un mensaje de despedida, para especificar el usuario mencionado pon {user}, para el server usa {server} (usar {user} es obligatorio)',
+    description : 'El Bot envia a un canal específico un mensaje de despedida, para especificar el usuario mencionado pon {user} (o para el tag sin mención {username}), para el server usa {server}, para la cantidad de miembros, {members}; para el owner, {owner}',
     aliases: ['Leave', 'LEAVE', 'Leavechannel', 'LEAVECHANNEL', 'LeaveChannel'],
     usage: '!leave',
     examples: ['!leave #canal "{user} se ha ido de {server}"'],
@@ -17,7 +17,6 @@ module.exports = {
         if (!leaveChannel) return message.channel.send("Debes especificar un canal para enviar el mensaje")
         if (!leaveChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para hablar en ese canal")
         if (!leaveMsg) return message.channel.send("Debes especificar un mensaje de bienvenida")
-        if (!leaveMsg.includes("{user}")) return message.channel.send("Debes especificar un usuario con {user} para mencionarlo")
 
         updateGuild(message.guild, { LeaveMsg: leaveMsg, LeaveBool: true, LeaveChannel: leaveChannel.id})
 
