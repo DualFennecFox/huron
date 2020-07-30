@@ -38,7 +38,6 @@ module.exports = {
             case "welcomemsg" || "WelcomeMsg" || "Welcomemsg" || "WELCOMEMSG":
                 let welcomeChannel = message.mentions.channels.first();
                 if (!welcomeChannel) return message.channel.send("Debes especificar un canal para enviar el mensaje")
-                if (welcomeChannel != args[1]) return message.channel.send("Debes especificar un canal primero para enviar el mensaje")
                 if (!welcomeChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para hablar en ese canal")
                 let welcomeMsg = args.slice(1).join(" ").replace(welcomeChannel, '')
                 if (!welcomeMsg) return message.channel.send("Debes especificar un mensaje de bienvenida")
@@ -48,12 +47,11 @@ module.exports = {
             message.channel.send("Se ha establecido el mensaje de bienvenida")
             break;
             case "leavemsg" || "LeaveMsg" || "Leavemsg" || "LEAVEMSG":
-                let leaveMsg = args.slice(2).join(" ")
                 let leaveChannel = message.mentions.channels.first();
                 if (!leaveChannel) return message.channel.send("Debes especificar un canal para enviar el mensaje")
-                if (leaveChannel != args[1]) return message.channel.send("Debes especificar un canal primero para enviar el mensaje")
                 if (!leaveChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para hablar en ese canal")
                 if (!leaveMsg) return message.channel.send("Debes especificar un mensaje de despedida")
+                let leaveMsg = args.slice(1).join(" ").replace(leaveChannel, '')
         
                 updateGuild(message.guild, { LeaveMsg: leaveMsg, LeaveBool: true, LeaveChannel: leaveChannel.id})
         
