@@ -40,7 +40,7 @@ module.exports = {
                 if (!welcomeChannel) return message.channel.send("Debes especificar un canal para enviar el mensaje")
                 if (welcomeChannel != args[1]) return message.channel.send("Debes especificar un canal primero para enviar el mensaje")
                 if (!welcomeChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para hablar en ese canal")
-                let welcomeMsg = args.slice(2).join(" ")
+                let welcomeMsg = args.slice(1).join(" ").replace(welcomeChannel, '')
                 if (!welcomeMsg) return message.channel.send("Debes especificar un mensaje de bienvenida")
 
                 updateGuild(message.guild, { JoinMsg: welcomeMsg, JoinBool: true, WelcomeChannel: welcomeChannel.id})
@@ -72,6 +72,9 @@ module.exports = {
             break;
             case "disableleave" || "DisableLeave" || "Disableleave" || "DISABLELEAVE" || "disableleavemsg" || "DisableLeavemsg" || "DisableLeaveMsg" || "DisableLeaveMsg" || "DISABLELEAVEMSG":
                 Guild.findOne({ guildID: message.guild.id }).then(doc => {
+                    if (!doc) {
+                        return message.channel.send("No existe un mensaje de bienvenida")
+                     }
                     if (doc.LeaveBool == false) return message.channel.send("Ya estaba desactivado el mensaje")
                 })
                 updateGuild(message.guild, { LeaveMsg: "", LeaveBool: false, LeaveChannel: ""})
