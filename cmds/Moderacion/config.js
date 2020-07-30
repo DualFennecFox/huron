@@ -50,8 +50,8 @@ module.exports = {
                 let leaveChannel = message.mentions.channels.first();
                 if (!leaveChannel) return message.channel.send("Debes especificar un canal para enviar el mensaje")
                 if (!leaveChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para hablar en ese canal")
-                if (!leaveMsg) return message.channel.send("Debes especificar un mensaje de despedida")
                 let leaveMsg = args.slice(1).join(" ").replace(leaveChannel, '')
+                if (!leaveMsg) return message.channel.send("Debes especificar un mensaje de despedida")
         
                 updateGuild(message.guild, { LeaveMsg: leaveMsg, LeaveBool: true, LeaveChannel: leaveChannel.id})
         
