@@ -108,7 +108,7 @@ function playSong(queue, message) {
 
                     if (args[0].match(/^(?!.*\?.*\bv=)https:\/\/www\.youtube\.com\/.*\?.*\blist=.*$/)) {
                               try {
-                                ytpl(args[0], { limit: 0 }).then(playlist => {
+                                ytpl(args[0], { limit: Infinity }).then(playlist => {
                                     for (let i = 0; i < playlist.items.length; i++) {
                                         musicData.server[message.guild.id].queue.push({
                                             url: playlist.items[i].url,
