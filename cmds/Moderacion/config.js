@@ -28,14 +28,14 @@ module.exports = {
                 return
         }
         switch (args[0]) {
-            case "prefix" || "Prefix" || "PREFIX":
+            case "prefix":
                 if (!args[1]) return message.channel.send(`Mi prefix en este server es ${prefix}`)
                 let nPrefix = args.slice(1).join(" ");
                 await updateGuild(message.guild, { prefix: nPrefix });
 
                 message.channel.send(`Su nuevo Prefix es ${nPrefix}`)
             break;
-            case "welcomemsg" || "WelcomeMsg" || "Welcomemsg" || "WELCOMEMSG":
+            case "welcomemsg":
                 let welcomeChannel = message.mentions.channels.first();
                 if (!welcomeChannel) return message.channel.send("Debes especificar un canal para enviar el mensaje")
                 if (!welcomeChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para hablar en ese canal")
@@ -46,7 +46,7 @@ module.exports = {
 
             message.channel.send("Se ha establecido el mensaje de bienvenida")
             break;
-            case "leavemsg" || "LeaveMsg" || "Leavemsg" || "LEAVEMSG":
+            case "leavemsg":
                 let leaveChannel = message.mentions.channels.first();
                 if (!leaveChannel) return message.channel.send("Debes especificar un canal para enviar el mensaje")
                 if (!leaveChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para hablar en ese canal")
@@ -57,27 +57,31 @@ module.exports = {
         
                 message.channel.send("Se ha establecido el mensaje de despedida")                
             break;
-            case "disablewelcome" || "DisableWelcome" || "Disablewelcome" || "DISABLEWELCOME" || "disablewelcomemsg" || "DisableWelcomeMsg" || "DisableWelcomeMSG" || "DISABLEWELCOMEMSG":
+            case "disablewelcome":
                 Guild.findOne({ guildID: message.guild.id }).then(doc => {
                     if (!doc) {
                        return message.channel.send("No existe un mensaje de bienvenida")
                     }
-                    if (doc.JoinBool == false) return message.channel.send("Ya estaba desactivado el mensaje")
-                })
+                   else if (doc.JoinBool == false) return message.channel.send("Ya estaba desactivado el mensaje")
+                else {
                 updateGuild(message.guild, { JoinMsg: "", JoinBool: false, WelcomeChannel: ""})
         
                 message.channel.send("Se ha eliminado el mensaje de bienvenida")
+                }
+                })
             break;
-            case "disableleave" || "DisableLeave" || "Disableleave" || "DISABLELEAVE" || "disableleavemsg" || "DisableLeavemsg" || "DisableLeaveMsg" || "DisableLeaveMsg" || "DISABLELEAVEMSG":
+            case "disableleave":
                 Guild.findOne({ guildID: message.guild.id }).then(doc => {
                     if (!doc) {
                         return message.channel.send("No existe un mensaje de bienvenida")
                      }
-                    if (doc.LeaveBool == false) return message.channel.send("Ya estaba desactivado el mensaje")
-                })
+                   else if (doc.LeaveBool == false) return message.channel.send("Ya estaba desactivado el mensaje")
+                else {
                 updateGuild(message.guild, { LeaveMsg: "", LeaveBool: false, LeaveChannel: ""})
         
                 message.channel.send("Se ha eliminado el mensaje de despedida")
+                }
+            })
             break;
             default:
                 const embed = new Discord.MessageEmbed()
