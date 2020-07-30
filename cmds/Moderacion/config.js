@@ -29,6 +29,7 @@ module.exports = {
         }
         switch (args[0]) {
             case "prefix" || "Prefix" || "PREFIX":
+                if (!args[1]) return message.channel.send(`Mi prefix en este server es ${prefix}`)
                 let nPrefix = args.slice(1).join(" ");
                 await updateGuild(message.guild, { prefix: nPrefix });
 
