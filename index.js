@@ -124,7 +124,6 @@ client.on('guildMemberAdd', member => {
   if (!doc.JoinBool) return
   if (doc.JoinBool == false) return
   if (!doc.JoinMsg) return
-  if (!doc.JoinMsg.includes("{user}")) return
   if (!doc.WelcomeChannel) return
   let Channel = member.guild.channels.cache.get(doc.WelcomeChannel)
   if (!Channel) return
@@ -143,7 +142,6 @@ client.on('guildMemberRemove', member => {
     if (!doc) return
     if (doc.LeaveBool == false) return
     if (!doc.LeaveMsg) return
-    if (!doc.LeaveMsg.includes("{user}")) return
     if (!doc.LeaveChannel) return
     let Channel = member.guild.channels.cache.get(doc.LeaveChannel)
     if (!Channel) return
