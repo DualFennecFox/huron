@@ -18,6 +18,7 @@ const Discord = require('discord.js');
         let member2 = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
         if (!member2) member2 = message.member
         let name = args.slice(1).join(" ");
+        if (name.length > 32) return message.channel.send("El apodo no debe contener más de 32 caracteres")
         if (user.id === client.user.id) return member2.setNickname(name).then(message.channel.send("Se ha cambiado mi apodo"))
         let role = member2.roles.highest;
 
