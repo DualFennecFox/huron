@@ -111,12 +111,12 @@ function playSong(queue, message) {
                                 ytpl(args[0], { limit: Infinity }).then(playlist => {
                                     for (let i = 0; i < playlist.items.length; i++) {
                                         musicData.server[message.guild.id].queue.push({
-                                            url: playlist.items[i].url,
+                                            url: playlist.items[i].url_simple,
                                             title: playlist.items[i].title,
                                             duration: playlist.items[i].duration,
                                             thumbnail: playlist.items[i].thumbnail,
                                             channel: playlist.items[i].author.name,
-                                            channelURL: playlist.items[i].author.channel_url,
+                                            channelURL: playlist.items[i].author.ref,
                                             voiceChannel: message.member.voice.channel
                                         });
                                     }
