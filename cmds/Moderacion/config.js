@@ -1,7 +1,7 @@
 const Discord = require('discord.js')
 const mongoose = require('mongoose')
 const Guild = require('./models/Guild')
-const { updateGuild } = require('./models/functions')
+const { updateGuild, getGuild } = require('./models/functions')
 
 module.exports = {
     name : 'config',
@@ -31,7 +31,7 @@ module.exports = {
                 await updateGuild(message.guild, { prefix: nPrefix });
 
                 message.channel.send(`Su nuevo Prefix es ${nPrefix}`)
-                break;
+            break;
             case "welcomemsg" || "WelcomeMsg" || "Welcomemsg" || "WELCOMEMSG":
                 let welcomeMsg = args.slice(2).join(" ")
                 let welcomeChannel = message.mentions.channels.first();
@@ -54,6 +54,26 @@ module.exports = {
         
                 message.channel.send("Se ha establecido el mensaje de despedida")                
             break;
+            case "disablewelcome" || "DisableWelcome" || "Disablewelcome" || "DISABLEWELCOME" || "disablewelcomemsg" || "DisableWelcomeMsg" || "DisableWelcomeMSG" || "DISABLEWELCOMEMSG":
+                Guild.findOne({ guildID: message.guild.id }).then(doc => {
+                    if (!doc) {
+                       await getGuild(message.guild)
+                       return message.channel.send("No existe un mensaje de bienvenida")
+                    }
+                    if (doc.JoinBool == false) return message.channel.send("Ya estaba desactivado el mensaje")
+                })
+                updateGuild(message.guild, { JoinMsg: "", JoinBool: false, WelcomeChannel: ""})
+        
+                message.channel.send("Se ha eliminado el mensaje de bienvenida")
+            break;
+            case "disableleave" || "DisableLeave" || "Disableleave" || "DISABLELEAVE" || "disableleavemsg" || "DisableLeavemsg" || "DisableLeaveMsg" || "DisableLeaveMsg" || "DISABLELEAVEMSG":
+                Guild.findOne({ guildID: message.guild.id }).then(doc => {
+                    if (doc.LeaveBool == false) return message.channel.send("Ya estaba desactivado el mensaje")
+                })
+                updateGuild(message.guild, { LeaveMsg: "", LeaveBool: false, LeaveChannel: ""})
+        
+                message.channel.send("Se ha eliminado el mensaje de despedida")
+            break;
             default:
                 const embed = new Discord.MessageEmbed()
                 .setAuthor("Configuración", client.user.displayAvatarURL())
@@ -65,7 +85,7 @@ module.exports = {
                 .addField("Tags", "Los tags para los mensajes de bienvenida y despedida son:\n {user} : Menciona al usuario\n {username} : Muestra el nombre y el tag del usuario\n {server} : Muestra el nombre del servidor\n {owner} : Nombra al Owner del servidor con su tag\n {members} : Muestra el número de miembros desde que el usuario se unio o dejo el server.")
 
                 message.channel.send({ embed })
-                break;
+            break;
         }
     }
 }
