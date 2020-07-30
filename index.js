@@ -57,6 +57,7 @@ client.on('message', (message) => {
     
     let args = message.content.slice(prefix.length).trim().split(/ +/g);
     let cmd = args.shift().toLowerCase();
+    let command;
 
     if (message.content === "Reset Status") {
       if (message.author.id !== owner) return
@@ -76,9 +77,8 @@ client.on('message', (message) => {
    }
  
     if (!message.content.startsWith(prefix)) return;
- 
+
      if (client.commands.has(cmd)) {
-       let command;
  
        command = client.commands.get(cmd);
      } else {
