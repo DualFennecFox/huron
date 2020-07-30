@@ -129,7 +129,7 @@ client.on('guildMemberAdd', member => {
   if (!Channel) return
   if (!Channel.permissionsFor(member.guild.me).has("SEND_MESSAGES")) return
   
-  let msg = doc.LeaveMsg.replace("{user}", member).replace("{server}", member.guild.name).replace("{username}", member.user.tag).replace("{members}", member.guild.memberCount).replace("{owner}", member.guild.owner.user.tag)
+  let msg = doc.JoinMsg.replace("{user}", member).replace("{server}", member.guild.name).replace("{username}", member.user.tag).replace("{members}", member.guild.memberCount).replace("{owner}", member.guild.owner.user.tag)
  
  Channel.send(msg)
 }).catch(err => {
