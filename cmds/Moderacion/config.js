@@ -20,6 +20,8 @@ module.exports = {
                 .addField("Prefix", "Para cambiar el prefix eliga uno diciendo \"prefix\"\n Ejemplo: config prefix - \n")
                 .addField("WelcomeMsg", "Para cambiar el mensaje de bienvenida diga \"welcomemsg\"\n Ejemplo: config welcomemsg \`#Canal-mencionado\` Bienvenido {user} a {server}\n")
                 .addField("Leavemsg", "Para cambiar el mensaje de despedida diga \"welcomemsg\"\n Ejemplo: config leavemsg \`#Canal-mencionado\` {user} a dejado {server}\n")
+                .addField("DisableWelcome", "Elimina el mensaje de bienvenida, si es que esta activado\n")
+                .addField("DisableLeave", "Elimina el mensaje de despedida, si es que esta activado\n")
                 .addField("Tags", "Los tags para los mensajes de bienvenida y despedida son:\n {user} : Menciona al usuario\n {username} : Muestra el nombre y el tag del usuario\n {server} : Muestra el nombre del servidor\n {owner} : Nombra al Owner del servidor con su tag\n {members} : Muestra el número de miembros desde que el usuario se unio o dejo el server.")
 
                 message.channel.send({ embed })
@@ -82,6 +84,8 @@ module.exports = {
                 .addField("Prefix", "Para cambiar el prefix eliga uno diciendo \"prefix\"\n Ejemplo: config prefix - \n")
                 .addField("WelcomeMsg", "Para cambiar el mensaje de bienvenida diga \"welcomemsg\"\n Ejemplo: config welcomemsg \`#Canal-mencionado\` Bienvenido {user} a {server}\n")
                 .addField("Leavemsg", "Para cambiar el mensaje de despedida diga \"welcomemsg\"\n Ejemplo: config leavemsg \`#Canal-mencionado\` {user} a dejado {server}\n")
+                .addField("DisableWelcome", "Elimina el mensaje de bienvenida, si es que esta activado\n")
+                .addField("DisableLeave", "Elimina el mensaje de despedida, si es que esta activado\n")
                 .addField("Tags", "Los tags para los mensajes de bienvenida y despedida son:\n {user} : Menciona al usuario\n {username} : Muestra el nombre y el tag del usuario\n {server} : Muestra el nombre del servidor\n {owner} : Nombra al Owner del servidor con su tag\n {members} : Muestra el número de miembros desde que el usuario se unio o dejo el server.")
 
                 message.channel.send({ embed })
