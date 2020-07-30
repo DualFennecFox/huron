@@ -1,8 +1,8 @@
 const musicData = require('./requirements/musicData')
 module.exports = {
-    name : 'disconnect',
+    name : 'leave',
     category: "Musica",
-    aliases: ['Disconnect', 'DISCONNECT'],
+    aliases: ['Leave', 'LEAVE', 'disconnect', 'Disconnect', 'DISCONNECT'],
     description : 'Este comando saca al bot del canal de voz del usuario si es que esta',
     usage: '!disconnect',
     examples: ['!disconnect'],
