@@ -59,7 +59,6 @@ module.exports = {
             case "disablewelcome" || "DisableWelcome" || "Disablewelcome" || "DISABLEWELCOME" || "disablewelcomemsg" || "DisableWelcomeMsg" || "DisableWelcomeMSG" || "DISABLEWELCOMEMSG":
                 Guild.findOne({ guildID: message.guild.id }).then(doc => {
                     if (!doc) {
-                       await getGuild(message.guild)
                        return message.channel.send("No existe un mensaje de bienvenida")
                     }
                     if (doc.JoinBool == false) return message.channel.send("Ya estaba desactivado el mensaje")
