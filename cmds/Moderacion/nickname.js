@@ -17,13 +17,13 @@ const Discord = require('discord.js');
         if (!user) user = message.author
         let member2 = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
         if (!member2) member2 = message.member
+        let name = args.slice(1).join(" ");
+        if (user.id === client.user.id) return member2.setNickname(name).then(message.channel.send("Se ha cambiado mi apodo"))
         let role = member2.roles.highest;
 
         if (message.guild.me.roles.highest.comparePositionTo(role) < 1) {
             return message.channel.send("Mi rol es muy bajo para poder cambiarle el nombre");
         }
-
-        let name = args.slice(1).join(" ");
 
         await member2.setNickname(name).then(message.channel.send(`Se ha cambiado el apodo de **${user.username}**`))
 
