@@ -39,6 +39,19 @@ module.exports = {
         "russia": ":flag_ru: Russia",
         "southafrica": ":flag_za:  South Africa"
     };
+    const roleEmbed = new Discord.MessageEmbed()
+    if (args[0] == "roles" || args[0] === 'r' || args[0] === 'role') {
+       let roles = await message.guild.roles.cache.filter(r => `<@&${r.id}>`).join(", ")
+
+       await message.channel.send(roleEmbed.setColor("RANDOM").setDescription(roles).setAuthor(`Roles del servidor`, message.guild.iconURL()).setThumbnail(message.guild.iconURL()))
+    }
+    else if (args[0] === "channels" || args[0] === "channel") {
+        const channelEmbed = new Discord.MessageEmbed()
+        let channels = await message.guild.channels.cache.filter(channel => `<#${channel.id}>`).join(", ")
+
+        await message.channel.send(channelEmbed.setColor("RANDOM").setDescription(channels).setAuthor(`Canales del servidor`, message.guild.iconURL()).setThumbnail(message.guild.iconURL()))
+    }
+    else {
     const embed = new Discord.MessageEmbed()
         .setAuthor(message.guild.name, message.guild.iconURL())
         .setColor("RANDOM")
@@ -46,7 +59,7 @@ module.exports = {
         .addField("ID", message.guild.id, true)
         .addField("Dueñ@", `${message.guild.owner.user.username}#${message.guild.owner.user.discriminator}`, true)
         .addField("Región", region[message.guild.region], true)
-        .addField("Miembros", `${message.guild.members.cache.size}`, true)
+        .addField("Miembros", `Todos: ${message.guild.members.cache.size}\nHumanos: ${message.guild.members.cache.filter(member => !member.user.bot).size}\nBots: ${message.guild.members.cache.filter(member => member.user.bot).size} `, true)
         .addField("Nivel de Verificación", verifLevels[message.guild.verificationLevel], true)
         .addField("Canales", message.guild.channels.cache.size, true)
         .addField("Roles", message.guild.roles.cache.size, true)
@@ -56,5 +69,6 @@ module.exports = {
     .catch(err => {
         console.log(err);
     })
+}
 }
 }

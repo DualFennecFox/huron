@@ -79,7 +79,7 @@ client.on('message', (message) => {
     if (!message.content.startsWith(prefix)) return;
 
      if (client.commands.has(cmd)) {
-
+message.guild.members.cache.filter(user => user.user.bot !== user.user.id).map(member => `<@!<${member.id}>`).join(", ")
        command = client.commands.get(cmd);
      } else {
        command = client.commands.get(client.aliases.get(cmd));

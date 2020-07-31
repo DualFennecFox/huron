@@ -8,6 +8,13 @@ const ytpl = require('ytpl')
 const ytsr = require('ytsr')
 const ytScrapper = require('yt-scraper')
 const getVideoId = require('get-video-id')
+function search(nameKey, myArray) {
+    for (var i = 0; i < myArray.length; i++) {
+        if (myArray[i].link.includes(nameKey)) {
+            return myArray[i];
+        }
+    }
+}
 function playSong(queue, message) {
     if (!musicData.server[message.guild.id]) musicData.server[message.guild.id] = {
         queue: [],
@@ -141,20 +148,14 @@ function playSong(queue, message) {
                     else if (args[0].match(/^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+/)) {
                           try {
                           const url = args[0];
-                            let ID = getVideoId(args[0]).id;
-                            ytsr.getFilters(ID).then(filters => {
-                                let filter = filters.get('Type').find(o => o.name === 'Video');
-                                  var options = {
-                                      limit: 1,
-                                      nextpageRef: filter.ref
-                                  }
-                              
-                            ytsr(filter, options).then(video => {
-                            const title = video.items[0].title
-                            const duration = video.items[0].duration
-                            const thumbnail = video.items[0].thumbnail;
-                            const channel = video.items[0].author.name
-                            const channelURL = video.items[0].author.ref
+                            let ID = getVideoId(args[0]).id
+                            ytsr(ID, { limit: 10 }).then(toSearch => {
+                            let video = await search(url, toSearch.items)
+                            const title = video.title
+                            const duration = video.duration
+                            const thumbnail = video.thumbnail;
+                            const channel = video.author.name
+                            const channelURL = video.author.ref
                             if (duration == '00:00') duration = 'Transmitiendo en Vivo';
                             const voiceChannel = message.member.voice.channel
                             
@@ -180,9 +181,6 @@ function playSong(queue, message) {
                         }).catch(err => {
                             console.error(err)
                         })
-                    }).catch(err => {
-                        console.error(err)
-                    })
                       } catch (err) {
                           console.error(err)
                           message.channel.send("Algo salio mal vuelva a intentarlo")
