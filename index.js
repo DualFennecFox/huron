@@ -77,7 +77,7 @@ client.on('message', (message) => {
    }
  
     if (!message.content.startsWith(prefix)) return;
-
+    
      if (client.commands.has(cmd)) {
 
        command = client.commands.get(cmd);

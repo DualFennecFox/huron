@@ -9,27 +9,30 @@ module.exports = {
     examples: ['!unban @Firulais', '!unban 556540723235651584', '!unban @Firulais Razon'],
     run: async (client , message, args) => {
    
-    let bannedMember = await client.users.fetch(args[0])
-        if(!bannedMember) return message.channel.send("Este usuario no esta baneado o solo no existe")
+    let User = message.mentions.users.first() || await client.users.fetch(args[0], { cache: true });
+    if (!User) return message.channel.send("Debes mencionar a un usuario o darme su id");
+    let bReason = args.slice(1).join(" ")
+    if (!bReason) bReason = "No se específico una razón"
 
-    let ubReason = args.slice(1).join(" ")
-        if(!ubReason) ubReason = "No se específico una razón"
+    let bannedMember = await message.guild.fetchBan(User)
+        if(!bannedMember) return message.channel.send("Este usuario no esta baneado")
+
 
     if(!message.member.hasPermission("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
     if(!message.guild.me.hasPermission(["KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para Banear miembros");
 
     try {
-        message.guild.members.unban(bannedMember, {reason: ubReason})
+        message.guild.members.unban(User, {reason: bReason})
     } catch(err) {
-        console.log(err.bannedMember)
+        console.log(err)
     }
 
     let unbanEmbed = new Discord.MessageEmbed()
     .setDescription("~UnBan~")
     .setColor("#0088ff")
-    .addField("Usuario Desbaneado", `${bannedMember} Y su id es ${bannedMember.id}`)
+    .addField("Usuario Desbaneado", `${User} Y su id es ${User.id}`)
     .addField("Desbaneado Por", `<@!${message.author.id}> Y su ID es ${message.author.id}`)
-    .addField("Razón de Desbaneo", ubReason);
+    .addField("Razón de Desbaneo", bReason);
     
     message.channel.send( unbanEmbed )
     .catch(err => {
