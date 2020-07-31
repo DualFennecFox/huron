@@ -9,11 +9,15 @@ module.exports = {
     examples: ['!unban @Firulais', '!unban 556540723235651584', '!unban @Firulais Razon'],
     run: async (client , message, args) => {
    
-    let User = message.mentions.users.first()
+    let User = message.mentions.users.first() || client.users.cache.get(args[0])
     if (!User) {
-        if (!args[0].match(/<@.?[0-9]*?>/g) || !args[0].match(/[^<>@]/g)) return message.channel.send("Debes mencionar a un usuario o darme su id");
-       let UserID = args[0].replace("<@", '').replace("!", '').replace(">", '')
+       let UserID = args[0].replace(/([^0-9])/g, '')
+       try {
         User = await client.users.fetch(UserID, { cache: true });
+       } catch (err) {
+           console.error(err)
+           message.channel.send("Debes mencionar a un usuario o darme su id")
+       }
     }
     if (!User) return message.channel.send("Debes mencionar a un usuario o darme su id");
     let bReason = args.slice(1).join(" ")

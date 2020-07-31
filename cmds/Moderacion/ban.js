@@ -9,8 +9,29 @@ const Discord = require('discord.js');
     examples: ['!ban @Firulais', '!ban 556540723235651584', '!ban @Firulais Razon'],
     run: async (client , message, args) => {
 
-
-    let User = message.mentions.users.first() || await client.users.fetch(args[0], { cache: true });
+        let User = message.mentions.users.first() || client.users.cache.get(args[0])
+        if (!User) {
+           let UserID = args[0].replace(/([^0-9])/g, '')
+           try {
+            User = await client.users.fetch(UserID, { cache: true });
+           } catch (err) {
+               console.error(err)
+               message.channel.send("Debes mencionar a un usuario o darme su id")
+           }
+        }
+        if (!User) return message.channel.send("Debes mencionar a un usuario o darme su id");
+        let bReason = args.slice(1).join(" ")
+        if (!bReason) bReason = "No se específico una razón"
+        try {
+        let bans = await message.guild.fetchBans();
+    
+        let bannedMember = bans.find(user => user.id === User.id)
+    
+        if(!bannedMember) return message.channel.send("Este usuario no esta baneado")
+    
+        } catch (err) {
+            console.error(err)
+        }
     if (!User) return message.channel.send("Debes mencionar a un usuario o darme su id");
     let bReason = args.slice(1).join(" ")
     if(!bReason) bReason = "No se específico una razón"
