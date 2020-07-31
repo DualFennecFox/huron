@@ -79,16 +79,16 @@ client.on('message', (message) => {
     if (!message.content.startsWith(prefix)) return;
 
      if (client.commands.has(cmd)) {
- 
+
        command = client.commands.get(cmd);
      } else {
        command = client.commands.get(client.aliases.get(cmd));
      }
-        
        if (command) command.run(client, message, args, prefix);
   });
   })
    });
+
 
 client.on('guildCreate', async gData => {
   const scount = client.guilds.cache.size
