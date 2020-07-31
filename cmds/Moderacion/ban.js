@@ -27,7 +27,7 @@ const Discord = require('discord.js');
     
         let bannedMember = bans.find(user => user.id === User.id)
     
-        if(!bannedMember) return message.channel.send("Este usuario ya esta baneado")
+        if(bannedMember) return message.channel.send("Este usuario ya esta baneado")
     
         } catch (err) {
             console.error(err)
