@@ -43,13 +43,13 @@ module.exports = {
     if (args[0] == "roles" || args[0] === 'r' || args[0] === 'role') {
        let roles = await message.guild.roles.cache.map(r => `<@&${r.id}>`).join(", ")
 
-       await message.channel.send(roleEmbed.setColor("RANDOM").setDescription(roles).setAuthor(`Roles del servidor`, message.guild.iconURL()).setThumbnail(message.guild.iconURL()))
+       await message.channel.send(roleEmbed.setColor("RANDOM").setDescription(roles).setAuthor(`Roles del servidor`, message.guild.iconURL()).setThumbnail(message.guild.iconURL()).setFooter(`${message.guild.name} | ${message.guild.id}`))
     }
     else if (args[0] === "channels" || args[0] === "channel") {
         const channelEmbed = new Discord.MessageEmbed()
         let channels = await message.guild.channels.cache.filter(channel => channel.type !== "category").map(channel => `<#${channel.id}>`).join(", ")
 
-        await message.channel.send(channelEmbed.setColor("RANDOM").setDescription(channels).setAuthor(`Canales del servidor`, message.guild.iconURL()).setThumbnail(message.guild.iconURL()))
+        await message.channel.send(channelEmbed.setColor("RANDOM").setDescription(channels).setAuthor(`Canales del servidor`, message.guild.iconURL()).setThumbnail(message.guild.iconURL()).setFooter(`${message.guild.name} | ${message.guild.id}`))
     }
     else {
        let channels = message.guild.channels.cache.size 
