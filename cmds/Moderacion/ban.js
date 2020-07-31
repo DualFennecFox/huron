@@ -10,9 +10,7 @@ const Discord = require('discord.js');
     run: async (client , message, args) => {
 
 
-    let bUser = message.mentions.users.first() || client.users.cache.get(args[0]);
-    let User = message.mentions.users.first() || client.users.cache.get(args[0]);
-    if (!bUser) User = client.users.fetch(bUser.id, { cache: true })
+    let User = message.mentions.users.first() || await client.users.fetch(args[0], { cache: true });
     if (!User) return message.channel.send("Debes mencionar a un usuario o darme su id");
     let bReason = args.join(" ").replace(User, '')
     if(!bReason) bReason = "No se específico una razón"
@@ -35,7 +33,7 @@ const Discord = require('discord.js');
     .addField("Usuario Baneado", `${User} Y su ID es ${User.id}`)
     .addField("Baneado Por", `<@!${message.author.id}> Y su ID es ${message.author.id}`)
     .addField("Razón de Baneo", bReason);
-    message.guild.member(User).ban(bReason);
+    message.guild.ban(User, {reason: bReason });
 
     message.channel.send( banEmbed )
     .catch(err => {
