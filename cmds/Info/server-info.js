@@ -41,11 +41,13 @@ module.exports = {
     };
     const roleEmbed = new Discord.MessageEmbed()
     if (args[0] == "roles" || args[0] === 'r' || args[0] === 'role') {
+       if(!message.member.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR" || "MANAGE_GUILD") || !message.guild.owner) return message.channel.send("No tienes permisos para ver los roles del servidor")
        let roles = await message.guild.roles.cache.map(r => `<@&${r.id}>`).join(", ")
 
        await message.channel.send(roleEmbed.setColor("RANDOM").setDescription(roles).setAuthor(`Roles del servidor`, message.guild.iconURL()).setThumbnail(message.guild.iconURL()).setFooter(`${message.guild.name} | ${message.guild.id}`))
     }
     else if (args[0] === "channels" || args[0] === "channel") {
+        if(!message.member.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR" || "MANAGE_GUILD") || !message.guild.owner) return message.channel.send("No tienes permisos para ver los canales del servidor")
         const channelEmbed = new Discord.MessageEmbed()
         let channels = await message.guild.channels.cache.filter(channel => channel.type !== "category" && channel.type !== "voice").map(channel => `<#${channel.id}>`).join(", ")
 
