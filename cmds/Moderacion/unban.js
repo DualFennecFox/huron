@@ -25,9 +25,8 @@ module.exports = {
     try {
     let bans = await message.guild.fetchBans();
 
-    let bannedMember = bans.find(user => user.id === User.id)
+    let bannedMember = bans.find(user => user.user.id === User.id)
     
-    console.log(bannedMember)
     if(!bannedMember) return message.channel.send("Este usuario no esta baneado")
 
     } catch (err) {
