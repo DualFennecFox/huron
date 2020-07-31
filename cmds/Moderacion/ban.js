@@ -16,7 +16,7 @@ const Discord = require('discord.js');
             User = await client.users.fetch(UserID);
            } catch (err) {
                console.error(err)
-               message.channel.send("Debes mencionar a un usuario o darme su id")
+               return message.channel.send("Debes mencionar a un usuario o darme su id")
            }
         }
         if (!User) return message.channel.send("Debes mencionar a un usuario o darme su id");
