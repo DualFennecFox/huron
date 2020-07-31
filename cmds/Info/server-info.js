@@ -47,7 +47,7 @@ module.exports = {
     }
     else if (args[0] === "channels" || args[0] === "channel") {
         const channelEmbed = new Discord.MessageEmbed()
-        let channels = await message.guild.channels.cache.filter(channel => channel.type !== "category").map(channel => `<#${channel.id}>`).join(", ")
+        let channels = await message.guild.channels.cache.filter(channel => channel.type !== "category" && channel.type !== "voice").map(channel => `<#${channel.id}>`).join(", ")
 
         await message.channel.send(channelEmbed.setColor("RANDOM").setDescription(channels).setAuthor(`Canales del servidor`, message.guild.iconURL()).setThumbnail(message.guild.iconURL()).setFooter(`${message.guild.name} | ${message.guild.id}`))
     }
