@@ -11,7 +11,8 @@ module.exports = {
    
     let User = message.mentions.users.first()
     if (!User) {
-        User = await client.users.fetch(args[0], { cache: true });
+       let UserID = User.replace("<@", '').replace("!", '').replace(">", '')
+        User = await client.users.fetch(UserID, { cache: true });
     }
     if (!User) return message.channel.send("Debes mencionar a un usuario o darme su id");
     let bReason = args.slice(1).join(" ")
