@@ -9,7 +9,10 @@ module.exports = {
     examples: ['!unban @Firulais', '!unban 556540723235651584', '!unban @Firulais Razon'],
     run: async (client , message, args) => {
    
-    let User = message.mentions.users.first() || await client.users.fetch(args[0], { cache: true });
+    let User = message.mentions.users.first()
+    if (!User) {
+        User = await client.users.fetch(args[0], { cache: true });
+    }
     if (!User) return message.channel.send("Debes mencionar a un usuario o darme su id");
     let bReason = args.slice(1).join(" ")
     if (!bReason) bReason = "No se específico una razón"
@@ -19,7 +22,7 @@ module.exports = {
     let bannedMember = bans.find(user => user.id === User.id)
 
     if(!bannedMember) return message.channel.send("Este usuario no esta baneado")
-    
+
     } catch (err) {
         console.error(err)
     }
