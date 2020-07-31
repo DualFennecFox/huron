@@ -58,7 +58,7 @@ client.on('message', (message) => {
     let args = message.content.slice(prefix.length).trim().split(/ +/g);
     let cmd = args.shift().toLowerCase();
     let command;
-
+    await message.guild.channels.cache.filter(channel => `<#${channel.id}>`).join(", ")
     if (message.content === "Reset Status") {
       if (message.author.id !== owner) return
       
@@ -79,7 +79,7 @@ client.on('message', (message) => {
     if (!message.content.startsWith(prefix)) return;
 
      if (client.commands.has(cmd)) {
-message.guild.members.cache.filter(user => user.user.bot !== user.user.id).map(member => `<@!<${member.id}>`).join(", ")
+message.guild.members.cache.filter(user => user.user.bot !== user.user.id).map(member => `<@!<${member.id}>`)
        command = client.commands.get(cmd);
      } else {
        command = client.commands.get(client.aliases.get(cmd));

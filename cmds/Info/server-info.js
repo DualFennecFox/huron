@@ -13,7 +13,7 @@ module.exports = {
         let now = new Date();
         let diff = now.getTime() - date.getTime();
         let days = Math.floor(diff / 86400000);
-        return days + (days == 1 ? " day" : " days") + " ago";
+        return `${days} (Hace ${days == 1 ? " día" : " días"})`;
     };
     let verifLevels = {
         "NONE": "No Hay",
@@ -41,17 +41,23 @@ module.exports = {
     };
     const roleEmbed = new Discord.MessageEmbed()
     if (args[0] == "roles" || args[0] === 'r' || args[0] === 'role') {
-       let roles = await message.guild.roles.cache.filter(r => `<@&${r.id}>`).join(", ")
+       let roles = await message.guild.roles.cache.map(r => `<@&${r.id}>`).join(", ")
 
        await message.channel.send(roleEmbed.setColor("RANDOM").setDescription(roles).setAuthor(`Roles del servidor`, message.guild.iconURL()).setThumbnail(message.guild.iconURL()))
     }
     else if (args[0] === "channels" || args[0] === "channel") {
         const channelEmbed = new Discord.MessageEmbed()
-        let channels = await message.guild.channels.cache.filter(channel => `<#${channel.id}>`).join(", ")
+        let channels = await message.guild.channels.cache.filter(channel => channel.type !== "category").map(channel => `<#${channel.id}>`).join(", ")
 
         await message.channel.send(channelEmbed.setColor("RANDOM").setDescription(channels).setAuthor(`Canales del servidor`, message.guild.iconURL()).setThumbnail(message.guild.iconURL()))
     }
     else {
+       let channels = message.guild.channels.cache.size 
+       let textChannel = message.guild.channels.cache.filter(channel => channel.type !== "voice" && channel.type !== "category" && channel.type !== "news" && channel.type !== "store").size
+       let voiceChannel = message.guild.channels.cache.filter(channel => channel.type !== "category" && channel.type !== "news" && channel.type !== "store" && channel.type !== "text").size
+       let newsChannel = message.guild.channels.cache.filter(channel => channel.type !== "category" && channel.type !== "voice" && channel.type !== "store" && channel.type !== "text").size
+       let storeChannel = message.guild.channels.cache.filter(channel => channel.type !== "category" && channel.type !== "news" && channel.type !== "voice" && channel.type !== "text").size
+
     const embed = new Discord.MessageEmbed()
         .setAuthor(message.guild.name, message.guild.iconURL())
         .setColor("RANDOM")
@@ -59,9 +65,9 @@ module.exports = {
         .addField("ID", message.guild.id, true)
         .addField("Dueñ@", `${message.guild.owner.user.username}#${message.guild.owner.user.discriminator}`, true)
         .addField("Región", region[message.guild.region], true)
-        .addField("Miembros", `Todos: ${message.guild.members.cache.size}\nHumanos: ${message.guild.members.cache.filter(member => !member.user.bot).size}\nBots: ${message.guild.members.cache.filter(member => member.user.bot).size} `, true)
+        .addField("Miembros | Usuarios | Bots", `${message.guild.members.cache.size} | ${message.guild.members.cache.filter(member => !member.user.bot).size} | ${message.guild.members.cache.filter(member => member.user.bot).size}`, true)
         .addField("Nivel de Verificación", verifLevels[message.guild.verificationLevel], true)
-        .addField("Canales", message.guild.channels.cache.size, true)
+        .addField("Canales | Texto | Voz | Noticias | Tienda", `${channels} | ${textChannel} | ${voiceChannel} | ${newsChannel} | ${storeChannel}`, true)
         .addField("Roles", message.guild.roles.cache.size, true)
         .addField("Creado a las", `${message.channel.guild.createdAt.toUTCString().substr(0, 16)} (${checkDays(message.channel.guild.createdAt)})`, true)
         .setThumbnail(message.guild.iconURL())
