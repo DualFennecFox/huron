@@ -142,7 +142,14 @@ function playSong(queue, message) {
                           try {
                           const url = args[0];
                             let ID = getVideoId(args[0]).id;
-                            ytsr(ID, { limit: 1 }).then(video => {
+                            ytsr.getFilters(ID).then(filters => {
+                                let filter = filters.get('Type').find(o => o.name === 'Video');
+                                  var options = {
+                                      limit: 1,
+                                      nextpageRef: filter.ref
+                                  }
+                              
+                            ytsr(filter, options).then(video => {
                             const title = video.items[0].title
                             const duration = video.items[0].duration
                             const thumbnail = video.items[0].thumbnail;
@@ -173,6 +180,9 @@ function playSong(queue, message) {
                         }).catch(err => {
                             console.error(err)
                         })
+                    }).catch(err => {
+                        console.error(err)
+                    })
                       } catch (err) {
                           console.error(err)
                           message.channel.send("Algo salio mal vuelva a intentarlo")
