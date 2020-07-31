@@ -12,7 +12,7 @@ module.exports = {
         let now = new Date();
         let diff = now.getTime() - date.getTime();
         let days = Math.floor(diff / 86400000);
-        return days + (days == 1 ? " day" : " days") + " ago";
+        return `Hace ${days} ${days == 1 ? "día" : "días"}`;
         };
     let user = message.mentions.users.first() || client.users.cache.get(args[0]) || client.users.cache.get(args[1]) || message.author
     if (!message.guild.member(user)) user = message.author
