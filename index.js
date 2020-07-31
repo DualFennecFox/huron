@@ -58,7 +58,7 @@ client.on('message', (message) => {
     let args = message.content.slice(prefix.length).trim().split(/ +/g);
     let cmd = args.shift().toLowerCase();
     let command;
-    await message.guild.channels.cache.filter(channel => `<#${channel.id}>`).join(", ")
+
     if (message.content === "Reset Status") {
       if (message.author.id !== owner) return
       
