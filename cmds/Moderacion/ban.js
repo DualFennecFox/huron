@@ -12,8 +12,8 @@ const Discord = require('discord.js');
 
     let User = message.mentions.users.first() || await client.users.fetch(args[0], { cache: true });
     if (!User) return message.channel.send("Debes mencionar a un usuario o darme su id");
-    let bReason = args.join(" ").replace(User, '')
-    if(!bReason || bReason == User) bReason = "No se específico una razón"
+    let bReason = args.slice(1).join(" ")
+    if(!bReason) bReason = "No se específico una razón"
     if (message.guild.member(User)) {
     bUser = message.guild.member(User)
     let role = bUser.roles.highest;
