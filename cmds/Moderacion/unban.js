@@ -13,10 +13,16 @@ module.exports = {
     if (!User) return message.channel.send("Debes mencionar a un usuario o darme su id");
     let bReason = args.slice(1).join(" ")
     if (!bReason) bReason = "No se específico una razón"
+    try {
+    let bans = await message.guild.fetchBans();
 
-    let bannedMember = await message.guild.fetchBan(User)
-        if(!bannedMember) return message.channel.send("Este usuario no esta baneado")
+    let bannedMember = bans.find(user => user.id === User.id)
 
+    if(!bannedMember) return message.channel.send("Este usuario no esta baneado")
+    
+    } catch (err) {
+        console.error(err)
+    }
 
     if(!message.member.hasPermission("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
     if(!message.guild.me.hasPermission(["KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para Banear miembros");
@@ -35,8 +41,5 @@ module.exports = {
     .addField("Razón de Desbaneo", bReason);
     
     message.channel.send( unbanEmbed )
-    .catch(err => {
-        console.log(err);
-    })
 }
 }
