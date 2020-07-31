@@ -46,7 +46,7 @@ const Discord = require('discord.js');
     }
 
     let banEmbed = new Discord.MessageEmbed()
-    .setDescription("~Ban~")
+    .setAuthor("Ban", User.displayAvatarURL())
     .setColor("#0088ff")
     .addField("Usuario Baneado", `${User} Y su ID es ${User.id}`)
     .addField("Baneado Por", `<@!${message.author.id}> Y su ID es ${message.author.id}`)
