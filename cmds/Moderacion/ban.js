@@ -33,7 +33,7 @@ const Discord = require('discord.js');
     .addField("Usuario Baneado", `${User} Y su ID es ${User.id}`)
     .addField("Baneado Por", `<@!${message.author.id}> Y su ID es ${message.author.id}`)
     .addField("Razón de Baneo", bReason);
-    message.guild.member(User).ban(bReason)
+    message.guild.members.ban(User.id, { reason: bReason })
 
     message.channel.send( banEmbed )
     .catch(err => {
