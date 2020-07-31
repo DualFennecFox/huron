@@ -13,7 +13,7 @@ const Discord = require('discord.js');
         if (!User) {
            let UserID = args[0].replace(/([^0-9])/g, '')
            try {
-            User = await client.users.fetch(UserID, { cache: true });
+            User = await client.users.fetch(UserID);
            } catch (err) {
                console.error(err)
                message.channel.send("Debes mencionar a un usuario o darme su id")
@@ -27,14 +27,11 @@ const Discord = require('discord.js');
     
         let bannedMember = bans.find(user => user.id === User.id)
     
-        if(!bannedMember) return message.channel.send("Este usuario no esta baneado")
+        if(!bannedMember) return message.channel.send("Este usuario ya esta baneado")
     
         } catch (err) {
             console.error(err)
         }
-    if (!User) return message.channel.send("Debes mencionar a un usuario o darme su id");
-    let bReason = args.slice(1).join(" ")
-    if(!bReason) bReason = "No se específico una razón"
     if (message.guild.member(User)) {
     bUser = message.guild.member(User)
     let role = bUser.roles.highest;

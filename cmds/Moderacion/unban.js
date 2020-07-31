@@ -13,7 +13,7 @@ module.exports = {
     if (!User) {
        let UserID = args[0].replace(/([^0-9])/g, '')
        try {
-        User = await client.users.fetch(UserID, { cache: true });
+        User = await client.users.fetch(UserID);
        } catch (err) {
            console.error(err)
            message.channel.send("Debes mencionar a un usuario o darme su id")
