@@ -25,7 +25,8 @@ const {search, updateGuild, createGuild } = require('./models/functions');
       let doc = search(bUser.id, db.warns)
 
       if (!doc) return message.channel.send("Ese usuario no tiene advertencias")
-      doc = {}
+      
+      delete doc
       await db.save();
 
       return message.channel.send(`Se han eliminado las infracciones de ${bUser}`)
