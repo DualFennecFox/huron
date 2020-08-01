@@ -1,8 +1,7 @@
 const Discord = require('discord.js');
 const Guild = require('./models/Guild')
 const mongoose = require('mongoose');
-const { updateGuild, createGuild } = require('./models/functions');
-const { bulkWrite } = require('./models/Guild');
+const {search, updateGuild, createGuild } = require('./models/functions');
     module.exports = {
     name : 'warn',
     category: "Moderacion",
@@ -11,16 +10,10 @@ const { bulkWrite } = require('./models/Guild');
     usage: '!warn',
     examples: ['!warn @Firulais', '!warn 556540723235651584', '!warn @Firulais Razon'],
     run: async (client , message, args) => {
-        function search(nameKey, myArray) {
-        for (var i = 0; i < myArray.length; i++) {
-            if (myArray[i].warnUserID === nameKey) {
-                return myArray[i];
-            }
-        }
-    }
+        
     if (message.author.id !== process.env.OWNER) return
 
-    if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
+    if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
 
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o darme su id")
     let bUser = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
@@ -30,13 +23,12 @@ const { bulkWrite } = require('./models/Guild');
     if(!bReason) bReason = "No se específico una razón"
 
     if (bUser.id === message.author.id) return message.channel.send("No te puedes warnear a ti mismo")  
-    if(bUser.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No puedes advertir a un moderador!");
+    if(bUser.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS") || !message.guild.owner) return message.channel.send("No puedes advertir a un moderador!");
  
    let db = await Guild.findOne({ guildID: message.guild.id })
 
    await Guild.findOne({ guildID: message.guild.id}, {warns: { $elemMatch: { warnUserID: bUser.id } } }).then((result) => {
-    console.log(result)
-    if (result) console.log(result.warns)
+
     let warnLevel
     let doc = search(bUser.id, db.warns)
         if (!result) {

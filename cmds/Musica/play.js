@@ -8,6 +8,7 @@ const ytpl = require('ytpl')
 const ytsr = require('ytsr')
 const ytScrapper = require('yt-scraper')
 const getVideoId = require('get-video-id')
+const { search } = require('../Moderacion/models/functions')
 function search(nameKey, myArray) {
     for (var i = 0; i < myArray.length; i++) {
         if (myArray[i].link.includes(nameKey)) {

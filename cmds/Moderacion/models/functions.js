@@ -45,8 +45,16 @@ let getGuild = async (guild) => {
     const newGuild = new Guild(merged);
     return newGuild.save()
   }
+  function search(nameKey, myArray) {
+    for (var i = 0; i < myArray.length; i++) {
+        if (myArray[i].warnUserID === nameKey) {
+            return myArray[i];
+        }
+    }
+}
 module.exports = {
     getGuild,
     updateGuild,
-    createGuild
+    createGuild,
+    search
 }
