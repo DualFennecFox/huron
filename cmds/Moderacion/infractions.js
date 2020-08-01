@@ -21,7 +21,6 @@ const {search, updateGuild, createGuild } = require('./models/functions');
 
     let db = await Guild.findOne({ guildID: message.guild.id })
 
-   await Guild.findOne({ guildID: message.guild.id}, {warns: { $elemMatch: { warnUserID: bUser.id } } }).then((result) => {
 
     let doc = search(bUser.id, db.warns)
 
@@ -37,10 +36,7 @@ const {search, updateGuild, createGuild } = require('./models/functions');
     .setAuthor(`Infracciones de: ${bUser.user.tag}`, bUser.user.displayAvatarURL())
     .setDescription(map)
     .setFooter(`${bUser.user.username} | ${bUser.user.id}`)
-    
-   }).catch(err => {
-       console.error(err)
-       return message.channel.send("Hubo un error al mostrar las infracciones")
-   })
+
+    message.channel.send({ embed })
     }
 }
