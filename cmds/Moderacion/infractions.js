@@ -34,7 +34,7 @@ const {search, updateGuild, createGuild } = require('./models/functions');
     let map = warns.map(user => user).join("\n")
 
     const embed = new Discord.MessageEmbed()
-    .setAuthor(`Infracciones de: ${bUser.user.tag}`, bUser.displayAvatarURL())
+    .setAuthor(`Infracciones de: ${bUser.user.tag}`, bUser.user.displayAvatarURL())
     .setDescription(map)
     .setFooter(`${bUser.user.username} | ${bUser.user.id}`)
     
