@@ -9,6 +9,7 @@ module.exports = {
     examples: ['!unban @Firulais', '!unban 556540723235651584', '!unban @Firulais Razon'],
     run: async (client , message, args) => {
    
+    if (args.length <= 0) return message.channel.send("Debes mencionar a un usuario o darme su id")
     let User = message.mentions.users.first() || client.users.cache.get(args[0])
     if (!User) {
        let UserID = args[0].replace(/([^0-9])/g, '')
@@ -16,10 +17,10 @@ module.exports = {
         User = await client.users.fetch(UserID);
        } catch (err) {
            console.error(err)
-           message.channel.send("Debes mencionar a un usuario o darme su id")
+           message.channel.send("Ese no parece ser un usuario valido")
        }
     }
-    if (!User) return message.channel.send("Debes mencionar a un usuario o darme su id");
+    if (!User) return message.channel.send("Ese no parece ser un usuario valido");
     let bReason = args.slice(1).join(" ")
     if (!bReason) bReason = "No se específico una razón"
     try {
