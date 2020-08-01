@@ -27,7 +27,9 @@ const {search, updateGuild, createGuild, searchAndDelete } = require('./models/f
 
       if (!doc) return message.channel.send("Ese usuario no tiene advertencias")
       
-      await searchAndDelete(bUser.id, db.warns)
+      let number = searchAndDelete(bUser.id, db.warns)
+
+      await doc.warns.pull(number)
 
       db.save();
 
