@@ -30,7 +30,7 @@ const { inlineArrayTransformer } = require('common-tags');
       
       let number = searchAndDelete(bUser.id, db.warns)
 
-     db.warns.splice(number)
+     db.warns.splice(number, 1)
 
       db.save()
 
