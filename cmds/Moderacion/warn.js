@@ -78,7 +78,7 @@ const {search, updateGuild, createGuild } = require('./models/functions');
             db.save()
         }
         let number
-       if (result.warns) number = doc.warnLevel
+       if (doc.warnLevel) number = doc.warnLevel
        else number = 1
         warnLevel = parseInt(number)
         
