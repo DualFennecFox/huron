@@ -88,7 +88,7 @@ const { bulkWrite } = require('./models/Guild');
             db.save()
         }
         let number
-       if (result.warns && doc.warnLevel) number = result.warns[0].warnLevel
+       if (result.warns && doc.warnLevel) number = doc.warnLevel
        else number = 1
         warnLevel = parseInt(number)
         
