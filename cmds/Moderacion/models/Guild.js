@@ -13,5 +13,6 @@ const guildSchema = mongoose.Schema({
     LeaveBool: Boolean,
     WelcomeChannel: String,
     LeaveChannel: String,
+    warns: []
   })
   module.exports = mongoose.model("Guild", guildSchema)

@@ -17,6 +17,7 @@ let getGuild = async (guild) => {
         LeaveBool: false,
         WelcomeChannel: "",
         LeaveChannel: "",
+        warns: []
       };
       try {
         createGuild(newGuild);
