@@ -52,9 +52,17 @@ let getGuild = async (guild) => {
         }
     }
 }
+function searchAndDelete(nameKey, myArray) {
+  for (var i = 0; i < myArray.length; i++) {
+  if (myArray[i].warnUserID === nameKey) {
+      return myArray.pull(i);
+  }
+}
+}
 module.exports = {
     getGuild,
     updateGuild,
     createGuild,
-    search
+    search,
+    searchAndDelete
 }

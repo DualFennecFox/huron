@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const Guild = require('./models/Guild')
 const mongoose = require('mongoose');
-const {search, updateGuild, createGuild } = require('./models/functions');
+const {search, updateGuild, createGuild, searchAndDelete } = require('./models/functions');
     module.exports = {
     name : 'clearinfractions',
     category: "Moderacion",
@@ -26,11 +26,8 @@ const {search, updateGuild, createGuild } = require('./models/functions');
 
       if (!doc) return message.channel.send("Ese usuario no tiene advertencias")
       
-      for (var i = 0; i < db.warns.length; i++) {
-        if (db.warns[i].warnUserID === bUser.id) {
-            return db.warns.pull(i);
-        }
-    }
+      searchAndDelete(bUser.id, db.warns)
+
       await db.save();
 
       return message.channel.send(`Se han eliminado las infracciones de ${bUser}`)
