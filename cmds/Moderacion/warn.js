@@ -88,7 +88,9 @@ const { bulkWrite } = require('./models/Guild');
             result.warns[0].warnLevel = warnLevel + 1
             result.save()
         }
-        let number = result.warns[0].warnLevel
+        let number
+       if (result.warns && doc.warnLevel) number = result.warns[0].warnLevel
+       else number = 1
         warnLevel = parseInt(number)
         
        message.channel.send(`Se ha advertido a ${bUser}, tiene ${warnLevel} warns`)
