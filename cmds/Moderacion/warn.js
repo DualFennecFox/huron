@@ -30,10 +30,10 @@ const { bulkWrite } = require('./models/Guild');
 
    let userID = Guild.findOne({ guildID: message.guild.id}, {warns: { $elemMatch: { warnUserID: bUser.id } } }).then((result) => {
        console.log(result.warns)
-   
+    let warnLevel
         if (!result) {
            let number = 0
-           let warnLevel = parseInt(number)
+           warnLevel = parseInt(number)
            const newGuild = {
             guildID: guild.id,
             guildName: guild.name,
@@ -59,7 +59,7 @@ const { bulkWrite } = require('./models/Guild');
         } 
         else if (!result.warns[0] || !result.warns[0].warnUserID) {
             let number = 0
-            let warnLevel = parseInt(number)
+            warnLevel = parseInt(number)
             db.warns.push({
                 _id: mongoose.Types.ObjectId(),
                 warnUser: bUser.user.username,
@@ -72,7 +72,7 @@ const { bulkWrite } = require('./models/Guild');
         }
         else {
             let number = result.warns[0].warnLevel
-            let warnLevel = parseInt(number)
+            warnLevel = parseInt(number)
 
             result.warns[0].warnedByID.push(message.author.id)
             result.warns[0].warnReason.push(bReason)
@@ -80,7 +80,7 @@ const { bulkWrite } = require('./models/Guild');
             db.save()
         }
         let number = result.warns[0].warnLevel
-        let warnLevel = parseInt(number)
+        warnLevel = parseInt(number)
         
        message.channel.send(`Se ha advertido a ${bUser}, tiene ${warnLevel + 1} warns`)
     }).catch(err => {
