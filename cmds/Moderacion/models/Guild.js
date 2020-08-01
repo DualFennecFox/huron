@@ -14,7 +14,7 @@ const guildSchema = mongoose.Schema({
     WelcomeChannel: String,
     LeaveChannel: String,
     warns: [{
-      _id: mongoose.Schema.Types.ObjectId(),
+      _id: mongoose.Types.ObjectId(),
       warnUser: String,
       warnUserID: String,
       warnedByID: [],
