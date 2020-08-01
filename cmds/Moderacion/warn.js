@@ -35,10 +35,10 @@ const { bulkWrite } = require('./models/Guild');
            let number = 0
            warnLevel = parseInt(number)
            const newGuild = {
-            guildID: guild.id,
-            guildName: guild.name,
-            guildOwner: guild.owner.user.username,
-            guildOwnerID: guild.ownerID,
+            guildID: message.guild.id,
+            guildName: message.guild.name,
+            guildOwner: message.guild.owner.user.username,
+            guildOwnerID: message.guild.ownerID,
             prefix: '!',
             JoinMsg: "",
             JoinBool: false,
@@ -77,7 +77,7 @@ const { bulkWrite } = require('./models/Guild');
             result.warns[0].warnedByID.push(message.author.id)
             result.warns[0].warnReason.push(bReason)
             result.warns[0].warnLevel = warnLevel + 1
-            db.save()
+            userID.save()
         }
         let number = result.warns[0].warnLevel
         warnLevel = parseInt(number)
