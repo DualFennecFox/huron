@@ -29,7 +29,9 @@ const {search, updateGuild, createGuild, searchAndDelete } = require('./models/f
       
       let number = searchAndDelete(bUser.id, db.warns)
 
-      db.update({ warns: { $pull: number }}).exec()
+      db.warns.pull(number)
+
+      db.save()
 
       return message.channel.send(`Se han eliminado las infracciones de ${bUser}`)
     }
