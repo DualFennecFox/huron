@@ -29,7 +29,7 @@ const {search, updateGuild, createGuild, searchAndDelete } = require('./models/f
       
       let number = searchAndDelete(bUser.id, db.warns)
 
-      await doc.warns.pull(number)
+      await db.warns.pull(number)
 
       db.save();
 
