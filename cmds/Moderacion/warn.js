@@ -11,6 +11,7 @@ const {search, updateGuild, createGuild } = require('./models/functions');
     examples: ['!warn @Firulais', '!warn 556540723235651584', '!warn @Firulais Razon'],
     run: async (client , message, args) => {
 
+    if (message.author.id !== process.env.OWNER) return
     if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
 
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o darme su id")

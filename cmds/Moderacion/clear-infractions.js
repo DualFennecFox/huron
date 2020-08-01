@@ -12,6 +12,7 @@ const {search, updateGuild, createGuild, searchAndDelete } = require('./models/f
     run: async (client , message, args) => {
     if (!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
 
+    if (message.author.id !== process.env.OWNER) return
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o remover todas las infracciones con \"all\"")
     let bUser = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
     
@@ -26,9 +27,9 @@ const {search, updateGuild, createGuild, searchAndDelete } = require('./models/f
 
       if (!doc) return message.channel.send("Ese usuario no tiene advertencias")
       
-      searchAndDelete(bUser.id, db.warns)
+      await searchAndDelete(bUser.id, db.warns)
 
-      await db.save();
+      db.save();
 
       return message.channel.send(`Se han eliminado las infracciones de ${bUser}`)
     }
