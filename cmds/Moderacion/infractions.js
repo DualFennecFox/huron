@@ -30,7 +30,7 @@ const {search, updateGuild, createGuild } = require('./models/functions');
     for (let i = 0; i < doc.warnLevel; i++) {
         warns.push(`**Usuario:** <@!${doc.warnedByID[i]}>\n**Razón:** ${doc.warnReason[i]}`)
     }
-    let map = warns.map(user => user).join("\n")
+    let map = warns.map(user => user).join("\n\n")
 
     const embed = new Discord.MessageEmbed()
     .setAuthor(`Infracciones de: ${bUser.user.tag}`, bUser.user.displayAvatarURL())
