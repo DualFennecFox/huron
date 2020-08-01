@@ -61,6 +61,8 @@ const { bulkWrite } = require('./models/Guild');
             createGuild(newGuild)
         } 
         else if (!result.warns) {
+            let number = 0
+            let warnLevel = parseInt(number)
             result.warns.push({
                 _id: mongoose.Types.ObjectId(),
                 warnUser: bUser.user.username,
@@ -73,7 +75,7 @@ const { bulkWrite } = require('./models/Guild');
                 }]
                 })
         }
-        else if (!result.warns[bUser.id]) {
+        else if (!result.warns[0].warnUserID) {
             let number = 0
             let warnLevel = parseInt(number)
              result.warns[bUser.id] = {
@@ -100,7 +102,7 @@ const { bulkWrite } = require('./models/Guild');
             }]})
         }
         db.save()
-       message.channel.send(`Se ha warneado a ${bUser}, tiene ${warnLevel++} warns`)
+       message.channel.send(`Se ha advertido a ${bUser}, tiene ${warnLevel++} warns`)
     }).catch(err => {
         console.error(err)
         return message.channel.send("Hubo un error al advertir a este usuario")
