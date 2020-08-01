@@ -60,7 +60,7 @@ const { bulkWrite } = require('./models/Guild');
         else if (!result.warns[0] || !result.warns[0].warnUserID) {
             let number = 0
             let warnLevel = parseInt(number)
-            result.warns.push({
+            db.warns.push({
                 _id: mongoose.Types.ObjectId(),
                 warnUser: bUser.user.username,
                 warnUserID: bUser.id,
