@@ -34,12 +34,11 @@ const { bulkWrite } = require('./models/Guild');
  
    let db = await Guild.findOne({ guildID: message.guild.id })
 
-   let warnArr = await Guild.findOne({ guildID: message.guild.id }, {warns: { $elemMatch: { warnUserID: bUser.id }}})
    await Guild.findOne({ guildID: message.guild.id}, {warns: { $elemMatch: { warnUserID: bUser.id } } }).then((result) => {
     console.log(result)
     if (result) console.log(result.warns)
     let warnLevel
-    let doc = search(bUser.id, result.warns)
+    let doc = search(bUser.id, db.warns)
         if (!result) {
            let number = 0
            warnLevel = parseInt(number)
@@ -83,10 +82,10 @@ const { bulkWrite } = require('./models/Guild');
             let number = result.warns[0].warnLevel
             warnLevel = parseInt(number)
 
-            result.warns[0].warnedByID.push(message.author.id)
-            result.warns[0].warnReason.push(bReason)
-            result.warns[0].warnLevel = warnLevel + 1
-            Guild.updateOne({ guildID: message.guild.id }, result)
+            doc.warnedByID.push(message.author.id)
+            doc.warnReason.push(bReason)
+            doc.warnLevel = warnLevel + 1
+            db.save()
         }
         let number
        if (result.warns && doc.warnLevel) number = result.warns[0].warnLevel
