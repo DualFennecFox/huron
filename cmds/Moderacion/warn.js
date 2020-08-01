@@ -52,7 +52,7 @@ const { bulkWrite } = require('./models/Guild');
                 warnUserID: bUser.id,
                 warnedByID: [message.author.id],
                 warnReason: [bReason],
-                warnLevel: warnLevel++
+                warnLevel: warnLevel + 1
                 })
             }
             createGuild(newGuild)
@@ -66,7 +66,7 @@ const { bulkWrite } = require('./models/Guild');
                 warnUserID: bUser.id,
                 warnedByID: [message.author.id],
                 warnReason: [bReason],
-                warnLevel: warnLevel++
+                warnLevel: warnLevel + 1
                 })
             db.save()
         }
@@ -76,13 +76,13 @@ const { bulkWrite } = require('./models/Guild');
 
             result.warns[0].warnedByID.push(message.author.id)
             result.warns[0].warnReason.push(bReason)
-            result.warns[0].warnLevel = warnLevel++
+            result.warns[0].warnLevel = warnLevel + 1
             db.save()
         }
         let number = result.warns[0].warnLevel
         let warnLevel = parseInt(number)
         
-       message.channel.send(`Se ha advertido a ${bUser}, tiene ${warnLevel++} warns`)
+       message.channel.send(`Se ha advertido a ${bUser}, tiene ${warnLevel + 1} warns`)
     }).catch(err => {
         console.error(err)
         return message.channel.send("Hubo un error al advertir a este usuario")
