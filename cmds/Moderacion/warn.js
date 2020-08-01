@@ -50,58 +50,38 @@ const { bulkWrite } = require('./models/Guild');
                 _id: mongoose.Types.ObjectId(),
                 warnUser: bUser.user.username,
                 warnUserID: bUser.id,
-                warninfo: [{
-                    warnedBy: message.author.tag,
-                    warnedByID: message.author.id,
-                    warnReason: bReason,
-                    warnLevel: warnLevel++
-                }]
+                warnedByID: [message.author.id],
+                warnReason: [bReason],
+                warnLevel: warnLevel++
                 })
             }
             createGuild(newGuild)
         } 
-        else if (!result.warns) {
+        else if (!result.warns[0] || !result.warns[0].warnUserID) {
             let number = 0
             let warnLevel = parseInt(number)
             result.warns.push({
                 _id: mongoose.Types.ObjectId(),
                 warnUser: bUser.user.username,
                 warnUserID: bUser.id,
-                warninfo: [{
-                    warnedBy: message.author.tag,
-                    warnedByID: message.author.id,
-                    warnReason: bReason,
-                    warnLevel: warnLevel++
-                }]
+                warnedByID: [message.author.id],
+                warnReason: [bReason],
+                warnLevel: warnLevel++
                 })
+            db.save()
         }
-        else if (!result.warns[0].warnUserID) {
-            let number = 0
-            let warnLevel = parseInt(number)
-             result.warns[bUser.id] = {
-            _id: mongoose.Types.ObjectId(),
-            warnUser: bUser.user.username,
-            warnUserID: bUser.id,
-            warinfo: [{
-                    warnedBy: message.author.tag,
-                    warnedByID: message.author.id,
-                    warnReason: bReason,
-                    warnLevel: warnLevel++
-            }]
-        }
-    }
         else {
-            let number = 0
+            let number = result.warns[0].warnLevel
             let warnLevel = parseInt(number)
 
-            userID.warns.push({warninfo: [{
-                warnedBy: message.author.tag,
-                warnedByID: message.author.id,
-                warnReason: bReason,
-                warnLevel: warnLevel++
-            }]})
+            result.warns[0].warnedByID.push(message.author.id)
+            result.warns[0].warnReason.push(bReason)
+            result.warns[0].warnLevel = warnLevel++
+            db.save()
         }
-        db.save()
+        let number = result.warns[0].warnLevel
+        let warnLevel = parseInt(number)
+        
        message.channel.send(`Se ha advertido a ${bUser}, tiene ${warnLevel++} warns`)
     }).catch(err => {
         console.error(err)

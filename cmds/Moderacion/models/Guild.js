@@ -13,6 +13,13 @@ const guildSchema = mongoose.Schema({
     LeaveBool: Boolean,
     WelcomeChannel: String,
     LeaveChannel: String,
-    warns: []
+    warns: [{
+      _id: mongoose.Schema.Types.ObjectId(),
+      warnUser: String,
+      warnUserID: String,
+      warnedByID: [],
+      warnReason: [],
+      warnLevel: Number
+    }]
   })
   module.exports = mongoose.model("Guild", guildSchema)
