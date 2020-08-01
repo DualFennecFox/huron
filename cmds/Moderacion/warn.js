@@ -20,7 +20,7 @@ const {search, updateGuild, createGuild } = require('./models/functions');
     let bReason = args.slice(1).join(" ");
     if(!bReason) bReason = "No se específico una razón"
 
-    if (bUser.id === message.author.id) return message.channel.send("No te puedes warnear a ti mismo")  
+    if (bUser.id === message.author.id) return message.channel.send("No te puedes advertir a ti mismo")  
     if(bUser.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS") || !message.guild.owner) return message.channel.send("No puedes advertir a un moderador!");
  
    let db = await Guild.findOne({ guildID: message.guild.id })
@@ -83,6 +83,7 @@ const {search, updateGuild, createGuild } = require('./models/functions');
         warnLevel = parseInt(number)
         
        message.channel.send(`Se ha advertido a ${bUser}, tiene ${warnLevel} warns`)
+       bUser.user.send(`Has sido advertido en **${message.guild.name}** Por la razón: ${bReason}`)
     }).catch(err => {
         console.error(err)
         return message.channel.send("Hubo un error al advertir a este usuario")
