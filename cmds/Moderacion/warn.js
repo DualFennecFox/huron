@@ -26,9 +26,9 @@ const { bulkWrite } = require('./models/Guild');
     if (bUser.id === message.author.id) return message.channel.send("No te puedes warnear a ti mismo")  
     if(bUser.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No puedes advertir a un moderador!");
  
-   let db = await Guild.findOne({ guildID: message.guild.id })
+   let db = await Guild.findOne({ guildID: message.guild.id }, {warns: { $elemMatch: { warnUserID: bUser.id } } })
 
-   let userID = Guild.findOne({ guildID: message.guild.id, warns: { $elemMatch: { warnUserID: bUser.id } } }).then((result) => {
+     Guild.findOne({ guildID: message.guild.id, warns: { $elemMatch: { warnUserID: bUser.id } } }).then((result) => {
     console.log(result)
     if (result) console.log(result.warns)
     let warnLevel
@@ -58,7 +58,7 @@ const { bulkWrite } = require('./models/Guild');
             }
             createGuild(newGuild)
         } 
-        else if (!result.warns[0] || !result.warns[0].warnUserID) {
+        else if (!result || !result.warns[0].warnUserID) {
             let number = 0
             warnLevel = parseInt(number)
             db.warns.push({
