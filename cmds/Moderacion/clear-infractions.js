@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const Guild = require('./models/Guild')
 const mongoose = require('mongoose');
 const {search, updateGuild, createGuild, searchAndDelete } = require('./models/functions');
+const { inlineArrayTransformer } = require('common-tags');
     module.exports = {
     name : 'clearinfractions',
     category: "Moderacion",
@@ -29,7 +30,7 @@ const {search, updateGuild, createGuild, searchAndDelete } = require('./models/f
       
       let number = searchAndDelete(bUser.id, db.warns)
 
-      db.warns.pull(number)
+     db.warns.splice(number)
 
       db.save()
 
