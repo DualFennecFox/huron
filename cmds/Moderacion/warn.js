@@ -11,7 +11,13 @@ const { bulkWrite } = require('./models/Guild');
     usage: '!warn',
     examples: ['!warn @Firulais', '!warn 556540723235651584', '!warn @Firulais Razon'],
     run: async (client , message, args) => {
-
+        function search(nameKey, myArray) {
+        for (var i = 0; i < myArray.length; i++) {
+            if (myArray[i].warnUserID === nameKey) {
+                return myArray[i];
+            }
+        }
+    }
     if (message.author.id !== process.env.OWNER) return
 
     if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
@@ -26,13 +32,15 @@ const { bulkWrite } = require('./models/Guild');
     if (bUser.id === message.author.id) return message.channel.send("No te puedes warnear a ti mismo")  
     if(bUser.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No puedes advertir a un moderador!");
  
-   let db = await Guild.findOne({ guildID: message.guild.id }, {warns: { $elemMatch: { warnUserID: bUser.id } } })
+   let db = await Guild.findOne({ guildID: message.guild.id })
 
-     Guild.findOne({ guildID: message.guild.id, warns: { $elemMatch: { warnUserID: bUser.id } } }).then((result) => {
+   let warnArr = await Guild.findOne({ guildID: message.guild.id }, {warns: { $elemMatch: { warnUserID: bUser.id }}})
+   await Guild.findOne({ guildID: message.guild.id}, {warns: { $elemMatch: { warnUserID: bUser.id } } }).then((result) => {
     console.log(result)
     if (result) console.log(result.warns)
     let warnLevel
-        if (!result && !db) {
+    let doc = search(bUser.id, result.warns)
+        if (!result) {
            let number = 0
            warnLevel = parseInt(number)
            const newGuild = {
@@ -58,7 +66,7 @@ const { bulkWrite } = require('./models/Guild');
             }
             createGuild(newGuild)
         } 
-        else if (!result || !result.warns[0].warnUserID) {
+        else if (!doc) {
             let number = 0
             warnLevel = parseInt(number)
             db.warns.push({
