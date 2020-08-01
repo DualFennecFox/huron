@@ -25,7 +25,7 @@ function getAll(client, message) {
         
 const commands = (category) => {
     return client.commands
-        .filter(cmd => cmd.category === category)
+        .filter(cmd => cmd.category === category && cmd.name !== 'warn')
         .map(cmd => `- \`${cmd.name}\``)
         .join("\n");
 } 
