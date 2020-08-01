@@ -82,7 +82,7 @@ const { bulkWrite } = require('./models/Guild');
         let number = result.warns[0].warnLevel
         warnLevel = parseInt(number)
         
-       message.channel.send(`Se ha advertido a ${bUser}, tiene ${warnLevel + 1} warns`)
+       message.channel.send(`Se ha advertido a ${bUser}, tiene ${warnLevel} warns`)
     }).catch(err => {
         console.error(err)
         return message.channel.send("Hubo un error al advertir a este usuario")
