@@ -68,6 +68,9 @@ module.exports = {
         
                 message.channel.send("Se ha eliminado el mensaje de bienvenida")
                 }
+                }).catch(err => {
+                    console.error(err)
+                    return message.channel.send("Ha ocurrido un error")
                 })
             break;
             case "disableleave":
@@ -81,6 +84,9 @@ module.exports = {
         
                 message.channel.send("Se ha eliminado el mensaje de despedida")
                 }
+            }).catch(err => {
+                console.error(err)
+                message.channel.send("Ha ocurrido un error")
             })
             break;
             default:

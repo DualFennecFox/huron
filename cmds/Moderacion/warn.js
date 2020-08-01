@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const Guild = require('./models/Guild')
 const mongoose = require('mongoose');
 const { updateGuild, createGuild } = require('./models/functions');
+const { bulkWrite } = require('./models/Guild');
     module.exports = {
     name : 'warn',
     category: "Moderacion",
@@ -12,6 +13,9 @@ const { updateGuild, createGuild } = require('./models/functions');
     run: async (client , message, args) => {
 
     if (message.author.id !== process.env.OWNER) return
+
+    if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
+
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o darme su id")
     let bUser = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
     if(!bUser) return message.channel.send("Ese no parece ser un usuario valido");
@@ -20,8 +24,7 @@ const { updateGuild, createGuild } = require('./models/functions');
     if(!bReason) bReason = "No se específico una razón"
 
     if (bUser.id === message.author.id) return message.channel.send("No te puedes warnear a ti mismo")  
-    if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
-    if(bUser.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No puedes warnear a un moderador!");
+    if(bUser.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No puedes advertir a un moderador!");
  
    let db = await Guild.findOne({ guildID: message.guild.id })
 
@@ -29,8 +32,21 @@ const { updateGuild, createGuild } = require('./models/functions');
        console.log(result.warns[0].warnUserID)
    
         if (!result) {
-           let warnLevel = 0
-            db.warns.push({ 
+           let number = 0
+           let warnLevel = parseInt(number)
+           const newGuild = {
+            guildID: guild.id,
+            guildName: guild.name,
+            guildOwner: guild.owner.user.username,
+            guildOwnerID: guild.ownerID,
+            prefix: '!',
+            JoinMsg: "",
+            JoinBool: false,
+            LeaveMsg: "",
+            LeaveBool: false,
+            WelcomeChannel: "",
+            LeaveChannel: "", 
+            warns: ({
                 _id: mongoose.Types.ObjectId(),
                 warnUser: bUser.user.username,
                 warnUserID: bUser.id,
@@ -38,28 +54,43 @@ const { updateGuild, createGuild } = require('./models/functions');
                     warnedBy: message.author.tag,
                     warnedByID: message.author.id,
                     warnReason: bReason,
-                    warnLevel: warnLevel + 1
+                    warnLevel: warnLevel++
                 }]
-            })
+                })
+            }
+            createGuild(newGuild)
         } 
+        else if (!result.warns[bUser.id]) {
+            let number = 0
+            let warnLevel = parseInt(number)
+             result.warns[bUser.id] = {
+            _id: mongoose.Types.ObjectId(),
+            warnUser: bUser.user.username,
+            warnUserID: bUser.id,
+            warinfo: [{
+                    warnedBy: message.author.tag,
+                    warnedByID: message.author.id,
+                    warnReason: bReason,
+                    warnLevel: warnLevel++
+            }]
+        }
+    }
         else {
-            userID.warns.addToSet({
-                _id: mongoose.Types.ObjectId(),
-                warnUser: bUser.user.username,
-                warnUserID: bUser.id,
-            })
+            let number = 0
+            let warnLevel = parseInt(number)
+
             userID.warns.push({warninfo: [{
                 warnedBy: message.author.tag,
                 warnedByID: message.author.id,
                 warnReason: bReason,
-                warnLevel: warnLevel + 1
+                warnLevel: warnLevel++
             }]})
         }
         db.save()
-       message.channel.send(`Se ha warneado a ${bUser}, tiene ${warnLevel} warns`)
+       message.channel.send(`Se ha warneado a ${bUser}, tiene ${warnLevel++} warns`)
     }).catch(err => {
         console.error(err)
-        return message.channel.send("Hubo un error al warnear a este usuario")
+        return message.channel.send("Hubo un error al advertir a este usuario")
     })
     }
 }
