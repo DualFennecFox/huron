@@ -77,7 +77,7 @@ const { bulkWrite } = require('./models/Guild');
             result.warns[0].warnedByID.push(message.author.id)
             result.warns[0].warnReason.push(bReason)
             result.warns[0].warnLevel = warnLevel + 1
-            userID.save()
+            result.save()
         }
         let number = result.warns[0].warnLevel
         warnLevel = parseInt(number)
