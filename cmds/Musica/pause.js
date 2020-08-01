@@ -17,7 +17,12 @@ const musicData = require("./requirements/musicData")
                 if (musicData.server[message.guild.id].pause == true) return message.channel.send("Ya están pausadas las canciones")
 
                 musicData.server[message.guild.id].pause = true
+                try {
                 musicData.server[message.guild.id].songDispatcher.pause()
+                } catch (err) {
+                    console.error(err)
+                    return message.channel.send("A ocurrido un error al pausar la canción")
+                }
                 message.channel.send("Se ha pausado la canción")
             }
     }

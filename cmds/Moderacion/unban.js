@@ -9,7 +9,7 @@ module.exports = {
     examples: ['!unban @Firulais', '!unban 556540723235651584', '!unban @Firulais Razon'],
     run: async (client , message, args) => {
    
-    if (args.length <= 0) return message.channel.send("Debes mencionar a un usuario o darme su id")
+    if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o darme su id")
     let User = message.mentions.users.first() || client.users.cache.get(args[0])
     if (!User) {
        let UserID = args[0].replace(/([^0-9])/g, '')
@@ -41,6 +41,7 @@ module.exports = {
         message.guild.members.unban(User, {reason: bReason})
     } catch(err) {
         console.log(err)
+        return message.channel.send("Se ha ocurrido un error al desbanear a este usuario")
     }
 
     let unbanEmbed = new Discord.MessageEmbed()

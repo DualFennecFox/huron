@@ -8,10 +8,12 @@ const Discord = require('discord.js');
     usage: '!mute',
     examples: ['!mute @Firulais', '!mute 556540723235651584', '!mute @Firulais Razon'],
     run: async (client , message, args) => {
-    let mutee = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
-    if(!mutee) return message.channel.send("Debes mencionar a un usuario o darme su id");
-    if(mutee.id === message.author.id) return message.channel.send("No te puedes mutear a ti mismo!");
+    
     if(!message.member.hasPermission("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR" || "MANAGE_ROLES") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
+    if (!args.length >= 1) return message.channel.send("Debe mencionar un usuario muteado o darme su id")
+    let mutee = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
+    if(!mutee) return message.channel.send("Ese no parece ser un usuario valido");
+    if(mutee.id === message.author.id) return message.channel.send("No te puedes mutear a ti mismo!");
     if(!message.guild.me.hasPermission(["MANAGE_ROLES" || "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para añadir roles");
     if (mutee.roles.cache.some((role) => role.name === 'Muteado')) return message.channel.send("Esta persona ya esta muteada");
     if(mutee.hasPermission("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR" || "MANAGE_ROLES") || !message.guild.owner) return message.channel.send("Esta persona no puede ser muteada!");
@@ -39,8 +41,9 @@ const Discord = require('discord.js');
                     SPEAK: false
                 })
             })
-        } catch(e) {
-            console.log(e.stack);
+        } catch (err) {
+            console.error(err)
+            message.channel.send("Se ha ocurrido un error al crear o modificar el rol Muteado")
     }
 }
 
@@ -59,7 +62,7 @@ let muteEmbed = new Discord.MessageEmbed()
 
     message.channel.send( muteEmbed )
     .catch(err => {
-        console.log(err);
+        console.error(err);
     })
 }
 }

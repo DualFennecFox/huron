@@ -26,7 +26,10 @@ const Discord = require('discord.js');
             return message.channel.send("Mi rol es muy bajo para poder cambiarle el nombre");
         }
 
-        await member2.setNickname(name).then(message.channel.send(`Se ha cambiado el apodo de **${user.username}**`))
+        await member2.setNickname(name).then(message.channel.send(`Se ha cambiado el apodo de **${user.username}**`)).catch(err => {
+            console.error(err)
+            message.channel.send("Se ha ocurrido un error al cambiar el nombre")
+        })
 
     }
 }

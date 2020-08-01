@@ -10,7 +10,9 @@ module.exports = {
     run: async (client, message, args) => {
     let argsresult;
     let mChannel = message.mentions.channels.first();
+    if (message.guild.me.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR")) {
     message.delete()
+    }
     if(mChannel && args[0] == "{sendchannel}") {
         argsresult = args.join(" ")
         if(!argsresult) return;

@@ -9,7 +9,8 @@ const Discord = require('discord.js');
     examples: ['!ban @Firulais', '!ban 556540723235651584', '!ban @Firulais Razon'],
     run: async (client , message, args) => {
 
-        if (args.length <= 0) return message.channel.send("Debes mencionar a un usuario o darme su id")
+        if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
+        if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o darme su id")
         let User = message.mentions.users.first() || client.users.cache.get(args[0])
         if (!User) {
            let UserID = args[0].replace(/([^0-9])/g, '')
@@ -37,7 +38,6 @@ const Discord = require('discord.js');
     bUser = message.guild.member(User)
     let role = bUser.roles.highest;
     if (User.id === message.author.id) return message.channel.send("No te puedes banear a ti mismo")
-    if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
     if(!message.guild.me.hasPermission(["BAN_MEMBERS" || "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para Banear miembros");
     if(bUser.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("Esta persona no puede ser baneada!");
 
@@ -52,7 +52,13 @@ const Discord = require('discord.js');
     .addField("Usuario Baneado", `${User} Y su ID es ${User.id}`)
     .addField("Baneado Por", `<@!${message.author.id}> Y su ID es ${message.author.id}`)
     .addField("Razón de Baneo", bReason);
+
+    try {
     message.guild.members.ban(User.id, { reason: bReason })
+    } catch (err) {
+        console.error(err)
+        return message.channel.send("Se ha ocurrido un error al banear a este usuario")
+    }
 
     message.channel.send( banEmbed )
     .catch(err => {

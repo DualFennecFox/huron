@@ -17,7 +17,12 @@ const musicData = require("./requirements/musicData")
 
                 
                 musicData.server[message.guild.id].pause = false
+                try {
                 musicData.server[message.guild.id].songDispatcher.resume()
+                } catch (err) {
+                    console.error(err)
+                    return message.channel.send("Hubo un error al reanudar la canción")
+                }
                 message.channel.send("Se ha reanudado la canción")
             }
         }

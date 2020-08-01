@@ -79,13 +79,17 @@ client.on('message', (message) => {
     if (!message.content.startsWith(prefix)) return;
 
      if (client.commands.has(cmd)) {
-message.guild.members.cache.filter(user => user.user.bot !== user.user.id).map(member => `<@!<${member.id}>`)
+    message.guild.members.cache.filter(user => user.user.bot !== user.user.id).map(member => `<@!<${member.id}>`)
        command = client.commands.get(cmd);
      } else {
        command = client.commands.get(client.aliases.get(cmd));
      }
        if (command) command.run(client, message, args, prefix);
-  });
+  }).catch(err => {
+    console.error(err)
+  })
+  }).catch(err => {
+    console.error(err)
   })
    });
 
@@ -115,6 +119,8 @@ client.user.setPresence({
 let data = Guild.findOne({ guildID: gData.id }).then((result) => {
   if (!result) return;
   else return result.remove()
+}).catch(err => {
+  console.error(err)
 })
 });
 
