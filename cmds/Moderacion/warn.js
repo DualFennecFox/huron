@@ -29,7 +29,7 @@ const { bulkWrite } = require('./models/Guild');
    let db = await Guild.findOne({ guildID: message.guild.id })
 
    let userID = Guild.findOne({ guildID: message.guild.id}, {warns: { $elemMatch: { warnUserID: bUser.id } } }).then((result) => {
-       console.log(result.warns[0].warnUserID)
+       console.log(result.warns)
    
         if (!result) {
            let number = 0
