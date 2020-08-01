@@ -60,6 +60,19 @@ const { bulkWrite } = require('./models/Guild');
             }
             createGuild(newGuild)
         } 
+        else if (!result.warns) {
+            result.warns.push({
+                _id: mongoose.Types.ObjectId(),
+                warnUser: bUser.user.username,
+                warnUserID: bUser.id,
+                warninfo: [{
+                    warnedBy: message.author.tag,
+                    warnedByID: message.author.id,
+                    warnReason: bReason,
+                    warnLevel: warnLevel++
+                }]
+                })
+        }
         else if (!result.warns[bUser.id]) {
             let number = 0
             let warnLevel = parseInt(number)
