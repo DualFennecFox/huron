@@ -99,6 +99,7 @@ client.on('message', (message) => {
 
 client.on('guildCreate', async gData => {
   const scount = client.guilds.cache.size
+  dbl.postStats(client.guilds.cache.size)
   client.user.setPresence({
     status: "online",
     activity: {
@@ -111,6 +112,7 @@ getGuild(gData)
 })
 client.on('guildDelete', async gData => {
 const scount = client.guilds.cache.size
+dbl.postStats(client.guilds.cache.size)
 client.user.setPresence({
   status: "online",
   activity: {
