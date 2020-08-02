@@ -32,17 +32,23 @@ const { inlineArrayTransformer } = require('common-tags');
 
      db.warns.splice(number, 1)
 
-      db.save()
-
-      return message.channel.send(`Se han eliminado las infracciones de ${bUser}`)
+      db.save().then(result => {
+        return message.channel.send(`Se han eliminado las infracciones de ${bUser}`)
+      }).catch(err => {
+        console.error(err)
+        return message.channel.send("Hubo un error al remover las infracciones")
+      })
     }
    else if (args[0] === 'all') {
    if (!db || !db.warns || db.warns.length == 0) return message.channel.send("Ningún usuario tiene advertencias")
 
-    db.warns.length = 0
-    await db.save()
-
-    message.channel.send("Se han eliminado todas las infracciones")
+    db.updateOne({ guildID: message.guild.id }, { $set: { warns: [] }}, function (err, result) {
+      if (err) {
+        console.error(err)
+        return message.channel.send("Hubo un error al remover las infracciones")
+      }
+      message.channel.send("Se han eliminado todas las infracciones")
+    })
    }
     }
 }
