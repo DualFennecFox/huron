@@ -91,6 +91,7 @@ function playSong(queue, message) {
                     if (message.guild.me.voice.channel) {
                         if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.channel.send("Debes estar conectado a mi canal de voz para usar este comando")
                         }
+                    if (!args.length >= 1) return message.channel.send("Dime que canción quieres escuchar")
                     if (!musicData.server[message.guild.id]) musicData.server[message.guild.id] = {
                         queue: [],
                         loop: false,

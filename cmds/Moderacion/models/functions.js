@@ -52,7 +52,7 @@ let getGuild = async (guild) => {
         }
     }
 }
-function searchAndDelete(nameKey, myArray) {
+function searchNumber(nameKey, myArray) {
   for (var i = 0; i < myArray.length; i++) {
   if (myArray[i].warnUserID === nameKey) {
       return i
@@ -64,5 +64,5 @@ module.exports = {
     updateGuild,
     createGuild,
     search,
-    searchAndDelete
+    searchNumber
 }

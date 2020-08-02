@@ -1,8 +1,8 @@
 const Discord = require('discord.js');
 const Guild = require('./models/Guild')
 const mongoose = require('mongoose');
-const {search, updateGuild, createGuild, searchAndDelete } = require('./models/functions');
-const { inlineArrayTransformer } = require('common-tags');
+const {search, updateGuild, createGuild, searchNumber } = require('./models/functions');
+
     module.exports = {
     name : 'clearinfractions',
     category: "Moderacion",
@@ -27,7 +27,7 @@ const { inlineArrayTransformer } = require('common-tags');
 
       if (!doc) return message.channel.send("Ese usuario no tiene advertencias")
       
-      let number = searchAndDelete(bUser.id, db.warns)
+      let number = searchNumber(bUser.id, db.warns)
 
      db.warns.splice(number, 1)
 

@@ -19,6 +19,7 @@ const {search, updateGuild, createGuild } = require('./models/functions');
 
     let db = await Guild.findOne({ guildID: message.guild.id })
 
+    if (!db) return message.channel.send("Este usuario no tiene infracciones")
 
     let doc = search(bUser.id, db.warns)
 
@@ -33,7 +34,7 @@ const {search, updateGuild, createGuild } = require('./models/functions');
     const embed = new Discord.MessageEmbed()
     .setAuthor(`Infracciones de: ${bUser.user.tag}`, bUser.user.displayAvatarURL())
     .setColor("#FF0000")
-    .setDescription(`**Este usuario tiene ${warns.length} advertencias.**\n\n ${map}`)
+    .setDescription(`**Este usuario tiene ${warns.length} advertencias.**\n\n${map}`)
     .setFooter(`${bUser.user.username} | ${bUser.user.id}`)
 
     message.channel.send({ embed })
