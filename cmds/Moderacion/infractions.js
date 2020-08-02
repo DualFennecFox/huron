@@ -33,7 +33,7 @@ const {search, updateGuild, createGuild } = require('./models/functions');
     const embed = new Discord.MessageEmbed()
     .setAuthor(`Infracciones de: ${bUser.user.tag}`, bUser.user.displayAvatarURL())
     .setColor("#FF0000")
-    .setDescription(map)
+    .setDescription(`**Este usuario tiene ${warns.length} advertencias.**\n\n ${map}`)
     .setFooter(`${bUser.user.username} | ${bUser.user.id}`)
 
     message.channel.send({ embed })
