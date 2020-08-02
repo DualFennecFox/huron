@@ -23,7 +23,6 @@ const {search, updateGuild, createGuild } = require('./models/functions');
 
     if (bUser.id === message.author.id) return message.channel.send("No te puedes advertir a ti mismo")
     if (bUser.id === client.user.id) return message.channel.send("No me puedo advertir a mi mismo")  
-    if(bUser.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS") || !message.guild.owner) return message.channel.send("No puedes advertir a un moderador!");
     
    let db = await Guild.findOne({ guildID: message.guild.id })
 
