@@ -13,7 +13,6 @@ const { inlineArrayTransformer } = require('common-tags');
     run: async (client , message, args) => {
     if (!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
 
-    if (message.author.id !== process.env.OWNER) return
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o remover todas las infracciones con \"all\"")
     let bUser = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
     
