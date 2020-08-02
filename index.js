@@ -13,6 +13,10 @@ const Guild = require('./cmds/Moderacion/models/Guild')
 const config = require('./cmds/Moderacion/models/config');
 const { getGuild, updateGuild, createGuild } = require('./cmds/Moderacion/models/functions');
 mongoose.connect(`${process.env.MONGOURI}/Guild`, { useNewUrlParser: true, useUnifiedTopology: true })
+const DBL = require('dblapi.js')
+const dbl = new DBL(process.env.DBL, client)
+
+dbl.postStats(client.guilds.cache.size)
 
 let prefix;
 const token = process.env.TOKEN;
