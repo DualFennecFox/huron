@@ -85,8 +85,9 @@ const {search, updateGuild, createGuild } = require('./models/functions');
         
        message.channel.send(`Se ha advertido a ${bUser}, tiene ${warnLevel} warns`)
 
-       if (!message.author.bot)
+       if (!message.author.bot) {
        bUser.user.send(`Has sido advertido en **${message.guild.name}** Por la razón: ${bReason}`)
+       }
     }).catch(err => {
         console.error(err)
         return message.channel.send("Hubo un error al advertir a este usuario")
