@@ -11,7 +11,7 @@ youtube = new Youtube(process.env.YOUTUBE_API_KEY)
 const musicData = require("./cmds/Musica/requirements/musicData")
 const Guild = require('./cmds/Moderacion/models/Guild')
 const config = require('./cmds/Moderacion/models/config');
-const { getGuild, updateGuild, createGuild } = require('./cmds/Moderacion/models/functions');
+const { getGuild, updateGuild, createGuild, checkDays } = require('./cmds/Moderacion/models/functions');
 mongoose.connect(`${process.env.MONGOURI}/Guild`, { useNewUrlParser: true, useUnifiedTopology: true })
 const DBL = require('dblapi.js')
 const dbl = new DBL(process.env.DBL, client)
@@ -129,11 +129,57 @@ let data = Guild.findOne({ guildID: gData.id }).then((result) => {
 })
 });
 
+client.on("channelCreate", channel => {
+  Guild.findOne({ guildID: channel.guild.id }).then(doc => {
+    if (!doc) return
+    if (doc.channelCreate == true) {
+      if (!doc.LogChannel) return
+      let Channel = channel.guild.channels.cache.get(doc.LogChannel)
+      if (!Channel) return
+      if (!Channel.permissionsFor(channel.guild.me).has("SEND_MESSAGES")) return
+
+      const embed = new Discord.MessageEmbed()
+      .setAuthor(channel.name, channel.guild.iconURL())
+      .setColor("#FF0000")
+      .setDescription(`Se ha creado el canal **${channel.name}**`)
+      .addField("Creado a las", checkDays(channel.createdAt))
+      .setFooter(`${member.user.username} | ${member.user.id}`);
+
+  Channel.send({ embed })
+    } 
+  }).catch(err => {
+    console.error(err)
+  })
+});
+
+client.on("channelDelete", channel => {
+  Guild.findOne({ guildID: channel.guild.id }).then(doc => {
+  if (!doc) return
+  if (doc.channelCreate == true) {
+    if (!doc.LogChannel) return
+    let Channel = channel.guild.channels.cache.get(doc.LogChannel)
+    if (!Channel) return
+    if (!Channel.permissionsFor(channel.guild.me).has("SEND_MESSAGES")) return
+    
+    const embed = new Discord.MessageEmbed()
+      .setAuthor(channel.name, channel.guild.iconURL())
+      .setColor("#FF0000")
+      .setDescription(`Se ha eliminado el canal **${channel.name}**`)
+      .addField("Creado a las", checkDays(channel.createdAt))
+      .addField("Permisos", channel.permissionOverwrites.map(ch => ch).join(", "))
+      .setFooter(`${member.user.username} | ${member.user.id}`);
+
+  Channel.send({ embed })
+  }
+  }).catch(err => {
+    console.error(err)
+  })
+})
+
 client.on('guildMemberAdd', member => {
   Guild.findOne({ guildID: member.guild.id }).then(doc => {
   if (!doc) return
-  if (!doc.JoinBool) return
-  if (doc.JoinBool == false) return
+  if (doc.JoinBool == true) {
   if (!doc.JoinMsg) return
   if (!doc.WelcomeChannel) return
   let Channel = member.guild.channels.cache.get(doc.WelcomeChannel)
@@ -143,6 +189,22 @@ client.on('guildMemberAdd', member => {
   let msg = doc.JoinMsg.replace("{user}", member).replace("{server}", member.guild.name).replace("{username}", member.user.tag).replace("{members}", member.guild.memberCount).replace("{owner}", member.guild.owner.user.tag)
  
  Channel.send(msg)
+  }
+ if (doc.MemberRemove == true) {
+  if (!doc.LogChannel) return
+  let Channel = member.guild.channels.cache.get(doc.LogChannel)
+  if (!Channel) return
+  if (!Channel.permissionsFor(member.guild.me).has("SEND_MESSAGES")) return
+
+  const embed = new Discord.MessageEmbed()
+  .setAuthor(member.user.tag, member.user.displayAvatarURL())
+  .setColor("#FF0000")
+  .setDescription(`**${member.user.tag}** Se ha unido a el servidor`)
+  .addField("Creado a las", checkDays(member.user.createdAt))
+  .setFooter(`${member.user.username} | ${member.user.id}`);
+
+  Channel.send({ embed })
+}
 }).catch(err => {
   console.error(err)
 })
@@ -151,7 +213,7 @@ client.on('guildMemberAdd', member => {
 client.on('guildMemberRemove', member => {
   Guild.findOne({ guildID: member.guild.id }).then(doc => {
     if (!doc) return
-    if (doc.LeaveBool == false) return
+    if (doc.LeaveBool == true) {
     if (!doc.LeaveMsg) return
     if (!doc.LeaveChannel) return
     let Channel = member.guild.channels.cache.get(doc.LeaveChannel)
@@ -161,6 +223,23 @@ client.on('guildMemberRemove', member => {
     let msg = doc.LeaveMsg.replace("{user}", member).replace("{server}", member.guild.name).replace("{username}", member.user.tag).replace("{members}", member.guild.memberCount).replace("{owner}", member.guild.owner.user.tag)
 
     Channel.send(msg)
+    }
+    if (doc.MemberRemove == true) {
+      if (!doc.LogChannel) return
+      let Channel = member.guild.channels.cache.get(doc.LogChannel)
+      if (!Channel) return
+      if (!Channel.permissionsFor(member.guild.me).has("SEND_MESSAGES")) return
+
+      const embed = new Discord.MessageEmbed()
+      .setAuthor(member.user.tag, member.user.displayAvatarURL())
+      .setColor("#FF0000")
+      .setDescription(`**${member.user.tag}** Ha dejado el servidor`)
+      .addField("Miembro Desde", checkDays(member.joinedAt))
+      .addField("Roles", member.roles.cache.map(r => `\`${r.name}\``))
+      .setFooter(`${member.user.username} | ${member.user.id}`);
+
+      Channel.send({ embed })
+    }
   }).catch(err => {
     console.error(err)
   })

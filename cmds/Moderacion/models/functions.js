@@ -1,6 +1,7 @@
 const Guild = require('./Guild')
 const defaultSettings = require('./config')
 const mongoose = require('mongoose');
+
 let getGuild = async (guild) => {
     let data = Guild.findOne({ guildID: guild.id }).then(result => {
    if (result) defaultSettings.prefix = result.prefix
@@ -17,6 +18,29 @@ let getGuild = async (guild) => {
         LeaveBool: false,
         WelcomeChannel: "",
         LeaveChannel: "",
+        LogChannel: "",
+        Premium: false,
+        channelCreate: false,
+        channelDelete: false,
+        channelPinsUpdate: false,
+        channelUpdate: false,
+        emojiCreate: false,
+        emojiDelete: false,
+        emojiUpdate: false,
+        banAdd: false,
+        banRemove: false,
+        MemberAdd: false,
+        MemberRemove: false,
+        MemberUpdate: false,
+        guildUpdate: false,
+        inviteCreate: false,
+        inviteDelete: false,
+        messageDelete: false,
+        messageDeleteBulk: false,
+        messageUpdate: false,
+        roleCreate: false,
+        roleDelete: false,
+        roleUpdate: false,
         warns: []
       };
       try {
