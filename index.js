@@ -143,7 +143,7 @@ client.on("channelCreate", channel => {
       .setColor("#FF0000")
       .setDescription(`Se ha creado el canal **${channel.name}**`)
       .addField("Creado a las", checkDays(channel.createdAt))
-      .setFooter(`${member.user.username} | ${member.user.id}`);
+      .setFooter(`${channel.name} | ${channel.id}`);
 
   Channel.send({ embed })
     } 
@@ -167,7 +167,7 @@ client.on("channelDelete", channel => {
       .setDescription(`Se ha eliminado el canal **${channel.name}**`)
       .addField("Creado a las", checkDays(channel.createdAt))
       .addField("Permisos", channel.permissionOverwrites.map(ch => ch).join(", "))
-      .setFooter(`${member.user.username} | ${member.user.id}`);
+      .setFooter(`${channel.name} | ${channel.id}`);
 
   Channel.send({ embed })
   }
