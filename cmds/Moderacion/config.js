@@ -31,6 +31,58 @@ module.exports = {
             case "prefix":
                 if (!args[1]) return message.channel.send(`Mi prefix en este server es ${prefix}`)
                 let nPrefix = args.slice(1).join(" ");
+                Guild.findOne({ guildID: message.guild.id }).then(doc => {
+                    if (!doc) {
+                        const newGuild = {
+                            guildID: message.guild.id,
+                            guildName: message.guild.name,
+                            guildOwner: message.guild.owner.user.username,
+                            guildOwnerID: message.guild.ownerID,
+                            prefix: nPrefix,
+                            JoinMsg: "",
+                            JoinBool: false,
+                            LeaveMsg: "",
+                            LeaveBool: false,
+                            WelcomeChannel: "",
+                            LeaveChannel: "",
+                            LogChannel: "",
+                            log: {
+                            Premium: false,
+                            channelCreate: false,
+                            channelDelete: false,
+                            channelPinsUpdate: false,
+                            channelUpdate: false,
+                            emojiCreate: false,
+                            emojiDelete: false,
+                            emojiUpdate: false,
+                            banAdd: false,
+                            banRemove: false,
+                            MemberAdd: false,
+                            MemberRemove: false,
+                            MemberUpdate: false,
+                            guildUpdate: false,
+                            inviteCreate: false,
+                            inviteDelete: false,
+                            messageDelete: false,
+                            messageDeleteBulk: false,
+                            messageUpdate: false,
+                            roleCreate: false,
+                            roleDelete: false,
+                            roleUpdate: false,
+                            },
+                            warns: []
+                          };
+                          try {
+                            createGuild(newGuild);
+                            
+                          } catch (error) {
+                            console.error(error);
+                          }
+                          return
+                    }
+                }).catch(err => {
+                    console.error(err)
+                })
                 await updateGuild(message.guild, { prefix: nPrefix });
 
                 message.channel.send(`Su nuevo Prefix es ${nPrefix}`)
