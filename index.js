@@ -185,7 +185,7 @@ client.on("channelDelete", channel => {
       .setAuthor("Canal Eliminado", channel.guild.iconURL())
       .setColor("#FF0000")
       .setDescription(`Se ha eliminado el canal **${channel.name}**`)
-      .addField("Creado a las", checkDays(channel.createdAt))
+      .addField("Creado", checkDays(channel.createdAt))
       .addField("Tipo de canal", type[channel.type])
       .setFooter(`${channel.name} | ${channel.id}`);
 
