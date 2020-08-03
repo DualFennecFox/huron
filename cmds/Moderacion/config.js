@@ -78,14 +78,15 @@ module.exports = {
                           } catch (error) {
                             console.error(error);
                           }
-                          return
+                          return message.channel.send(`Su nuevo Prefix es ${nPrefix}`)
                     }
+                    else {
+                    updateGuild(message.guild, { prefix: nPrefix });
+                   return message.channel.send(`Su nuevo Prefix es ${nPrefix}`)
+                }
                 }).catch(err => {
                     console.error(err)
                 })
-                await updateGuild(message.guild, { prefix: nPrefix });
-
-                message.channel.send(`Su nuevo Prefix es ${nPrefix}`)
             break;
             case "welcomemsg":
                 let welcomeChannel = message.mentions.channels.first();
@@ -140,14 +141,16 @@ module.exports = {
                           } catch (error) {
                             console.error(error);
                           }
-                          return
+                          return message.channel.send("Se ha establecido el mensaje de bienvenida")
+                    }
+                    else {
+                        updateGuild(message.guild, { JoinMsg: welcomeMsg, JoinBool: true, WelcomeChannel: welcomeChannel.id})
+
+                        return message.channel.send("Se ha establecido el mensaje de bienvenida")
                     }
                 }).catch(err => {
                     console.error(err)
                 })
-                updateGuild(message.guild, { JoinMsg: welcomeMsg, JoinBool: true, WelcomeChannel: welcomeChannel.id})
-
-            message.channel.send("Se ha establecido el mensaje de bienvenida")
             break;
             case "leavemsg":
                 let leaveChannel = message.mentions.channels.first();
@@ -202,14 +205,15 @@ module.exports = {
                           } catch (error) {
                             console.error(error);
                           }
-                          return
+                          return message.channel.send("Se ha establecido el mensaje de despedida") 
+                    }
+                    else {
+                        updateGuild(message.guild, { LeaveMsg: leaveMsg, LeaveBool: true, LeaveChannel: leaveChannel.id})
+                        return message.channel.send("Se ha establecido el mensaje de despedida") 
                     }
                 }).catch(err => {
                     console.error(err)
-                })
-                updateGuild(message.guild, { LeaveMsg: leaveMsg, LeaveBool: true, LeaveChannel: leaveChannel.id})
-        
-                message.channel.send("Se ha establecido el mensaje de despedida")                
+                })               
                 
             break;
             case "disablewelcome":
