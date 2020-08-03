@@ -134,7 +134,7 @@ client.on("channelCreate", channel => {
   if (channel.type === "dm") return
   Guild.findOne({ guildID: channel.guild.id }).then(doc => {
     if (!doc) return
-    if (doc.channelCreate == true) {
+    if (doc.log.channelCreate == true) {
       if (!doc.log.LogChannel) return
       let Channel = channel.guild.channels.cache.get(doc.LogChannel)
       if (!Channel) return
