@@ -140,10 +140,6 @@ client.on("channelCreate", channel => {
       if (!Channel) return
       if (!Channel.permissionsFor(channel.guild.me).has("SEND_MESSAGES")) return
 
-      let toSend;
-      if (channel.type === "text") toSend = `<#${channel.id}>`
-      else toSend = `**${channel.name}**`
-
       let type = {
         "category": "Categoría",
         "text": "Texto",
@@ -155,7 +151,7 @@ client.on("channelCreate", channel => {
       const embed = new Discord.MessageEmbed()
       .setAuthor("Canal Creado", channel.guild.iconURL())
       .setColor("#FF0000")
-      .setDescription(`Se ha creado el canal ${toSend}`)
+      .setDescription(`Se ha creado el canal **${channel.name}**`)
       .addField("Tipo de canal", type[channel.type])
       .setFooter(`${channel.name} | ${channel.id}`);
 
@@ -175,9 +171,7 @@ client.on("channelDelete", channel => {
     let Channel = channel.guild.channels.cache.get(doc.LogChannel)
     if (!Channel) return
     if (!Channel.permissionsFor(channel.guild.me).has("SEND_MESSAGES")) return
-    let toSend;
-    if (channel.type === "text") toSend = `<#${channel.id}>`
-    else toSend = `**${channel.name}**`
+
     let type = {
       "category": "Categoría",
       "text": "Texto",
