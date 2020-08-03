@@ -255,7 +255,7 @@ client.on('guildMemberRemove', member => {
       .setColor("#FF0000")
       .setDescription(`**${member.user.tag}** Ha dejado el servidor`)
       .addField("Miembro Desde", checkDays(member.joinedAt))
-      .addField("Roles", member.roles.cache.map(r => `\`${r.name}\``))
+      .addField("Roles", member.roles.cache.map(r => `\`${r.name}\``).join(", "))
       .setFooter(`${member.user.username} | ${member.user.id}`);
 
       Channel.send({ embed })
