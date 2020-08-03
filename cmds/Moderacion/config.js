@@ -41,7 +41,58 @@ module.exports = {
                 if (!welcomeChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para hablar en ese canal")
                 let welcomeMsg = args.slice(1).join(" ").replace(welcomeChannel, '')
                 if (!welcomeMsg) return message.channel.send("Debes especificar un mensaje de bienvenida")
-
+                Guild.findOne({ guildID: message.guild.id }).then(doc => {
+                    if (!doc) {
+                        const newGuild = {
+                            guildID: message.guild.id,
+                            guildName: message.guild.name,
+                            guildOwner: message.guild.owner.user.username,
+                            guildOwnerID: message.guild.ownerID,
+                            prefix: '!',
+                            JoinMsg: welcomeMsg,
+                            JoinBool: true,
+                            LeaveMsg: "",
+                            LeaveBool: false,
+                            WelcomeChannel: welcomeChannel.id,
+                            LeaveChannel: "",
+                            LogChannel: "",
+                            log: {
+                            Premium: false,
+                            channelCreate: false,
+                            channelDelete: false,
+                            channelPinsUpdate: false,
+                            channelUpdate: false,
+                            emojiCreate: false,
+                            emojiDelete: false,
+                            emojiUpdate: false,
+                            banAdd: false,
+                            banRemove: false,
+                            MemberAdd: false,
+                            MemberRemove: false,
+                            MemberUpdate: false,
+                            guildUpdate: false,
+                            inviteCreate: false,
+                            inviteDelete: false,
+                            messageDelete: false,
+                            messageDeleteBulk: false,
+                            messageUpdate: false,
+                            roleCreate: false,
+                            roleDelete: false,
+                            roleUpdate: false,
+                            },
+                            warns: []
+                          };
+                          try {
+                            createGuild(newGuild);
+                            
+                          } catch (error) {
+                            console.error(error);
+                          }
+                          return
+                    }
+                }).catch(err => {
+                    console.error(err)
+                })
                 updateGuild(message.guild, { JoinMsg: welcomeMsg, JoinBool: true, WelcomeChannel: welcomeChannel.id})
 
             message.channel.send("Se ha establecido el mensaje de bienvenida")
@@ -52,15 +103,68 @@ module.exports = {
                 if (!leaveChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para hablar en ese canal")
                 let leaveMsg = args.slice(1).join(" ").replace(leaveChannel, '')
                 if (!leaveMsg) return message.channel.send("Debes especificar un mensaje de despedida")
-        
+                Guild.findOne({ guildID: message.guild.id }).then(doc => {
+                    if (!doc) {
+                        const newGuild = {
+                            guildID: message.guild.id,
+                            guildName: message.guild.name,
+                            guildOwner: message.guild.owner.user.username,
+                            guildOwnerID: message.guild.ownerID,
+                            prefix: '!',
+                            JoinMsg: "",
+                            JoinBool: false,
+                            LeaveMsg: leaveMsg,
+                            LeaveBool: true,
+                            WelcomeChannel: "",
+                            LeaveChannel: leaveChannel.id,
+                            LogChannel: "",
+                            log: {
+                            Premium: false,
+                            channelCreate: false,
+                            channelDelete: false,
+                            channelPinsUpdate: false,
+                            channelUpdate: false,
+                            emojiCreate: false,
+                            emojiDelete: false,
+                            emojiUpdate: false,
+                            banAdd: false,
+                            banRemove: false,
+                            MemberAdd: false,
+                            MemberRemove: false,
+                            MemberUpdate: false,
+                            guildUpdate: false,
+                            inviteCreate: false,
+                            inviteDelete: false,
+                            messageDelete: false,
+                            messageDeleteBulk: false,
+                            messageUpdate: false,
+                            roleCreate: false,
+                            roleDelete: false,
+                            roleUpdate: false,
+                            },
+                            warns: []
+                          };
+                          try {
+                            createGuild(newGuild);
+                            
+                          } catch (error) {
+                            console.error(error);
+                          }
+                          return
+                    }
+                }).catch(err => {
+                    console.error(err)
+                })
                 updateGuild(message.guild, { LeaveMsg: leaveMsg, LeaveBool: true, LeaveChannel: leaveChannel.id})
         
                 message.channel.send("Se ha establecido el mensaje de despedida")                
+                
             break;
             case "disablewelcome":
                 Guild.findOne({ guildID: message.guild.id }).then(doc => {
                     if (!doc) {
-                       return message.channel.send("No existe un mensaje de bienvenida")
+                       message.channel.send("No existe un mensaje de bienvenida")
+                       return getGuild(message.guild)
                     }
                    else if (doc.JoinBool == false) return message.channel.send("Ya estaba desactivado el mensaje")
                 else {
@@ -76,7 +180,8 @@ module.exports = {
             case "disableleave":
                 Guild.findOne({ guildID: message.guild.id }).then(doc => {
                     if (!doc) {
-                        return message.channel.send("No existe un mensaje de bienvenida")
+                        message.channel.send("No existe un mensaje de bienvenida")
+                        return getGuild(message.guild)
                      }
                    else if (doc.LeaveBool == false) return message.channel.send("Ya estaba desactivado el mensaje")
                 else {
