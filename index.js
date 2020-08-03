@@ -54,7 +54,8 @@ client.on('message', (message) => {
   if (message.channel.type === "dm") return;
   getGuild(message.guild).then(() => {
     Guild.findOne({ guildID: message.guild.id }).then((result) => {
-      prefix = result.prefix
+     if (result) prefix = result.prefix
+     else prefix = '!'
      }).then(() => {
     if (message.author.bot) return;
     
