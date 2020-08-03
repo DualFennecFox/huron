@@ -155,7 +155,7 @@ client.on("channelCreate", channel => {
 client.on("channelDelete", channel => {
   Guild.findOne({ guildID: channel.guild.id }).then(doc => {
   if (!doc) return
-  if (doc.channelCreate == true) {
+  if (doc.channelDelete == true) {
     if (!doc.LogChannel) return
     let Channel = channel.guild.channels.cache.get(doc.LogChannel)
     if (!Channel) return
@@ -190,7 +190,7 @@ client.on('guildMemberAdd', member => {
  
  Channel.send(msg)
   }
- if (doc.MemberRemove == true) {
+ if (doc.MemberAdd == true) {
   if (!doc.LogChannel) return
   let Channel = member.guild.channels.cache.get(doc.LogChannel)
   if (!Channel) return
