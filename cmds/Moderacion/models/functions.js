@@ -2,7 +2,8 @@ const Guild = require('./Guild')
 const defaultSettings = require('./config')
 const mongoose = require('mongoose');
 
-let getGuild = async (guild) => {
+let getGuild = async (guild, creating) => {
+  if (creating == false) {
     let data = Guild.findOne({ guildID: guild.id }).then(result => {
    if (result) defaultSettings.prefix = result.prefix
     else {
@@ -52,6 +53,7 @@ let getGuild = async (guild) => {
       }
     }
     })
+  }
   }
   
   let updateGuild = async (guild, settings) => {

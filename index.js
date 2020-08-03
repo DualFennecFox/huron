@@ -52,7 +52,8 @@ client.on('ready', () => {
 
 client.on('message', (message) => {
   if (message.channel.type === "dm") return;
-  getGuild(message.guild).then(() => {
+  let creating = false
+  getGuild(message.guild, creating).then(() => {
     Guild.findOne({ guildID: message.guild.id }).then((result) => {
      if (result) prefix = result.prefix
      else prefix = '!'
@@ -264,6 +265,39 @@ client.on('guildMemberRemove', member => {
   }).catch(err => {
     console.error(err)
   })
+})
+client.on("guildMemberUpdate", (oldMember, newMember) => {
+  
+  let name = false
+  let newRole = false
+  let getNewRole;
+  let removeRole = false
+  let getRemovedRole;
+  let avatar = false
+  let nickname = false
+  
+
+  if (oldMember.user.tag !== newMember.user.tag) {
+  name = true
+  }
+  oldMember.roles.cache.every(role => {
+    if (!newMember.roles.cache.every("id", role.id)) {
+      newRole = true
+      getNewRole = role
+    }
+  })
+  newMember.roles.cache.every(role => {
+    if (!oldMember.roles.cache.every("id", role.id)) {
+      removeRole = true
+      getRemovedRole = role
+    }
+  })
+  if (oldMember.user.avatarURL() != newMember.user.avatarURL()) {
+    avatar = true
+  }
+  if (oldMember.nickname != newMember.nickname) {
+    nickname = true
+  }
 })
 
 client.login(process.env.TOKEN);
