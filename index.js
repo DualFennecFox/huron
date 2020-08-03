@@ -135,7 +135,7 @@ client.on("channelCreate", channel => {
   Guild.findOne({ guildID: channel.guild.id }).then(doc => {
     if (!doc) return
     if (doc.log.channelCreate == true) {
-      if (!doc.log.LogChannel) return
+      if (!doc.LogChannel) return
       let Channel = channel.guild.channels.cache.get(doc.LogChannel)
       if (!Channel) return
       if (!Channel.permissionsFor(channel.guild.me).has("SEND_MESSAGES")) return
@@ -190,7 +190,7 @@ client.on("channelDelete", channel => {
     const embed = new Discord.MessageEmbed()
       .setAuthor("Canal Eliminado", channel.guild.iconURL())
       .setColor("#FF0000")
-      .setDescription(`Se ha eliminado el canal ${toSend}`)
+      .setDescription(`Se ha eliminado el canal **${channel.name}**`)
       .addField("Creado a las", checkDays(channel.createdAt))
       .addField("Tipo de canal", type[channel.type])
       .setFooter(`${channel.name} | ${channel.id}`);
