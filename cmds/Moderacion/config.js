@@ -1,7 +1,7 @@
 const Discord = require('discord.js')
 const mongoose = require('mongoose')
 const Guild = require('./models/Guild')
-const { updateGuild, getGuild } = require('./models/functions')
+const { updateGuild, getGuild, createGuild } = require('./models/functions')
 
 module.exports = {
     name : 'config',
