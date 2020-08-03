@@ -135,7 +135,7 @@ client.on("channelCreate", channel => {
   Guild.findOne({ guildID: channel.guild.id }).then(doc => {
     if (!doc) return
     if (doc.channelCreate == true) {
-      if (!doc.LogChannel) return
+      if (!doc.log.LogChannel) return
       let Channel = channel.guild.channels.cache.get(doc.LogChannel)
       if (!Channel) return
       if (!Channel.permissionsFor(channel.guild.me).has("SEND_MESSAGES")) return
@@ -170,7 +170,7 @@ client.on("channelDelete", channel => {
   if (channel.type === "dm") return
   Guild.findOne({ guildID: channel.guild.id }).then(doc => {
   if (!doc) return
-  if (doc.channelDelete == true) {
+  if (doc.log.channelDelete == true) {
     if (!doc.LogChannel) return
     let Channel = channel.guild.channels.cache.get(doc.LogChannel)
     if (!Channel) return
@@ -216,7 +216,7 @@ client.on('guildMemberAdd', member => {
  
  Channel.send(msg)
   }
- if (doc.MemberAdd == true) {
+ if (doc.log.MemberAdd == true) {
   if (!doc.LogChannel) return
   let Channel = member.guild.channels.cache.get(doc.LogChannel)
   if (!Channel) return
@@ -250,7 +250,7 @@ client.on('guildMemberRemove', member => {
 
     Channel.send(msg)
     }
-    if (doc.MemberRemove == true) {
+    if (doc.log.MemberRemove == true) {
       if (!doc.LogChannel) return
       let Channel = member.guild.channels.cache.get(doc.LogChannel)
       if (!Channel) return
