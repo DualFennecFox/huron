@@ -146,7 +146,7 @@ function playSong(queue, message) {
                           const url = args[0];
                             let ID = getVideoId(args[0]).id
                             ytsr(ID, { limit: 10 }).then(toSearch => {
-                            let video = searchVideo(url, toSearch.items)
+                            let video = searchVideo(ID, toSearch.items)
                             const title = video.title
                             const duration = video.duration
                             const thumbnail = video.thumbnail;
