@@ -42,8 +42,8 @@ let getGuild = async (guild) => {
         roleCreate: false,
         roleDelete: false,
         roleUpdate: false,
+        },
         warns: []
-        }
       };
       try {
         createGuild(newGuild);
