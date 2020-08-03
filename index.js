@@ -220,7 +220,7 @@ client.on('guildMemberAdd', member => {
   .setAuthor(member.user.tag, member.user.displayAvatarURL())
   .setColor("#FF0000")
   .setDescription(`**${member.user.tag}** Se ha unido a el servidor`)
-  .addField("Creado a las", checkDays(member.user.createdAt))
+  .addField("Creado", checkDays(member.user.createdAt))
   .setFooter(`${member.user.username} | ${member.user.id}`);
 
   Channel.send({ embed })
@@ -254,6 +254,7 @@ client.on('guildMemberRemove', member => {
       .setAuthor(member.user.tag, member.user.displayAvatarURL())
       .setColor("#FF0000")
       .setDescription(`**${member.user.tag}** Ha dejado el servidor`)
+      .addField("Creado", checkDays(member.user.createdAt))
       .addField("Miembro Desde", checkDays(member.joinedAt))
       .addField("Roles", member.roles.cache.map(r => `\`${r.name}\``).join(", "))
       .setFooter(`${member.user.username} | ${member.user.id}`);
