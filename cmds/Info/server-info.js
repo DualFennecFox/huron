@@ -59,7 +59,8 @@ module.exports = {
        let voiceChannel = message.guild.channels.cache.filter(channel => channel.type !== "category" && channel.type !== "news" && channel.type !== "store" && channel.type !== "text").size
        let newsChannel = message.guild.channels.cache.filter(channel => channel.type !== "category" && channel.type !== "voice" && channel.type !== "store" && channel.type !== "text").size
        let storeChannel = message.guild.channels.cache.filter(channel => channel.type !== "category" && channel.type !== "news" && channel.type !== "voice" && channel.type !== "text").size
-
+       let channelName = `Canales | ${textChannel == 0 ? "" : `Texto | `}${voiceChannel == 0 ? "" : `Voz | `}${newsChannel == 0 ? "" : `Noticias | `}${storeChannel == 0 ? "" : "Tienda"}`
+       let channelOrder = `${textChannel == 0 ? "" : `${textChannel} | `}${voiceChannel == 0 ? "" : `${voiceChannel} | `}${newsChannel == 0 ? "" : `${newsChannel} | `}${storeChannel == 0 ? "" : storeChannel}`
     const embed = new Discord.MessageEmbed()
         .setAuthor(message.guild.name, message.guild.iconURL())
         .setColor("RANDOM")
@@ -69,7 +70,7 @@ module.exports = {
         .addField("Región", region[message.guild.region], true)
         .addField("Miembros | Usuarios | Bots", `${message.guild.members.cache.size} | ${message.guild.members.cache.filter(member => !member.user.bot).size} | ${message.guild.members.cache.filter(member => member.user.bot).size}`, true)
         .addField("Nivel de Verificación", verifLevels[message.guild.verificationLevel], true)
-        .addField("Canales | Texto | Voz | Noticias | Tienda", `${channels} | ${textChannel} | ${voiceChannel} | ${newsChannel} | ${storeChannel}`, true)
+        .addField(channelName, `${channels} | ${channelOrder}`, true)
         .addField("Roles", message.guild.roles.cache.size, true)
         .addField("Creado a las", `${message.channel.guild.createdAt.toUTCString().substr(0, 16)} (${checkDays(message.channel.guild.createdAt)})`, true)
         .setThumbnail(message.guild.iconURL())
