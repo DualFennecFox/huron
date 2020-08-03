@@ -8,7 +8,13 @@ const ytpl = require('ytpl')
 const ytsr = require('ytsr')
 const ytScrapper = require('yt-scraper')
 const getVideoId = require('get-video-id')
-const { searchVideo } = require('../Moderacion/models/functions')
+function search(nameKey, myArray) {
+    for (var i = 0; i < myArray.length; i++) {
+        if (myArray[i].link.includes(nameKey)) {
+            return myArray[i];
+        }
+    }
+  }
 
 function playSong(queue, message) {
     if (!musicData.server[message.guild.id]) musicData.server[message.guild.id] = {
@@ -146,7 +152,7 @@ function playSong(queue, message) {
                           const url = args[0];
                             let ID = getVideoId(args[0]).id
                             ytsr(ID, { limit: 10 }).then(toSearch => {
-                            let video = searchVideo(ID, toSearch.items)
+                            let video = search(ID, toSearch.items)
                             const title = video.title
                             const duration = video.duration
                             const thumbnail = video.thumbnail;
