@@ -19,6 +19,7 @@ let getGuild = async (guild) => {
         WelcomeChannel: "",
         LeaveChannel: "",
         LogChannel: "",
+        log: {
         Premium: false,
         channelCreate: false,
         channelDelete: false,
@@ -42,6 +43,7 @@ let getGuild = async (guild) => {
         roleDelete: false,
         roleUpdate: false,
         warns: []
+        }
       };
       try {
         createGuild(newGuild);
