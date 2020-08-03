@@ -131,6 +131,7 @@ let data = Guild.findOne({ guildID: gData.id }).then((result) => {
 });
 
 client.on("channelCreate", channel => {
+  if (channel.type === "dm") return
   Guild.findOne({ guildID: channel.guild.id }).then(doc => {
     if (!doc) return
     if (doc.channelCreate == true) {
@@ -139,11 +140,23 @@ client.on("channelCreate", channel => {
       if (!Channel) return
       if (!Channel.permissionsFor(channel.guild.me).has("SEND_MESSAGES")) return
 
+      let toSend;
+      if (channel.type === "text") toSend = `<#${channel.id}>`
+      else toSend = `**${channel.name}**`
+
+      let type = {
+        "category": "Categoría",
+        "text": "Texto",
+        "voice": "Voz",
+        "news": "Noticias",
+        "store": "Tienda",
+        "unknown": "Desconocido"
+      }
       const embed = new Discord.MessageEmbed()
-      .setAuthor(channel.name, channel.guild.iconURL())
+      .setAuthor("Canal Creado", channel.guild.iconURL())
       .setColor("#FF0000")
-      .setDescription(`Se ha creado el canal **${channel.name}**`)
-      .addField("Creado a las", checkDays(channel.createdAt))
+      .setDescription(`Se ha creado el canal ${toSend}`)
+      .addField("Tipo de canal", type[channel.type])
       .setFooter(`${channel.name} | ${channel.id}`);
 
   Channel.send({ embed })
@@ -154,6 +167,7 @@ client.on("channelCreate", channel => {
 });
 
 client.on("channelDelete", channel => {
+  if (channel.type === "dm") return
   Guild.findOne({ guildID: channel.guild.id }).then(doc => {
   if (!doc) return
   if (doc.channelDelete == true) {
@@ -161,13 +175,24 @@ client.on("channelDelete", channel => {
     let Channel = channel.guild.channels.cache.get(doc.LogChannel)
     if (!Channel) return
     if (!Channel.permissionsFor(channel.guild.me).has("SEND_MESSAGES")) return
+    let toSend;
+    if (channel.type === "text") toSend = `<#${channel.id}>`
+    else toSend = `**${channel.name}**`
+    let type = {
+      "category": "Categoría",
+      "text": "Texto",
+      "voice": "Voz",
+      "news": "Noticias",
+      "store": "Tienda",
+      "unknown": "Desconocido"
+    }
     
     const embed = new Discord.MessageEmbed()
-      .setAuthor(channel.name, channel.guild.iconURL())
+      .setAuthor("Canal Eliminado", channel.guild.iconURL())
       .setColor("#FF0000")
-      .setDescription(`Se ha eliminado el canal **${channel.name}**`)
+      .setDescription(`Se ha eliminado el canal ${toSend}`)
       .addField("Creado a las", checkDays(channel.createdAt))
-      .addField("Permisos", channel.permissionOverwrites.map(ch => ch).join(", "))
+      .addField("Tipo de canal", type[channel.type])
       .setFooter(`${channel.name} | ${channel.id}`);
 
   Channel.send({ embed })

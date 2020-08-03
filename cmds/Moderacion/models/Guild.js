@@ -14,6 +14,7 @@ const guildSchema = mongoose.Schema({
     WelcomeChannel: String,
     LeaveChannel: String,
     LogChannel: String,
+    log: {
     Premium: Boolean,
     channelCreate: Boolean,
     channelDelete: Boolean,
@@ -35,7 +36,8 @@ const guildSchema = mongoose.Schema({
     messageUpdate: Boolean,
     roleCreate: Boolean,
     roleDelete: Boolean,
-    roleUpdate: Boolean,
+    roleUpdate: Boolean
+    },
     warns: [{
       warnUser: String,
       warnUserID: String,
