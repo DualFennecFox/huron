@@ -285,7 +285,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   name = true
   }
   newMember.roles.cache.every(function (role) {
-    oldMember.guild.roles.fetch(role.id, { cache: true }).catch(err => {
+    newMember.guild.roles.fetch(role.id, { cache: true }).catch(err => {
       console.error(err)
       newRole = false
     })
