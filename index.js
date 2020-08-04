@@ -281,7 +281,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   let nickname = false
   let iconURL
 
-  if (newMember.user.username != oldMember.user.username) {
+  if (newMember.username != oldMember.username) {
   name = true
   }
   newMember.roles.cache.every(function (role) {
@@ -297,7 +297,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
       getRemovedRole = role
     }
   })
-  if (newMember.user.avatarURL != oldMember.user.avatarURL) {
+  if (newMember.avatar != oldMember.avatar) {
     avatar = true
   }
 if (newMember.nickname !== oldMember.nickname) {

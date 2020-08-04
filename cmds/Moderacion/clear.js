@@ -16,7 +16,7 @@ const { parse } = require('dotenv-flow');
     else if (amount <= 1 || amount > 100) {
       return message.channel.send('Debes elegir un número entre 1 y 100');
     }
-    message.delete()
+    if (message) message.delete()
     message.channel.messages.fetch({ limit: amount })
     .then(messages => {
       message.channel.bulkDelete(messages, true);
