@@ -319,7 +319,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   if (avatar == true) embed.addField("Avatar Actualizado", `[Antes](${oldMember.user.displayAvatarURL({ dynamic: true })}) | [Después](${newMember.user.displayAvatarURL({ dynamic: true })})`)
   if (nickname == true) embed.addField("Apodo Antes | Después", `${oldMember.nickname} | ${newMember.nickname}`)
 
-  message.channel.send({ embed })
+  Channel.send({ embed })
 }
 }).catch(err => {
   console.error(err)
