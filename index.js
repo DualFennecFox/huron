@@ -281,23 +281,25 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   let nickname = false
   let iconURL
 
-  console.log(oldMember)
-  console.log(newMember)
-
   if (newMember.user.username != oldMember.user.username) {
   name = true
   }
+  if (oldMember.roles.cache.size < newMember.roles.cache.size) {
   for (const role of newMember.roles.cache.map(x => x.id)) {
     if (!oldMember.roles.cache.has(role)) {
         newRole = true
         getNewRole = newMember.guild.roles.cache.get(role)
     }
 }
+  }
+  
+if (newMember.roles.cache.size < oldMember.roles.cache.size) {
 for (const role of oldMember.roles.cache.map(x => x.id)) {
   if (!newMember.roles.cache.has(role)) {
       removeRole = true
       getRemovedRole = newMember.guild.roles.cache.get(role)
   }
+}
 }
 
   if (newMember.user.avatarURL() != oldMember.user.avatarURL()) {
