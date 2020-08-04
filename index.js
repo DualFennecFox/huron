@@ -269,9 +269,8 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   if (!doc) return
   if (doc.log.MemberUpdate == true) {
     if (!doc.LogChannel) return
-    let Channel = channel.guild.channels.cache.get(doc.LogChannel)
+    let Channel = newMember.guild.channels.cache.get(doc.LogChannel)
     if (!Channel) return
-    if (!Channel.permissionsFor(channel.guild.me).has("SEND_MESSAGES")) return
 
   let name = false
   let newRole = false
