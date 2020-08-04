@@ -265,7 +265,7 @@ client.on('guildMemberRemove', member => {
 
 client.on("guildMemberUpdate", (oldMember, newMember) => {
   
-  Guild.findOne({ guildID: channel.guild.id }).then(doc => {
+  Guild.findOne({ guildID: newMember.guild.id }).then(doc => {
   if (!doc) return
   if (doc.log.MemberUpdate == true) {
     if (!doc.LogChannel) return
