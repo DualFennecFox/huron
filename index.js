@@ -404,7 +404,7 @@ client.on('emojiUpdate', (oldEmoji, newEmoji) => {
       const embed = new Discord.MessageEmbed()
       .setAuthor("Emoji Actualizado")
       .setColor("#FF0000")
-      .setDescription(`<:${newEmoji.name}:${newEmoji.id}> Se ha renombrado a ${newEmoji.name}`)
+      .setDescription(`<:${newEmoji.name}:${newEmoji.id}> Se ha renombrado a\n${newEmoji.name}\n\n**De:** ${oldEmoji.name}\n**A:** ${newEmoji.name}`)
       .setThumbnail(animated)
       .setFooter(`Por: ${author.username} | ${author.id}`);
 
