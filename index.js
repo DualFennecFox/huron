@@ -296,19 +296,19 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
     nickname = true
   }
   if (avatar == true) {
-    iconURL = oldMember.displayAvatarURL()
+    iconURL = oldMember.user.displayAvatarURL()
   } else {
-    iconURL = newMember.displayAvatarURL()
+    iconURL = newMember.user.displayAvatarURL()
   }
 
   const embed = new Discord.MessageEmbed()
   .setAuthor("Miembro actualizado", iconURL)
-  .setThumbnail(newMember.displayAvatarURL())
+  .setThumbnail(newMember.user.displayAvatarURL())
   .setFooter(`${newMember.user.username} | ${newMember.user.id}`)
   if (name == true) embed.addField("Nombre Antes | Después", `${oldMember.user.tag} | ${newMember.user.tag}`)
   if (newRole == true) embed.addField("Nuevo Rol", `<@&${getNewRole.id}>`)
   if (removeRole == true) embed.addField("Rol Removido",`<@${getRemovedRole.id}>`)
-  if (avatar == true) embed.addField("Avatar Actualizado", `[Antes](${oldMember.displayAvatarURL({ dynamic: true })}) | [Después](${newMember.displayAvatarURL({ dynamic: true })})`)
+  if (avatar == true) embed.addField("Avatar Actualizado", `[Antes](${oldMember.user.displayAvatarURL({ dynamic: true })}) | [Después](${newMember.user.displayAvatarURL({ dynamic: true })})`)
   if (nickname == true) embed.addField("Apodo Antes | Después", `${oldMember.nickname} | ${newMember.nickname}`)
 
   message.channel.send({ embed })
