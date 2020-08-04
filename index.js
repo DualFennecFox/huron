@@ -253,7 +253,7 @@ client.on('guildMemberRemove', member => {
       .setDescription(`**${member.user.tag}** Ha dejado el servidor`)
       .addField("Creado", checkDays(member.user.createdAt))
       .addField("Miembro Desde", checkDays(member.joinedAt))
-      .addField("Roles", member.roles.cache.map(r => `<@&${r.id}>`).join(", "))
+      .addField("Roles", member.roles.cache.filter(r => r.name !== "@everyone").map(r => `<@&${r.id}>`).join(", "))
       .setFooter(`${member.user.username} | ${member.user.id}`);
 
       Channel.send({ embed })
@@ -280,8 +280,8 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   let avatar = false
   let nickname = false
   let iconURL
-  console.log("viejo " + oldMember.displayAvatarURL())
-  console.log("nuevo " + newMember.displayAvatarURL())
+  console.log("viejo " + oldMember.user.avatarURL())
+  console.log("nuevo " + newMember.user.avatarURL())
 
   if (oldMember.user.username != newMember.user.username) {
   name = true
