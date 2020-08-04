@@ -340,11 +340,10 @@ client.on('emojiCreate', emoji => {
       let Channel = emoji.guild.channels.cache.get(doc.LogChannel)
       if (!Channel) return
 
-      let author = emoji.fetchAuthor()
       const embed = new Discord.MessageEmbed()
-      .setAuthor("Emoji Creado", emoji.url)
-      .addField(emoji.name, `<:${emoji.name}:${emoji.id}> | ${emoji.id}`)
-      .setFooter(`Por: ${author.tag} | ${author.id}`);
+      .setAuthor("Emoji Creado", `https://cdn.discordapp.com/emojis/${emoji.id}.png`)
+      .addField(emoji.name, `<:${emoji.name}:${emoji.id}>`)
+      .setFooter(`ID: ${emoji.id}`);
 
       Channel.send({ embed })
     }
