@@ -339,9 +339,10 @@ client.on('emojiCreate', emoji => {
       if (!doc.LogChannel) return
       let Channel = emoji.guild.channels.cache.get(doc.LogChannel)
       if (!Channel) return
-
+      
+      console.log(emoji.fetchAuthor())
       const embed = new Discord.MessageEmbed()
-      .setAuthor("Emoji Creado", `https://cdn.discordapp.com/emojis/${emoji.id}.png`)
+      .setAuthor("Emoji Creado")
       .setColor("#FF0000")
       .setDescription(`<:${emoji.name}:${emoji.id}> | ${emoji.name}`)
       .setThumbnail(`https://cdn.discordapp.com/emojis/${emoji.id}.png`)
