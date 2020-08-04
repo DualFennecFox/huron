@@ -265,6 +265,15 @@ client.on('guildMemberRemove', member => {
 
 client.on("guildMemberUpdate", (oldMember, newMember) => {
   
+  if (channel.type === "dm") return
+  Guild.findOne({ guildID: channel.guild.id }).then(doc => {
+  if (!doc) return
+  if (doc.log.MemberUpdate == true) {
+    if (!doc.LogChannel) return
+    let Channel = channel.guild.channels.cache.get(doc.LogChannel)
+    if (!Channel) return
+    if (!Channel.permissionsFor(channel.guild.me).has("SEND_MESSAGES")) return
+
   let name = false
   let newRole = false
   let getNewRole;
@@ -312,6 +321,9 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   if (nickname == true) embed.addField("Apodo Antes | Después", `${oldMember.nickname} | ${newMember.nickname}`)
 
   message.channel.send({ embed })
-})
+}
+}).catch(err => {
+  console.error(err)
+  })
 
 client.login(process.env.TOKEN);
