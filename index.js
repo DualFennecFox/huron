@@ -278,19 +278,20 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   let removeRole = false
   let getRemovedRole;
   let avatar = false
+  let nickname = false
   let iconURL
 
   if (oldMember.user.tag !== newMember.user.tag) {
   name = true
   }
-  oldMember.roles.cache.every(function (role) {
-    if (!newMember.roles.cache.find(r => r.id === role.id)) {
+  newMember.roles.cache.every(function (role) {
+    if (!oldMember.roles.cache.find(r => r.id === role.id)) {
       newRole = true
       getNewRole = role
     }
   })
-  newMember.roles.cache.every(function (role) {
-    if (!oldMember.roles.cache.find(r => r.id === role.id)) {
+  oldMember.roles.cache.every(function (role) {
+    if (!newMember.roles.cache.find(r => r.id === role.id)) {
       removeRole = true
       getRemovedRole = role
     }
@@ -298,7 +299,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   if (oldMember.user.avatarURL() != newMember.user.avatarURL()) {
     avatar = true
   }
-
+if (oldMember.nickname !== newMember.nickname)
   if (avatar == true) {
     iconURL = oldMember.user.displayAvatarURL()
   } else {
@@ -316,6 +317,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   if (newRole == true) embed.addField("Nuevo Rol", `<@&${getNewRole.id}>`)
   if (removeRole == true) embed.addField("Rol Removido",`<@${getRemovedRole.id}>`)
   if (avatar == true) embed.addField("Avatar Actualizado", `[Antes](${oldMember.user.displayAvatarURL({ dynamic: true })}) | [Después](${newMember.user.displayAvatarURL({ dynamic: true })})`)
+  if (nickname == true) embed.addField("Apodo Antes | Después", `${oldMember.nickname} | ${newMember.nickname}`)
 
   Channel.send({ embed })
 }
