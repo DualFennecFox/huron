@@ -296,7 +296,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
       getRemovedRole = role
     }
   })
-  if (oldMember.user.avatarURL() != newMember.user.avatarURL()) {
+  if (oldMember.user.displayAvatarURL() != newMember.user.displayAvatarURL()) {
     avatar = true
   }
 if (oldMember.nickname !== newMember.nickname) {
