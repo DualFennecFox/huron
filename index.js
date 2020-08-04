@@ -342,11 +342,14 @@ client.on('emojiCreate', emoji => {
       
       emoji.fetchAuthor().then(author => {
 
+        let animated = ""
+        if (emoji.animated == true) animated = `https://cdn.discordapp.com/emojis/${emoji.id}.gif`
+        else animated = `https://cdn.discordapp.com/emojis/${emoji.id}.png`
       const embed = new Discord.MessageEmbed()
       .setAuthor("Emoji Creado")
       .setColor("#FF0000")
       .setDescription(`<:${emoji.name}:${emoji.id}> | ${emoji.name}\n\nID: ${emoji.id}`)
-      .setThumbnail(`https://cdn.discordapp.com/emojis/${emoji.id}.png`)
+      .setThumbnail(animated)
       .setFooter(`Por: ${author.username} | ${author.id}`);
 
       Channel.send({ embed })
@@ -366,14 +369,49 @@ client.on('emojiDelete', emoji => {
       if (!doc.LogChannel) return
       let Channel = emoji.guild.channels.cache.get(doc.LogChannel)
       if (!Channel) return
-      
+
+      let animated = ""
+      if (emoji.animated == true) animated = `https://cdn.discordapp.com/emojis/${emoji.id}.gif`
+      else animated = `https://cdn.discordapp.com/emojis/${emoji.id}.png`
       const embed = new Discord.MessageEmbed()
       .setAuthor("Emoji Eliminado")
       .setColor("#FF0000")
-      .setDescription(`${emoji.name} ID: ${emoji.id}`)
-      .setThumbnail(`https://cdn.discordapp.com/emojis/${emoji.id}.png`)
+      .setDescription(`${emoji.name}\n\nID: ${emoji.id}`)
+      .setThumbnail(animated)
 
       Channel.send({ embed })
+  }
+  }).catch(err => {
+    console.error(err)
+  })
+})
+
+client.on('emojiUpdate', (oldEmoji, newEmoji) => {
+
+  Guild.findOne({ guildID: newEmoji.guild.id }).then(doc => {
+    if (!doc) return
+    if (doc.log.emojiCreate == true) {
+      if (!doc.LogChannel) return
+      let Channel = newEmoji.guild.channels.cache.get(doc.LogChannel)
+      if (!Channel) return
+      
+      if (oldEmoji.name === newEmoji.name) return
+      newEmoji.fetchAuthor().then(author => {
+
+        let animated = ""
+        if (newEmoji.animated == true) animated = `https://cdn.discordapp.com/emojis/${newEmoji.id}.gif`
+        else animated = `https://cdn.discordapp.com/emojis/${newEmoji.id}.png`
+      const embed = new Discord.MessageEmbed()
+      .setAuthor("Emoji Actualizado")
+      .setColor("#FF0000")
+      .setDescription(`<:${newEmoji.name}:${newEmoji.id}> Se ha renombrado a ${newEmoji.name}`)
+      .setThumbnail(animated)
+      .setFooter(`Por: ${author.username} | ${author.id}`);
+
+      Channel.send({ embed })
+    }).catch(err => {
+      console.error(err)
+    })
   }
   }).catch(err => {
     console.error(err)
