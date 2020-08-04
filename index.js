@@ -319,7 +319,7 @@ if (oldMember.nickname !== newMember.nickname) {
   .setColor("#FF0000")
   if (name == true) embed.addField("Nombre Antes | Después", `${oldMember.user.tag} | ${newMember.user.tag}`)
   if (newRole == true) embed.addField("Nuevo Rol", `<@&${getNewRole.id}>`)
-  if (removeRole == true) embed.addField("Rol Removido",`<@${getRemovedRole.id}>`)
+  if (removeRole == true) embed.addField("Rol Removido",`<@&${getRemovedRole.id}>`)
   if (avatar == true) embed.addField("Avatar Actualizado", `[Antes](${oldMember.user.displayAvatarURL({ dynamic: true })}) | [Después](${newMember.user.displayAvatarURL({ dynamic: true })})`)
   if (nickname == true) embed.addField("Apodo Antes | Después", `${oldMember.displayName} | ${newMember.displayName}`)
 
