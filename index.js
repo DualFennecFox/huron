@@ -237,7 +237,7 @@ client.on('guildMemberRemove', member => {
     if (!Channel) return
     if (!Channel.permissionsFor(member.guild.me).has("SEND_MESSAGES")) return
 
-    let msg = doc.LeaveMsg.replace("{user}", member).replace("{server}", member.guild.name).replace("{username}", member.user.tag).replace("{members}", member.guild.memberCount).replace("{owner}", member.guild.owner.user.tag)
+    let msg = doc.LeaveMsg.replaceAll("{user}", member).replace("{server}", member.guild.name).replace("{username}", member.user.tag).replace("{members}", member.guild.memberCount).replace("{owner}", member.guild.owner.user.tag)
 
     Channel.send(msg)
     }
@@ -261,6 +261,57 @@ client.on('guildMemberRemove', member => {
   }).catch(err => {
     console.error(err)
   })
+})
+
+client.on("guildMemberUpdate", (oldMember, newMember) => {
+  
+  let name = false
+  let newRole = false
+  let getNewRole;
+  let removeRole = false
+  let getRemovedRole;
+  let avatar = false
+  let nickname = false
+  let iconURL
+
+  if (oldMember.user.tag !== newMember.user.tag) {
+  name = true
+  }
+  oldMember.roles.cache.every(role => {
+    if (!newMember.roles.cache.find("id", role.id)) {
+      newRole = true
+      getNewRole = role
+    }
+  })
+  newMember.roles.cache.every(role => {
+    if (!oldMember.roles.cache.find("id", role.id)) {
+      removeRole = true
+      getRemovedRole = role
+    }
+  })
+  if (oldMember.user.avatarURL() != newMember.user.avatarURL()) {
+    avatar = true
+  }
+  if (oldMember.nickname != newMember.nickname) {
+    nickname = true
+  }
+  if (avatar == true) {
+    iconURL = oldMember.displayAvatarURL()
+  } else {
+    iconURL = newMember.displayAvatarURL()
+  }
+
+  const embed = new Discord.MessageEmbed()
+  .setAuthor("Miembro actualizado", iconURL)
+  .setThumbnail(newMember.displayAvatarURL())
+  .setFooter(`${newMember.user.username} | ${newMember.user.id}`)
+  if (name == true) embed.addField("Nombre Antes | Después", `${oldMember.user.tag} | ${newMember.user.tag}`)
+  if (newRole == true) embed.addField("Nuevo Rol", `<@&${getNewRole.id}>`)
+  if (removeRole == true) embed.addField("Rol Removido",`<@${getRemovedRole.id}>`)
+  if (avatar == true) embed.addField("Avatar Actualizado", `[Antes](${oldMember.displayAvatarURL({ dynamic: true })}) | [Después](${newMember.displayAvatarURL({ dynamic: true })})`)
+  if (nickname == true) embed.addField("Apodo Antes | Después", `${oldMember.nickname} | ${newMember.nickname}`)
+
+  message.channel.send({ embed })
 })
 
 client.login(process.env.TOKEN);
