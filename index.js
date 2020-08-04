@@ -271,7 +271,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
     if (!doc.LogChannel) return
     let Channel = newMember.guild.channels.cache.get(doc.LogChannel)
     if (!Channel) return
-
+  newMember.fetch()
   let name = false
   let newRole = false
   let getNewRole;
