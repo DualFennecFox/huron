@@ -287,19 +287,19 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   if (newMember.username != oldMember.username) {
   name = true
   }
-  newMember.roles.cache.every(function (role) {
-    if (!oldMember.roles.cache.find(r => r.id === role.id)) {
+  for (const role of newMember.roles.cache.map(x => x.id)) {
+    if (!oldMember.roles.cache.has(role)) {
+        newRole = true
+        getNewRole = role
+    }
+}
+for (const role of oldMember.roles.cache.map(x => x.id)) {
+  if (!newMember.roles.cache.has(role)) {
       newRole = true
       getNewRole = role
-    }
-  })
-  oldMember.roles.cache.every(function (role) {
-  
-    if (!newMember.roles.cache.find(r => r.id === role.id)) {
-      removeRole = true
-      getRemovedRole = role
-    }
-  })
+  }
+}
+
   if (newMember.avatar != oldMember.avatar) {
     avatar = true
   }
