@@ -426,15 +426,16 @@ client.on("guildBanAdd", (guild, user) => {
       let Channel = guild.channels.cache.get(doc.LogChannel)
       if (!Channel) return
       guild.fetchBan(user.id).then(Ban => {
-
+      let reason = Ban.reason
+      if (!reason) reason = "No se especifico una Razón"
+      
       const embed = new Discord.MessageEmbed()
       .setAuthor("Usuario Baneado", user.displayAvatarURL())
       .setColor("#FF0000")
       .setDescription(`${user.tag} Ha sido baneado\n**ID:** ${user.id}`)
       .addField("Creado", checkDays(user.createdAt))
-      .addField("Baneado Por", `${Ban.user.tag}\nID: ${Ban.user.id}`)
       .addField("Razón", Ban.reason)
-
+      
       Channel.send({ embed })
     
   }).catch(err => {
