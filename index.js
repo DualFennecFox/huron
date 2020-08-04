@@ -280,6 +280,8 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   let avatar = false
   let nickname = false
   let iconURL
+  console.log("viejo " + oldMember)
+  console.log("nuevo " + newMember)
 
   if (oldMember.user.username != newMember.user.username) {
   name = true
@@ -311,12 +313,10 @@ if (oldMember.nickname !== newMember.nickname) {
   if (name == false && newRole == false && removeRole == false && avatar == false && nickname == false) return
 
   const embed = new Discord.MessageEmbed()
-  .setAuthor("Miembro actualizado", iconURL)
-  .setTitle(newMember.user.tag)
+  .setAuthor(newMember.user.tag, iconURL)
   .setThumbnail(newMember.user.displayAvatarURL())
   .setFooter(`${newMember.user.username} | ${newMember.user.id}`)
   .setColor("#FF0000")
-  .addField("Creado", checkDays(newMember.user.createdAt))
   if (name == true) embed.addField("Nombre Antes | Después", `${oldMember.user.tag} | ${newMember.user.tag}`)
   if (newRole == true) embed.addField("Nuevo Rol", `<@&${getNewRole.id}>`)
   if (removeRole == true) embed.addField("Rol Removido",`<@${getRemovedRole.id}>`)
