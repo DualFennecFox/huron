@@ -299,7 +299,9 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   if (oldMember.user.avatarURL() != newMember.user.avatarURL()) {
     avatar = true
   }
-if (oldMember.nickname !== newMember.nickname)
+if (oldMember.nickname !== newMember.nickname) {
+  nickname = true
+}
   if (avatar == true) {
     iconURL = oldMember.user.displayAvatarURL()
   } else {
