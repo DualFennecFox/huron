@@ -308,6 +308,8 @@ if (oldMember.nickname !== newMember.nickname) {
     iconURL = newMember.user.displayAvatarURL()
   }
 
+  if (name == false && newRole == false && removeRole == false && avatar == false && nickname == false) return
+  
   const embed = new Discord.MessageEmbed()
   .setAuthor("Miembro actualizado", iconURL)
   .setTitle(newMember.user.tag)
@@ -319,7 +321,7 @@ if (oldMember.nickname !== newMember.nickname) {
   if (newRole == true) embed.addField("Nuevo Rol", `<@&${getNewRole.id}>`)
   if (removeRole == true) embed.addField("Rol Removido",`<@${getRemovedRole.id}>`)
   if (avatar == true) embed.addField("Avatar Actualizado", `[Antes](${oldMember.user.displayAvatarURL({ dynamic: true })}) | [Después](${newMember.user.displayAvatarURL({ dynamic: true })})`)
-  if (nickname == true) embed.addField("Apodo Antes | Después", `${oldMember.nickname} | ${newMember.nickname}`)
+  if (nickname == true) embed.addField("Apodo Antes | Después", `${oldMember.displayName} | ${newMember.displayName}`)
 
   Channel.send({ embed })
 }
