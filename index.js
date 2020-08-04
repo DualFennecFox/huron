@@ -290,7 +290,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   for (const role of newMember.roles.cache.map(x => x.id)) {
     if (!oldMember.roles.cache.has(role)) {
         newRole = true
-        getNewRole = role
+        getNewRole = newMember.guild.roles.cache.get(role)
     }
 }
 for (const role of oldMember.roles.cache.map(x => x.id)) {
