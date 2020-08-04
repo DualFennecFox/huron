@@ -281,7 +281,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   let nickname = false
   let iconURL
 
-  if (oldMember.user.tag != newMember.user.tag) {
+  if (oldMember.user.username != newMember.user.username) {
   name = true
   }
   newMember.roles.cache.every(function (role) {
