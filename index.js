@@ -342,7 +342,9 @@ client.on('emojiCreate', emoji => {
 
       const embed = new Discord.MessageEmbed()
       .setAuthor("Emoji Creado", `https://cdn.discordapp.com/emojis/${emoji.id}.png`)
-      .addField(emoji.name, `<:${emoji.name}:${emoji.id}>`)
+      .setColor("#FF0000")
+      .setDescription(`<:${emoji.name}:${emoji.id}> | ${emoji.name}`)
+      .setThumbnail(`https://cdn.discordapp.com/emojis/${emoji.id}.png`)
       .setFooter(`ID: ${emoji.id}`);
 
       Channel.send({ embed })
