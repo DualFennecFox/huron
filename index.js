@@ -281,7 +281,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   let nickname = false
   let iconURL
 
-  if (oldMember.user.tag !== newMember.user.tag) {
+  if (oldMember.user.tag != newMember.user.tag) {
   name = true
   }
   newMember.roles.cache.every(function (role) {
@@ -309,7 +309,7 @@ if (oldMember.nickname !== newMember.nickname) {
   }
 
   if (name == false && newRole == false && removeRole == false && avatar == false && nickname == false) return
-  
+
   const embed = new Discord.MessageEmbed()
   .setAuthor("Miembro actualizado", iconURL)
   .setTitle(newMember.user.tag)
