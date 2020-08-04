@@ -427,7 +427,7 @@ client.on("guildBanAdd", (guild, user) => {
       if (!Channel) return
       guild.fetchBan(user.id).then(Ban => {
       let reason = Ban.reason
-      if (!reason) reason = "No se especifico una Razón"
+      if (!Ban.reason) reason = "No se especifico una Razón"
       
       const embed = new Discord.MessageEmbed()
       .setAuthor("Usuario Baneado", user.displayAvatarURL())
