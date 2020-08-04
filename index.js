@@ -283,7 +283,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   console.log("viejo " + oldMember.user.avatarURL())
   console.log("nuevo " + newMember.user.avatarURL())
 
-  if (oldMember.user.username != newMember.user.username) {
+  if (newMember.user.username != oldMember.user.username) {
   name = true
   }
   newMember.roles.cache.every(function (role) {
@@ -306,10 +306,10 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
       getRemovedRole = role
     }
   })
-  if (oldMember.user.displayAvatarURL() != newMember.user.displayAvatarURL()) {
+  if (newMember.user.displayAvatarURL() != oldMember.user.displayAvatarURL()) {
     avatar = true
   }
-if (oldMember.nickname !== newMember.nickname) {
+if (newMember.nickname !== oldMember.nickname) {
   nickname = true
 }
   if (avatar == true) {
