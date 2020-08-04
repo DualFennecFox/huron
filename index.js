@@ -284,7 +284,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   console.log(oldMember)
   console.log(newMember)
 
-  if (newMember.username != oldMember.username) {
+  if (newMember.user.username != oldMember.user.username) {
   name = true
   }
   for (const role of newMember.roles.cache.map(x => x.id)) {
@@ -300,7 +300,7 @@ for (const role of oldMember.roles.cache.map(x => x.id)) {
   }
 }
 
-  if (newMember.avatar != oldMember.avatar) {
+  if (newMember.user.avatarURL() != oldMember.user.avatarURL()) {
     avatar = true
   }
 if (newMember.nickname !== oldMember.nickname) {
@@ -329,6 +329,27 @@ if (newMember.nickname !== oldMember.nickname) {
 }
 }).catch(err => {
   console.error(err)
+  })
+})
+
+client.on('emojiCreate', emoji => {
+  Guild.findOne({ guildID: emoji.guild.id }).then(doc => {
+    if (!doc) return
+    if (doc.log.emojiCreate == true) {
+      if (!doc.LogChannel) return
+      let Channel = emoji.guild.channels.cache.get(doc.LogChannel)
+      if (!Channel) return
+
+      let author = emoji.fetchAuthor()
+      const embed = new Discord.MessageEmbed()
+      .setAuthor("Emoji Creado", emoji.url)
+      .addField(emoji.name, `<:${emoji.name}:${emoji.id}> | ${emoji.id}`)
+      .setFooter(`Por: ${author.tag} | ${author.id}`);
+
+      Channel.send({ embed })
+    }
+  }).catch(err => {
+    console.error(err)
   })
 })
 
