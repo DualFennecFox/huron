@@ -458,7 +458,7 @@ client.on("guildBanRemove", (guild, user) => {
       const embed = new Discord.MessageEmbed()
       .setAuthor("Usuario Desbaneado", user.displayAvatarURL())
       .setColor("#FF0000")
-      .setDescription(`<@!${user.tag}> Ha sido Desbaneado\n**ID:** ${user.id}`)
+      .setDescription(`<@!${user.id}> Ha sido Desbaneado\n**ID:** ${user.id}`)
       .addField("Creado", checkDays(user.createdAt))
 
       Channel.send({ embed })
