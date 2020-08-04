@@ -307,9 +307,11 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
 
   const embed = new Discord.MessageEmbed()
   .setAuthor("Miembro actualizado", iconURL)
+  .setTitle(newMember.user.tag)
   .setThumbnail(newMember.user.displayAvatarURL())
   .setFooter(`${newMember.user.username} | ${newMember.user.id}`)
   .setColor("#FF0000")
+  .addField("Creado", checkDays(newMember.user.createdAt))
   if (name == true) embed.addField("Nombre Antes | Después", `${oldMember.user.tag} | ${newMember.user.tag}`)
   if (newRole == true) embed.addField("Nuevo Rol", `<@&${getNewRole.id}>`)
   if (removeRole == true) embed.addField("Rol Removido",`<@${getRemovedRole.id}>`)
