@@ -280,14 +280,12 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   let avatar = false
   let nickname = false
   let iconURL
-  console.log("viejo " + oldMember.user.avatarURL())
-  console.log("nuevo " + newMember.user.avatarURL())
 
   if (newMember.user.username != oldMember.user.username) {
   name = true
   }
   newMember.roles.cache.every(function (role) {
-    newMember.guild.roles.fetch(role.id, { cache: true }).catch(err => {
+    oldMember.guild.roles.fetch(role.id, { cache: true }).catch(err => {
       console.error(err)
       newRole = false
     })
