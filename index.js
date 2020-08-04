@@ -253,7 +253,7 @@ client.on('guildMemberRemove', member => {
       .setDescription(`**${member.user.tag}** Ha dejado el servidor`)
       .addField("Creado", checkDays(member.user.createdAt))
       .addField("Miembro Desde", checkDays(member.joinedAt))
-      .addField("Roles", member.roles.cache.map(r => `\`${r.name}\``).join(", "))
+      .addField("Roles", member.roles.cache.map(r => `<@&${r.id}>`).join(", "))
       .setFooter(`${member.user.username} | ${member.user.id}`);
 
       Channel.send({ embed })
