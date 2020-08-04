@@ -281,9 +281,9 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   let nickname = false
   let iconURL
 
-  console.log(oldMember.user)
-  console.log(newMember.user)
-  
+  console.log(oldMember)
+  console.log(newMember)
+
   if (newMember.username != oldMember.username) {
   name = true
   }
