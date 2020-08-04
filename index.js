@@ -359,4 +359,31 @@ client.on('emojiCreate', emoji => {
   })
 })
 
+client.on('emojiDelete', emoji => {
+  Guild.findOne({ guildID: emoji.guild.id }).then(doc => {
+    if (!doc) return
+    if (doc.log.emojiCreate == true) {
+      if (!doc.LogChannel) return
+      let Channel = emoji.guild.channels.cache.get(doc.LogChannel)
+      if (!Channel) return
+      
+      emoji.fetchAuthor().then(author => {
+
+      const embed = new Discord.MessageEmbed()
+      .setAuthor("Emoji Eliminado")
+      .setColor("#FF0000")
+      .setDescription(`${emoji.name} ID: ${emoji.id}`)
+      .setThumbnail(`https://cdn.discordapp.com/emojis/${emoji.id}.png`)
+      .setFooter(`De: ${author.username} | ${author.id}`);
+
+      Channel.send({ embed })
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+  }).catch(err => {
+    console.error(err)
+  })
+})
+
 client.login(process.env.TOKEN);
