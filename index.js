@@ -278,13 +278,13 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   name = true
   }
   oldMember.roles.cache.every(function (role) {
-    if (!newMember.roles.cache.find("id", role.id)) {
+    if (!newMember.roles.cache.find(r => r.id === role.id)) {
       newRole = true
       getNewRole = role
     }
   })
   newMember.roles.cache.every(function (role) {
-    if (!oldMember.roles.cache.find("id", role.id)) {
+    if (!oldMember.roles.cache.find(r => r.id === role.id)) {
       removeRole = true
       getRemovedRole = role
     }
