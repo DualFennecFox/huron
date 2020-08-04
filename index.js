@@ -365,7 +365,7 @@ client.on('emojiCreate', emoji => {
 client.on('emojiDelete', emoji => {
   Guild.findOne({ guildID: emoji.guild.id }).then(doc => {
     if (!doc) return
-    if (doc.log.emojiCreate == true) {
+    if (doc.log.emojiDelete == true) {
       if (!doc.LogChannel) return
       let Channel = emoji.guild.channels.cache.get(doc.LogChannel)
       if (!Channel) return
@@ -390,7 +390,7 @@ client.on('emojiUpdate', (oldEmoji, newEmoji) => {
 
   Guild.findOne({ guildID: newEmoji.guild.id }).then(doc => {
     if (!doc) return
-    if (doc.log.emojiCreate == true) {
+    if (doc.log.emojiUpdate == true) {
       if (!doc.LogChannel) return
       let Channel = newEmoji.guild.channels.cache.get(doc.LogChannel)
       if (!Channel) return
@@ -413,6 +413,55 @@ client.on('emojiUpdate', (oldEmoji, newEmoji) => {
       console.error(err)
     })
   }
+  }).catch(err => {
+    console.error(err)
+  })
+})
+
+client.on("guildBanAdd", (guild, user) => {
+  Guild.findOne({ guildID: guild.id }).then(doc => {
+    if (!doc) return
+    if (doc.log.banAdd == true) {
+      if (!doc.LogChannel) return
+      let Channel = guild.channels.cache.get(doc.LogChannel)
+      if (!Channel) return
+      guild.fetchBan(user.id).then(Ban => {
+
+      const embed = new Discord.MessageEmbed()
+      .setAuthor("Usuario Baneado", user.displayAvatarURL())
+      .setColor("#FF0000")
+      .setDescription(`${user.tag} Ha sido baneado\n**ID:** ${user.id}`)
+      .addField("Creado", checkDays(user.createdAt))
+      .addField("Baneado Por", `${Ban.user.tag}\nID: ${Ban.user.id}`)
+      .addField("Razón", Ban.reason)
+
+      Channel.send({ embed })
+    
+  }).catch(err => {
+    console.error(err)
+  })
+}
+  }).catch(err => {
+    console.error(err)
+  })
+})
+
+client.on("guildBanRemove", (guild, user) => {
+  Guild.findOne({ guildID: guild.id }).then(doc => {
+    if (!doc) return
+    if (doc.log.banRemove == true) {
+      if (!doc.LogChannel) return
+      let Channel = guild.channels.cache.get(doc.LogChannel)
+      if (!Channel) return
+
+      const embed = new Discord.MessageEmbed()
+      .setAuthor("Usuario Desbaneado", user.displayAvatarURL())
+      .setColor("#FF0000")
+      .setDescription(`${user.tag} Ha sido Desbaneado\n**ID:** ${user.id}`)
+      .addField("Creado", checkDays(user.createdAt))
+
+      Channel.send({ embed })
+}
   }).catch(err => {
     console.error(err)
   })
