@@ -1,3 +1,6 @@
+const Discord = require('discord.js')
+const Guild = require('../cmds/Moderacion/models/Guild')
+
 module.exports = async (oldEmoji, newEmoji) => {
 
     Guild.findOne({ guildID: newEmoji.guild.id }).then(doc => {
