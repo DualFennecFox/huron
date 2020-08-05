@@ -14,9 +14,43 @@ module.exports = async (oldRole, newRole) => {
         let name = false
         let newperm = false
         let removeperms = false
-        let getremoveperm;
+        let getremoveperm = []
         let position = false
-        let getnewperm
+        let getnewperm = []
+            
+        let changeRole = {
+        "ADMINISTRATOR": "Administrador",
+        "CREATE_INSTANT_INVITE": "Crear invitación",
+        "KICK_MEMBERS": "Expulsar miembros",
+        "BAN_MEMBERS": "Banear miembros",
+        "MANAGE_CHANNELS": "Gestionar canales",
+        "MANAGE_GUILD": "Gestionar servidor",
+        "ADD_REACTIONS": "Añadir reacciones",
+        "VIEW_AUDIT_LOG": "Ver el registro de auditoría",
+        "PRIORITY_SPEAKER": "Prioridad de palabra",
+        "STREAM": "Video",
+        "VIEW_CHANNEL": "Leer canales de texto y canales de voz",
+        "SEND_MESSAGES": "Enviar mensajes",
+        "SEND_TTS_MESSAGES": "Enviar mensajes de texto a voz",
+        "MANAGE_MESSAGES": "Gestionar mensajes", 
+        "EMBED_LINKS": "Insertar enlaces",
+        "ATTACH_FILES": "Adjuntar archivos",
+        "READ_MESSAGE_HISTORY": "Leer el historial de mensajes",
+        "MENTION_EVERYONE": "Mencionar @everyone, @here y todos los roles",
+        "USE_EXTERNAL_EMOJIS": "Usar emojis externos",
+        "VIEW_GUILD_INSIGHTS": "Ver información del servidor",
+        "CONNECT": "Conectar",
+        "SPEAK": "Hablar",
+        "MUTE_MEMBERS" : "Silenciar miembros",
+        "DEAFEN_MEMBERS": "Ensorceder miembros",
+        "MOVE_MEMBERS": "Mover miembros",
+        "USE_VAD": "Usar Actividad de voz",
+        "CHANGE_NICKNAME": "Cambiar apodo",
+        "MANAGE_NICKNAMES": "Gestionar apodos", 
+        "MANAGE_ROLES": "Gestionar roles",
+        "MANAGE_WEBHOOKS": "Gestionar webhooks",
+        "MANAGE_EMOJIS": "Gestionar emojis"
+        }
 
         console.log("viejo " + oldRole.permissions)
         console.log("nuevo " + newRole.permissions)
@@ -26,13 +60,15 @@ module.exports = async (oldRole, newRole) => {
         for (const role of newRole.permissions.toArray()) {
             if (!oldRole.permissions.has(role)) {
                 newperm = true
-                getnewperm = role
+                let rol = changeRole[role]
+                getnewperm.push(rol)
             }
           }
         for (const role of oldRole.permissions.toArray()) {
             if (!newRole.permissions.has(role)) {
                 removeperms = true
-                getremoveperm = role
+                let rol = changeRole[role]
+                getremoveperm.push(rol)
         }
         }
         if (oldRole.position != newRole.position) {
@@ -45,8 +81,8 @@ module.exports = async (oldRole, newRole) => {
         .setFooter(`${newRole.name} | ${newRole.id}`)
         .setColor("#FF0000")
         if (name == true) embed.addField("Nombre Antes | Después", `${oldRole.name} | ${newRole.name}`)
-        if (newperm == true) embed.addField("Permisos Agregados", `${getnewperm}`)
-        if (removeperms == true) embed.addField("Permisos Removidos", `${getremoveperm}`)
+        if (newperm == true) embed.addField("Permisos Agregados", `${getnewperm.map(r => r).join(", ")}`)
+        if (removeperms == true) embed.addField("Permisos Removidos", `${getremoveperm.map(r => r).join(", ")}`)
         if (position == true) embed.addField("Posición", `**De:** ${oldRole.position}\n**A:** ${newRole.position}`)
     
         Channel.send({ embed })
