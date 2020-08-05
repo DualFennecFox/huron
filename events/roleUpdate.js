@@ -23,13 +23,13 @@ module.exports = async (oldRole, newRole) => {
         if (oldRole.name != newRole.name) {
             name = true
         }
-        for (const role of newRole.permissions.serialize()) {
+        for (const role of newRole.permissions) {
             if (!oldRole.has(role)) {
                 newperm = true
                 getnewperm = role
             }
           }
-        for (const role of oldRole.permissions.serialize()) {
+        for (const role of oldRole.permissions) {
             if (!newRole.has(role)) {
                 removeperms = true
                 getremoveperm = role
