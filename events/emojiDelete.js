@@ -9,7 +9,7 @@ module.exports = async emoji => {
         if (!doc.LogChannel) return
         let Channel = emoji.guild.channels.cache.get(doc.LogChannel)
         if (!Channel) return
-        if (!Channel.permissionsFor(channel.guild.me).has("SEND_MESSAGES")) return
+        if (!Channel.permissionsFor(emoji.guild.me).has("SEND_MESSAGES")) return
   
         let animated = ""
         if (emoji.animated == true) animated = `https://cdn.discordapp.com/emojis/${emoji.id}.gif`
