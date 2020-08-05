@@ -42,6 +42,8 @@ let getGuild = async (guild) => {
         roleCreate: false,
         roleDelete: false,
         roleUpdate: false,
+        userUpdate: false,
+        voiceUpdate: false
         },
         warns: []
       };

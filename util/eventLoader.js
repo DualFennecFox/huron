@@ -2,6 +2,8 @@ const reqEvent = (event) => require(`../events/${event}`);
 module.exports = client => {
   client.on('ready', () => reqEvent('ready')(client));
   client.on('message', reqEvent('message'));
+  client.on('error', reqEvent('error'));
+  client.on('disconnect', reqEvent('disconnect'))
   client.on('channelCreate', reqEvent('channelCreate'));
   client.on('channelDelete', reqEvent('channelDelete'));
   client.on('emojiCreate', reqEvent('emojiCreate'));
@@ -14,4 +16,13 @@ module.exports = client => {
   client.on('guildMemberAdd', reqEvent('guildMemberAdd'));
   client.on('guildMemberRemove', reqEvent('guildMemberRemove'));
   client.on('guildMemberUpdate', reqEvent('guildMemberUpdate'));
+  client.on('guildUpdate', reqEvent('guildUpdate'));
+  client.on('inviteCreate', reqEvent('inviteCreate'));
+  client.on('inviteDelete', reqEvent('inviteDelete'));
+  client.on('messageDelete', reqEvent('messageDelete'));
+  client.on('messageDeleteBulk', reqEvent('messageDeleteBulk'));
+  client.on('messageUpdate', reqEvent('messageUpdate'));
+  client.on('roleCreate', reqEvent('roleCreate'));
+  client.on('roleDelete', reqEvent('roleDelete'));
+  client.on('roleUpdate', reqEvent('roleUpdate'));
 };

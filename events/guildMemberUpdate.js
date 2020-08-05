@@ -10,20 +10,13 @@ module.exports = async (oldMember, newMember) => {
       let Channel = newMember.guild.channels.cache.get(doc.LogChannel)
       if (!Channel) return
       if (!Channel.permissionsFor(newMember.guild.me).has("SEND_MESSAGES")) return
-  
-    newMember.fetch()
-    let name = false
+
     let newRole = false
     let getNewRole;
     let removeRole = false
     let getRemovedRole;
-    let avatar = false
     let nickname = false
-    let iconURL
   
-    if (newMember.user.username != oldMember.user.username) {
-    name = true
-    }
     if (oldMember.roles.cache.size < newMember.roles.cache.size) {
     for (const role of newMember.roles.cache.map(x => x.id)) {
       if (!oldMember.roles.cache.has(role)) {
@@ -41,10 +34,7 @@ module.exports = async (oldMember, newMember) => {
     }
   }
   }
-  
-    if (newMember.user.avatarURL() != oldMember.user.avatarURL()) {
-      avatar = true
-    }
+
   if (newMember.nickname !== oldMember.nickname) {
     nickname = true
   }
@@ -54,7 +44,7 @@ module.exports = async (oldMember, newMember) => {
       iconURL = newMember.user.displayAvatarURL()
     }
   
-    if (name == false && newRole == false && removeRole == false && avatar == false && nickname == false) return
+    if (newRole == false && removeRole == false && nickname == false) return
   
     const embed = new Discord.MessageEmbed()
     .setAuthor(newMember.user.tag, iconURL)

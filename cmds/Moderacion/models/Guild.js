@@ -36,7 +36,9 @@ const guildSchema = mongoose.Schema({
     messageUpdate: Boolean,
     roleCreate: Boolean,
     roleDelete: Boolean,
-    roleUpdate: Boolean
+    roleUpdate: Boolean,
+    userUpdate: Boolean,
+    voiceState: Boolean
     },
     warns: [{
       warnUser: String,
