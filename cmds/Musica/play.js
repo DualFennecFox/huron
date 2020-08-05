@@ -4,7 +4,6 @@ const musicData = require("./requirements/musicData");
 const loop = require('./loop');
 const ytpl = require('ytpl')
 const ytsr = require('ytsr')
-const ytScrapper = require('yt-scraper')
 const getVideoId = require('get-video-id')
 function search(nameKey, myArray) {
     for (var i = 0; i < myArray.length; i++) {
