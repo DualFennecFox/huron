@@ -58,7 +58,7 @@ module.exports = async (oldGuild, newGuild) => {
   
     if (name == false && region == false && icon == false && afk == false && afkTime == false && verification == false && owner == false && system == false) return
   
-    let region = {
+    let regionChange = {
         "brazil": ":flag_br: Brazil",
         "eu-central": ":flag_eu: Central Europe",
         "singapore": ":flag_sg: Singapore",
@@ -89,7 +89,7 @@ module.exports = async (oldGuild, newGuild) => {
     .setFooter(`${newGuild.name} | ${newGuild.id}`)
     .setColor("#FF0000")
     if (name == true) embed.addField("Nombre Antes | Después", `${oldGuild.name} | ${newGuild.name}`)
-    if (region == true) embed.addField("Región Actualizada", `**De:** ${region[oldGuild.region]}\n**A:** ${region[newGuild.region]}`)
+    if (region == true) embed.addField("Región Actualizada", `**De:** ${region[oldGuild.region]}\n**A:** ${regionChange[newGuild.region]}`)
     if (icon == true) embed.addField("Icono Actualizado",`[Antes](${oldGuild.iconURL()}) | [Después](${newGuild.iconURL()})`)
     if (afk == true) embed.addField("Canal AFK Actualizado", `**De: ${oldGuild.name} | ${oldGuild.id}\n**A:** ${newGuild.name} | ${newGuild.id}`)
     if (afkTime == true) embed.addField("Tiempo AFK Actualizado", `**De:** ${oldGuild.afkTimeout}\n**A:** ${newGuild.afkTimeout}`)
