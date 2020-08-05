@@ -38,11 +38,6 @@ module.exports = async (oldMember, newMember) => {
   if (newMember.nickname !== oldMember.nickname) {
     nickname = true
   }
-    if (avatar == true) {
-      iconURL = oldMember.user.displayAvatarURL()
-    } else {
-      iconURL = newMember.user.displayAvatarURL()
-    }
   
     if (newRole == false && removeRole == false && nickname == false) return
   
