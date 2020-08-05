@@ -33,7 +33,7 @@ module.exports = async (oldRole, newRole) => {
         .setFooter(`${newRole.name} | ${newRole.id}`)
         .setColor("#FF0000")
         if (name == true) embed.addField("Nombre Antes | Después", `${oldRole.name} | ${newRole.name}`)
-        if (perm == true) embed.addField("Permisos" `**Antes:** ${oldRole.permissions}\n**Después:** ${newRole.permissions}`)
+        if (perm == true) embed.addField("Permisos" `**Antes:** ${oldRole.permissions.toString()}\n**Después:** ${newRole.permissions.toString()}`)
         if (position == true) embed.addField("Posición", `**De:** ${oldRole.position}\n**A:** ${newRole.position}`)
     
         Channel.send({ embed })

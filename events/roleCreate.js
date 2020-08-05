@@ -16,7 +16,7 @@ module.exports = async role => {
           .setAuthor("Rol Creado", role.guild.iconURL())
           .setColor("#FF0000")
           .setFooter(`${role.name} | ${role.id}`)
-          .setDescription(`<@&${role.id}> \n\n**Permisos:** ${role.permissions}\n**Posición:** ${role.position}`)
+          .setDescription(`<@&${role.id}> \n\n**Permisos:** ${role.permissions.toString()}\n**Posición:** ${role.position}`)
 
           Channel.send({ embed })
         }
