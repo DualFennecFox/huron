@@ -1,7 +1,7 @@
 const DBL = require("dblapi.js");
-const dbl = new DBL(process.env.DBL, client)
 
 module.exports = async client => {
+    const dbl = new DBL(process.env.DBL, client)
     console.log(`Logged in as ${client.user.tag}!`);
     const scount = client.guilds.cache.size
     dbl.postStats(client.guilds.cache.size)

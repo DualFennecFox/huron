@@ -1,9 +1,9 @@
 const DBL = require("dblapi.js");
-const dbl = new DBL(process.env.DBL, client)
 const { getGuild } = require('../cmds/Moderacion/models/functions')
 
 module.exports = async guild => {
     let client = guild.client
+    const dbl = new DBL(process.env.DBL, client)
     const scount = client.guilds.cache.size
     dbl.postStats(client.guilds.cache.size)
     client.user.setPresence({
