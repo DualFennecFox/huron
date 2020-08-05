@@ -93,11 +93,45 @@ function checkDays(date) {
   let days = Math.floor(diff / 86400000);
   return `Hace ${days} ${days == 1 ? "día" : "días"}`;
 };
+let changeRole = {
+  "ADMINISTRATOR": "Administrador",
+  "CREATE_INSTANT_INVITE": "Crear invitación",
+  "KICK_MEMBERS": "Expulsar miembros",
+  "BAN_MEMBERS": "Banear miembros",
+  "MANAGE_CHANNELS": "Gestionar canales",
+  "MANAGE_GUILD": "Gestionar servidor",
+  "ADD_REACTIONS": "Añadir reacciones",
+  "VIEW_AUDIT_LOG": "Ver el registro de auditoría",
+  "PRIORITY_SPEAKER": "Prioridad de palabra",
+  "STREAM": "Video",
+  "VIEW_CHANNEL": "Leer canales de texto y canales de voz",
+  "SEND_MESSAGES": "Enviar mensajes",
+  "SEND_TTS_MESSAGES": "Enviar mensajes de texto a voz",
+  "MANAGE_MESSAGES": "Gestionar mensajes", 
+  "EMBED_LINKS": "Insertar enlaces",
+  "ATTACH_FILES": "Adjuntar archivos",
+  "READ_MESSAGE_HISTORY": "Leer el historial de mensajes",
+  "MENTION_EVERYONE": "Mencionar \@everyone, \@here y todos los roles",
+  "USE_EXTERNAL_EMOJIS": "Usar emojis externos",
+  "VIEW_GUILD_INSIGHTS": "Ver información del servidor",
+  "CONNECT": "Conectar",
+  "SPEAK": "Hablar",
+  "MUTE_MEMBERS" : "Silenciar miembros",
+  "DEAFEN_MEMBERS": "Ensorceder miembros",
+  "MOVE_MEMBERS": "Mover miembros",
+  "USE_VAD": "Usar Actividad de voz",
+  "CHANGE_NICKNAME": "Cambiar apodo",
+  "MANAGE_NICKNAMES": "Gestionar apodos", 
+  "MANAGE_ROLES": "Gestionar roles",
+  "MANAGE_WEBHOOKS": "Gestionar webhooks",
+  "MANAGE_EMOJIS": "Gestionar emojis"
+  };
 module.exports = {
     getGuild,
     updateGuild,
     createGuild,
     search,
     searchNumber,
-    checkDays
+    checkDays,
+    changeRole
 }

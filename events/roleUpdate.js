@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
+const  { changeRole } = require('../cmds/Moderacion/models/functions')
 
 module.exports = async (oldRole, newRole) => {
     let client = newRole.client
@@ -16,42 +17,14 @@ module.exports = async (oldRole, newRole) => {
         let removeperms = false
         let getremoveperm = []
         let position = false
+        let mentionable = false
+        let hoist = false
         let getnewperm = []
-            
-        let changeRole = {
-        "ADMINISTRATOR": "Administrador",
-        "CREATE_INSTANT_INVITE": "Crear invitación",
-        "KICK_MEMBERS": "Expulsar miembros",
-        "BAN_MEMBERS": "Banear miembros",
-        "MANAGE_CHANNELS": "Gestionar canales",
-        "MANAGE_GUILD": "Gestionar servidor",
-        "ADD_REACTIONS": "Añadir reacciones",
-        "VIEW_AUDIT_LOG": "Ver el registro de auditoría",
-        "PRIORITY_SPEAKER": "Prioridad de palabra",
-        "STREAM": "Video",
-        "VIEW_CHANNEL": "Leer canales de texto y canales de voz",
-        "SEND_MESSAGES": "Enviar mensajes",
-        "SEND_TTS_MESSAGES": "Enviar mensajes de texto a voz",
-        "MANAGE_MESSAGES": "Gestionar mensajes", 
-        "EMBED_LINKS": "Insertar enlaces",
-        "ATTACH_FILES": "Adjuntar archivos",
-        "READ_MESSAGE_HISTORY": "Leer el historial de mensajes",
-        "MENTION_EVERYONE": "Mencionar @everyone, @here y todos los roles",
-        "USE_EXTERNAL_EMOJIS": "Usar emojis externos",
-        "VIEW_GUILD_INSIGHTS": "Ver información del servidor",
-        "CONNECT": "Conectar",
-        "SPEAK": "Hablar",
-        "MUTE_MEMBERS" : "Silenciar miembros",
-        "DEAFEN_MEMBERS": "Ensorceder miembros",
-        "MOVE_MEMBERS": "Mover miembros",
-        "USE_VAD": "Usar Actividad de voz",
-        "CHANGE_NICKNAME": "Cambiar apodo",
-        "MANAGE_NICKNAMES": "Gestionar apodos", 
-        "MANAGE_ROLES": "Gestionar roles",
-        "MANAGE_WEBHOOKS": "Gestionar webhooks",
-        "MANAGE_EMOJIS": "Gestionar emojis"
-        }
 
+        let boolean = {
+            "false": "No",
+            "true": "Si"
+        }
         console.log("viejo " + oldRole.permissions)
         console.log("nuevo " + newRole.permissions)
         if (oldRole.name != newRole.name) {
@@ -74,7 +47,13 @@ module.exports = async (oldRole, newRole) => {
         if (oldRole.position != newRole.position) {
             position = true
         }
-        if (name == false && newperm == false && position == false && removeperms == false) return
+        if (oldRole.mentionable != newRole.mentionable) {
+            mentionable = true
+        }
+        if (oldRole.hoist != newRole.hoist) {
+            hoist = true
+        }
+        if (name == false && newperm == false && position == false && removeperms == false && mentionable == false && hoist == false) return
 
         const embed = new Discord.MessageEmbed()
         .setAuthor("Rol Actualizado", newRole.guild.iconURL())
@@ -84,8 +63,10 @@ module.exports = async (oldRole, newRole) => {
         if (newperm == true) embed.addField("Permisos Agregados", `${getnewperm.map(r => r).join(", ")}`)
         if (removeperms == true) embed.addField("Permisos Removidos", `${getremoveperm.map(r => r).join(", ")}`)
         if (position == true) embed.addField("Posición", `**De:** ${oldRole.position}\n**A:** ${newRole.position}`)
+        if (mentionable == true) embed.addField("Mencionable", `**${boolean[newRole.mentionable]}**`)
+        if (hoist == true) embed.addField("Mostrar Separado", `**${boolean[role.hoist]}**`)
     
-        Channel.send({ embed })
+        Channel.send({ embed }) 
     }
 }).catch(err => {
     console.error(err)
