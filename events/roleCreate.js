@@ -12,8 +12,6 @@ module.exports = async role => {
           if (!Channel) return
           if (!Channel.permissionsFor(role.guild.me).has("SEND_MESSAGES")) return
 
-          for (const rol of role.per)
-
           const embed = new Discord.MessageEmbed()
           .setAuthor("Rol Creado", role.guild.iconURL())
           .setColor("#FF0000")

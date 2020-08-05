@@ -18,6 +18,8 @@ module.exports = async role => {
           .setColor("#FF0000")
           .setFooter(`${role.name} | ${role.id}`)
           .setDescription(`<${role.name} \n\n**Permisos:** ${role.permissions.toString()}\n**Posición:** ${role.position}\n**Creado:**${checkDays(role.createdAt)}`)
+          
+          Channel.send({ embed })
         }
 }).catch(err => {
     console.error(err)
