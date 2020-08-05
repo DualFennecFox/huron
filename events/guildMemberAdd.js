@@ -26,7 +26,7 @@ module.exports = async member => {
         const embed = new Discord.MessageEmbed()
         .setAuthor(member.user.tag, member.user.displayAvatarURL())
         .setColor("#FF0000")
-        .setDescription(`**${member.user.tag}** Se ha unido a el servidor`)
+        .setDescription(`<@!${member.user.id}> Se ha unido a el servidor`)
         .addField("Creado", checkDays(member.user.createdAt))
         .setFooter(`${member.user.username} | ${member.user.id}`);
       
