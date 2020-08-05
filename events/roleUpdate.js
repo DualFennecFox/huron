@@ -38,7 +38,7 @@ module.exports = async (oldRole, newRole) => {
         if (oldRole.position != newRole.position) {
             position = true
         }
-        if (name == false && perm == false && position == false) return
+        if (name == false && newperm == false && position == false && removeperms == false) return
 
         const embed = new Discord.MessageEmbed()
         .setAuthor("Rol Actualizado", newRole.guild.iconURL())
