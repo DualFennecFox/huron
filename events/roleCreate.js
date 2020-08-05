@@ -12,11 +12,15 @@ module.exports = async role => {
           if (!Channel) return
           if (!Channel.permissionsFor(role.guild.me).has("SEND_MESSAGES")) return
 
+          let boolean = {
+              "false": "No",
+              "true": "Si"
+          }
           const embed = new Discord.MessageEmbed()
           .setAuthor("Rol Creado", role.guild.iconURL())
           .setColor("#FF0000")
           .setFooter(`${role.name} | ${role.id}`)
-          .setDescription(`<@&${role.id}> \n\n**Color:** ${role.hexColor}\n**Posición:** ${role.position}\n**Mencionable:** ${role.mentionable}\n**Mostrar Separado:** ${role.hoist}\n**Permisos:**${role.permissions.serialize()}`)
+          .setDescription(`<@&${role.id}> \n\n**Color:** ${role.hexColor}\n**Posición:** ${role.position}\n**Mencionable:** ${boolean[role.mentionable]}\n**Mostrar Separado:** ${boolean[role.hoist]}`)
 
           Channel.send({ embed })
         }

@@ -12,16 +12,28 @@ module.exports = async (oldRole, newRole) => {
           if (!Channel.permissionsFor(newRole.guild.me).has("SEND_MESSAGES")) return
 
         let name = false
-        let perm = false
+        let newperm = false
+        let removeperms = false
+        let getremoveperm;
         let position = false
+        let getnewperm
 
         console.log("viejo " + oldRole.permissions)
         console.log("nuevo " + newRole.permissions)
         if (oldRole.name != newRole.name) {
             name = true
         }
-        if (oldRole.permissions != newRole.permissions) {
-            perm = true
+        for (const role of newRole.permissions.serialize()) {
+            if (!oldRole.has(role)) {
+                newperm = true
+                getnewperm = role
+            }
+          }
+        for (const role of oldRole.permissions.serialize()) {
+            if (!newRole.has(role)) {
+                removeperms = true
+                getremoveperm = role
+        }
         }
         if (oldRole.position != newRole.position) {
             position = true
@@ -33,7 +45,8 @@ module.exports = async (oldRole, newRole) => {
         .setFooter(`${newRole.name} | ${newRole.id}`)
         .setColor("#FF0000")
         if (name == true) embed.addField("Nombre Antes | Después", `${oldRole.name} | ${newRole.name}`)
-        if (perm == true) embed.addField("Permisos" `**Antes:** ${oldRole.permissions.toString()}\n**Después:** ${newRole.permissions.toString()}`)
+        if (newperm == true) embed.addField("Permisos Agregados", `${getnewperm}`)
+        if (removeperms == true) embed.addField("Permisos Removidos", `${getremoveperm}`)
         if (position == true) embed.addField("Posición", `**De:** ${oldRole.position}\n**A:** ${newRole.position}`)
     
         Channel.send({ embed })
