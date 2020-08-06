@@ -93,7 +93,7 @@ function checkDays(date) {
   let days = Math.floor(diff / 86400000);
   return `Hace ${days} ${days == 1 ? "día" : "días"}`;
 };
-let changeRole = {
+const changeRole = {
   "ADMINISTRATOR": "Administrador",
   "CREATE_INSTANT_INVITE": "Crear invitación",
   "KICK_MEMBERS": "Expulsar miembros",
