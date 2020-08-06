@@ -77,7 +77,7 @@ module.exports = async channel => {
             user = true
           overwritesAllowedUser.push(`<@!${perm.id}>: ${setAll(perm.allow.toArray())}`)
           overwritesDenyUser.push(`<@!${perm.id}>: ${changeRole[perm.deny.toArray()]}`)
-setAll()
+
           }
           if (perm.type === "role") {
             role = true
