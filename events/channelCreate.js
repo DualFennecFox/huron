@@ -20,7 +20,7 @@ module.exports = async channel => {
       let overwritesAllowedRole = []
       let role = false
       let overwritesDenyRole = []
-      console.log(channel)
+
       let type = {
         "category": "Categoría",
         "text": "Texto",
@@ -32,6 +32,7 @@ module.exports = async channel => {
       if (channel.permissionOverwrites) {
         perm = true
         for (const perm of channel.permissionOverwrites) {
+          console.log(perm)
           if (perm.type === "member") {
             user = true
           overwritesAllowedUser.push(`<@!${perm.id}>: ${changeRole[perm.allow.toArray()]}`)
