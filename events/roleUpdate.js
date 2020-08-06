@@ -59,12 +59,13 @@ module.exports = async (oldRole, newRole) => {
         .setAuthor("Rol Actualizado", newRole.guild.iconURL())
         .setFooter(`${newRole.name} | ${newRole.id}`)
         .setColor("#FF0000")
+        .setDescription(`<@&${newRole.id}>`)
         if (name == true) embed.addField("Nombre Antes | Después", `${oldRole.name} | ${newRole.name}`)
         if (newperm == true) embed.addField("Permisos Agregados", `${getnewperm.map(r => r).join(", ")}`)
         if (removeperms == true) embed.addField("Permisos Removidos", `${getremoveperm.map(r => r).join(", ")}`)
         if (position == true) embed.addField("Posición", `**De:** ${oldRole.position}\n**A:** ${newRole.position}`)
         if (mentionable == true) embed.addField("Mencionable", `**${boolean[newRole.mentionable]}**`)
-        if (hoist == true) embed.addField("Mostrar Separado", `**${boolean[role.hoist]}**`)
+        if (hoist == true) embed.addField("Mostrar Separado", `**${boolean[newRole.hoist]}**`)
     
         Channel.send({ embed }) 
     }
