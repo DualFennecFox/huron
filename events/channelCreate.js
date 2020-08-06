@@ -32,18 +32,17 @@ module.exports = async channel => {
       if (channel.permissionOverwrites) {
         perm = true
         for (const perm of channel.permissionOverwrites) {
-          console.log(perm.permissionOverwrites)
-          if (perm.type === "member") {
+          console.log(perm[0])
+          if (perm[0].type === "member") {
             user = true
-          overwritesAllowedUser.push(`<@!${perm.permissionOverwrites.id}>: ${changeRole[perm.allow.toArray()]}`)
-          overwritesDenyUser.push(`<@!${perm.id}>: ${changeRole[perm.allow.toArray()]}`)
+          overwritesAllowedUser.push(`<@!${perm[0].id}>: ${changeRole[perm[0].allow.toArray()]}`)
+          overwritesDenyUser.push(`<@!${perm[0].id}>: ${changeRole[perm[0].deny.toArray()]}`)
 
-          overwritesDenyUser.push(perm.deny.toArray())
           }
-          if (perm.type === "role") {
+          if (perm[0].type === "role") {
             role = true
-            overwritesAllowedRole.push(`<@&${perm.id}>: ${changeRole[perm.allow.toArray()]}`)
-            overwritesDenyRole.push(`<@&${perm.id}>: ${changeRole[perm.deny.toArray()]}`)
+            overwritesAllowedRole.push(`<@&${perm[0].id}>: ${changeRole[perm[0].allow.toArray()]}`)
+            overwritesDenyRole.push(`<@&${perm[0].id}>: ${changeRole[perm[0].deny.toArray()]}`)
           }
         }
       }
