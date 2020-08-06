@@ -11,7 +11,7 @@ module.exports = async role => {
           let Channel = role.guild.channels.cache.get(doc.LogChannel)
           if (!Channel) return
           if (!Channel.permissionsFor(role.guild.me).has("SEND_MESSAGES")) return
-
+            
           let boolean = {
               "false": "No",
               "true": "Si"

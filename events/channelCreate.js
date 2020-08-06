@@ -31,7 +31,7 @@ module.exports = async channel => {
       }
       if (channel.permissionOverwrites) {
         perm = true
-        for (const perm of channel.permissionOverwrites) {
+        for (const perm of channel.permissionOverwrites.toArray()) {
           console.log(channel.permissionOverwrites)
           if (perm[0].type === "member") {
             user = true

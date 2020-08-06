@@ -15,7 +15,7 @@ module.exports = async message => {
         const embed = new Discord.MessageEmbed()
         .setAuthor("Mensaje Eliminado", message.guild.iconURL())
         .setColor("#FF0000")
-        .setDescription(`**En:** <#${message.channel.id}>\n\n${message.content}\n\n**Creado:**${checkDays(message.createdAt)}`)
+        .setDescription(`**En:** <#${message.channel.id}>\n\n${message.content}`)
         .setFooter(`De: ${message.author.tag} | ${message.author.id}`)
 
     Channel.send({ embed })
