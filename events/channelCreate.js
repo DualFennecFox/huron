@@ -28,7 +28,7 @@ module.exports = async channel => {
         "store": "Tienda",
         "unknown": "Desconocido"
       }
-      const changeRole = [{
+      const changeRole = {
         "ADMINISTRATOR": "Administrador",
         "CREATE_INSTANT_INVITE": "Crear invitación",
         "KICK_MEMBERS": "Expulsar miembros",
@@ -60,22 +60,28 @@ module.exports = async channel => {
         "MANAGE_ROLES": "Gestionar roles",
         "MANAGE_WEBHOOKS": "Gestionar webhooks",
         "MANAGE_EMOJIS": "Gestionar emojis"
-        }];
-        
+        };
+        function setAll(a) {
+          var i, n = a.length;
+          for (i = 0; i < n; ++i) {
+              a[i] = changeRole[a[i]];
+          }
+      }
       if (channel.permissionOverwrites) {
         perm = true
         for (const perm of channel.permissionOverwrites.values()) {
+
           console.log("allow " + perm.allow.toArray())
           console.log("deny " + perm.deny.toArray())
           if (perm.type === "member") {
             user = true
-          overwritesAllowedUser.push(`<@!${perm.id}>: ${changeRole[perm.allow.toArray()]}`)
+          overwritesAllowedUser.push(`<@!${perm.id}>: ${setall(perm.allow.toArray())}`)
           overwritesDenyUser.push(`<@!${perm.id}>: ${changeRole[perm.deny.toArray()]}`)
-
+setAll()
           }
           if (perm.type === "role") {
             role = true
-            overwritesAllowedRole.push(`<@&${perm.id}>: ${changeRole[perm.allow.toArray()]}`)
+            overwritesAllowedRole.push(`<@&${perm.id}>: ${setall(perm.allow.toArray())}`)
             overwritesDenyRole.push(`<@&${perm.id}>: ${changeRole[perm.deny.toArray()]}`)
           }
         }
