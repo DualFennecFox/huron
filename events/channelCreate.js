@@ -75,18 +75,15 @@ module.exports = async channel => {
           console.log("deny " + perm.deny.toArray())
           if (perm.type === "member") {
             user = true
-            let vau = setAll(perm.allow.toArray())
-            let vdu = setAll(perm.deny.toArray())
-          overwritesAllowedUser.push(`<@!${perm.id}>: ${vau}`)
-          overwritesDenyUser.push(`<@!${perm.id}>: ${vdu}`)
+
+          overwritesAllowedUser.push(`<@!${perm.id}>: ${perm.allow}`)
+          overwritesDenyUser.push(`<@!${perm.id}>: ${perm.deny}`)
 
           }
           if (perm.type === "role") {
             role = true
-            let bar = setAll(perm.allow.toArray())
-            let vdr = setAll(perm.deny.toArray())
-            overwritesAllowedRole.push(`<@&${perm.id}>: ${bar}`)
-            overwritesDenyRole.push(`<@&${perm.id}>: ${vdr}`)
+            overwritesAllowedRole.push(`<@&${perm.id}>: ${perm.allow}`)
+            overwritesDenyRole.push(`<@&${perm.id}>: ${perm.deny}`)
           }
         }
       }
