@@ -15,12 +15,17 @@ module.exports = async invite => {
       let diff = now.getTime() - invite.expiresAt.getTime();
       let days = Math.floor(diff / 86400000);
       let expiresAt = `En ${days} ${days == 1 ? "día" : "días"}`;
-    
+      let inv
+      if (invite.maxUses === 0) {
+        inv = "Infinito"
+      }
+      else inv = invite.maxUses
+
     const embed = new Discord.MessageEmbed()
     .setAuthor("Invitación Creada", invite.guild.iconURL())
     .setFooter(`${invite.guild.name} | ${invite.guild.id}`)
     .setColor("#FF0000")
-    .setDescription(`**Para el Canal:** ${invite.channel.name}\n[URL](${invite.url})\n**Usos Máximos:** ${invite.maxUses}\n**Expira En:** ${expiresAt}\n**Creado Por:** <@!${invite.inviter.id}>`)
+    .setDescription(`**Para el Canal:** ${invite.channel.name}\n[URL](${invite.url})\n**Usos Máximos:** ${inv}\n**Expira En:** ${expiresAt}\n**Creado Por:** <@!${invite.inviter.id}>`)
   
     Channel.send({ embed })
   }
