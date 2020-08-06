@@ -3,6 +3,7 @@ const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async message => {
     if (message.channel.type === "dm") return;
+    if (!message.channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return
       let client = message.client
 
       let prefix;
