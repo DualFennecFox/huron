@@ -13,7 +13,7 @@ module.exports = async member => {
         if (!Channel) return
         if (!Channel.permissionsFor(member.guild.me).has("SEND_MESSAGES")) return
         
-        let msg = doc.JoinMsg.replace("{user}", member).replace("{server}", member.guild.name).replace("{username}", member.user.tag).replace("{members}", member.guild.memberCount).replace("{owner}", member.guild.owner.user.tag)
+        let msg = doc.JoinMsg.replace(/{user}/g, member).replace(/{server}/g, member.guild.name).replace(/{username}/g, member.user.tag).replace(/{members}/g, member.guild.memberCount).replace(/{owner}/g, member.guild.owner.user.tag)
        
        Channel.send(msg)
         }
