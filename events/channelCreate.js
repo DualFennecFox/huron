@@ -68,7 +68,7 @@ module.exports = async channel => {
       let AllowR;
       let DenyR;
 
-      if (perm == true && overwritesAllowedUser) AllowU = overwritesAllowedUser.map(r => r).join("\n").replace(/ADMINISTRATOR/g, "Administrador")
+      if (perm == true && overwritesAllowedUser) AllowU = overwritesAllowedUser.map(r => r).join("\n\n").replace(/ADMINISTRATOR/g, "Administrador")
       .replace(/CREATE_INSTANT_INVITE/g, "Crear Invitación")
       .replace(/KICK_MEMBERS/g, "Expulsar miembros")
       .replace(/BAN_MEMBERS/g, "Banear Miembros")
@@ -100,7 +100,7 @@ module.exports = async channel => {
       .replace(/MANAGE_WEBHOOKS/g, "Gestionar webhooks")
       .replace(/MANAGE_EMOJIS/g, "Gestionar emojis");
 
-      if (perm == true && overwritesDenyUser) DenyU = overwritesDenyUser.map(r => r).join("\n").replace(/ADMINISTRATOR/g, "Administrador")
+      if (perm == true && overwritesDenyUser) DenyU = overwritesDenyUser.map(r => r).join("\n\n").replace(/ADMINISTRATOR/g, "Administrador")
       .replace(/CREATE_INSTANT_INVITE/g, "Crear Invitación")
       .replace(/KICK_MEMBERS/g, "Expulsar miembros")
       .replace(/BAN_MEMBERS/g, "Banear Miembros")
@@ -132,7 +132,7 @@ module.exports = async channel => {
       .replace(/MANAGE_WEBHOOKS/g, "Gestionar webhooks")
       .replace(/MANAGE_EMOJIS/g, "Gestionar emojis");
 
-      if (perm == true && overwritesAllowedRole) AllowR = overwritesAllowedRole.map(r => r).join("\n")
+      if (perm == true && overwritesAllowedRole) AllowR = overwritesAllowedRole.map(r => r).join("\n\n")
       .replace(/ADMINISTRATOR/g, "Administrador")
       .replace(/CREATE_INSTANT_INVITE/g, "Crear Invitación")
       .replace(/KICK_MEMBERS/g, "Expulsar miembros")
@@ -165,7 +165,7 @@ module.exports = async channel => {
       .replace(/MANAGE_WEBHOOKS/g, "Gestionar webhooks")
       .replace(/MANAGE_EMOJIS/g, "Gestionar emojis");
       
-      if (perm == true && overwritesDenyRole) DenyR = overwritesDenyRole.map(r => r).join("\n")
+      if (perm == true && overwritesDenyRole) DenyR = overwritesDenyRole.map(r => r).join("\n\n")
       .replace(/ADMINISTRATOR/g, "Administrador")
       .replace(/CREATE_INSTANT_INVITE/g, "Crear Invitación")
       .replace(/KICK_MEMBERS/g, "Expulsar miembros")
