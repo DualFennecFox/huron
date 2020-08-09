@@ -43,7 +43,7 @@ let getGuild = async (guild) => {
         roleDelete: false,
         roleUpdate: false,
         userUpdate: false,
-        voiceUpdate: false
+        voiceState: false
         },
         warns: []
       };

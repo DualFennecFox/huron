@@ -17,7 +17,7 @@ module.exports = async message => {
         .setDescription(`**En:** <#${message.channel.id}>\n\n${message.content}`)
         .setFooter(`De: ${message.author.tag} | ${message.author.id}`)
     
-    Channel.send(`Mensaje Eliminado En: <#${message.channel.id}> ${embed}`)
+    Channel.send(`Mensaje Eliminado En: <#${message.channel.id}>`, {embed})
 }
 }).catch(err => {
         console.error(err)
