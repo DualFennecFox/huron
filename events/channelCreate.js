@@ -205,9 +205,9 @@ module.exports = async channel => {
       if (allowedUser == false && denyUser == true) msgU = `**Denegados:** ${DenyU}`
       if (allowedUser == true && denyUser == true) msgU = `**Permitidos:** ${AllowU}\n\n**Denegados:** ${DenyU}`
 
-      if (allowedrole == true && denyRole == false) msgR = `**Permitidos:** ${AllowU}`
-      if (allowedrole == false && denyRole == true) msgR = `**Denegados:** ${DenyU}`
-      if (allowedrole == true && denyRole == true) msgR = `**Permitidos:** ${AllowU}\n\n**Denegados:** ${DenyU}`
+      if (allowedrole == true && denyRole == false) msgR = `**Permitidos:** ${AllowR}`
+      if (allowedrole == false && denyRole == true) msgR = `**Denegados:** ${DenyR}`
+      if (allowedrole == true && denyRole == true) msgR = `**Permitidos:** ${AllowR}\n\n**Denegados:** ${DenyR}`
 
       const embed = new Discord.MessageEmbed()
       .setAuthor("Canal Creado", channel.guild.iconURL())
