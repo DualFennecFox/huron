@@ -37,19 +37,19 @@ module.exports = async channel => {
           console.log(perm.deny.toArray())
           if (perm.type === "member") {
             user = true
-          if (perm.allow.toArray() !== "") {
+          if (perm.allow.toArray() !== "[]") {
           overwritesAllowedUser.push(`<@!${perm.id}>: ${perm.allow.toArray().join(", ")}`)
           }
-          if (perm.deny.toArray() !== "") {
+          if (perm.deny.toArray() !== "[]") {
           overwritesDenyUser.push(`<@!${perm.id}>: ${perm.deny.toArray().join(", ")}`)
           }
           }
           if (perm.type === "role") {
             role = true
-            if (perm.allow.toArray() !== "") {
+            if (perm.allow.toArray() !== "[]") {
             overwritesAllowedRole.push(`<@&${perm.id}>: ${perm.allow.toArray().join(", ")}`)
             }
-            if (perm.deny.toArray() !== "") {
+            if (perm.deny.toArray() !== "[]") {
             overwritesDenyRole.push(`<@&${perm.id}>: ${perm.deny.toArray().join(", ")}`)
             }
           }
@@ -189,11 +189,6 @@ module.exports = async channel => {
       .replace(/MANAGE_ROLES/g, "Gestionar roles")
       .replace(/MANAGE_WEBHOOKS/g, "Gestionar webhooks")
       .replace(/MANAGE_EMOJIS/g, "Gestionar emojis");
-
-      if (AllowU === "") AllowU + "Ninguno";
-      if (!DenyU === "") DenyU + "Ninguno";
-      if (!AllowR === "") AllowR + "Ninguno";
-      if (!DenyR === "") DenyR + "Ninguno";
 
       const embed = new Discord.MessageEmbed()
       .setAuthor("Canal Creado", channel.guild.iconURL())
