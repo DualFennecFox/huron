@@ -42,7 +42,7 @@ module.exports = async (oldMember, newMember) => {
     if (newRole == false && removeRole == false && nickname == false) return
   
     const embed = new Discord.MessageEmbed()
-    .setAuthor(newMember.user.tag, iconURL)
+    .setAuthor(newMember.user.tag, newMember.user.displayAvatarURL())
     .setThumbnail(newMember.user.displayAvatarURL())
     .setFooter(`${newMember.user.username} | ${newMember.user.id}`)
     .setColor("#FF0000")
