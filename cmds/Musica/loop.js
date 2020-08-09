@@ -1,4 +1,3 @@
-const Discord = require('discord.js');
 const musicData = require("./requirements/musicData")
     module.exports = {
             name : 'loop',

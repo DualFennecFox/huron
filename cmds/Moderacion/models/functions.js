@@ -3,7 +3,7 @@ const defaultSettings = require('./config')
 const mongoose = require('mongoose');
 
 let getGuild = async (guild) => {
-    let data = Guild.findOne({ guildID: guild.id }).then(result => {
+    Guild.findOne({ guildID: guild.id }).then(result => {
    if (result) defaultSettings.prefix = result.prefix
     else {
       const newGuild = {

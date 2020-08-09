@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
 const ytdl = require('ytdl-core');
 const musicData = require("./requirements/musicData");
-const loop = require('./loop');
 const ytpl = require('ytpl')
 const ytsr = require('ytsr')
 const getVideoId = require('get-video-id')

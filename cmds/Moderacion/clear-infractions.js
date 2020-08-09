@@ -1,7 +1,5 @@
-const Discord = require('discord.js');
 const Guild = require('./models/Guild')
-const mongoose = require('mongoose');
-const {search, updateGuild, createGuild, searchNumber } = require('./models/functions');
+const {search, searchNumber } = require('./models/functions');
 
     module.exports = {
     name : 'clearinfractions',
