@@ -20,7 +20,6 @@ module.exports = client => {
   client.on('inviteCreate', reqEvent('inviteCreate'));
   client.on('inviteDelete', reqEvent('inviteDelete'));
   client.on('messageDelete', reqEvent('messageDelete'));
-  client.on('messageDeleteBulk', reqEvent('messageDeleteBulk'));
   client.on('messageUpdate', reqEvent('messageUpdate'));
   client.on('roleCreate', reqEvent('roleCreate'));
   client.on('roleDelete', reqEvent('roleDelete'));

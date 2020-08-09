@@ -7,20 +7,19 @@ module.exports = async message => {
     Guild.findOne({ guildID: message.guild.id }).then(doc => {
         if (!doc) return
         if (doc.log.messageDelete == true) {
-          if (!doc.LogChannel) return
-          let Channel = message.guild.channels.cache.get(doc.LogChannel)
-          if (!Channel) return
-          if (!Channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return
-
+            if (!doc.LogChannel) return
+            let Channel = message.guild.channels.cache.get(doc.LogChannel)
+            if (!Channel) return
+            if (!Channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return
+    
         const embed = new Discord.MessageEmbed()
-        .setAuthor("Mensaje Eliminado", message.guild.iconURL())
         .setColor("#FF0000")
         .setDescription(`**En:** <#${message.channel.id}>\n\n${message.content}`)
         .setFooter(`De: ${message.author.tag} | ${message.author.id}`)
-
-    Channel.send({ embed })
-    }
+    
+    Channel.send(`Mensaje Eliminado En: <#${message.channel.id}> ${embed}`)
+}
 }).catch(err => {
-    console.error(err)
+        console.error(err)
 })
 }

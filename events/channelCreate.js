@@ -19,6 +19,10 @@ module.exports = async channel => {
       let overwritesAllowedRole = []
       let role = false
       let overwritesDenyRole = []
+      let allowedUser = false
+      let denyUser = false
+      let allowedrole = false
+      let denyRole = false
 
       let type = {
         "category": "Categoría",
@@ -38,18 +42,22 @@ module.exports = async channel => {
           if (perm.type === "member") {
             user = true
           if (perm.allow.toArray().length >= 1) {
+          allowedUser = true
           overwritesAllowedUser.push(`<@!${perm.id}>: ${perm.allow.toArray().join(", ")}`)
           }
           if (perm.deny.toArray().length >= 1) {
+          denyUser = true
           overwritesDenyUser.push(`<@!${perm.id}>: ${perm.deny.toArray().join(", ")}`)
           }
           }
           if (perm.type === "role") {
             role = true
             if (perm.allow.toArray().length >= 1) {
+            allowedrole = true
             overwritesAllowedRole.push(`<@&${perm.id}>: ${perm.allow.toArray().join(", ")}`)
             }
             if (perm.deny.toArray().length >= 1) {
+            denyRole = true
             overwritesDenyRole.push(`<@&${perm.id}>: ${perm.deny.toArray().join(", ")}`)
             }
           }
@@ -190,13 +198,24 @@ module.exports = async channel => {
       .replace(/MANAGE_WEBHOOKS/g, "Gestionar webhooks")
       .replace(/MANAGE_EMOJIS/g, "Gestionar emojis");
 
+      let msgU;
+      let msgR;
+
+      if (allowedUser == true && denyUser == false) msgU = `**Permitidos:** ${AllowU}`
+      if (allowedUser == false && denyUser == true) msgU = `**Denegados:** ${DenyU}`
+      if (allowedUser == true && denyUser == true) msgU = `**Permitidos:** ${AllowU}\n\n**Denegados:** ${DenyU}`
+
+      if (allowedrole == true && denyRole == false) msgR = `**Permitidos:** ${AllowU}`
+      if (allowedrole == false && denyRole == true) msgR = `**Denegados:** ${DenyU}`
+      if (allowedrole == true && denyRole == true) msgR = `**Permitidos:** ${AllowU}\n\n**Denegados:** ${DenyU}`
+
       const embed = new Discord.MessageEmbed()
       .setAuthor("Canal Creado", channel.guild.iconURL())
       .setColor("#FF0000")
       .setDescription(`Se ha creado el canal **${channel.name}**`)
       .addField("Tipo de canal", type[channel.type])
-      if (perm == true && user == true) embed.addField("Permisos Por Usuario", `**Permitidos:** ${AllowU}\n\n**Denegados:** ${DenyU}`)
-      if (perm == true && role == true) embed.addField("Permisos Por Rol", `**Permitidos:** ${AllowR}\n\n**Denegados:** ${DenyR}`)
+      if (perm == true && user == true) embed.addField("Permisos Por Usuario", msgU)
+      if (perm == true && role == true) embed.addField("Permisos Por Rol", msgR)
       .setFooter(`${channel.name} | ${channel.id}`);
 
   Channel.send({ embed })
