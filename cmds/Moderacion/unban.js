@@ -47,7 +47,7 @@ module.exports = {
     let unbanEmbed = new Discord.MessageEmbed()
     .setAuthor("UnBan", User.displayAvatarURL())
     .setColor("#0088ff")
-    .addField("Usuario Desbaneado", `${User} Y su id es ${User.id}`)
+    .addField("Usuario Desbaneado", `<@!${User.id}> Y su id es ${User.id}`)
     .addField("Desbaneado Por", `<@!${message.author.id}> Y su ID es ${message.author.id}`)
     .addField("Razón de Desbaneo", bReason);
     
