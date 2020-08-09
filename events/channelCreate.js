@@ -61,12 +61,6 @@ module.exports = async channel => {
         "MANAGE_WEBHOOKS": "Gestionar webhooks",
         "MANAGE_EMOJIS": "Gestionar emojis"
         };
-        function setAll(a) {
-          var i, n = a.length;
-          for (i = 0; i < n; ++i) {
-              a[i] = changeRole[a[i]];
-          }
-      }
       if (channel.permissionOverwrites) {
         perm = true
         for (const perm of channel.permissionOverwrites.values()) {
@@ -75,31 +69,46 @@ module.exports = async channel => {
           console.log("deny " + perm.deny.toArray())
           if (perm.type === "member") {
             user = true
-          
-          let oau = []
-          let odu = []
-          oau.push(perm.allow.toArray())
-          odu.push(perm.deny.toArray())
-          overwritesAllowedUser.push(`<@!${perm.id}>: ${oau.map(r => changeRole[r]).join(", ")}`)
-          overwritesDenyUser.push(`<@!${perm.id}>: ${odu.map(r => changeRole[r]).join(", ")}`)
-
+          if (perm.allow) {
+          overwritesAllowedUser.push(`<@!${perm.id}>: ${perm.allow.toArray()}`)
+          }
+          if (perm.deny) {
+          overwritesDenyUser.push(`<@!${perm.id}>: ${perm.deny.toArray()}`)
+          }
           }
           if (perm.type === "role") {
             role = true
-            let oar = []
-            let odr = []
+            if (perm.allow) {
             overwritesAllowedRole.push(`<@&${perm.id}>: ${perm.allow.toArray()}`)
+            }
+            if (perm.deny) {
             overwritesDenyRole.push(`<@&${perm.id}>: ${perm.deny.toArray()}`)
+            }
           }
         }
       }
+      let AllowU;
+      let DenyU;
+      let AllowR;
+      let DenyR;
+
+      if (perm == true && overwritesAllowedUser) AllowU = overwritesAllowedUser.map(r => r).join("\n").replace(/ADMINISTRATOR/g, "Administrador").replace(/CREATE_INSTANT_INVITE/g, "Crear Invitación").replace(/KICK_MEMBERS/g, "Expulsar miembros").replace(/BAN_MEMBERS/g, "Banear Miembros").replace(/MANAGE_CHANNELS/g, "Gestionar Canales").replace(/MANAGE_GUILD/g, "Gestionar Servidor").replace(/ADD_REACTIONS/g, "Añadir reacciones").replace(/VIEW_AUDIT_LOG/g, "Ver el registro de auditoría").replace(/PRIORITY_SPEAKER/g, "Prioridad de palabra").replace(/STREAM/g, "Video").replace(/VIEW_CHANNEL/g, "Leer canales de texto y canales de voz").replace(/SEND_MESSAGES/g, "Enviar mensajes").replace(/SEND_TTS_MESSAGES/g, "Enviar mensajes de texto a voz").replace(/MANAGE_MESSAGES/g, "Gestionar mensajes").replace(/EMBED_LINKS/g, "Insertar enlaces").replace(/ATTACH_FILES/g, "Adjuntar archivos").replace(/READ_MESSAGE_HISTORY/g, "Leer el historial de mensajes").replace(/MENTION_EVERYONE/g, "Mencionar \@everyone, \@here y todos los roles").replace(/USE_EXTERNAL_EMOJIS/g, "Usar emojis externos").replace(/VIEW_GUILD_INSIGHTS/g, "Ver información del servidor").replace(/CONNECT/g, "Conectar").replace(/SPEAK/g, "Hablar").replace(/MUTE_MEMBERS/g, "Silenciar miembros").replace(/DEAFEN_MEMBERS/g, "Ensordecer Miembros").replace(/MOVE_MEMBERS/g, "Mover miembros").replace(/USE_VAD/g, "Usar Actividad de voz").replace(/CHANGE_NICKNAME/g, "Cambiar apodo").replace(/MANAGE_NICKNAMES/g, "Gestionar apodos").replace(/MANAGE_ROLES/g, "Gestionar roles").replace(/MANAGE_WEBHOOKS/g, "Gestionar webhooks").replace(/MANAGE_EMOJIS/g, "Gestionar emojis");
+      if (perm == true && overwritesDenyUser) DenyU = overwritesDenyUser.map(r => r).join("\n").replace(/ADMINISTRATOR/g, "Administrador").replace(/CREATE_INSTANT_INVITE/g, "Crear Invitación").replace(/KICK_MEMBERS/g, "Expulsar miembros").replace(/BAN_MEMBERS/g, "Banear Miembros").replace(/MANAGE_CHANNELS/g, "Gestionar Canales").replace(/MANAGE_GUILD/g, "Gestionar Servidor").replace(/ADD_REACTIONS/g, "Añadir reacciones").replace(/VIEW_AUDIT_LOG/g, "Ver el registro de auditoría").replace(/PRIORITY_SPEAKER/g, "Prioridad de palabra").replace(/STREAM/g, "Video").replace(/VIEW_CHANNEL/g, "Leer canales de texto y canales de voz").replace(/SEND_MESSAGES/g, "Enviar mensajes").replace(/SEND_TTS_MESSAGES/g, "Enviar mensajes de texto a voz").replace(/MANAGE_MESSAGES/g, "Gestionar mensajes").replace(/EMBED_LINKS/g, "Insertar enlaces").replace(/ATTACH_FILES/g, "Adjuntar archivos").replace(/READ_MESSAGE_HISTORY/g, "Leer el historial de mensajes").replace(/MENTION_EVERYONE/g, "Mencionar \@everyone, \@here y todos los roles").replace(/USE_EXTERNAL_EMOJIS/g, "Usar emojis externos").replace(/VIEW_GUILD_INSIGHTS/g, "Ver información del servidor").replace(/CONNECT/g, "Conectar").replace(/SPEAK/g, "Hablar").replace(/MUTE_MEMBERS/g, "Silenciar miembros").replace(/DEAFEN_MEMBERS/g, "Ensordecer Miembros").replace(/MOVE_MEMBERS/g, "Mover miembros").replace(/USE_VAD/g, "Usar Actividad de voz").replace(/CHANGE_NICKNAME/g, "Cambiar apodo").replace(/MANAGE_NICKNAMES/g, "Gestionar apodos").replace(/MANAGE_ROLES/g, "Gestionar roles").replace(/MANAGE_WEBHOOKS/g, "Gestionar webhooks").replace(/MANAGE_EMOJIS/g, "Gestionar emojis");
+      if (perm == true && overwritesAllowedRole) AllowR = overwritesAllowedRole.map(r => r).join("\n").replace(/ADMINISTRATOR/g, "Administrador").replace(/CREATE_INSTANT_INVITE/g, "Crear Invitación").replace(/KICK_MEMBERS/g, "Expulsar miembros").replace(/BAN_MEMBERS/g, "Banear Miembros").replace(/MANAGE_CHANNELS/g, "Gestionar Canales").replace(/MANAGE_GUILD/g, "Gestionar Servidor").replace(/ADD_REACTIONS/g, "Añadir reacciones").replace(/VIEW_AUDIT_LOG/g, "Ver el registro de auditoría").replace(/PRIORITY_SPEAKER/g, "Prioridad de palabra").replace(/STREAM/g, "Video").replace(/VIEW_CHANNEL/g, "Leer canales de texto y canales de voz").replace(/SEND_MESSAGES/g, "Enviar mensajes").replace(/SEND_TTS_MESSAGES/g, "Enviar mensajes de texto a voz").replace(/MANAGE_MESSAGES/g, "Gestionar mensajes").replace(/EMBED_LINKS/g, "Insertar enlaces").replace(/ATTACH_FILES/g, "Adjuntar archivos").replace(/READ_MESSAGE_HISTORY/g, "Leer el historial de mensajes").replace(/MENTION_EVERYONE/g, "Mencionar \@everyone, \@here y todos los roles").replace(/USE_EXTERNAL_EMOJIS/g, "Usar emojis externos").replace(/VIEW_GUILD_INSIGHTS/g, "Ver información del servidor").replace(/CONNECT/g, "Conectar").replace(/SPEAK/g, "Hablar").replace(/MUTE_MEMBERS/g, "Silenciar miembros").replace(/DEAFEN_MEMBERS/g, "Ensordecer Miembros").replace(/MOVE_MEMBERS/g, "Mover miembros").replace(/USE_VAD/g, "Usar Actividad de voz").replace(/CHANGE_NICKNAME/g, "Cambiar apodo").replace(/MANAGE_NICKNAMES/g, "Gestionar apodos").replace(/MANAGE_ROLES/g, "Gestionar roles").replace(/MANAGE_WEBHOOKS/g, "Gestionar webhooks").replace(/MANAGE_EMOJIS/g, "Gestionar emojis");
+      if (perm == true && overwritesDenyRole) DenyR = overwritesDenyRole.map(r => r).join("\n").replace(/ADMINISTRATOR/g, "Administrador").replace(/CREATE_INSTANT_INVITE/g, "Crear Invitación").replace(/KICK_MEMBERS/g, "Expulsar miembros").replace(/BAN_MEMBERS/g, "Banear Miembros").replace(/MANAGE_CHANNELS/g, "Gestionar Canales").replace(/MANAGE_GUILD/g, "Gestionar Servidor").replace(/ADD_REACTIONS/g, "Añadir reacciones").replace(/VIEW_AUDIT_LOG/g, "Ver el registro de auditoría").replace(/PRIORITY_SPEAKER/g, "Prioridad de palabra").replace(/STREAM/g, "Video").replace(/VIEW_CHANNEL/g, "Leer canales de texto y canales de voz").replace(/SEND_MESSAGES/g, "Enviar mensajes").replace(/SEND_TTS_MESSAGES/g, "Enviar mensajes de texto a voz").replace(/MANAGE_MESSAGES/g, "Gestionar mensajes").replace(/EMBED_LINKS/g, "Insertar enlaces").replace(/ATTACH_FILES/g, "Adjuntar archivos").replace(/READ_MESSAGE_HISTORY/g, "Leer el historial de mensajes").replace(/MENTION_EVERYONE/g, "Mencionar \@everyone, \@here y todos los roles").replace(/USE_EXTERNAL_EMOJIS/g, "Usar emojis externos").replace(/VIEW_GUILD_INSIGHTS/g, "Ver información del servidor").replace(/CONNECT/g, "Conectar").replace(/SPEAK/g, "Hablar").replace(/MUTE_MEMBERS/g, "Silenciar miembros").replace(/DEAFEN_MEMBERS/g, "Ensordecer Miembros").replace(/MOVE_MEMBERS/g, "Mover miembros").replace(/USE_VAD/g, "Usar Actividad de voz").replace(/CHANGE_NICKNAME/g, "Cambiar apodo").replace(/MANAGE_NICKNAMES/g, "Gestionar apodos").replace(/MANAGE_ROLES/g, "Gestionar roles").replace(/MANAGE_WEBHOOKS/g, "Gestionar webhooks").replace(/MANAGE_EMOJIS/g, "Gestionar emojis");
+
+      if (typeof AllowU === 'undefined') AllowU = "Ninguno";
+      if (typeof DenyU === 'undefined') DenyU = "Ninguno";
+      if (typeof AllowR === 'undefined') AllowR = "Ninguno";
+      if (typeof DenyR === 'undefined') DenyR = "Ninguno";
+
       const embed = new Discord.MessageEmbed()
       .setAuthor("Canal Creado", channel.guild.iconURL())
       .setColor("#FF0000")
       .setDescription(`Se ha creado el canal **${channel.name}**`)
       .addField("Tipo de canal", type[channel.type])
-      if (perm == true && user == true) embed.addField("Permisos Por Usuario", `**Permitidos:** ${overwritesAllowedUser.map(r => r).join("\n")}\n\n**Denegados:** ${overwritesDenyUser.map(r => r).join("\n")}`)
-      if (perm == true && role == true) embed.addField("Permisos Por Rol", `**Permitidos:** ${overwritesAllowedRole.map(r => r).join("\n")}\n\n**Denegados:** ${overwritesDenyRole.map(r => r).join("\n")}`)
+      if (perm == true && user == true) embed.addField("Permisos Por Usuario", `**Permitidos:** ${AllowU}\n\n**Denegados:** ${DenyU}`)
+      if (perm == true && role == true) embed.addField("Permisos Por Rol", `**Permitidos:** ${AllowR}\n\n**Denegados:** ${DenyR}`)
       .setFooter(`${channel.name} | ${channel.id}`);
 
   Channel.send({ embed })
