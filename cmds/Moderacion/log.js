@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const Guild = require("./models/Guild")
-const { updateLog, createGuild } = require("./models/functions")
+const { updateLog, createGuild, updateGuild } = require("./models/functions")
 
 module.exports = {
     name : 'log',
@@ -96,7 +96,7 @@ module.exports = {
                     }
             }
             try {
-            updateLog(message.guild, newGuild)
+            updateGuild(message.guild, newGuild)
             } catch (err) {
                 console.error(err)
             }
@@ -312,11 +312,11 @@ module.exports = {
         break;
     }
     break;
-    case "unable":
+    case "disable":
         switch (args[1]) {
             case "all":
                 Guild.findOne({ guildID: message.guild.id }).then(doc => {
-                updateLog(message.guild, {
+                updateGuild(message.guild, {log: {
                     channelCreate: false,
                     channelDelete: false,
                     channelPinsUpdate: false,
@@ -340,6 +340,7 @@ module.exports = {
                     roleUpdate: false,
                     userUpdate: false,
                     voiceState: false
+                }
                 })
             
                 message.channel.send("Se han desactivado todos los registros")
