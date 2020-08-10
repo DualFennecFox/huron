@@ -75,7 +75,7 @@ let getGuild = async (guild) => {
         if (data.log[key] !== settings[key]) data.log[key] = settings[key];
         else return;
     }
-    return data.save()
+    return (await data).save()
   };
   let createGuild = async (settings) => {
     let defaults = Object.assign({ _id: mongoose.Types.ObjectId() });
