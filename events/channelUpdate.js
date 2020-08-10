@@ -23,14 +23,14 @@ module.exports = async (oldChannel, newChannel) => {
                 name = true
             }
             for (const channel of newChannel.permissionOverwrites.values()) {
-                if (!oldChannel.permissionOverwrites.toArray().includes(channel)) {
+                if (!oldChannel.permissionOverwrites.has(channel)) {
                     newperm = true
                     let rol = changeRole[channel]
                     getnewperm.push(rol)
                 }
               }
             for (const channel of oldChannel.permissionOverwrites.values()) {
-                if (!newChannel.permissionOverwrites.toArray().includes(channel)) {
+                if (!newChannel.permissionOverwrites.has(channel)) {
                     removeperms = true
                     let rol = changeRole[channel]
                     getremoveperm.push(rol)
