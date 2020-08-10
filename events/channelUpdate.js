@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
-
+const { changeRole } = require('../cmds/Moderacion/models/functions')
 module.exports = async (oldChannel, newChannel) => {
         if (newChannel.type == "dm") return
         let client = newChannel.client 
@@ -18,11 +18,7 @@ module.exports = async (oldChannel, newChannel) => {
             let getremoveperm = []
             let position = false
             let getnewperm = []
-    
-            let boolean = {
-                "false": "No",
-                "true": "Si"
-            }
+
             if (oldChannel.name != newChannel.name) {
                 name = true
             }
