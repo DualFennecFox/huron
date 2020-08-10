@@ -13,8 +13,8 @@ module.exports = async role => {
           if (!Channel) return
           if (!Channel.permissionsFor(role.guild.me).has("SEND_MESSAGES")) return
 
-          for (const role of role.permissions.toArray()) {
-                let rol = changeRole[role]
+          for (const perm of role.permissions.toArray()) {
+                let rol = changeRole[perm]
                 perms.push(rol)
             }
 

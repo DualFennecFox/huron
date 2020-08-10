@@ -25,8 +25,6 @@ module.exports = async (oldRole, newRole) => {
             "false": "No",
             "true": "Si"
         }
-        console.log("viejo " + oldRole.permissions)
-        console.log("nuevo " + newRole.permissions)
         if (oldRole.name != newRole.name) {
             name = true
         }
@@ -63,7 +61,7 @@ module.exports = async (oldRole, newRole) => {
         if (name == true) embed.addField("Nombre Antes | Después", `${oldRole.name} | ${newRole.name}`)
         if (newperm == true) embed.addField("Permisos Agregados", `${getnewperm.map(r => r).join(", ")}`)
         if (removeperms == true) embed.addField("Permisos Removidos", `${getremoveperm.map(r => r).join(", ")}`)
-        if (position == true) embed.addField("Posición", `**De:** ${oldRole.position}\n**A:** ${newRole.position}`)
+        if (position == true) embed.addField("Posición", `**De:** ${oldRole.rawPosition}\n**A:** ${newRole.rawPosition}`)
         if (mentionable == true) embed.addField("Mencionable", `**${boolean[newRole.mentionable]}**`)
         if (hoist == true) embed.addField("Mostrar Separado", `**${boolean[newRole.hoist]}**`)
     

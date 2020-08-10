@@ -6,6 +6,7 @@ module.exports = client => {
   client.on('disconnect', reqEvent('disconnect'))
   client.on('channelCreate', reqEvent('channelCreate'));
   client.on('channelDelete', reqEvent('channelDelete'));
+  client.on('channelUpdate', reqEvent('channelUpdate'))
   client.on('emojiCreate', reqEvent('emojiCreate'));
   client.on('emojiDelete', reqEvent('emojiDelete'));
   client.on('emojiUpdate', reqEvent('emojiUpdate'));
