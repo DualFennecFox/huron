@@ -68,11 +68,8 @@ let getGuild = async (guild) => {
   
   let updateLog = async (guild, settings) => {
     Guild.findOne({ guildID: guild.id }).then(data => {
-    console.log(settings)
-    console.log(data.log)
     if (typeof data.log !== 'object') data.log = {};
     for (const key in settings) {
-      console.log(settings[key])
         if (data[key] !== settings[key]) data[key] = settings[key];
         else return;
     }
