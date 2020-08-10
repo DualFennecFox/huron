@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const Guild = require("./models/Guild")
-const { updateGuild, createGuild } = require("./models/functions")
+const { updateLog, createGuild } = require("./models/functions")
 
 module.exports = {
     name : 'log',
@@ -96,7 +96,7 @@ module.exports = {
                     }
             }
             try {
-            updateGuild(message.guild, newGuild)
+            updateLog(message.guild, newGuild)
             } catch (err) {
                 console.error(err)
             }
@@ -166,7 +166,7 @@ module.exports = {
             case "all":
                 Guild.findOne({ guildID: message.guild.id }).then(doc => {
                         
-                updateGuild(message.guild, { log: {
+                updateLog(message.guild,  {
                     channelCreate: true,
                     channelDelete: true,
                     channelPinsUpdate: true,
@@ -190,7 +190,7 @@ module.exports = {
                     roleUpdate: true,
                     userUpdate: false,
                     voiceState: false
-                }
+                
                     })
             
                 message.channel.send("Se han activado todos los registros")
@@ -201,113 +201,113 @@ module.exports = {
             break;
             case "channel": 
 
-              updateGuild(message.guild,  { channelCreate: true, channelDelete: true, channelPinsUpdate: true, channelUpdate: true })
+              updateLog(message.guild,  { channelCreate: true, channelDelete: true, channelPinsUpdate: true, channelUpdate: true })
             
             message.channel.send("Se han activado los registros de Canales")
 
         break;
         case "channelcreate":
-            updateGuild(message.guild,  { log: { channelCreate: true }})
+            updateLog(message.guild,   { channelCreate: true })
             message.channel.send("Se ha activado el registro \`Crear Canales\`")
         break;
         case "channeldelete":
-            updateGuild(message.guild,  { log: { channelDelete: true }})
+            updateLog(message.guild,   { channelDelete: true })
             message.channel.send("Se ha activado el registro \`Canal Eliminado\`")
         break;
         case "channelupdate":
-            updateGuild(message.guild,  { log: { channelUpdate: true }})
+            updateLog(message.guild,   { channelUpdate: true })
             message.channel.send("Se ha activado el registro \`Canal Actualizado\`")
         break;
         case "channelpin":
-            updateGuild(message.guild,  { log: { channelPinsUpdate: true }})
+            updateLog(message.guild,   { channelPinsUpdate: true })
             message.channel.send("Se ha activado el registro \`Mensaje Fijado\`")
         break;
         case "emoji":
-            updateGuild(message.guild,  { log: { emojiCreate: true, emojiDelete: true, emojiUpdate: true }})
+            updateLog(message.guild,   { emojiCreate: true, emojiDelete: true, emojiUpdate: true })
             message.channel.send("Se han activado los registros de Emojis")
         break;
         case "emojicreate":
-            updateGuild(message.guild,  { log: { emojiCreate: true }})
+            updateLog(message.guild,   { emojiCreate: true })
             message.channel.send("Se ha activado el registro \`Emoji Creado\`")
         break;
         case "emojidelete":
-            updateGuild(message.guild,  { log: { emojiDelete: true }})
+            updateLog(message.guild,   { emojiDelete: true })
             message.channel.send("Se ha activado el registro \`Emoji Eliminado\`")
         break;
         case "emojiupdate":
-            updateGuild(message.guild,  { log: { emojiUpdate: true }})
+            updateLog(message.guild,   { emojiUpdate: true })
             message.channel.send("Se ha activado el registro \`Emoji Actualizado\`")
         break;
         case "bans":
-            updateGuild(message.guild,  { log: { banAdd: true, banRemove: true }})
+            updateLog(message.guild,   { banAdd: true, banRemove: true })
             message.channel.send("Se han activado los registros de Baneos")
         break;
         case "ban":
-            updateGuild(message.guild,  { log: { banAdd: true }})
+            updateLog(message.guild,   { banAdd: true })
             message.channel.send("Se ha activado el registro \`Ban\`")
         break;
         case "unban":
-            updateGuild(message.guild,  { log: { banRemove: true }})
+            updateLog(message.guild,   { banRemove: true })
             message.channel.send("Se ha activado el registro \`UnBan\`")
         break;
         case "member":
-            updateGuild(message.guild,  { log: { MemberAdd: true, MemberRemove: true, MemberUpdate: true }})
+            updateLog(message.guild,   { MemberAdd: true, MemberRemove: true, MemberUpdate: true })
             message.channel.send("Se han activado los registros de Miembros")
         break;
         case "memberadd":
-            updateGuild(message.guild,  { log: { MemberAdd: true }})
+            updateLog(message.guild,   { MemberAdd: true })
             message.channel.send("Se ha activado el registro \`Miembro Nuevo\`")
         break;
         case "memberremove":
-            updateGuild(message.guild,  { log: { MemberRemove: true }})
+            updateLog(message.guild,   { MemberRemove: true })
             message.channel.send("Se ha activado el registro \`Miembro se va\`")
         break;
         case "memberupdate": 
-            updateGuild(message.guild,  { log: { MemberUpdate: true }})
+            updateLog(message.guild,   { MemberUpdate: true })
             message.channel.send("Se ha activado el registro \`Miembro Actualizado\`")
         break;
         case "guildupdate":
-            updateGuild(message.guild,  { log: { guildUpdate: true }})
+            updateLog(message.guild,   { guildUpdate: true })
             message.channel.send("Se ha activado el registro \`Servidor Actualizado\`")
         break;
         case "invite":
-            updateGuild(message.guild,  { log: { inviteCreate: true, inviteDelete: true }})
+            updateLog(message.guild,   { inviteCreate: true, inviteDelete: true })
             message.channel.send("Se han activado los registros de Invitación")
         break;
         case "invitecreate":
-            updateGuild(message.guild,  { log: { inviteCreate: true }})
+            updateLog(message.guild,   { inviteCreate: true })
             message.channel.send("Se ha activado el registro \`Invitación Creada\`")
         break;
         case "invitedelete": 
-            updateGuild(message.guild,  { log: { inviteDelete: true }})
+            updateLog(message.guild,   { inviteDelete: true })
             message.channel.send("Se ha activado el registro \`Invitación Eliminada\`")
         break;
         case "message":
-            updateGuild(message.guild,  { log: { messageDelete: true, messageUpdate: true }})
+            updateLog(message.guild,   { messageDelete: true, messageUpdate: true })
             message.channel.send("Se han activado los registros de Mensajes")
         break;
         case "messagedelete": 
-            updateGuild(message.guild,  { log: { messageDelete: true }})
+            updateLog(message.guild,   { messageDelete: true })
             message.channel.send("Se ha activado el registro \`Mensaje Eliminado\`")
         break;
         case "messageupdate":
-            updateGuild(message.guild,  { log: { messageUpdate: true }})
+            updateLog(message.guild,   { messageUpdate: true })
             message.channel.send("Se ha activado el registro \`Mensaje Actualizado\`")
         break;
         case "role":
-            updateGuild(message.guild,  { log: { roleCreate: true, roleDelete: true, roleUpdate: true }})
+            updateLog(message.guild,   { roleCreate: true, roleDelete: true, roleUpdate: true })
             message.channel.send("Se han activado los registros de Roles")
         break;
         case "rolecreate":
-            updateGuild(message.guild,  { log: { roleCreate: true }})
+            updateLog(message.guild,   { roleCreate: true })
             message.channel.send("Se ha activado el registro \`Rol Creado\`")
         break;
         case "roledelete":
-            updateGuild(message.guild,  { log: { roleDelete: true }})
+            updateLog(message.guild,   { roleDelete: true })
             message.channel.send("Se ha activado el registro \`Rol Eliminado\`")
         break;
         case "roleupdate":
-            updateGuild(message.guild,  { log: { roleUpdate: true }})
+            updateLog(message.guild,   { roleUpdate: true })
             message.channel.send("Se ha activado el registro \`Rol Actualizado\`")
         break;
     }
@@ -316,7 +316,7 @@ module.exports = {
         switch (args[1]) {
             case "all":
                 Guild.findOne({ guildID: message.guild.id }).then(doc => {
-                updateGuild(message.guild, { log: {
+                updateLog(message.guild, {
                     channelCreate: false,
                     channelDelete: false,
                     channelPinsUpdate: false,
@@ -340,7 +340,6 @@ module.exports = {
                     roleUpdate: false,
                     userUpdate: false,
                     voiceState: false
-                }
                 })
             
                 message.channel.send("Se han desactivado todos los registros")
@@ -351,113 +350,113 @@ module.exports = {
             break;
             case "channel": 
 
-              updateGuild(message.guild, { log: { channelCreate: false, channelDelete: false, channelPinsUpdate: false, channelUpdate: false }})
+              updateLog(message.guild,  { channelCreate: false, channelDelete: false, channelPinsUpdate: false, channelUpdate: false })
             
             message.channel.send("Se han desactivado los registros de Canales")
 
         break;
         case "channelcreate":
-            updateGuild(message.guild,  { log: { channelCreate: false }})
+            updateLog(message.guild,   { channelCreate: false })
             message.channel.send("Se ha desactivado el registro \`Crear Canales\`")
         break;
         case "channeldelete":
-            updateGuild(message.guild,  { log: { channelDelete: false }})
+            updateLog(message.guild,   { channelDelete: false })
             message.channel.send("Se ha desactivado el registro \`Canal Eliminado\`")
         break;
         case "channelupdate":
-            updateGuild(message.guild,  { log: { channelUpdate: false }})
+            updateLog(message.guild,   { channelUpdate: false })
             message.channel.send("Se ha desactivado el registro \`Canal Actualizado\`")
         break;
         case "channelpin":
-            updateGuild(message.guild,  { log: { channelPinsUpdate: false }})
+            updateLog(message.guild,   { channelPinsUpdate: false })
             message.channel.send("Se ha desactivado el registro \`Mensaje Fijado\`")
         break;
         case "emoji":
-            updateGuild(message.guild,  { log: { emojiCreate: false, emojiDelete: false, emojiUpdate: false }})
+            updateLog(message.guild,   { emojiCreate: false, emojiDelete: false, emojiUpdate: false })
             message.channel.send("Se han desactivado los registros de Emojis")
         break;
         case "emojicreate":
-            updateGuild(message.guild,  { log: { emojiCreate: false }})
+            updateLog(message.guild,   { emojiCreate: false })
             message.channel.send("Se ha desactivado el registro \`Emoji Creado\`")
         break;
         case "emojidelete":
-            updateGuild(message.guild,  { log: { emojiDelete: false }})
+            updateLog(message.guild,   { emojiDelete: false })
             message.channel.send("Se ha desactivado el registro \`Emoji Eliminado\`")
         break;
         case "emojiupdate":
-            updateGuild(message.guild,  { log: { emojiUpdate: false }})
+            updateLog(message.guild,   { emojiUpdate: false })
             message.channel.send("Se ha desactivado el registro \`Emoji Actualizado\`")
         break;
         case "bans":
-            updateGuild(message.guild,  { log: { banAdd: false, banRemove: false }})
+            updateLog(message.guild,   { banAdd: false, banRemove: false })
             message.channel.send("Se han desactivado los registros de Baneos")
         break;
         case "ban":
-            updateGuild(message.guild,  { log: { banAdd: false }})
+            updateLog(message.guild,   { banAdd: false })
             message.channel.send("Se ha desactivado el registro \`Ban\`")
         break;
         case "unban":
-            updateGuild(message.guild,  { log: { banRemove: false }})
+            updateLog(message.guild,   { banRemove: false })
             message.channel.send("Se ha desactivado el registro \`UnBan\`")
         break;
         case "member":
-            updateGuild(message.guild,  { log: { MemberAdd: false, MemberRemove: false, MemberUpdate: false }})
+            updateLog(message.guild,   { MemberAdd: false, MemberRemove: false, MemberUpdate: false })
             message.channel.send("Se han desactivado los registros de Miembros")
         break;
         case "memberadd":
-            updateGuild(message.guild,  { log: { MemberAdd: false }})
+            updateLog(message.guild,   { MemberAdd: false })
             message.channel.send("Se ha desactivado el registro \`Miembro Nuevo\`")
         break;
         case "memberremove":
-            updateGuild(message.guild,  { log: { MemberRemove: false }})
+            updateLog(message.guild,   { MemberRemove: false })
             message.channel.send("Se ha desactivado el registro \`Miembro se va\`")
         break;
         case "memberupdate": 
-            updateGuild(message.guild,  { log: { MemberUpdate: false }})
+            updateLog(message.guild,   { MemberUpdate: false })
             message.channel.send("Se ha desactivado el registro \`Miembro Actualizado\`")
         break;
         case "guildupdate":
-            updateGuild(message.guild,  { log: { guildUpdate: false }})
+            updateLog(message.guild,   { guildUpdate: false })
             message.channel.send("Se ha desactivado el registro \`Servidor Actualizado\`")
         break;
         case "invite":
-            updateGuild(message.guild,  { log: { inviteCreate: false, inviteDelete: false }})
+            updateLog(message.guild,   { inviteCreate: false, inviteDelete: false })
             message.channel.send("Se han desactivado los registros de Invitación")
         break;
         case "invitecreate":
-            updateGuild(message.guild,  { log: { inviteCreate: false }})
+            updateLog(message.guild,   { inviteCreate: false })
             message.channel.send("Se ha desactivado el registro \`Invitación Creada\`")
         break;
         case "invitedelete": 
-            updateGuild(message.guild,  { log: { inviteDelete: false }})
+            updateLog(message.guild,   { inviteDelete: false })
             message.channel.send("Se ha desactivado el registro \`Invitación Eliminada\`")
         break;
         case "message":
-            updateGuild(message.guild,  { log: { messageDelete: false, messageUpdate: false }})
+            updateLog(message.guild,   { messageDelete: false, messageUpdate: false })
             message.channel.send("Se han desactivado los registros de Mensajes")
         break;
         case "messagedelete": 
-            updateGuild(message.guild,  { log: { messageDelete: false }})
+            updateLog(message.guild,   { messageDelete: false })
             message.channel.send("Se ha desactivado el registro \`Mensaje Eliminado\`")
         break;
         case "messageupdate":
-            updateGuild(message.guild,  { log: { messageUpdate: false }})
+            updateLog(message.guild,   { messageUpdate: false })
             message.channel.send("Se ha desactivado el registro \`Mensaje Actualizado\`")
         break;
         case "role":
-            updateGuild(message.guild,  { log: { roleCreate: false, roleDelete: false, roleUpdate: false }})
+            updateLog(message.guild,   { roleCreate: false, roleDelete: false, roleUpdate: false })
             message.channel.send("Se han desactivado los registros de Roles")
         break;
         case "rolecreate":
-            updateGuild(message.guild,  { log: { roleCreate: false }})
+            updateLog(message.guild,   { roleCreate: false })
             message.channel.send("Se ha desactivado el registro \`Rol Creado\`")
         break;
         case "roledelete":
-            updateGuild(message.guild,  { log: { roleDelete: false }})
+            updateLog(message.guild,   { roleDelete: false })
             message.channel.send("Se ha desactivado el registro \`Rol Eliminado\`")
         break;
         case "roleupdate":
-            updateGuild(message.guild,  { log: { roleUpdate: false }})
+            updateLog(message.guild,   { roleUpdate: false })
             message.channel.send("Se ha desactivado el registro \`Rol Actualizado\`")
         break;
     }
