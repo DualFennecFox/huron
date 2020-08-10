@@ -9,7 +9,7 @@ module.exports = {
     aliases: ['Log', 'LOG', 'logs', 'Logs', 'LOGS'],
     usage: '!kick',
     examples: ['!log messagedelete', '!log nickname', '!log channel'],
-    run: async (client , message, args) => {
+    run: async (client , message, args, prefix) => {
         if (message.author.id !== process.env.OWNER) return
 
         if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_MEMBERS")) return message.channel.send("No tienes permisos para usar este comando")
