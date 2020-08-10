@@ -132,6 +132,5 @@ module.exports = {
     search,
     searchNumber,
     checkDays,
-    updateLog,
     changeRole
 }
