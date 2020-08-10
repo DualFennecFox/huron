@@ -76,7 +76,7 @@ let getGuild = async (guild) => {
   };
   let createGuild = async (settings) => {
     let defaults = Object.assign({ _id: mongoose.Types.ObjectId() });
-    let merged = Object.assign(defaults, settings);
+    let merged = Object.assign(defaults, {log: settings });
   
     const newGuild = new Guild(merged);
     return newGuild.save()
