@@ -76,7 +76,7 @@ let getGuild = async (guild) => {
         if (data[key] !== settings[key]) data[key] = settings[key];
         else return;
     }
-    return Guild.updateOne({ guildID: guild.id }, settings)
+    return data.save()
   })
   };
   let createGuild = async (settings) => {
