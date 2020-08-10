@@ -165,34 +165,33 @@ module.exports = {
         switch (args[1]) {
             case "all":
                 Guild.findOne({ guildID: message.guild.id }).then(doc => {
-                        const newGuild = {
-                        log: {
-                        channelCreate: true,
-                        channelDelete: true,
-                        channelPinsUpdate: true,
-                        channelUpdate: true,
-                        emojiCreate: true,
-                        emojiDelete: true,
-                        emojiUpdate: true,
-                        banAdd: true,
-                        banRemove: true,
-                        MemberAdd: true,
-                        MemberRemove: true,
-                        MemberUpdate: true,
-                        guildUpdate: true,
-                        inviteCreate: true,
-                        inviteDelete: true,
-                        messageDelete: true,
-                        messageDeleteBulk: true,
-                        messageUpdate: true,
-                        roleCreate: true,
-                        roleDelete: true,
-                        roleUpdate: true,
-                        userUpdate: false,
-                        voiceState: false
-                        }
+                        
+                updateLog(message.guild, {log: {
+                    channelCreate: true,
+                    channelDelete: true,
+                    channelPinsUpdate: true,
+                    channelUpdate: true,
+                    emojiCreate: true,
+                    emojiDelete: true,
+                    emojiUpdate: true,
+                    banAdd: true,
+                    banRemove: true,
+                    MemberAdd: true,
+                    MemberRemove: true,
+                    MemberUpdate: true,
+                    guildUpdate: true,
+                    inviteCreate: true,
+                    inviteDelete: true,
+                    messageDelete: true,
+                    messageDeleteBulk: true,
+                    messageUpdate: true,
+                    roleCreate: true,
+                    roleDelete: true,
+                    roleUpdate: true,
+                    userUpdate: false,
+                    voiceState: false
                 }
-                updateLog(message.guild, newGuild)
+                    })
             
                 message.channel.send("Se han activado todos los registros")
                 }).catch(err => {
@@ -317,34 +316,32 @@ module.exports = {
         switch (args[1]) {
             case "all":
                 Guild.findOne({ guildID: message.guild.id }).then(doc => {
-                        const newGuild = {
-                        log: {
-                        channelCreate: false,
-                        channelDelete: false,
-                        channelPinsUpdate: false,
-                        channelUpdate: false,
-                        emojiCreate: false,
-                        emojiDelete: false,
-                        emojiUpdate: false,
-                        banAdd: false,
-                        banRemove: false,
-                        MemberAdd: false,
-                        MemberRemove: false,
-                        MemberUpdate: false,
-                        guildUpdate: false,
-                        inviteCreate: false,
-                        inviteDelete: false,
-                        messageDelete: false,
-                        messageDeleteBulk: false,
-                        messageUpdate: false,
-                        roleCreate: false,
-                        roleDelete: false,
-                        roleUpdate: false,
-                        userUpdate: false,
-                        voiceState: false
-                        }
+                updateLog(message.guild, {log: {
+                    channelCreate: false,
+                    channelDelete: false,
+                    channelPinsUpdate: false,
+                    channelUpdate: false,
+                    emojiCreate: false,
+                    emojiDelete: false,
+                    emojiUpdate: false,
+                    banAdd: false,
+                    banRemove: false,
+                    MemberAdd: false,
+                    MemberRemove: false,
+                    MemberUpdate: false,
+                    guildUpdate: false,
+                    inviteCreate: false,
+                    inviteDelete: false,
+                    messageDelete: false,
+                    messageDeleteBulk: false,
+                    messageUpdate: false,
+                    roleCreate: false,
+                    roleDelete: false,
+                    roleUpdate: false,
+                    userUpdate: false,
+                    voiceState: false
                 }
-                updateLog(message.guild, newGuild)
+                })
             
                 message.channel.send("Se han desactivado todos los registros")
                 }).catch(err => {
