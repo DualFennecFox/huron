@@ -53,6 +53,8 @@ let getGuild = async (guild) => {
         console.error(error);
       }
     }
+    }).catch(err => {
+      console.error(err)
     })
   }
   
@@ -66,13 +68,16 @@ let getGuild = async (guild) => {
     return Guild.updateOne({ guildID: guild.id }, settings);
   };
   let updateLog = async (guild, settings) => {
-    let data = getGuild(guild);
+Guild.findOne({ guildID: guild.id }).then(data => {
     if (typeof data.log !== 'object') data.log = {};
     for (const key in settings) {
         if (data.log[key] !== settings[key]) data.log[key] = settings[key];
         else return;
     }
-    return Guild.updateOne({ guildID: guild.id }, {log: settings });
+    return data.save()
+  }).catch(err => {
+    console.error(err)
+  })
   };
   let createGuild = async (settings) => {
     let defaults = Object.assign({ _id: mongoose.Types.ObjectId() });
