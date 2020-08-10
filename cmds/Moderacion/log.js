@@ -166,7 +166,7 @@ module.exports = {
             case "all":
                 Guild.findOne({ guildID: message.guild.id }).then(doc => {
                         
-                updateLog(message.guild,  {
+                updateGuild(message.guild, {log: {
                     channelCreate: true,
                     channelDelete: true,
                     channelPinsUpdate: true,
@@ -190,7 +190,7 @@ module.exports = {
                     roleUpdate: true,
                     userUpdate: false,
                     voiceState: false
-                
+                }
                     })
             
                 message.channel.send("Se han activado todos los registros")
