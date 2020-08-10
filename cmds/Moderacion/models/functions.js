@@ -67,7 +67,7 @@ let getGuild = async (guild) => {
   };
   
   let updateLog = async (guild, settings) => {
-    let data = getGuild(guild);
+    let data = Guild.findOne({ guildID: guild.id })
     console.log(settings)
     if (typeof data.log !== 'object') data.log = {};
     for (const key in settings) {
@@ -75,7 +75,7 @@ let getGuild = async (guild) => {
         if (data.log[key] !== settings[key]) data.log[key] = settings[key];
         else return;
     }
-    return Guild.updateOne({ guildID: guild.id }, settings);
+    return data.save()
   };
   let createGuild = async (settings) => {
     let defaults = Object.assign({ _id: mongoose.Types.ObjectId() });
