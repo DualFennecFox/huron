@@ -69,8 +69,8 @@ let getGuild = async (guild) => {
   let updateLog = async (guild, settings) => {
     let data = getGuild(guild);
     if (typeof data.log !== 'object') data.log = {};
-    for (const key in settings) {
-        if (data.log[key] !== settings[key]) data.log[key] = settings[key];
+    for (const key in settings.log) {
+        if (data.log[key] !== settings.log[key]) data.log[key] = settings.log[key];
         else return;
     }
     return Guild.updateOne({ guildID: guild.id }, settings);
