@@ -18,7 +18,7 @@ module.exports = async message => {
                 message.embeds.forEach(embed => {
                 if (embed.description) msg += `**Descripción:** ${embed.description}\n`
                 if (embed.fields) msg += `**Campos:** ${embed.fields.join("\n")}\n\n`
-                if (embed.footer.text) msg += `**Pie:** ${embed.footer.text}`
+                if (embed.footer) msg += `**Pie:** ${embed.footer.text}`
                 })
             }
             const embed = new Discord.MessageEmbed()
