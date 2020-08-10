@@ -73,10 +73,10 @@ let getGuild = async (guild) => {
     if (typeof data.log !== 'object') data.log = {};
     for (const key in settings) {
       console.log(settings[key])
-        if (data.log[key] !== settings[key]) data.log[key] = settings[key];
+        if (data[key] !== settings[key]) data[key] = settings[key];
         else return;
     }
-    return data.save()
+    return Guild.updateOne({ guildID: guild.id }, settings)
   })
   };
   let createGuild = async (settings) => {
