@@ -65,7 +65,7 @@ let getGuild = async (guild) => {
     }
     return Guild.updateOne({ guildID: guild.id }, settings);
   };
-  let updateGuild = async (guild, settings) => {
+  let updateLog = async (guild, settings) => {
     let data = getGuild(guild);
     if (typeof data.log !== 'object') data.log = {};
     for (const key in settings) {
@@ -141,5 +141,6 @@ module.exports = {
     search,
     searchNumber,
     checkDays,
-    changeRole
+    updateLog,
+    changeRole,
 }
