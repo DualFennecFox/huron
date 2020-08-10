@@ -16,7 +16,7 @@ module.exports = {
         let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0]);
         if (!channel) return message.channel.send("Debes especificar un canal")
 
-        if (channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para hablar en ese canal")
+        if (!channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para hablar en ese canal")
 
         Guild.findOne({ guildID: message.guild.id }).then(doc => {
             if (!doc) {
