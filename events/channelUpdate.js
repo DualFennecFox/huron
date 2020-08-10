@@ -3,12 +3,12 @@ const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async (oldChannel, newChannel) => {
         if (newChannel.type == "dm") return
-        let client = newRole.client 
+        let client = newChannel.client 
         Guild.findOne({ guildID: newChannel.guild.id }).then(doc => {
             if (!doc) return
             if (doc.log.channelUpdate == true) {
               if (!doc.LogChannel) return
-              let Channel = newRole.guild.channels.cache.get(doc.LogChannel)
+              let Channel = newChannel.guild.channels.cache.get(doc.LogChannel)
               if (!Channel) return
               if (!Channel.permissionsFor(newChannel.guild.me).has("SEND_MESSAGES")) return
     
@@ -47,10 +47,10 @@ module.exports = async (oldChannel, newChannel) => {
             if (name == false && newperm == false && position == false && removeperms == false) return
     
             const embed = new Discord.MessageEmbed()
-            .setAuthor("Canal Actualizado", newRole.guild.iconURL())
-            .setFooter(`${newRole.name} | ${newRole.id}`)
+            .setAuthor("Canal Actualizado", newChannel.guild.iconURL())
+            .setFooter(`${newChannel.name} | ${newChannel.id}`)
             .setColor("#FF0000")
-            .setDescription(`<@&${newRole.id}>`)
+            .setDescription(`<#${newChannel.id}>`)
             if (name == true) embed.addField("Nombre Antes | Después", `${oldChannel.name} | ${newChannel.name}`)
             if (newperm == true) embed.addField("Permisos Agregados", `${getnewperm.join(", ")}`)
             if (removeperms == true) embed.addField("Permisos Removidos", `${getremoveperm.join(", ")}`)
