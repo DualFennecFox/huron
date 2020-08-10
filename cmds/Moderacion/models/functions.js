@@ -66,6 +66,15 @@ let getGuild = async (guild) => {
     return Guild.updateOne({ guildID: guild.id }, settings);
   };
   
+  let updateLog = async (guild, settings) => {
+    let data = getGuild(guild);
+    if (typeof data !== 'object') data = {};
+    for (const key in settings) {
+        if (data.log[key] !== settings.log[key]) data.log[key] = settings.log[key];
+        else return;
+    }
+    return Guild.updateOne({ guildID: guild.id }, settings);
+  };
   let createGuild = async (settings) => {
     let defaults = Object.assign({ _id: mongoose.Types.ObjectId() });
     let merged = Object.assign(defaults, settings);
@@ -133,5 +142,6 @@ module.exports = {
     search,
     searchNumber,
     checkDays,
+    updateLog,
     changeRole
 }
