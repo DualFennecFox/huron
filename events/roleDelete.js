@@ -22,7 +22,7 @@ module.exports = async role => {
           .setAuthor("Rol Eliminado", role.guild.iconURL())
           .setColor("#FF0000")
           .setFooter(`${role.name} | ${role.id}`)
-          .setDescription(`${role.name} \n\n**Posición:** ${role.position}\n**Creado:**${checkDays(role.createdAt)}\n**Permisos:** ${perms.map(r => r).join(", ")}`)
+          .setDescription(`${role.name} \n\n**Posición:** ${role.rawPosition}\n**Creado:**${checkDays(role.createdAt)}\n**Permisos:** ${perms.join(", ")}`)
           
           Channel.send({ embed })
         }

@@ -20,7 +20,7 @@ module.exports = async role => {
           .setAuthor("Rol Creado", role.guild.iconURL())
           .setColor("#FF0000")
           .setFooter(`${role.name} | ${role.id}`)
-          .setDescription(`<@&${role.id}> \n\n**Color:** ${role.hexColor}\n**Posición:** ${role.position}\n**Mencionable:** ${boolean[role.mentionable]}\n**Mostrar Separado:** ${boolean[role.hoist]}`)
+          .setDescription(`<@&${role.id}> \n\n**Color:** ${role.hexColor}\n**Mencionable:** ${boolean[role.mentionable]}\n**Mostrar Separado:** ${boolean[role.hoist]}`)
 
           Channel.send({ embed })
         }

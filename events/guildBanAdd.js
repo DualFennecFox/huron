@@ -14,7 +14,7 @@ module.exports = async (guild, user) => {
   
         guild.fetchBan(user.id).then(Ban => {
         let reason = Ban.reason
-        if (!reason) reason = "No se especifico una Razón"
+        if (!reason) reason = "No se ha proporcionado una razón"
         
         const embed = new Discord.MessageEmbed()
         .setAuthor("Usuario Baneado", user.displayAvatarURL())

@@ -43,7 +43,6 @@ module.exports = async (oldMember, newMember) => {
   
     const embed = new Discord.MessageEmbed()
     .setAuthor(newMember.user.tag, newMember.user.displayAvatarURL())
-    .setThumbnail(newMember.user.displayAvatarURL())
     .setFooter(`${newMember.user.username} | ${newMember.user.id}`)
     .setColor("#FF0000")
     if (newRole == true) embed.addField("Nuevo Rol", `<@&${getNewRole.id}>`)
