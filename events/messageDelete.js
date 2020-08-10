@@ -17,7 +17,7 @@ module.exports = async message => {
             if (message.embeds) {
                 message.embeds.forEach(embed => {
                 if (embed.description) msg += `**Descripción:** ${embed.description}\n`
-                if (embed.fields) msg += `**Campos:** ${embed.fields.join("\n")}\n\n`
+                if (embed.fields) msg += `**Campos:** ${embed.fields.forEach(field => field.value.join("\n"))}\n\n`
                 if (embed.footer) msg += `**Pie:** ${embed.footer.text}`
                 })
             }
