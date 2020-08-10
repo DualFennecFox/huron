@@ -1,3 +1,4 @@
+const Discord = require('discord.js')
 const Guild = require("./models/Guild")
 const { updateGuild, createGuild } = require("./models/functions")
 
@@ -159,8 +160,9 @@ module.exports = {
     }).catch(err => {
         console.error(err)
     })
-
         switch (args[0]) {
+            case "enable": 
+        switch (args[1]) {
             case "all":
                 Guild.findOne({ guildID: message.guild.id }).then(doc => {
                         const newGuild = {
@@ -310,5 +312,8 @@ module.exports = {
             message.channel.send("Se ha activado el registro \`Rol Actualizado\`")
         break;
     }
+    break;
+    case "unable":
     }
+}
 }
