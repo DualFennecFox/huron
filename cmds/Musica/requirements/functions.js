@@ -1,4 +1,4 @@
-const Discord = new Discord.MessageEmbed()
+const Discord = require('discord.js')
 const musicData = require('./musicData')
 const ytdl = require('ytdl-core')
 
