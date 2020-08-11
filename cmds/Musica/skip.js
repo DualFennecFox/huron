@@ -1,5 +1,5 @@
 const musicData = require("./requirements/musicData")
-const { playSong }= require("./play")
+const { playSong }= require("./requirements/functions")
     module.exports = {
             name : 'skip',
             category: "Musica",

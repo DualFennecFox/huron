@@ -18,7 +18,6 @@ const guildSchema = mongoose.Schema({
     Premium: Boolean,
     channelCreate: Boolean,
     channelDelete: Boolean,
-    channelPinsUpdate: Boolean,
     channelUpdate: Boolean,
     emojiCreate: Boolean,
     emojiDelete: Boolean,
