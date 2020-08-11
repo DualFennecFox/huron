@@ -16,14 +16,7 @@ module.exports = {
                 if (musicData.server[message.guild.id].isPlaying == false) return message.channel.send("No se esta escuchando ninguna canción")
                 if (musicData.server[message.guild.id].queue.length < 1) return message.channel.send("No hay ninguna canción en la cola")
                 
-                let Songs = []
-
-                const embed = new Discord.MessageEmbed()
-                for (let v = 0; v < 15; v++) {
-                   Songs.push(`${v + 1}: ${musicData.server[message.guild.id].queue[v].title}`);
-                }      
-              const SongsMapped = Songs.map(queue => queue)
-                   .join("\n\n");      
-                   message.channel.send(embed.setDescription(SongsMapped))         
+                let Songs = musicData.server[message.guild.id].queue.map(q => q.title).join("\n\n");      
+                message.channel.send(embed.setDescription(Songs))         
     }
 } 
