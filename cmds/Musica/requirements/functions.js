@@ -1,4 +1,6 @@
+const Discord = new Discord.MessageEmbed()
 const musicData = require('./musicData')
+const ytdl = require('ytdl-core')
 
   function playSong(queue, message) {
     if (!musicData.server[message.guild.id]) musicData.server[message.guild.id] = {
