@@ -16,6 +16,8 @@ module.exports = {
                 if (musicData.server[message.guild.id].isPlaying == false) return message.channel.send("No se esta escuchando ninguna canción")
                 if (musicData.server[message.guild.id].queue.length < 1) return message.channel.send("No hay ninguna canción en la cola")
                 
+                const embed = new Discord.MessageEmbed();
+                
                 let Songs = musicData.server[message.guild.id].queue.map(q => q.title).join("\n\n");      
                 message.channel.send(embed.setDescription(Songs))         
     }
