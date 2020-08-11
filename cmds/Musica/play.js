@@ -8,8 +8,7 @@ const getVideoId = require('get-video-id')
 function search(nameKey, myArray) {
     for (var i = 0; i < myArray.length; i++) {
         if (myArray[i].link.includes(nameKey)) {
-            myArray[i];
-            break;
+            return myArray[i];
         }
     }
   }
