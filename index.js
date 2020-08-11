@@ -11,8 +11,11 @@ require('./util/eventLoader')(client);
 
 client.categories = fs.readdirSync("./cmds/");
 
-[].forEach(handler => {
+["command"].forEach(handler => {
     require(`./handlers/${handler}`)(client);
 }); 
+["logs"].forEach(handler => {
+    require(`./handlers/${handler}`)(client)
+})
 
 client.login(process.env.TOKEN);
