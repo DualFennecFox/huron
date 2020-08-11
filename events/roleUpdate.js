@@ -30,7 +30,7 @@ module.exports = async (oldRole, newRole) => {
         }
         for (const role of newRole.permissions.toArray()) {
             console.log(oldRole.permissions)
-            console.log(newRol.permissions)
+            console.log(newRole.permissions)
             if (!oldRole.permissions.every(p => p === role)) {
                 newperm = true
                 let rol = changeRole[role]
