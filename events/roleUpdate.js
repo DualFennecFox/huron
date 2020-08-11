@@ -29,14 +29,16 @@ module.exports = async (oldRole, newRole) => {
             name = true
         }
         for (const role of newRole.permissions.toArray()) {
-            if (!oldRole.permissions.toArray().includes(role)) {
+            console.log(oldRole.permissions)
+            console.log(newRol.permissions)
+            if (!oldRole.permissions.every(p => p === role)) {
                 newperm = true
                 let rol = changeRole[role]
                 getnewperm.push(rol)
             }
           }
         for (const role of oldRole.permissions.toArray()) {
-            if (!newRole.permissions.toArray().includes(role)) {
+            if (!newRole.permissions.every(p => p === role)) {
                 removeperms = true
                 let rol = changeRole[role]
                 getremoveperm.push(rol)
