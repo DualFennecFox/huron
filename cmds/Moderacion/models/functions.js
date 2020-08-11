@@ -1,6 +1,7 @@
 const Guild = require('./Guild')
 const defaultSettings = require('./config')
 const mongoose = require('mongoose');
+const { MessageEmbed } = require('discord.js')
 
 let getGuild = async (guild) => {
     Guild.findOne({ guildID: guild.id }).then(result => {
