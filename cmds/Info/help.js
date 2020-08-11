@@ -1,5 +1,3 @@
-const { MessageEmbed } = require("discord.js");
-const { stripIndents } = require("common-tags");
 const { getAll, getCMD } = require('../Moderacion/models/functions')
     module.exports = {
     name: "help",

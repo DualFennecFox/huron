@@ -19,7 +19,7 @@ module.exports = {
         let command;
         let method;
 
-        Guild.findOne({ guildID: message.guild.id }).then(doc => {
+        Guild.findOne({ guildID: message.guild.id }).then(async (doc) => {
             if (!doc) {
                 const newGuild = {
                     guildID: message.guild.id,
@@ -103,9 +103,6 @@ module.exports = {
                 console.error(err)
             }
         }
-    }).catch(err => {
-        console.error(err)
-    })
 
         if (doc.log.channelCreate == true) active += "Canal Creado\n"
         if (doc.log.channelDelete == true) active += "Canal Eliminado\n"
@@ -161,6 +158,7 @@ module.exports = {
                 message.channel.send({ embed })
                 return
         }
+        
         else if (args[0] === "enable" || args[0] || "disable") {
          if (args[0] === "enable") method = "enable"
          else if (args[0] === "disable") method = "disable";
@@ -170,5 +168,8 @@ module.exports = {
         };
             if (command) command.run(message, method)
     }
+}).catch(err => {
+    console.error(err)
+})
 }
 }
