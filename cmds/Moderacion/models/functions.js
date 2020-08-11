@@ -139,7 +139,7 @@ const changeRole = {
   "MANAGE_WEBHOOKS": "Gestionar webhooks",
   "MANAGE_EMOJIS": "Gestionar emojis"
   };
-function getAll(client, message) {
+function getAll(client, message, prefix) {
     const embed = new MessageEmbed()
         .setColor("RANDOM")
         .addField('Invite', '[Server de Soporte](https://discord.gg/EnWH5HG) | [Invitar al Bot](https://discord.com/oauth2/authorize?client_id=708377742340653137&permissions=-8&scope=bot) | [Patreon](https://patreon.com/EPBK) | [Vota](https://top.gg/bot/728100449047019534)')

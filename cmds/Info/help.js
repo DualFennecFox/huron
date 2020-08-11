@@ -10,7 +10,7 @@ const { getAll, getCMD } = require('../Moderacion/models/functions')
     if (args[0]) {
         return getCMD(client, message, args[0]);
     } else {
-    getAll(client, message);
+    getAll(client, message, prefix);
 }
     }
 }
