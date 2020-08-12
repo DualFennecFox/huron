@@ -26,7 +26,7 @@ module.exports = async (oldMember, newMember) => {
   }
     }
   
-  if (newMember.roles.cache.size < oldMember.roles.cache.size) {
+  if (oldMember.roles.cache.size > newMember.roles.cache.size) {
   for (const role of oldMember.roles.cache.map(x => x.id)) {
     if (!newMember.roles.cache.has(role)) {
         removeRole = true
