@@ -30,7 +30,7 @@ module.exports = async (oldRole, newRole) => {
         }
         console.log(oldRole.permissions.toArray())
         console.log(newRole.permissions.toArray())
-        let newerperm = newRole.permissions.toArray()
+        let newerperm = await newRole.permissions.toArray()
         for (let v = 0; v < newRole.permissions.toArray().length; v++) {
             console.log(newerperm[v])
             if (!oldRole.permissions.has(newerperm[v])) {
@@ -39,7 +39,7 @@ module.exports = async (oldRole, newRole) => {
                 getnewperm.push(rol)
             }
           }
-          let oldperm = oldRole.permissions.toArray()
+          let oldperm = await oldRole.permissions.toArray()
         for (let v = 0; v < oldRole.permissions.toArray().length; v++) {
             console.log(oldperm[v])
             if (!newRole.permissions.has(oldperm[v])) {
