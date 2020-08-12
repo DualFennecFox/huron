@@ -140,6 +140,27 @@ const changeRole = {
   "MANAGE_WEBHOOKS": "Gestionar webhooks",
   "MANAGE_EMOJIS": "Gestionar emojis"
   };
+const changePerm = {
+    "channelCreate": "Canal Creado",
+    "channelDelete": "Canal Eliminado",
+    "channelUpdate": "Canal Actualizado",
+    "emojiCreate": "Emoji Creado",
+    "emojiDelete": "Emoji Eliminado",
+    "emojiUpdate": "Emoji Actualizado",
+    "banAdd": "Baneo",
+    "banRemove": "Desbaneo",
+    "MemberAdd": "Nuevo Miembro",
+    "MemberRemove": "Miembro se va",
+    "MemberUpdate": "Miembro Actualizado",
+    "guildUpdate": "Servidor Actualizado",
+    "inviteCreate": "Invitación Creada",
+    "inviteDelete": "Invitación Eliminada",
+    "messageDelete": "Mensaje Eliminado",
+    "messageUpdate": "Mensaje Actualizado",
+    "roleCreate": "Rol Creado",
+    "roleDelete": "Rol Eliminado",
+    "roleUpdate": "Rol Actualizado"
+};
 function getAll(client, message, prefix) {
     const embed = new MessageEmbed()
         .setColor("RANDOM")
@@ -200,4 +221,5 @@ module.exports = {
     getCMD,
     updateLog,
     changeRole,
+    changePerm
 }

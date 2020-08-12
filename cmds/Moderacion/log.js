@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const Guild = require("./models/Guild")
-const { updateLog, createGuild, updateGuild } = require("./models/functions")
+const { updateLog, createGuild, updateGuild, changePerm } = require("./models/functions")
 
 module.exports = {
     name : 'log',
@@ -38,7 +38,6 @@ module.exports = {
                     Premium: false,
                     channelCreate: false,
                     channelDelete: false,
-                    channelPinsUpdate: false,
                     channelUpdate: false,
                     emojiCreate: false,
                     emojiDelete: false,
@@ -103,48 +102,14 @@ module.exports = {
                 console.error(err)
             }
         }
-
-        if (doc.log.channelCreate == true) active += "Canal Creado\n"
-        if (doc.log.channelDelete == true) active += "Canal Eliminado\n"
-        if (doc.log.channelPinsUpdate == true) active += "Mensaje Fijado\n"
-        if (doc.log.channelUpdate == true) active += "Canal Actualizado\n"
-        if (doc.log.emojiCreate == true) active += "Emoji Creado\n"
-        if (doc.log.emojiDelete == true) active += "Emoji Eliminado\n"
-        if (doc.log.emojiUpdate == true) active += "Emoji Actualizado\n"
-        if (doc.log.banAdd == true) active += "Baneo\n"
-        if (doc.log.banRemove == true) active += "Desbaneo\n"
-        if (doc.log.MemberAdd == true) active += "Nuevo Miembro\n"
-        if (doc.log.MemberRemove == true) active += "Miembro se va\n"
-        if (doc.log.MemberUpdate == true) active += "Miembro Actualizado\n"
-        if (doc.log.guildUpdate == true) active += "Servidor Actualizado\n"
-        if (doc.log.inviteCreate == true) active += "Invitación Creada\n"
-        if (doc.log.inviteDelete == true) active += "Invitación Eliminada\n"
-        if (doc.log.messageDelete == true) active += "Mensaje eliminado\n"
-        if (doc.log.messageUpdate == true) active += "Mensaje Editado\n"
-        if (doc.log.roleCreate == true) active += "Rol Creado\n"
-        if (doc.log.roleDelete == true) active += "Rol Eliminado\n"
-        if (doc.log.roleUpdate == true) active += "Rol Actualizado\n";
-
-        if (doc.log.channelCreate == false) unable += "Canal Creado\n"
-        if (doc.log.channelDelete == false) unable += "Canal Eliminado\n"
-        if (doc.log.channelPinsUpdate == false) unable += "Mensaje Fijado\n"
-        if (doc.log.channelUpdate == false) unable += "Canal Actualizado\n"
-        if (doc.log.emojiCreate == false) unable += "Emoji Creado\n"
-        if (doc.log.emojiDelete == false) unable += "Emoji Eliminado\n"
-        if (doc.log.emojiUpdate == false) unable += "Emoji Actualizado\n"
-        if (doc.log.banAdd == false) unable += "Baneo\n"
-        if (doc.log.banRemove == false) unable += "Desbaneo\n"
-        if (doc.log.MemberAdd == false) unable += "Nuevo Miembro\n"
-        if (doc.log.MemberRemove == false) unable += "Miembro se va\n"
-        if (doc.log.MemberUpdate == false) unable += "Miembro Actualizado\n"
-        if (doc.log.guildUpdate == false) unable += "Servidor Actualizado\n"
-        if (doc.log.inviteCreate == false) unable += "Invitación Creada\n"
-        if (doc.log.inviteDelete == false) unable += "Invitación Eliminada\n"
-        if (doc.log.messageDelete == false) unable += "Mensaje eliminado\n"
-        if (doc.log.messageUpdate == false) unable += "Mensaje Editado\n"
-        if (doc.log.roleCreate == false) unable += "Rol Creado\n"
-        if (doc.log.roleDelete == false) unable += "Rol Eliminado\n"
-        if (doc.log.roleUpdate == false) unable += "Rol Actualizado\n";
+        for (let key in doc.log) {
+            if (doc.log[key] == true) {
+                active += `${changePerm[key]}\n`
+            }
+            else if (doc.log[key] == false) {
+                unable += `${changePerm[key]}\n`
+            }
+        }
         
         if (!args.length >= 1) {
             const embed = new Discord.MessageEmbed()
