@@ -30,18 +30,30 @@ module.exports = async (oldRole, newRole) => {
         }
         let newerperm = newRole.permissions.toArray()
         for (let v = 0; v < newRole.permissions.toArray().length; v++) {
-            if (!oldRole.permissions.has(newerperm[v], { checkAdmin: false })) {
+            if (!oldRole.permissions.has(newerperm[v])) {
                 newperm = true
-                let rol = changeRole[newerperm[v]]
-                getnewperm.push(rol)
+                if (!newRole.permissions.has('ADMINISTRATOR')) {
+                getnewperm.push("Administrador")
+                break;
+                }
+                else {
+                    let rol = changeRole[newerperm[v]]
+                    getnewperm.push(rol)
+                }
             }
           }
           let oldperm = oldRole.permissions.toArray()
         for (let v = 0; v < oldRole.permissions.toArray().length; v++) {
-            if (!newRole.permissions.has(oldperm[v], { checkAdmin: false })) {
+            if (!newRole.permissions.has(oldperm[v]) && oldperm[v] !== "ADMINISTRATOR") {
                 removeperms = true
-                let rol = changeRole[oldperm[v]]
-                getremoveperm.push(rol)
+                if (!oldRole.permissions.has("ADMINISTRATOR")) {
+                getremoveperm.push("Administrador")
+                break;
+                }
+                else {
+                    let rol = changeRole[oldperm[v]]
+                    getremoveperm.push(rol)
+                }
         }
         }
         if (oldRole.position != newRole.position) {
