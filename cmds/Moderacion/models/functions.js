@@ -166,7 +166,7 @@ function getAll(client, message, prefix) {
         .setColor("RANDOM")
         .addField('Invite', '[Server de Soporte](https://discord.gg/EnWH5HG) | [Invitar al Bot](https://discord.com/oauth2/authorize?client_id=708377742340653137&permissions=-8&scope=bot) | [Patreon](https://patreon.com/EPBK) | [Vota](https://top.gg/bot/728100449047019534)')
         .setThumbnail(client.user.displayAvatarURL())
-        .setFooter(`Use ${prefix} antes de cada comando`)
+        .setFooter(`Para información de un comando en especifico use ${prefix}help [comando]`)
         
 const commands = (category) => {
     return client.commands
