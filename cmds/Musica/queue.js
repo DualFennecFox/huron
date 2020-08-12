@@ -17,9 +17,14 @@ module.exports = {
                 if (musicData.server[message.guild.id].queue.length < 1) return message.channel.send("No hay ninguna canción en la cola")
                 
                 let Songs = []
+                let num = musicData.server[message.guild.id].queue.length
+
+                if (musicData.server[message.guild.id].queue.length >= 15) {
+                  num = 15
+                }
 
                 const embed = new Discord.MessageEmbed()
-                for (let v = 0; v < 15; v++) {
+                for (let v = 0; v < num; v++) {
                    Songs.push(`${v + 1}: ${musicData.server[message.guild.id].queue[v].title}`);
                 }      
               const SongsMapped = Songs.join("\n\n")
