@@ -28,16 +28,16 @@ module.exports = async (oldRole, newRole) => {
         if (oldRole.name != newRole.name) {
             name = true
         }
-        for (const role of newRole.permissions.serialize()) {
-            console.log(oldRole.permissionsOverwrites)
-            console.log(newRole.permissionsOverwrites)
+        for (const role of newRole.permissions) {
+            console.log(oldRole.permissions)
+            console.log(newRole.permissions)
             if (!oldRole.permissions.has(p => p === role)) {
                 newperm = true
                 let rol = changeRole[role]
                 getnewperm.push(rol)
             }
           }
-        for (const role of oldRole.permissions.serialize()) {
+        for (const role of oldRole.permissions) {
             if (!newRole.permissions.has(role)) {
                 removeperms = true
                 let rol = changeRole[role]
