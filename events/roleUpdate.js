@@ -32,6 +32,7 @@ module.exports = async (oldRole, newRole) => {
         console.log(newRole.permissions.toArray())
         let newerperm = newRole.permissions.toArray()
         for (let v = 0; v < newRole.permissions.toArray().length; v++) {
+            console.log(newerperm[v])
             if (!oldRole.permissions.has(newerperm[v])) {
                 newperm = true
                 let rol = changeRole[newerperm[v]]
