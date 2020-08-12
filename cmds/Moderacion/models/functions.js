@@ -143,7 +143,6 @@ const changeRole = {
 const changePerm = {
     "channelCreate": "Canal Creado",
     "channelDelete": "Canal Eliminado",
-    "channelUpdate": "Canal Actualizado",
     "emojiCreate": "Emoji Creado",
     "emojiDelete": "Emoji Eliminado",
     "emojiUpdate": "Emoji Actualizado",
@@ -156,11 +155,12 @@ const changePerm = {
     "inviteCreate": "Invitación Creada",
     "inviteDelete": "Invitación Eliminada",
     "messageDelete": "Mensaje Eliminado",
-    "messageUpdate": "Mensaje Actualizado",
+    "messageUpdate": "Mensaje Editado",
     "roleCreate": "Rol Creado",
     "roleDelete": "Rol Eliminado",
     "roleUpdate": "Rol Actualizado"
 };
+
 function getAll(client, message, prefix) {
     const embed = new MessageEmbed()
         .setColor("RANDOM")
