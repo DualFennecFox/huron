@@ -103,10 +103,10 @@ module.exports = {
             }
         }
         for (let key in doc.log) {
-            if (doc.log[key] == true) {
+            if (doc.log[key] == true && changePerm[key] != undefined) {
                 active += `${changePerm[key]}\n`
             }
-            else if (doc.log[key] == false) {
+            else if (doc.log[key] == false && changePerm[key] != undefined) {
                 unable += `${changePerm[key]}\n`
             }
         }
@@ -116,7 +116,7 @@ module.exports = {
                 .setAuthor("Registros", client.user.displayAvatarURL())
                 .setColor("#FFFF00")
                 .setDescription(`Para que funcionen los registros se debe poner un canal con ${prefix}logchannel #Canal-Mencionado, se pueden seleccionar todos los eventos con \"All\"\n\n**Eventos:**\nchannel, channelcreate, channeldelete, channelupdate, channelpin, emoji, emojicreate, emojidelete, emojiupdate, bans, ban, unban, member, memberadd, memberremove, memberupdate, guildupdate, invite, invitecreate, invitedelete, message, messagedelete, messageupdate, role, rolecreate, roledelete, roleupdate`)
-                embed.addField("Todos",  "Canal Creado\nCanal Eliminado\nMensaje Fijado\nCanal Actualizado\nEmoji Creado\nEmoji Eliminado\nEmoji Actualizado\nBaneo\nDesbaneo\nNuevo Miembro\nMiembro se va\nMiembro Actualizado\nServidor Actualizado\nInvitación Creada\nInvitación Eliminada\nMensaje Eliminado\nMensaje Editado\nRol Creado\nRol Eliminado\nRol Actualizado")
+                embed.addField("Todos",  "Canal Creado\nCanal Eliminado\nEmoji Creado\nEmoji Eliminado\nEmoji Actualizado\nBaneo\nDesbaneo\nNuevo Miembro\nMiembro se va\nMiembro Actualizado\nServidor Actualizado\nInvitación Creada\nInvitación Eliminada\nMensaje Eliminado\nMensaje Editado\nRol Creado\nRol Eliminado\nRol Actualizado")
                 if (active != undefined) embed.addField("Activados", active.replace("undefined", ""))
                 if (unable != undefined) embed.addField("Desactivados", unable.replace("undefined", ""));
 
