@@ -13,14 +13,8 @@ module.exports = async message => {
                 if (!Channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return
             
             let msg = message.content
-            if (message.attachments) msg += message.attachments.map(r => `[${r.name}](${r.url})`).join(", ")
-            if (message.embeds) {
-                message.embeds.forEach(embed => {
-                if (embed.description) msg += `**Descripción:** ${embed.description}\n`
-                if (embed.fields) msg += `**Campos:** ${embed.fields.map(f => f.value).join("\n")}\n\n`
-                if (embed.footer) msg += `**Pie:** ${embed.footer.text}`
-                })
-            }
+            if (message.attachments) msg += message.attachments.map(r => r.name).join(", ")
+            if (!msg) return 
             const embed = new Discord.MessageEmbed()
             .setColor("#FF0000")
             .setDescription(`${msg}`)
