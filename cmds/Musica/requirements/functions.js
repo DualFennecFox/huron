@@ -10,7 +10,8 @@ const ytdl = require('ytdl-core')
         looped: [],
         songDispatcher: null,
         pause: false,
-        awaiting: false
+        awaiting: false,
+        lastEmbed: null
     }
     message.member.voice.channel
     .join()
@@ -23,6 +24,8 @@ const ytdl = require('ytdl-core')
             musicData.server[message.guild.id].pause = false
 
             if(musicData.server[message.guild.id].loop == false) {
+            if (musicData.server[message.guild.id].lastEmbed) musicData.server[message.guild.id].lastEmbed.delete();
+            
             const videoEmbed = new Discord.MessageEmbed()
             .setThumbnail(queue[0].thumbnail)
             .setColor('#FF0000')
@@ -37,6 +40,7 @@ const ytdl = require('ytdl-core')
             
             if (queue[1]) videoEmbed.addField('Siguiente Canción', `[${queue[1].title}](${queue[1].url})`);
             message.channel.send(videoEmbed);
+            musicData.server[message.guild.id].lastEmbed = videoEmbed
             musicData.server[message.guild.id].queue.shift();
             }
         })
@@ -61,6 +65,7 @@ const ytdl = require('ytdl-core')
             musicData.server[message.guild.id].loop = false
             musicData.server[message.guild.id].looped.length = 0
             musicData.server[message.guild.id].songDispatcher = null
+            musicData.server[message.guild.id].lastEmbed = null
             console.error(e);
             return message.member.voice.channel.leave();
             })

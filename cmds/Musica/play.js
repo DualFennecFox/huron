@@ -33,7 +33,8 @@ function search(nameKey, myArray) {
                         looped: [],
                         songDispatcher: null,
                         pause: false,
-                        awaiting: false
+                        awaiting: false,
+                        lastEmbed: null
                     }
                     if (!message.guild.me.voice.channel) {
                         musicData.server[message.guild.id].queue.length = 0
@@ -41,6 +42,7 @@ function search(nameKey, myArray) {
                         musicData.server[message.guild.id].isPlaying = false
                         musicData.server[message.guild.id].loop = false
                         musicData.server[message.guild.id].looped.length = 0
+                        musicData.server[message.guild.id].lastEmbed = null
                     }
 
                     if (args[0].match(/^(?!.*\?.*\bv=)https:\/\/www\.youtube\.com\/.*\?.*\blist=.*$/)) {
