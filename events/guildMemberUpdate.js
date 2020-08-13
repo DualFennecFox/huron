@@ -17,22 +17,18 @@ module.exports = async (oldMember, newMember) => {
     let getRemovedRole;
     let nickname = false
   
-    if (oldMember.roles.cache.size < newMember.roles.cache.size) {
     for (const role of newMember.roles.cache.map(x => x.id)) {
       if (!oldMember.roles.cache.has(role)) {
           newRole = true
           getNewRole = newMember.guild.roles.cache.get(role)
       }
   }
-    }
   
-  if (oldMember.roles.cache.size > newMember.roles.cache.size) {
   for (const role of oldMember.roles.cache.map(x => x.id)) {
     if (!newMember.roles.cache.has(role)) {
         removeRole = true
         getRemovedRole = newMember.guild.roles.cache.get(role)
     }
-  }
   }
 
   if (newMember.nickname !== oldMember.nickname) {
