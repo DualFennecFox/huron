@@ -165,13 +165,14 @@ function getAll(client, message, prefix) {
     const embed = new MessageEmbed()
         .setColor("RANDOM")
         .setThumbnail(client.user.displayAvatarURL())
+        .setDescription(`Estos son todos los comandos, si necesita ayuda vea la sección **Invite**.`)
+        .addField("Comandos de Información", client.categories.filter(cmd => cmd.category === "Info").map(cmd => `-\`${cmd.name}\``)).join(', ')
+        .addField("Comandos de Moderación", client.categories.filter(cmd => cmd.category === "Moderacion" && cmd.name !== "log" && cmd.name !== "logchannel").map(cmd => `-\`${cmd.name}\``)).join(', ')
+        .addField("Comandos de Música", client.categories.filter(cmd => cmd.category === "Musica").map(cmd => `-\`${cmd.name}\``)).join(', ')
+        .addField('Invite', '[Server de Soporte](https://discord.gg/EnWH5HG) | [Invitar al Bot](https://discord.com/oauth2/authorize?client_id=708377742340653137&permissions=-8&scope=bot) | [Patreon](https://patreon.com/EPBK) | [Vota](https://top.gg/bot/728100449047019534)')
         .setFooter(`Para información de un comando en especifico use ${prefix}help [comando]`)
 
-    return message.channel.send(embed.setDescription(`Estos son todos los comandos, si necesita ayuda vea la sección **Invite**.`)
-    .addField("Comandos de Información", client.categories.filter(cmd => cmd.category === "Info").map(cmd => `-\`${cmd.name}\``)).join(', ')
-    .addField("Comandos de Moderación", client.categories.filter(cmd => cmd.category === "Moderacion" && cmd.name !== "log" && cmd.name !== "logchannel").map(cmd => `-\`${cmd.name}\``)).join(', ')
-    .addField("Comandos de Música", client.categories.filter(cmd => cmd.category === "Musica").map(cmd => `-\`${cmd.name}\``)).join(', ')
-    .addField('Invite', '[Server de Soporte](https://discord.gg/EnWH5HG) | [Invitar al Bot](https://discord.com/oauth2/authorize?client_id=708377742340653137&permissions=-8&scope=bot) | [Patreon](https://patreon.com/EPBK) | [Vota](https://top.gg/bot/728100449047019534)'));
+    return message.channel.send(embed);
 }
 
 function getCMD(client, message, input) {
