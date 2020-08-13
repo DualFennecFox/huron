@@ -26,9 +26,7 @@ const ytdl = require('ytdl-core')
             const videoEmbed = new Discord.MessageEmbed()
             .setThumbnail(queue[0].thumbnail)
             .setColor('#FF0000')
-            .addField('Escuchando', `[${queue[0].title}](${queue[0].url})`)
-            .addField('Duración', queue[0].duration)
-            .addField('Canal', `[${queue[0].channel}](${queue[0].channelURL})`)
+            .addField('\u200b', `**Escuchando**\n\n[${queue[0].title}](${queue[0].url})\n\n**Duración**\n\n${queue[0].duration}\n\n**Canal** [${queue[0].channel}](${queue[0].channelURL})`)
             let url = queue[0].url
             const loopURL = {
                 url
