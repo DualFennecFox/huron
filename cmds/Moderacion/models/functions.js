@@ -179,9 +179,9 @@ const info = client.categories
             .reduce((string, category) => string + "\n" + category);
 
     return message.channel.send(embed.setDescription(`Estos son todos los comandos, si necesita ayuda vea la sección **Invite**.\n\n ${info}`)
-    .addField("Comandos de Información", client.categories.map(cat => `- \`${commands("Info")}\``))
-    .addField("Comandos de Moderación", client.categories.map(cat => `- \`${commands("Moderacion")}\``))
-    .addField("Comandos de Música", client.categories.map(cat => `- \`${commands("Musica")}\``)))
+    .addField("Comandos de Información", client.categories.map(cat => `${commands("Info")}`))
+    .addField("Comandos de Moderación", client.categories.map(cat => `${commands("Moderacion")}`))
+    .addField("Comandos de Música", client.categories.map(cat => `${commands("Musica")}`)))
     .addField('Invite', '[Server de Soporte](https://discord.gg/EnWH5HG) | [Invitar al Bot](https://discord.com/oauth2/authorize?client_id=708377742340653137&permissions=-8&scope=bot) | [Patreon](https://patreon.com/EPBK) | [Vota](https://top.gg/bot/728100449047019534)');
 }
 
