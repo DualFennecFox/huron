@@ -164,7 +164,6 @@ const changePerm = {
 function getAll(client, message, prefix) {
     const embed = new MessageEmbed()
         .setColor("RANDOM")
-        .addField('Invite', '[Server de Soporte](https://discord.gg/EnWH5HG) | [Invitar al Bot](https://discord.com/oauth2/authorize?client_id=708377742340653137&permissions=-8&scope=bot) | [Patreon](https://patreon.com/EPBK) | [Vota](https://top.gg/bot/728100449047019534)')
         .setThumbnail(client.user.displayAvatarURL())
         .setFooter(`Para información de un comando en especifico use ${prefix}help [comando]`)
         
@@ -180,9 +179,10 @@ const info = client.categories
             .reduce((string, category) => string + "\n" + category);
 
     return message.channel.send(embed.setDescription(`Estos son todos los comandos, si necesita ayuda vea la sección **Invite**.\n\n ${info}`)
-    .addField("Comandos de Información", client.categories.map(cat => `-\`${commands("Info")}\``))
-    .addField("Comandos de Moderación", client.categories.map(cat => `-\`${commands("Moderacion")}\``))
-    .addField("Comandos de Música", client.categories.map(cat => `-\`${commands("Musica")}\``)));
+    .addField("Comandos de Información", client.categories.map(cat => `- \`${commands("Info")}\``))
+    .addField("Comandos de Moderación", client.categories.map(cat => `- \`${commands("Moderacion")}\``))
+    .addField("Comandos de Música", client.categories.map(cat => `- \`${commands("Musica")}\``)))
+    .addField('Invite', '[Server de Soporte](https://discord.gg/EnWH5HG) | [Invitar al Bot](https://discord.com/oauth2/authorize?client_id=708377742340653137&permissions=-8&scope=bot) | [Patreon](https://patreon.com/EPBK) | [Vota](https://top.gg/bot/728100449047019534)');
 }
 
 function getCMD(client, message, input) {
