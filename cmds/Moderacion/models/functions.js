@@ -171,7 +171,7 @@ const commands = (category) => {
     return client.commands
         .filter(cmd => cmd.category === category && cmd.name !== "log" && cmd.name !== "logchannel")
         .map(cmd => `\`${cmd.name}\``)
-        .join(", ");
+        .join("\n");
 } 
 
     return message.channel.send(embed.setDescription(`Estos son todos los comandos, si necesita ayuda vea la sección **Invite**.`)
