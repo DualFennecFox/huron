@@ -4,7 +4,7 @@ const  { changeRole } = require('../cmds/Moderacion/models/functions')
 
 module.exports = async (oldRole, newRole) => {
     let client = newRole.client
-    Guild.findOne({ guildID: newRole.guild.id }).then(doc => {
+    Guild.findOne({ guildID: newRole.guild.id }).then(async doc => {
         if (!doc) return
         if (doc.log.roleUpdate == true) {
           if (!doc.LogChannel) return
