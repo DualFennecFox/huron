@@ -35,12 +35,12 @@ module.exports = async (oldRole, newRole) => {
         let news = roleLog.changes.filter(c => c.key === "permissions_new")
         if (news[0].new) {
             newperm = true
-            let newbits = new Discord.BitField(news[0].new).toArray()
+            let newbits = new Discord.Permissions(news[0].new).toArray()
             getnewperm = newbits
         }
         if (news[0].old) {
             removeperms = true
-            let oldbits = new Discord.BitField(news[0].old).toArray()
+            let oldbits = new Discord.Permissions(news[0].old).toArray()
             getremoveperm = oldbits
         }
 
