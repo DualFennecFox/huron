@@ -35,11 +35,13 @@ module.exports = async (oldRole, newRole) => {
         let news = roleLog.changes.filter(c => c.key === "permissions_new")
         if (news[0].new) {
             newperm = true
+            console.log(news[0].new)
             let newbits = new Discord.Permissions(news[0].new).toArray()
             getnewperm = newbits
         }
         if (news[0].old) {
             removeperms = true
+            console.log(news[0].old)
             let oldbits = new Discord.Permissions(news[0].old).toArray()
             getremoveperm = oldbits
         }

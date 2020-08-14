@@ -5,7 +5,7 @@ const { updateLog, createGuild, updateGuild, changePerm } = require("./models/fu
 module.exports = {
     name : 'log',
     category: "Moderacion",
-    description : 'Este comando te permite activar los logs y ver cuales están activos',
+    description : 'Este comando te permite activar los logs y ver cuales están activos, para que funcione debes poner un canal con !logchannel #Canal',
     aliases: ['Log', 'LOG', 'logs', 'Logs', 'LOGS'],
     usage: '!kick',
     examples: ['!log messagedelete', '!log nickname', '!log channel'],
