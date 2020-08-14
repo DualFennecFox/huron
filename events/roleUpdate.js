@@ -35,11 +35,13 @@ module.exports = async (oldRole, newRole) => {
         let news = roleLog.changes.filter(c => c.key === "permissions_new")
         if (news[0].new) {
             newperm = true
-            getnewperm = news[0]
+            let newbits = new Discord.BitField(news[0].new).toArray()
+            getnewperm = newbits
         }
         if (news[0].old) {
             removeperms = true
-            getremoveperm = news[0]
+            let oldbits = new Discord.BitField(news[0].old).toArray()
+            getremoveperm = oldbits
         }
 
         if (oldRole.position != newRole.position) {
@@ -59,8 +61,8 @@ module.exports = async (oldRole, newRole) => {
         .setColor("#FF0000")
         .setDescription(`<@&${newRole.id}>`)
         if (name == true) embed.addField("Nombre Antes | Después", `${oldRole.name} | ${newRole.name}`)
-        if (newperm == true) embed.addField("Permisos Agregados", `${getnewperm.new.toArray().join(", ")}`)
-        if (removeperms == true) embed.addField("Permisos Removidos", `${getremoveperm.old.toArray().join(", ")}`)
+        if (newperm == true) embed.addField("Permisos Agregados", `${newbits.join(", ")}`)
+        if (removeperms == true) embed.addField("Permisos Removidos", `${oldbits.join(", ")}`)
         if (position == true) embed.addField("Posición", `**De:** ${oldRole.rawPosition}\n**A:** ${newRole.rawPosition}`)
         if (mentionable == true) embed.addField("Mencionable", `**${boolean[newRole.mentionable]}**`)
         if (hoist == true) embed.addField("Mostrar Separado", `**${boolean[newRole.hoist]}**`)
