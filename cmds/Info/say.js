@@ -19,7 +19,7 @@ module.exports = {
         if(!message.member.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR") || !message.guild.owner) {
             mChannel = message.channel
            let replace = argsresult.replace(mChannel, '').replace(args[0], '').replace(/@everyone/g, "@\u200beveryone").replace(/@here/g, "@\u200bhere").replace(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|com)|discordapp\.com\/invite)\/.+[A-z0-9]/, "")
-            mChannel.send(removeMentions(replace))
+            mChannel.send(replace)
         }
        else {
         let remplased = argsresult.replace(mChannel, '').replace(args[0], '')
@@ -29,8 +29,8 @@ module.exports = {
         argsresult = args.join(" ")
         if(!argsresult) return;
         if(!message.member.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR") || !message.guild.owner) {
-               let replace = argsresult.replace(/@everyone/g, "everyone").replace(/@here/g, "here").replace(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|com)|discordapp\.com\/invite)\/.+[A-z0-9]/, "")
-               message.channel.send(removeMentions(replace))
+               let replace = argsresult.replace(/@everyone/g, "@\u200beveryone").replace(/@here/g, "@\u200bhere").replace(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|com)|discordapp\.com\/invite)\/.+[A-z0-9]/, "")
+               message.channel.send(replace)
             } else  message.channel.send(argsresult)
         }
     }
