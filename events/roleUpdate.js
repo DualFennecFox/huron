@@ -36,11 +36,13 @@ module.exports = async (oldRole, newRole) => {
         if (news) {
             newperm = true
             getnewperm = news
+            console.log(news)
         }
         let olds = roleLog.changes.filter(c => c.old)
         if (olds) {
             removeperms = true
             getremoveperm = olds
+            console.log(olds)
         }
         let removePerm = roleLog.changes.filter(c => c.old)
 
