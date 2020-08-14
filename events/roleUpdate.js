@@ -33,15 +33,13 @@ module.exports = async (oldRole, newRole) => {
         let roleLog = log.entries.filter(l => l.target.id === newRole.id).array()[0]
     
         let news = roleLog.changes.filter(c => c.key === "permissions_new")
-        if (news.new) {
+        if (news[0].new) {
             newperm = true
-            getnewperm = news
-            console.log(news.new)
+            getnewperm = news[0]
         }
-        if (news.old) {
+        if (news[0].old) {
             removeperms = true
-            getremoveperm = news
-            console.log(news)
+            getremoveperm = news[0]
         }
 
         if (oldRole.position != newRole.position) {
