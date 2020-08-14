@@ -13,7 +13,7 @@ module.exports = {
     if (message.guild.me.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR")) message.delete()
 
     if(mChannel && args[0] == "{sendchannel}") {
-        if (mChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return
+        if (!mChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return
         argsresult = args.join(" ")
         if(!argsresult) return;
         if(!message.member.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR") || !message.guild.owner) {
