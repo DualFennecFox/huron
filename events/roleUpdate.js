@@ -30,7 +30,7 @@ module.exports = async (oldRole, newRole) => {
         }
         let log = await newRole.guild.fetchAuditLogs({ limit: 5, type: "ROLE_UPDATE" })
 
-        let roleLog = log.entries.filter(l => l.target === newRole.id).array()[0]
+        let roleLog = log.entries.filter(l => l.target.id === newRole.id).array()[0]
     
         console.log(roleLog.changes.map(c => c.key))
         if (oldRole.mentionable != newRole.mentionable) {
