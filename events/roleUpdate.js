@@ -28,25 +28,11 @@ module.exports = async (oldRole, newRole) => {
         if (oldRole.name != newRole.name) {
             name = true
         }
-        let newerperm = newRole.permissions.toArray()
-        for (let v = 0; v < newRole.permissions.toArray().length; v++) {
-            if (!oldRole.permissions.has(newerperm[v], true)) {
-                newperm = true
-                let rol = changeRole[newerperm[v]]
-                getnewperm.push(rol)
-            }
-          }
-          let oldperm = oldRole.permissions.toArray()
-        for (let v = 0; v < oldRole.permissions.toArray().length; v++) {
-            if (!newRole.permissions.has(oldperm[v], true)) {
-                removeperms = true
-                let rol = changeRole[oldperm[v]]
-                getremoveperm.push(rol)
-                }
-        }
-        if (oldRole.position != newRole.position) {
-            position = true
-        }
+        let log = await newRole.guild.fetchAuditLogs({ limit: 5, type: "ROLE_UPDATE" })
+
+        let roleLog = log.entries.filter(l => l.target === newRole.id && c.key === ).array()[0]
+    
+        console.log(roleLog.changes.map(c => c.key))
         if (oldRole.mentionable != newRole.mentionable) {
             mentionable = true
         }
