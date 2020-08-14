@@ -32,19 +32,17 @@ module.exports = async (oldRole, newRole) => {
 
         let roleLog = log.entries.filter(l => l.target.id === newRole.id).array()[0]
     
-        let news = roleLog.changes.filter(c => c.new)
-        if (news) {
+        let news = roleLog.changes.filter(c => c.key === "permissions_new")
+        if (news.new) {
             newperm = true
             getnewperm = news
+            console.log(news.new)
+        }
+        if (news.old) {
+            removeperms = true
+            getremoveperm = news
             console.log(news)
         }
-        let olds = roleLog.changes.filter(c => c.old)
-        if (olds) {
-            removeperms = true
-            getremoveperm = olds
-            console.log(olds)
-        }
-        let removePerm = roleLog.changes.filter(c => c.old)
 
         if (oldRole.position != newRole.position) {
             position = true
@@ -63,8 +61,8 @@ module.exports = async (oldRole, newRole) => {
         .setColor("#FF0000")
         .setDescription(`<@&${newRole.id}>`)
         if (name == true) embed.addField("Nombre Antes | Después", `${oldRole.name} | ${newRole.name}`)
-        if (newperm == true) embed.addField("Permisos Agregados", `${getnewperm.join(", ").toString()}`)
-        if (removeperms == true) embed.addField("Permisos Removidos", `${getremoveperm.join(", ").toString()}`)
+        if (newperm == true) embed.addField("Permisos Agregados", `${getnewperm.new.toArray().join(", ")}`)
+        if (removeperms == true) embed.addField("Permisos Removidos", `${getremoveperm.old.toArray().join(", ")}`)
         if (position == true) embed.addField("Posición", `**De:** ${oldRole.rawPosition}\n**A:** ${newRole.rawPosition}`)
         if (mentionable == true) embed.addField("Mencionable", `**${boolean[newRole.mentionable]}**`)
         if (hoist == true) embed.addField("Mostrar Separado", `**${boolean[newRole.hoist]}**`)
