@@ -15,11 +15,11 @@ module.exports = async (oldRole, newRole) => {
         let name = false
         let newperm = false
         let removeperms = false
-        let getremoveperm = []
+        let getremoveperm = ""
         let position = false
         let mentionable = false
         let hoist = false
-        let getnewperm = []
+        let getnewperm = ""
 
         let boolean = {
             "false": "No",
@@ -30,9 +30,23 @@ module.exports = async (oldRole, newRole) => {
         }
         let log = await newRole.guild.fetchAuditLogs({ limit: 5, type: "ROLE_UPDATE" })
 
-        let roleLog = log.entries.filter(l => l.target.id === newRole.id).array()[0]
+        let roleLog = log.entries.filter(l => l.target === newRole.id).array()[0]
     
-        console.log(roleLog.changes.map(c => c.key))
+        let news = roleLog.changes.filter(c => c.new)
+        if (news) {
+            newperm = true
+            getnewperm = news
+        }
+        let olds = roleLog.changes.filter(c => c.old)
+        if (olds) {
+            removeperms = true
+            getremoveperm = olds
+        }
+        let removePerm = roleLog.changes.filter(c => c.old)
+
+        if (oldRole.position != newRole.position) {
+            position = true
+        }
         if (oldRole.mentionable != newRole.mentionable) {
             mentionable = true
         }
