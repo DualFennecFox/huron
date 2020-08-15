@@ -25,14 +25,14 @@ const { getUser } = require('./models/functions');
     if (kUser.id === message.author.id) return message.channel.send("No te puedes kickear a ti mismo")
 
     let role = kUser.roles.highest;
-    
+
     if (message.guild.me.roles.highest.comparePositionTo(role) < 1) {
         return message.channel.send("Mi rol es muy bajo para poder expulsarlo!");
     }
     
 
     let kickEmbed = new Discord.MessageEmbed()
-    .setDescription("~Kick~")
+    .setAuthor("Kick", kUser.user.displayAvatarURL())
     .setColor("#0088ff")
     .addField("Usuario Kickeado", `${kUser} Y su ID es ${kUser.id}`)
     .addField("Kickeado Por", `<@!${message.author.id}> Y su ID es ${message.author.id}`)

@@ -20,7 +20,7 @@ const { getUser } = require('./models/functions');
     if(mutee.id === message.author.id) return message.channel.send("No te puedes mutear a ti mismo!");
     if(!message.guild.me.hasPermission(["MANAGE_ROLES" || "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para añadir roles");
     if (mutee.roles.cache.some((role) => role.name === 'Muteado')) return message.channel.send("Esta persona ya esta muteada");
-    
+
     if(mutee.hasPermission("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR" || "MANAGE_ROLES") || !message.guild.owner) return message.channel.send("Esta persona no puede ser muteada!");
     
 
@@ -59,7 +59,7 @@ if (message.guild.me.roles.highest.comparePositionTo(muterole) < 1) {
 mutee.roles.add(muterole.id)
 
 let muteEmbed = new Discord.MessageEmbed()
-    .setDescription("~Mute~")
+    .setAuthor("Mute", mutee.user.displayAvatarURL())
     .setColor("#0088ff")
     .addField("Usuario Muteado", `${mutee} Y su ID es ${mutee.id}`)
     .addField("Muteado Por", `<@!${message.author.id}> Y su ID es ${message.author.id}`)
