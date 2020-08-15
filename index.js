@@ -18,4 +18,15 @@ client.categories = fs.readdirSync("./cmds/");
     require(`./handlers/${handler}`)(client)
 })
 
+client.on('messageDelete', async(message) => {
+    let log = await message.guild.fetchAuditLogs({ limit: 5, user: user.id, type: "MESSAGE_DELETE"})
+        
+    let logs = log.entries.first();
+    logs
+    let deletedBy = message.author
+    logs
+    if (logs.target.id === message.author) deletedBy === logs.executor
+    
+    
+})
 client.login(process.env.TOKEN);

@@ -12,23 +12,22 @@ module.exports = async (guild, user) => {
         if (!Channel) return
         if (!Channel.permissionsFor(guild.me).has("SEND_MESSAGES")) return
   
-        guild.fetchBan(user.id).then(Ban => {
-        let reason = Ban.reason
-        if (!reason) reason = "No se ha proporcionado una razón"
+        let log = guild.fetchAuditLogs({ limit: 5, user: user.id, type: "MEMBER_BAN_ADD"})
         
+        let ban = log.entries.first();
+
+        let description = `<@!${user.id}> Ha sido baneado\n**ID:** ${user.id}`
+
+        if (ban.target.id === user.id) description = `<@!${user.id}> Ha sido baneado\n**ID:** ${user.id}\n**Por:** <@!${ban.executor.id}>\n**ID:** ${ban.executor.id}`
         const embed = new Discord.MessageEmbed()
         .setAuthor("Usuario Baneado", user.displayAvatarURL({ format: "png", dynamic: true}))
         .setColor("#FF0000")
-        .setDescription(`<@!${user.id}> Ha sido baneado\n**ID:** ${user.id}`)
+        .setDescription(description)
         .addField("Creado", checkDays(user.createdAt))
-        .addField("Razón", reason)
+        .addField("Razón", ban.reason)
   
         Channel.send({ embed })
-      
-    }).catch(err => {
-      console.error(err)
-    })
-  }
+      }
     }).catch(err => {
       console.error(err)
     })
