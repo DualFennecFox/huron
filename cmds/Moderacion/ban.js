@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { getUser } = require('./models/functions')
 
     module.exports = {
     name : 'ban',
@@ -7,11 +8,12 @@ const Discord = require('discord.js');
     aliases: ['Ban', 'BAN'],
     usage: '!ban',
     examples: ['!ban @Firulais', '!ban 556540723235651584', '!ban @Firulais Razon'],
-    run: async (client , message, args) => {
+    run: async (client , message, args, prefix, contentPrefix) => {
 
         if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
         if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o darme su id")
         let User = message.mentions.users.first() || client.users.cache.get(args[0])
+        if (contentPrefix !== prefix) User = getUser(args.join(" "))
         if (!User) {
            let UserID = args[0].replace(/([^0-9])/g, '')
            try {

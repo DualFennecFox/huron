@@ -208,6 +208,13 @@ function getCMD(client, message, input) {
       console.log(err)
   })
 }
+function getUser(mention) {
+  if (!mention) return;
+  
+    mention = mention.replace(/([^0-9])/g, '')
+
+		return client.users.cache.get(mention);
+	}
 
 module.exports = {
     getGuild,
@@ -219,6 +226,7 @@ module.exports = {
     getAll,
     getCMD,
     updateLog,
+    getUser,
     changeRole,
     changePerm
 }

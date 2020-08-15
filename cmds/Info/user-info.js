@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const { getUser } = require('../Moderacion/models/functions')
 
 module.exports = {
     name : 'user-info',
@@ -7,7 +8,7 @@ module.exports = {
     aliases: ['User-info', 'USER-INFO', 'userinfo'],
     usage: '!user-info',
     examples: ['!user-info', '!user-info @Firulais', '!userinfo roles @Firulais'],
-    run: async (client , message, args) => {
+    run: async (client , message, args, prefix, contentPrefix) => {
     function checkDays(date) {
         let now = new Date();
         let diff = now.getTime() - date.getTime();
@@ -15,6 +16,8 @@ module.exports = {
         return `Hace ${days} ${days == 1 ? "día" : "días"}`;
         };
     let user = message.mentions.users.first() || client.users.cache.get(args[0]) || client.users.cache.get(args[1]) || message.author
+    if (contentPrefix !== prefix) user = getUser(args[0]) || getUser(args[1]) || message.author
+
     if (!message.guild.member(user)) user = message.author
     let memberMention = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.get(args[1]) || message.member;
        let rolesOfTheMember = memberMention.roles.cache.filter(r => r.name !== '@everyone').map(role => `<@&${role.id}>`).join('\n')
