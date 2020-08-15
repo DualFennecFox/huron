@@ -16,7 +16,7 @@ module.exports = {
         return `Hace ${days} ${days == 1 ? "día" : "días"}`;
         };
     let user = message.mentions.users.first() || client.users.cache.get(args[0]) || client.users.cache.get(args[1]) || message.author
-    if (contentPrefix !== prefix) user = getUser(args.join(" "), client) || message.author
+    if (contentPrefix !== prefix) user = getUser(args[0], client) || getUser(args[1], client) || message.author
 
     if (!message.guild.member(user)) user = message.author
     let memberMention = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.get(args[1]) || message.member;

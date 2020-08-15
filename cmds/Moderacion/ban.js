@@ -13,7 +13,7 @@ const { getUser } = require('./models/functions')
         if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
         if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o darme su id")
         let User = message.mentions.users.first() || client.users.cache.get(args[0])
-        if (contentPrefix !== prefix) User = getUser(args.join(" "), client)
+        if (contentPrefix !== prefix) User = getUser(args[0], client)
         if (!User) {
            let UserID = args[0].replace(/([^0-9])/g, '')
            try {
