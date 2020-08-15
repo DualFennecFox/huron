@@ -7,8 +7,10 @@ module.exports = {
   aliases: ['Avatar', 'AVATAR'],
   usage: `!avatar`,
   examples: ['!avatar', '!avatar @Firulais'],
-  run: async (client, message, args) => {
+  run: async (client, message, args, prefix, contentPrefix) => {
     let user = message.mentions.users.first() || client.users.cache.get(args[0]);
+    if (contentPrefix !== prefix) user = message.mentions.users.first(2).slice(1) || client.users.cache.get(args[0]);
+    
     if (!message.guild.member(user)) user = message.author
     if(!user) user = message.author;
     const embed = new Discord.MessageEmbed()

@@ -2,7 +2,7 @@ const { updateGuild } = require('../cmds/Moderacion/models/functions')
 
 module.exports = {
     name: "all",
-    run: async (client, message, args, method) => {
+    run: async (message, method) => {
             if (method === "enable") {
             updateGuild(message.guild, {log: {
                 channelCreate: true,
