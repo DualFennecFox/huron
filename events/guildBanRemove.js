@@ -11,7 +11,7 @@ module.exports = async (guild, user) => {
         if (!Channel) return
         if (!Channel.permissionsFor(guild.me).has("SEND_MESSAGES")) return
   
-        let log = guild.fetchAuditLogs({ limit: 5, user: user.id, type: "MEMBER_BAN_ADD"})
+        let log = await guild.fetchAuditLogs({ limit: 5, user: user.id, type: "MEMBER_BAN_ADD"})
         
         let ban = log.entries.first();
 
