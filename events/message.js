@@ -21,7 +21,7 @@ module.exports = async message => {
          prefix = "!"
        } 
        }).then(() => {
-      if (message.author.bot && message.author.id !== "559426966151757824") return;
+      if (message.author.bot) return;
       
       for (const thePrefix of prefixes) {
         if (message.content.startsWith(thePrefix)) contentPrefix = thePrefix
