@@ -10,7 +10,8 @@ module.exports = {
     run: async (client , message, args) => {
         if(!args[0]) return message.channel.send("Debes usar un emoji para poder mostrarlo")
 
-        let emoji = message.guild.emojis.cache.find(em => `<:${em.name}:${em.id}>` === args[0])
+        let emoji = await message.guild.emojis.cache.find(em => `<:${em.name}:${em.id}>` === args[0])
+        if (!emoji) return message.channel.send("Ese no parece ser un emoji valido")
 
     const embed = new Discord.MessageEmbed()
         .setAuthor(`Emoji ${emoji.name}`)

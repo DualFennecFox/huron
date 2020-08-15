@@ -8,7 +8,7 @@ module.exports = {
     aliases: ['Unmute', 'UNMUTE'],
     usage: '!unmute',
     examples: ['!unmute @Firulais', '!unmute 556540723235651584', '!unmute @Firulais Razon'],
-    run: async (client , message, args) => {
+    run: async (client , message, args, prefix, contentPrefix) => {
 
     if(!message.member.hasPermission("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!")
     if (!args.length >= 1) return message.channel.send("Debe mencionar un usuario muteado o darme su id")

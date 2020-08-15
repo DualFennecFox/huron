@@ -24,6 +24,8 @@ const { getUser } = require('./models/functions');
     if(kUser.hasPermission("KICK_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("Esta persona no puede ser expulsada!");
     if (kUser.id === message.author.id) return message.channel.send("No te puedes kickear a ti mismo")
 
+    let role = kUser.roles.highest;
+    
     if (message.guild.me.roles.highest.comparePositionTo(role) < 1) {
         return message.channel.send("Mi rol es muy bajo para poder expulsarlo!");
     }
