@@ -17,7 +17,7 @@ module.exports = async (guild, user) => {
 
         let description = `<@!${user.id}> Ha sido desbaneado\n**ID:** ${user.id}`
 
-        if (ban.target.id === user.id) description = `<@!${user.id}> Ha sido desbaneado\n**ID:** ${user.id}\n**Por:** <@!${ban.executor.id}>\n**ID:** ${ban.executor.id}`
+        if (ban.target.id === user.id) description = `<@!${user.id}> Ha sido desbaneado\n**ID:** ${user.id}\n\n**Por:** <@!${ban.executor.id}>\n**ID:** ${ban.executor.id}`
 
         const embed = new Discord.MessageEmbed()
         .setAuthor("Usuario Desbaneado", user.displayAvatarURL({ format: "png", dynamic: true}))
