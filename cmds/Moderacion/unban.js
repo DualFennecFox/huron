@@ -24,9 +24,8 @@ module.exports = {
     let bReason = args.slice(1).join(" ")
     if (!bReason) bReason = "No se específico una razón"
     try {
-    let bans = await message.guild.fetchBans();
 
-    let bannedMember = bans.get(User.id)
+    let bannedMember = await message.guild.fetchBan(User.id)
     
     if(!bannedMember) return message.channel.send("Este usuario no esta baneado")
 
