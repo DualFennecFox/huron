@@ -17,17 +17,5 @@ client.categories = fs.readdirSync("./cmds/");
 ["logs"].forEach(handler => {
     require(`./handlers/${handler}`)(client)
 })
-client.on('roleUpdate', (oldRole, newRole) => {
-  let log = await newRole.guild.fetchAuditLogs({ limit: 5, type: "ROLE_UPDATE" })
 
-  let roleLog = log.entries.filter(l => l.target === newRole.id ).array()[0]
-
-  roleLog.changes.filter(c => c.new).join(", ")
-roleLog.changes.keys()
-  roleLog.changes.filter(c => c.key)
-})
-
-client.on('message', message => {
-if (contentPrefix !== prefix) user = message.mentions.users.first(2).filter(u => !u.client)
-})
 client.login(process.env.TOKEN);
