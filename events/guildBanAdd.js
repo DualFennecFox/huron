@@ -4,7 +4,7 @@ const { checkDays } = require('../cmds/Moderacion/models/functions')
 
 module.exports = async (guild, user) => {
     let client = user.client
-    Guild.findOne({ guildID: guild.id }).then(doc => {
+    Guild.findOne({ guildID: guild.id }).then(async doc => {
       if (!doc) return
       if (doc.log.banAdd == true) {
         if (!doc.LogChannel) return

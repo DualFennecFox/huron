@@ -4,7 +4,7 @@ const { checkDays } = require('../cmds/Moderacion/models/functions')
 
 module.exports = async member => {
     let client = member.client
-    Guild.findOne({ guildID: member.guild.id }).then(doc => {
+    Guild.findOne({ guildID: member.guild.id }).then(async doc => {
         if (!doc) return
         if (doc.JoinBool == true) {
         if (!doc.JoinMsg) return
