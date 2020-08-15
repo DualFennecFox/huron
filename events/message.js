@@ -47,7 +47,7 @@ module.exports = async message => {
       }); 
       }
       if (message.content === `<@${client.user.id}>` || message.content === `<@!${client.user.id}>`) {
-       message.channel.send(`Mi prefix en este server es ${prefix}, si es la primera vez que me usa escriba ${prefix}help`)
+       message.channel.send(`Mi prefix en este server es ${prefix} o una mención, si es la primera vez que me usa escriba ${prefix}help.`)
      }
   
        if (client.commands.has(cmd)) {
