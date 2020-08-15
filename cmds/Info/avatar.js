@@ -10,6 +10,7 @@ module.exports = {
   run: async (client, message, args, prefix, contentPrefix) => {
     let user = message.mentions.users.first() || client.users.cache.get(args[0]);
     if (contentPrefix !== prefix) user = message.mentions.users.first(2).slice(0) || client.users.cache.get(args[0]);
+    console.log(message.mentions.users.array())
 
     if (!message.guild.member(user)) user = message.author
     if(!user) user = message.author;
