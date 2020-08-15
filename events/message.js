@@ -6,23 +6,30 @@ module.exports = async message => {
       let client = message.client
 
       let prefixes;
+      let contentPrefix;
       let prefix;
       const token = process.env.TOKEN
       const owner = process.env.OWNER
       
       Guild.findOne({ guildID: message.guild.id }).then((result) => {
-       if (result) prefixes = [result.prefix, `<@${client.user.id}>`, `<@!${client.user.id}>`]
-       else prefixes = ["!", `<@${client.user.id}>`, `<@!${client.user.id}>`]
+       if (result) {
+         prefixes = [result.prefix, `<@${client.user.id}>`, `<@!${client.user.id}>`]
+         prefix = result.prefix
+       }
+       else {
+         prefixes = ["!", `<@${client.user.id}>`, `<@!${client.user.id}>`]
+         prefix = "!"
+       } 
        }).then(() => {
       if (message.author.bot) return;
       
       for (const thePrefix of prefixes) {
-        if (message.content.startsWith(thePrefix)) prefix = thePrefix
+        if (message.content.startsWith(thePrefix)) contentPrefix = thePrefix
       }
-      if (!prefix) return;
-      if (!message.content.startsWith(prefix)) return;
+      if (!contentPrefix) return;
+      if (!message.content.startsWith(contentPrefix)) return;
 
-      let args = message.content.slice(prefix.length).trim().split(/ +/g);
+      let args = message.content.slice(contentPrefix.length).trim().split(/ +/g);
       let cmd = args.shift().toLowerCase();
       let command;
   
