@@ -20,6 +20,8 @@ module.exports = {
 
     if (!message.guild.member(user)) user = message.author
     let memberMention = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.get(args[1]) || message.member;
+    if (contentPrefix !== prefix) memberMention = messsage.guild.member(getUser(args[0], client)) || message.guild.member(getUser(args[1], client)) || message.member;
+    
        let rolesOfTheMember = memberMention.roles.cache.filter(r => r.name !== '@everyone').map(role => `<@&${role.id}>`).join('\n')
 
   if (args[0] === 'roles' || args[0] === 'r' || args[0] === 'role' || args[1] === 'roles' || args[1] === 'r' || args[1] === 'role') {
