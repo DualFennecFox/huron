@@ -33,7 +33,7 @@ const { getUser } = require('./models/functions');
     
 
     let kickEmbed = new Discord.MessageEmbed()
-    .setAuthor("Kick", kUser.user.displayAvatarURL())
+    .setAuthor("Kick", kUser.user.displayAvatarURL({ format: "png", dynamic: true}))
     .setColor("#0088ff")
     .addField("Usuario Kickeado", `${kUser} Y su ID es ${kUser.id}`)
     .addField("Kickeado Por", `<@!${message.author.id}> Y su ID es ${message.author.id}`)

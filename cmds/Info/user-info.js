@@ -31,7 +31,7 @@ module.exports = {
     }
     else {
     let myInfo = new Discord.MessageEmbed()
-        .setAuthor(user.username, user.displayAvatarURL())
+        .setAuthor(user.username, user.displayAvatarURL({ format: "png", dynamic: true}))
         .setColor('RANDOM')
         .addField("Nombre de Usuario", user.username, true)
         .addField("Discriminador", user.discriminator, true)
@@ -40,7 +40,7 @@ module.exports = {
         .addField("Miembro desde", `${memberMention.joinedAt.toUTCString().substr(0, 16)} (${checkDays(memberMention.joinedAt)})`, true)
         .addField("ID", user.id, true)
         .addField("Roles", memberMention.roles.cache.size, true)
-        .setThumbnail(user.displayAvatarURL())
+        .setThumbnail(user.displayAvatarURL({ format: "png", dynamic: true}))
     message.channel.send(myInfo)
     .catch(err => {
         console.log(err);

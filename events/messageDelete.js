@@ -18,7 +18,7 @@ module.exports = async message => {
             const embed = new Discord.MessageEmbed()
             .setColor("#FF0000")
             .setDescription(`${msg}`)
-            .setFooter(`De: ${message.author.tag} | ${message.author.id}`)
+            .setFooter(`De: ${message.author.tag} | ${message.author.id}`, message.author.displayAvatarURL({ format: "png", dynamic: true}))
         
         Channel.send(`Mensaje Eliminado En: <#${message.channel.id}>`, {embed})
     }

@@ -32,7 +32,7 @@ const { search, getUser } = require('./models/functions');
     let map = warns.map(user => user).join("\n\n")
 
     const embed = new Discord.MessageEmbed()
-    .setAuthor(`Infracciones de: ${bUser.user.tag}`, bUser.user.displayAvatarURL())
+    .setAuthor(`Infracciones de: ${bUser.user.tag}`, bUser.user.displayAvatarURL({ format: "png", dynamic: true}))
     .setColor("#FF0000")
     .setDescription(`**Este usuario tiene ${warns.length} advertencias.**\n\n${map}`)
     .setFooter(`${bUser.user.username} | ${bUser.user.id}`)

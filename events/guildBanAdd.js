@@ -17,7 +17,7 @@ module.exports = async (guild, user) => {
         if (!reason) reason = "No se ha proporcionado una razón"
         
         const embed = new Discord.MessageEmbed()
-        .setAuthor("Usuario Baneado", user.displayAvatarURL())
+        .setAuthor("Usuario Baneado", user.displayAvatarURL({ format: "png", dynamic: true}))
         .setColor("#FF0000")
         .setDescription(`<@!${user.id}> Ha sido baneado\n**ID:** ${user.id}`)
         .addField("Creado", checkDays(user.createdAt))

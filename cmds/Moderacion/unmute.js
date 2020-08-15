@@ -30,7 +30,7 @@ module.exports = {
     unmutee.roles.remove(umuterole.id);
 
     let unmuteEmbed = new Discord.MessageEmbed()
-    .setAuthor("UnMute", unmutee.user.displayAvatarURL())
+    .setAuthor("UnMute", unmutee.user.displayAvatarURL({ format: "png", dynamic: true}))
     .setColor("#0088ff")
     .addField("Usuario Desmuteado", `${unmutee} Y su ID es ${unmutee.id}`)
     .addField("Desmuteado Por", `<@!${message.author.id}> Y su ID es ${message.author.id}`)

@@ -24,7 +24,7 @@ module.exports = async member => {
           if (!Channel.permissionsFor(member.guild.me).has("SEND_MESSAGES")) return
     
           const embed = new Discord.MessageEmbed()
-          .setAuthor(member.user.tag, member.user.displayAvatarURL())
+          .setAuthor(member.user.tag, member.user.displayAvatarURL({ format: "png", dynamic: true}))
           .setColor("#FF0000")
           .setDescription(`**${member.user.tag}** Ha dejado el servidor`)
           .addField("Creado", checkDays(member.user.createdAt))

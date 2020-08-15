@@ -12,7 +12,7 @@ module.exports = async (guild, user) => {
         if (!Channel.permissionsFor(guild.me).has("SEND_MESSAGES")) return
   
         const embed = new Discord.MessageEmbed()
-        .setAuthor("Usuario Desbaneado", user.displayAvatarURL())
+        .setAuthor("Usuario Desbaneado", user.displayAvatarURL({ format: "png", dynamic: true}))
         .setColor("#FF0000")
         .setDescription(`<@!${user.id}> Ha sido Desbaneado\n**ID:** ${user.id}`)
         .addField("Creado", checkDays(user.createdAt))

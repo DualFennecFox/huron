@@ -21,7 +21,7 @@ module.exports = async (oldMessage, newMessage) => {
     if (content == false) return
 
     const embed = new Discord.MessageEmbed()
-    .setAuthor("Mensaje Editado", newMessage.author.displayAvatarURL())
+    .setAuthor("Mensaje Editado", newMessage.author.displayAvatarURL({ format: "png", dynamic: true}))
     .setColor("#FF0000")
     .setDescription(`**De:** <@!${newMessage.author.id}>\n\n**Antes:** ${oldMessage.content}\n**Después:** ${newMessage.content}`)
     .setFooter(`${newMessage.author.tag} | ${newMessage.author.id}`)

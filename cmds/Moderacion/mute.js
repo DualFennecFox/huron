@@ -60,7 +60,7 @@ if (message.guild.me.roles.highest.comparePositionTo(muterole) < 1) {
 mutee.roles.add(muterole.id)
 
 let muteEmbed = new Discord.MessageEmbed()
-    .setAuthor("Mute", mutee.user.displayAvatarURL())
+    .setAuthor("Mute", mutee.user.displayAvatarURL({ format: "png", dynamic: true}))
     .setColor("#0088ff")
     .addField("Usuario Muteado", `${mutee} Y su ID es ${mutee.id}`)
     .addField("Muteado Por", `<@!${message.author.id}> Y su ID es ${message.author.id}`)
