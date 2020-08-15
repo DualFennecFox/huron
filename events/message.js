@@ -56,7 +56,7 @@ module.exports = async message => {
        } else {
          command = client.commands.get(client.aliases.get(cmd));
        }
-         if (command) command.run(client, message, args, prefix);
+         if (command) command.run(client, message, args, prefix, contentPrefix);
     }).catch(err => {
       console.error(err)
     })
