@@ -208,7 +208,7 @@ function getCMD(client, message, input) {
       console.log(err)
   })
 }
-function getUser(mention) {
+function getUser(mention, client) {
   if (!mention) return;
   
     mention = mention.replace(/([^0-9])/g, '')
