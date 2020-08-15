@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const Guild = require('./models/Guild')
-const { search } = require('./models/functions');
+const { search, getUser } = require('./models/functions');
     module.exports = {
     name : 'infractions',
     category: "Moderacion",
@@ -8,12 +8,13 @@ const { search } = require('./models/functions');
     aliases: ['Infractions', 'INFRACTIONS', 'warns', 'Warns', 'WARNS'],
     usage: '!warns',
     examples: ['!warns @Firulais', '!warns 556540723235651584'],
-    run: async (client , message, args) => {
+    run: async (client , message, args, prefix, contentPrefix) => {
 
     if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
-
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o darme su id")
+
     let bUser = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
+    if (contentPrefix !== prefix) bUser = message.guild.member(getUser(args[0], client))
     if(!bUser) return message.channel.send("Ese no parece ser un usuario valido");
 
     let db = await Guild.findOne({ guildID: message.guild.id })

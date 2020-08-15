@@ -1,5 +1,5 @@
 const Guild = require('./models/Guild')
-const {search, searchNumber } = require('./models/functions');
+const {search, searchNumber, getUser } = require('./models/functions');
 
     module.exports = {
     name : 'clearinfractions',
@@ -8,11 +8,12 @@ const {search, searchNumber } = require('./models/functions');
     aliases: ['ClearInfractions', 'Clearinfractions', 'CLEARINFRACTIONS', 'clearwarns', 'ClearWarns', 'CLEARWARNS'],
     usage: '!warn',
     examples: ['!clearinfractions @Firulais', '!clearinfractions 556540723235651584', '!clearinfractions all'],
-    run: async (client , message, args) => {
+    run: async (client, message, args, prefix, contentPrefix) => {
     if (!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
-
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o remover todas las infracciones con \"all\"")
+
     let bUser = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
+    if (contentPrefix !== prefix) bUser = message.guild.member(getUser(args[0], client))
     
     let bReason = args.slice(1).join(" ");
     if(!bReason) bReason = "No se específico una razón"

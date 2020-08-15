@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { getUser } = require('./models/functions');
 
     module.exports = {
     name : 'mute',
@@ -7,15 +8,19 @@ const Discord = require('discord.js');
     description : 'Este comando Mutea al usuario mencionado con su ID o mención, también puedes dar una razón de ello',
     usage: '!mute',
     examples: ['!mute @Firulais', '!mute 556540723235651584', '!mute @Firulais Razon'],
-    run: async (client , message, args) => {
+    run: async (client , message, args, prefix, contentPrefix) => {
     
     if(!message.member.hasPermission("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR" || "MANAGE_ROLES") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
     if (!args.length >= 1) return message.channel.send("Debe mencionar un usuario muteado o darme su id")
+
     let mutee = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
+    if (contentPrefix !== prefix) mutee = message.guild.member(getUser(args[0], client))
     if(!mutee) return message.channel.send("Ese no parece ser un usuario valido");
+
     if(mutee.id === message.author.id) return message.channel.send("No te puedes mutear a ti mismo!");
     if(!message.guild.me.hasPermission(["MANAGE_ROLES" || "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para añadir roles");
     if (mutee.roles.cache.some((role) => role.name === 'Muteado')) return message.channel.send("Esta persona ya esta muteada");
+    
     if(mutee.hasPermission("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR" || "MANAGE_ROLES") || !message.guild.owner) return message.channel.send("Esta persona no puede ser muteada!");
     
 

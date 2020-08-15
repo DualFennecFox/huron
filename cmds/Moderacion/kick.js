@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { getUser } = require('./models/functions');
 
     module.exports  = {
     name : 'kick',
@@ -7,11 +8,13 @@ const Discord = require('discord.js');
     aliases: ['Kick', 'KICK'],
     usage: '!kick',
     examples: ['!kick @Firulais', '!kick 556540723235651584', '!kick @Firulais Razon'],
-    run: async (client , message, args) => {
+    run: async (client , message, args, prefix, contentPrefix) => {
 
     if(!message.member.hasPermission("KICK_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o darme su id")
+
     let kUser = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
+    if (contentPrefix !== prefix) kUser = message.guild.member(getUser(args[0], client))
     if (!kUser) return message.channel.send("Ese no parece ser un usuario valido");
 
     let kReason = args.slice(1).join(" ");

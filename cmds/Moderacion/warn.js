@@ -1,7 +1,8 @@
 const Discord = require('discord.js');
 const Guild = require('./models/Guild')
 const mongoose = require('mongoose');
-const {search, updateGuild, createGuild } = require('./models/functions');
+const {search, updateGuild, createGuild, getUser } = require('./models/functions')
+;
     module.exports = {
     name : 'warn',
     category: "Moderacion",
@@ -9,12 +10,13 @@ const {search, updateGuild, createGuild } = require('./models/functions');
     aliases: ['Warn', 'WARN'],
     usage: '!warn',
     examples: ['!warn @Firulais', '!warn 556540723235651584', '!warn @Firulais Razon'],
-    run: async (client , message, args) => {
+    run: async (client , message, args, prefix, contentPrefix) => {
 
     if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
-
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o darme su id")
+
     let bUser = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
+    if (contentPrefix !== prefix) bUser = message.guild.member(getUser(args[0], client))
     if(!bUser) return message.channel.send("Ese no parece ser un usuario valido");
     
     let bReason = args.slice(1).join(" ");
