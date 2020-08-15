@@ -40,6 +40,7 @@ const { getUser } = require('./models/functions')
     bUser = message.guild.member(User)
     let role = bUser.roles.highest;
     if (User.id === message.author.id) return message.channel.send("No te puedes banear a ti mismo")
+    if (User.id === client.user.id) return message.channel.send("No puedo banearme a mi mismo")
     if(!message.guild.me.hasPermission(["BAN_MEMBERS" || "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para Banear miembros");
     if(bUser.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("Esta persona no puede ser baneada!");
 

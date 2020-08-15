@@ -18,7 +18,7 @@ module.exports = {
     let unmutee = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
     if (contentPrefix !== prefix) unmutee = message.guild.member(getUser(args[0], client))
     if(!unmutee) return message.channel.send("Ese no parece ser un usuario valido");
-
+    if (unmutee.id === client.user.id) return message.channel.send("No puedo banearme a mi mismo")
     if (!unmutee.roles.cache.some((role) => role.name === 'Muteado')) return message.channel.send("Esta persona no esta muteada");
 
     let umReason = args.slice(1).join(" ");

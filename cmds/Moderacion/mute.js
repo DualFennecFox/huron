@@ -18,6 +18,7 @@ const { getUser } = require('./models/functions');
     if(!mutee) return message.channel.send("Ese no parece ser un usuario valido");
 
     if(mutee.id === message.author.id) return message.channel.send("No te puedes mutear a ti mismo!");
+    if (mutee.id === client.user.id) return message.channel.send("No puedo banearme a mi mismo")
     if(!message.guild.me.hasPermission(["MANAGE_ROLES" || "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para añadir roles");
     if (mutee.roles.cache.some((role) => role.name === 'Muteado')) return message.channel.send("Esta persona ya esta muteada");
 
