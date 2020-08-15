@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { getUser } = require('./models/functions')
 
 module.exports = {
     name : 'unban',
@@ -7,10 +8,11 @@ module.exports = {
     aliases: ['Unban', 'UNBAN'],
     usage: '!unban',
     examples: ['!unban @Firulais', '!unban 556540723235651584', '!unban @Firulais Razon'],
-    run: async (client , message, args) => {
+    run: async (client , message, args, prefix, contentPrefix) => {
    
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o darme su id")
     let User = message.mentions.users.first() || client.users.cache.get(args[0])
+    if (contentPrefix !== prefix) user = getUser(args[0], client)
     if (!User) {
        let UserID = args[0].replace(/([^0-9])/g, '')
        try {
@@ -24,8 +26,9 @@ module.exports = {
     let bReason = args.slice(1).join(" ")
     if (!bReason) bReason = "No se específico una razón"
     try {
+    let bans = await message.guild.fetchBans();
 
-    let bannedMember = await message.guild.fetchBan(User.id)
+    let bannedMember = bans.find(user => user.user.id === User.id)
     
     if(!bannedMember) return message.channel.send("Este usuario no esta baneado")
 
