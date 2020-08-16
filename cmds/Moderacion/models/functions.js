@@ -158,7 +158,6 @@ const changePerm = {
     "messageUpdate": "Mensaje Editado",
     "roleCreate": "Rol Creado",
     "roleDelete": "Rol Eliminado",
-    "roleUpdate": "Rol Actualizado"
 };
 
 function getAll(client, message, prefix) {
