@@ -27,24 +27,30 @@ module.exports = async (oldRole, newRole) => {
         }
         if (oldRole.name != newRole.name) {
             name = true
-            
+        }
+        
+        for (const perm of newRole.permissions.toArray()) {
+        if (oldRole.permissions.has("ADMINISTRATOR")) {
+            getnewperm.push("Todos (Administrador)")
+            break;
+        }
+        else if (!oldRole.permissions.has(perm, false)) {
+            newperm = true
+            getnewperm.push(changeRole[perm])    
+            }
+        }
+        let r = newRole.permissions.has()
+        for (const perm of oldRole.permissions.toArray()) {
+        if (newRole.permissions.has("ADMINISTRATOR")) {
+            getremoveperm.push("Todos (Administrador)")
+            break;
+        }
+        else if (!newRole.permissions.has(perm, false)) {
+            removeperms = true
+            getremoveperm.push(changeRole[perm])
+            }
         }
 
-        let oldPerms = oldRole.permissions.serialize()
-        let newPerms = newRole.permissions.serialize()
-        
-        for (const [key, element] of Object.entries(oldPerms)) {
-        if (newPerms[key] !== element) {
-            newperm = true
-            getnewperm.push(changeRole[key])
-        }
-        }
-        for (const [key, element] of Object.entries(newPerms)) {
-            if (oldPerms[key] !== element) {
-                removeperms = true
-                getremoveperm.push(changeRole[key])
-            }
-            }
         if (oldRole.position != newRole.position) {
             position = true
         }
