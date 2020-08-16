@@ -15,11 +15,11 @@ module.exports = async (oldRole, newRole) => {
         let name = false
         let newperm = false
         let removeperms = false
-        let getremoveperm = ""
+        let getremoveperm = []
         let position = false
         let mentionable = false
         let hoist = false
-        let getnewperm = ""
+        let getnewperm = []
 
         let boolean = {
             "false": "No",
@@ -28,22 +28,19 @@ module.exports = async (oldRole, newRole) => {
         if (oldRole.name != newRole.name) {
             name = true
         }
-        let log = await newRole.guild.fetchAuditLogs({ limit: 5, type: "ROLE_UPDATE" })
-
-        let roleLog = log.entries.filter(l => l.target.id === newRole.id).array()[0]
-    
-        let news = roleLog.changes.filter(c => c.key === "permissions_new")
-        if (news[0].new) {
+        
+        for (const perm of newRole.permissions.toArray()) {
+            if (oldRole.permissions.has(perm, false)) {
             newperm = true
-            console.log(news[0].new)
-            let newbits = new Discord.Permissions(news[0].new).toArray()
-            getnewperm = newbits
+            getnewperm.push(changeRole[perm])
+            }
         }
-        if (news[0].old) {
+
+        for (const perm of oldRole.permissions.toArray()) {
+            if (newRole.permissions.has(perm, false)) {
             removeperms = true
-            console.log(news[0].old)
-            let oldbits = new Discord.Permissions(news[0].old).toArray()
-            getremoveperm = oldbits
+            getremoveperm.push(changeRole[perm])
+            }
         }
 
         if (oldRole.position != newRole.position) {
@@ -63,8 +60,8 @@ module.exports = async (oldRole, newRole) => {
         .setColor("#FF0000")
         .setDescription(`<@&${newRole.id}>`)
         if (name == true) embed.addField("Nombre Antes | Después", `${oldRole.name} | ${newRole.name}`)
-        if (newperm == true) embed.addField("Permisos Agregados", `${newbits.join(", ")}`)
-        if (removeperms == true) embed.addField("Permisos Removidos", `${oldbits.join(", ")}`)
+        if (newperm == true) embed.addField("Permisos Agregados", `${getnewperm.join(", ")}`)
+        if (removeperms == true) embed.addField("Permisos Removidos", `${getremoveperm.join(", ")}`)
         if (position == true) embed.addField("Posición", `**De:** ${oldRole.rawPosition}\n**A:** ${newRole.rawPosition}`)
         if (mentionable == true) embed.addField("Mencionable", `**${boolean[newRole.mentionable]}**`)
         if (hoist == true) embed.addField("Mostrar Separado", `**${boolean[newRole.hoist]}**`)
