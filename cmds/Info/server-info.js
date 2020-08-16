@@ -18,8 +18,8 @@ module.exports = {
         "NONE": "No Hay",
         "LOW": "Bajo",
         "MEDIUM": "Medio",
-        "HIGH": "(╯°□°）╯︵  ┻━┻",
-        "VERY_HIGH": "┻━┻ミヽ(ಠ益ಠ)ノ彡┻━┻"
+        "HIGH": "Alto",
+        "VERY_HIGH": "Muy Alto"
     };
     let region = {
         "brazil": ":flag_br: Brazil",
