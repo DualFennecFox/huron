@@ -19,7 +19,6 @@ module.exports = async (oldGuild, newGuild) => {
     let afkTime = false
     let verification = false
     let owner = false
-    let system = false
     let iconURL
   
     if (oldGuild.name != newGuild.name) {
@@ -46,9 +45,6 @@ module.exports = async (oldGuild, newGuild) => {
     if (oldGuild.ownerID != newGuild.ownerID) {
         owner = true
     }
-    if (oldGuild.systemChannel.id != newGuild.systemChannel.id) {
-        system = true
-    }
   
     if (icon == true) {
       iconURL = oldGuild.iconURL()
@@ -56,7 +52,7 @@ module.exports = async (oldGuild, newGuild) => {
       iconURL = newGuild.iconURL()
     }
   
-    if (name == false && region == false && icon == false && afk == false && afkTime == false && verification == false && owner == false && system == false) return
+    if (name == false && region == false && icon == false && afk == false && afkTime == false && verification == false && owner == false) return
   
     let regionChange = {
         "brazil": ":flag_br: Brazil",
@@ -79,8 +75,8 @@ module.exports = async (oldGuild, newGuild) => {
         "NONE": "No Hay",
         "LOW": "Bajo",
         "MEDIUM": "Medio",
-        "HIGH": "(╯°□°）╯︵  ┻━┻",
-        "VERY_HIGH": "┻━┻ミヽ(ಠ益ಠ)ノ彡┻━┻"
+        "HIGH": "Alto",
+        "VERY_HIGH": "Muy Alto"
     };
 
     const embed = new Discord.MessageEmbed()
@@ -95,7 +91,6 @@ module.exports = async (oldGuild, newGuild) => {
     if (afkTime == true) embed.addField("Tiempo AFK Actualizado", `**De:** ${oldGuild.afkTimeout}\n**A:** ${newGuild.afkTimeout}`)
     if (verification == true) embed.addField("Verificación Actualizada", `**De:** ${verifLevels[oldGuild.verificationLevel]}\n**A:** ${verifLevels[newGuild.verificationLevel]}`)
     if (owner == true) embed.addField("Nuevo Dueño", `**De:** <@!${oldGuild.ownerID}>\n**A:** <@!${newGuild.ownerID}>`)
-    if (system = true) embed.addField("Canal de Sistema Actualizado", `**De:** ${oldGuild.systemChannel.name}\n**A:** ${newGuild.systemChannel.name}`)
 
     Channel.send({ embed })
   }
