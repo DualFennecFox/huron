@@ -46,7 +46,7 @@ module.exports = async (oldGuild, newGuild) => {
     if (oldGuild.ownerID != newGuild.ownerID) {
         owner = true
     }
-    if (oldGuild.systemChannelID != newGuild.systemChannelID) {
+    if (oldGuild.systemChannel.id != newGuild.systemChannel.id) {
         system = true
     }
   
