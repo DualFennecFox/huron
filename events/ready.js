@@ -16,29 +16,4 @@ module.exports = async client => {
           url: "https://www.twitch.tv/unfirulais"
       }
   }); 
-
-  var postData = querystring.stringify({
-    "guildCount": scount
-  })
-
-  var request = {
-    'host':`bots.ondiscord.xyz`,
-    'path': `/bot-api/bots/${client.user.id}/guilds`,
-    'method': "POST",
-    'auth': process.env.BOTS_ON_DISCORD,
-    headers: {
-      "Content_Type": "application/json"
-    }
-  }
-    let req = http.request(request, function (result) {
-      result.on('error', err => {
-        console.log("Hubo un error al subir los servidores a Bots on Discord: " + err)
-      })
-      result.on('data', chunk => {
-        console.log(`Posted: ${chunk}`)
-      })
-    })
-
-    req.write(postData);
-    req.end();
 }
