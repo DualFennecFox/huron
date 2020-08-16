@@ -27,23 +27,24 @@ module.exports = async (oldRole, newRole) => {
         }
         if (oldRole.name != newRole.name) {
             name = true
+            
         }
+
+        let oldPerms = oldRole.permissions.serialize()
+        let newPerms = newRole.permissions.serialize()
         
-        for (const perm of newRole.permissions.toArray()) {
-        if (!oldRole.permissions.has(perm, !false)) {
+        for (const [key, element] of Object.entries(oldPerms)) {
+        if (newPerms[key] !== element) {
             newperm = true
-            getnewperm.push(changeRole[perm])
-            }
+            getnewperm.push(changeRole[key])
         }
-
-        for (const perm of oldRole.permissions.toArray()) {
-        if (!newRole.permissions.has(perm, !false)) {
-            console.log(newRole.permissions.has(perm, false))
-            removeperms = true
-            getremoveperm.push(changeRole[perm])
-            }
         }
-
+        for (const [key, element] of Object.entries(newPerms)) {
+            if (oldPerms[key] !== element) {
+                removeperms = true
+                getremoveperm.push(changeRole[key])
+            }
+            }
         if (oldRole.position != newRole.position) {
             position = true
         }
