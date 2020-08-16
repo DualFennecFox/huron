@@ -14,12 +14,13 @@ module.exports = async message => {
             
             let msg = message.content
 
-            if (!msg && !message.attachments) return 
+            if (!msg && !message.attachments.first()) return 
+
             const embed = new Discord.MessageEmbed()
             .setColor("#FF0000")
             .setDescription(`${msg}`)
             .setFooter(`De: ${message.author.tag} | ${message.author.id}`, message.author.displayAvatarURL({ format: "png", dynamic: true}))
-            if (message.attachments) embed.addField("Archivos Adjuntados", message.attachments.map(r => r.name).join(","))
+            if (message.attachments.first()) embed.addField("Archivos Adjuntados", message.attachments.map(r => r.name).join(", "))
         
         Channel.send(`Mensaje Eliminado En: <#${message.channel.id}>`, {embed})
     }
