@@ -81,7 +81,6 @@ module.exports = async (oldGuild, newGuild) => {
 
     const embed = new Discord.MessageEmbed()
     .setAuthor("Servidor Actualizado", iconURL)
-    .setThumbnail(newGuild.iconURL())
     .setFooter(`${newGuild.name} | ${newGuild.id}`)
     .setColor("#FF0000")
     if (name == true) embed.addField("Nombre Antes | Después", `${oldGuild.name} | ${newGuild.name}`)
