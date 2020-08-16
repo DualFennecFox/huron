@@ -9,7 +9,6 @@ module.exports = {
     usage: '!logchannel',
     examples: ['!logchannel #Canal-mencionado', '!logchannel ID'],
     run: async (client , message, args) => {
-        if (message.author.id !== process.env.OWNER) return
         
         if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_MEMBERS")) return message.channel.send("No tienes permisos para usar este comando")
         
@@ -37,7 +36,6 @@ module.exports = {
                     Premium: false,
                     channelCreate: false,
                     channelDelete: false,
-                    channelPinsUpdate: false,
                     channelUpdate: false,
                     emojiCreate: false,
                     emojiDelete: false,

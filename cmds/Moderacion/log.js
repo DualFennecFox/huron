@@ -10,7 +10,6 @@ module.exports = {
     usage: '!kick',
     examples: ['!log messagedelete', '!log nickname', '!log channel'],
     run: async (client , message, args, prefix) => {
-        if (message.author.id !== process.env.OWNER) return
 
         if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_MEMBERS")) return message.channel.send("No tienes permisos para usar este comando")
 
@@ -73,7 +72,6 @@ module.exports = {
                     Premium: false,
                     channelCreate: false,
                     channelDelete: false,
-                    channelPinsUpdate: false,
                     channelUpdate: false,
                     emojiCreate: false,
                     emojiDelete: false,
@@ -115,7 +113,7 @@ module.exports = {
             const embed = new Discord.MessageEmbed()
                 .setAuthor("Registros", client.user.displayAvatarURL())
                 .setColor("#FFFF00")
-                .setDescription(`Para que funcionen los registros se debe poner un canal con ${prefix}logchannel #Canal-Mencionado, se pueden seleccionar todos los eventos con \"All\"\n\n**Eventos:**\nchannel, channelcreate, channeldelete, channelupdate, channelpin, emoji, emojicreate, emojidelete, emojiupdate, bans, ban, unban, member, memberadd, memberremove, memberupdate, guildupdate, invite, invitecreate, invitedelete, message, messagedelete, messageupdate, role, rolecreate, roledelete, roleupdate`)
+                .setDescription(`Para que funcionen los registros se debe poner un canal con ${prefix}logchannel #Canal-Mencionado, se pueden seleccionar todos los eventos con \"All\"\n\n**Eventos:**\nchannel, channelcreate, channeldelete, channelupdate, emoji, emojicreate, emojidelete, emojiupdate, bans, ban, unban, member, memberadd, memberremove, memberupdate, guildupdate, invite, invitecreate, invitedelete, message, messagedelete, messageupdate, role, rolecreate, roledelete, roleupdate`)
                 embed.addField("Todos",  "Canal Creado\nCanal Eliminado\nEmoji Creado\nEmoji Eliminado\nEmoji Actualizado\nBaneo\nDesbaneo\nNuevo Miembro\nMiembro se va\nMiembro Actualizado\nServidor Actualizado\nInvitación Creada\nInvitación Eliminada\nMensaje Eliminado\nMensaje Editado\nRol Creado\nRol Eliminado\nRol Actualizado")
                 if (active != undefined) embed.addField("Activados", active.replace("undefined", ""))
                 if (unable != undefined) embed.addField("Desactivados", unable.replace("undefined", ""));

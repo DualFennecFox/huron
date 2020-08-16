@@ -169,7 +169,7 @@ function getAll(client, message, prefix) {
         
 const commands = (category) => {
     return client.commands
-        .filter(cmd => cmd.category === category && cmd.name !== "log" && cmd.name !== "logchannel")
+        .filter(cmd => cmd.category === category)
         .map(cmd => `\`${cmd.name}\``)
         .join("\n");
 } 
