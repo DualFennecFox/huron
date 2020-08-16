@@ -13,8 +13,8 @@ module.exports = async message => {
                 if (!Channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return
             
             let msg = message.content
-            
-            if (!msg) return 
+
+            if (!msg && !message.attachments) return 
             const embed = new Discord.MessageEmbed()
             .setColor("#FF0000")
             .setDescription(`${msg}`)
