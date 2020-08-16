@@ -34,6 +34,9 @@ module.exports = async client => {
       result.on('error', err => {
         console.log("Hubo un error al subir los servidores a Bots on Discord: " + err)
       })
+      result.on('data', chunk => {
+        console.log(`Posted: ${chunk}`)
+      })
     })
 
     req.write(postData);
