@@ -178,7 +178,7 @@ const commands = (category) => {
     .addField("Comandos de Información", commands("Info"))
     .addField("Comandos de Moderación", commands("Moderacion"))
     .addField("Comandos de Música", commands("Musica"))
-    .addField('Invite', '[Server de Soporte](https://discord.gg/EnWH5HG) | [Invitar al Bot](https://discord.com/oauth2/authorize?client_id=708377742340653137&permissions=-8&scope=bot) | [Patreon](https://patreon.com/EPBK) | [Vota](https://top.gg/bot/728100449047019534)'));
+    .addField('Invite', '[Server de Soporte](https://discord.gg/WpGqHCJ) | [Invitar al Bot](https://discord.com/oauth2/authorize?client_id=708377742340653137&permissions=-8&scope=bot) | [Patreon](https://patreon.com/EPBK) | [Vota](https://top.gg/bot/728100449047019534)'));
 }
 
 function getCMD(client, message, input) {
