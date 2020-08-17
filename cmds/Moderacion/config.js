@@ -194,7 +194,8 @@ module.exports = {
                             roleDelete: false,
                             roleUpdate: false,
                             },
-                            warns: []
+                            warns: [],
+                            role: []
                           };
                           try {
                             createGuild(newGuild);

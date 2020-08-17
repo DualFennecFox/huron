@@ -58,7 +58,8 @@ module.exports = {
                     userUpdate: false,
                     voiceState: false
                     },
-                    warns: []
+                    warns: [],
+                    role: []
                   };
                   try {
                     createGuild(newGuild);

@@ -1,6 +1,7 @@
 const Discord = require('discord.js')
 const musicData = require('./musicData')
 const ytdl = require('ytdl-core')
+const youtubedl = require('youtube-dl')
 
   function playSong(queue, message) {
     if (!musicData.server[message.guild.id]) musicData.server[message.guild.id] = {
@@ -12,14 +13,14 @@ const ytdl = require('ytdl-core')
         pause: false,
         awaiting: false,
         lastEmbed: null
-    }
+    }  
     message.member.voice.channel
     .join()
-    .then(connection => {
+    .then(async connection => {
        const dispatcher = connection
-       .play(ytdl(queue[0].url, {filter: 'audioonly' }, {highWaterMark: 50, volume: false}))
-        
-        .on('start', () => {
+       .play(ytdl(queue[0].url, {filter: 'audioonly', requestOptions: { Cookie: cookie } }, {highWaterMark: 50, volume: false}))
+
+        .on('start', async () => {
             musicData.server[message.guild.id].songDispatcher = dispatcher
             musicData.server[message.guild.id].pause = false
 
@@ -39,13 +40,12 @@ const ytdl = require('ytdl-core')
             musicData.server[message.guild.id].looped.push(loopURL)
             
             if (queue[1]) videoEmbed.addField('Siguiente Canción', `[${queue[1].title}](${queue[1].url})`);
-            message.channel.send(videoEmbed).then(embed => {
+            let embed = await message.channel.send(videoEmbed)
             musicData.server[message.guild.id].lastEmbed = embed
-            })
             musicData.server[message.guild.id].queue.shift();
             }
         })
-        .on('finish', () => {
+        .on('finish', async () => {
          if (musicData.server[message.guild.id].loop == true) { 
              playSong(musicData.server[message.guild.id].looped, message)
             
@@ -58,7 +58,7 @@ const ytdl = require('ytdl-core')
                 message.channel.send("Se han terminado todas las canciones")
             }
             })
-        .on('error', e => {
+        .on('error', async e => {
             message.channel.send('No se puede escuchar esa canción');
             musicData.server[message.guild.id].queue.length = 0;
             musicData.server[message.guild.id].isPlaying = false;
