@@ -1,6 +1,7 @@
 const Discord = require('discord.js')
 const musicData = require('./musicData')
 const ytdl = require('ytdl-core-discord')
+const ytt = require('ytt')
 
   function playSong(queue, message) {
     if (!musicData.server[message.guild.id]) musicData.server[message.guild.id] = {
@@ -17,7 +18,7 @@ const ytdl = require('ytdl-core-discord')
     .join()
     .then(async connection => {
        const dispatcher = connection
-       .play(await ytdl(queue[0].url, {filter: "audioonly", format: "mp3"},  {highWaterMark: 50, volume: false}))
+       .play(await ytt.download(queue[0].url, {highWaterMark: 50, volume: false}))
 
         .on('start', async () => {
             musicData.server[message.guild.id].songDispatcher = dispatcher
