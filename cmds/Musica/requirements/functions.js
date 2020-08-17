@@ -19,8 +19,9 @@ const getvideoid = require('get-video-id')
     .join()
     .then(async connection => {
         var ID = await getvideoid(queue[0].url).id
+        console.log(await ytt.download(ID))
        const dispatcher = connection
-
+    
        .play(await ytt.download(ID), {highWaterMark: 50, volume: false})
 
         .on('start', async () => {
