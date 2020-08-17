@@ -17,7 +17,7 @@ const ytdl = require('ytdl-core')
     .join()
     .then(async connection => {
        const dispatcher = connection
-       .play(ytdl(queue[0].url, {filter: 'audioonly', requestOptions: { Cookie: cookie } }, {highWaterMark: 50, volume: false}))
+       .play(ytdl(queue[0].url, {filter: 'audioonly' }, {highWaterMark: 50, volume: false}))
 
         .on('start', async () => {
             musicData.server[message.guild.id].songDispatcher = dispatcher
