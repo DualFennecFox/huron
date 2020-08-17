@@ -18,9 +18,10 @@ const getvideoid = require('get-video-id')
     message.member.voice.channel
     .join()
     .then(async connection => {
+        var ID = await getvideoid(queue[0].url).id
        const dispatcher = connection
-       let id = await getvideoid(queue[0].url).id
-       .play(await ytt.download(id), {highWaterMark: 50, volume: false})
+
+       .play(await ytt.download(ID), {highWaterMark: 50, volume: false})
 
         .on('start', async () => {
             musicData.server[message.guild.id].songDispatcher = dispatcher
