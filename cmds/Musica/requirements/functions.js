@@ -1,8 +1,6 @@
 const Discord = require('discord.js')
 const musicData = require('./musicData')
-const ytdl = require('ytdl-core-discord')
-const ytt = require('ytt')
-const getvideoid = require('get-video-id')
+const ytdl = require('ytdl-core')
 
   function playSong(queue, message) {
     if (!musicData.server[message.guild.id]) musicData.server[message.guild.id] = {
@@ -18,11 +16,8 @@ const getvideoid = require('get-video-id')
     message.member.voice.channel
     .join()
     .then(async connection => {
-        var ID = await getvideoid(queue[0].url).id
-        console.log(await ytt.download(ID))
        const dispatcher = connection
-    
-       .play(await ytt.download(ID), {highWaterMark: 50, volume: false})
+       .play(ytdl(queue[0].url, {filter: 'audioonly' }, {highWaterMark: 50, volume: false}))
 
         .on('start', async () => {
             musicData.server[message.guild.id].songDispatcher = dispatcher
