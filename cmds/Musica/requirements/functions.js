@@ -1,7 +1,6 @@
 const Discord = require('discord.js')
 const musicData = require('./musicData')
 const ytdl = require('ytdl-core')
-const youtubedl = require('youtube-dl')
 
   function playSong(queue, message) {
     if (!musicData.server[message.guild.id]) musicData.server[message.guild.id] = {
