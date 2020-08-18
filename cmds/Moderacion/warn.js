@@ -1,8 +1,7 @@
-const Discord = require('discord.js');
 const Guild = require('./models/Guild')
 const mongoose = require('mongoose');
-const {search, createGuild, getUser } = require('./models/functions')
-;
+const {search, createGuild, getUser } = require('./models/functions');
+
     module.exports = {
     name : 'warn',
     category: "Moderacion",
@@ -45,6 +44,31 @@ const {search, createGuild, getUser } = require('./models/functions')
             LeaveBool: false,
             WelcomeChannel: "",
             LeaveChannel: "", 
+            log: {
+            Premium: false,
+            channelCreate: false,
+            channelDelete: false,
+            channelUpdate: false,
+            emojiCreate: false,
+            emojiDelete: false,
+            emojiUpdate: false,
+            banAdd: false,
+            banRemove: false,
+            MemberAdd: false,
+            MemberRemove: false,
+            MemberUpdate: false,
+            guildUpdate: false,
+            inviteCreate: false,
+            inviteDelete: false,
+            messageDelete: false,
+            messageDeleteBulk: false,
+            messageUpdate: false,
+            roleCreate: false,
+            roleDelete: false,
+            roleUpdate: false,
+            userUpdate: false,
+            voiceState: false
+            },
             warns: ({
                 _id: mongoose.Types.ObjectId(),
                 warnUser: bUser.user.username,
