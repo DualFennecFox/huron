@@ -18,12 +18,4 @@ client.categories = fs.readdirSync("./cmds/");
     require(`./handlers/${handler}`)(client)
 })
 
-client.on('ready', () => {
-    console.log(`Logged In as ${client.user.tag}`)
-})
-
-client.on('message', message => {
-    let args = message.content.slice(prefix.length).trim().split(/ +/g);
-    let cmd = args.shift().toLowerCase()
-})
 client.login(process.env.TOKEN);
