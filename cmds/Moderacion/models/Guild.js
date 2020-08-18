@@ -49,7 +49,7 @@ const guildSchema = mongoose.Schema({
     role: [{
       autoRole: Boolean,
       autoRoleChannel: Boolean,
-      Roles: [String]
+      Roles: []
     }]
   })
   module.exports = mongoose.model("Guild", guildSchema)
