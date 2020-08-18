@@ -1,13 +1,13 @@
 const Discord = require('discord.js')
 const Guild = require("./models/Guild")
-const { updateLog, createGuild, updateGuild, changePerm } = require("./models/functions")
+const { createGuild, updateGuild, changePerm } = require("./models/functions")
 
 module.exports = {
     name : 'log',
     category: "Moderacion",
     description : 'Este comando te permite activar los logs y ver cuales están activos, para que funcione debes poner un canal con !logchannel #Canal',
-    aliases: ['Log', 'LOG', 'logs', 'Logs', 'LOGS'],
-    usage: '!kick',
+    aliases: ['logs'],
+    usage: '!log <evento>',
     examples: ['!log messagedelete', '!log nickname', '!log channel'],
     run: async (client , message, args, prefix) => {
 

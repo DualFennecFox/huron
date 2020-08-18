@@ -4,10 +4,9 @@ const { getUser } = require('./models/functions')
 module.exports = {
     name : 'unban',
     category: "Moderacion",
-    description : 'Este comando Desbanea al usuario mencionado con su ID Ej: `!unban 556540723235651584` También puedes dar una razón de ello',
-    aliases: ['Unban', 'UNBAN'],
-    usage: '!unban',
-    examples: ['!unban @Firulais', '!unban 556540723235651584', '!unban @Firulais Razon'],
+    description : 'Este comando Desbanea al usuario mencionado con su ID, también puedes dar una razón de ello',
+    usage: '!unban <Usuario> [Razón]',
+    examples: ['!unban @Wumpus', '!unban 12345678987654321', '!unban @Wumpus Spam'],
     run: async (client , message, args, prefix, contentPrefix) => {
    
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o darme su id")

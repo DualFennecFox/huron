@@ -6,9 +6,9 @@ module.exports = {
     name : 'config',
     category: "Moderacion",
     description : 'El Bot muestra varios comandos para configurar ciertas cosas, como el prefix, mensaje de bienvenida y despedida',
-    aliases: ['Config', 'CONFIG', 'settings', 'Settings', 'SETTINGS'],
-    usage: '!config',
-    examples: ['!config prefix -', 'config welcomemsg'],
+    aliases: ['settings'],
+    usage: '!config <Configuración> <Valor>',
+    examples: ['!config prefix -', '!config welcomemsg'],
     run: async (client, message, args, prefix) => {
         if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_MEMBERS") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando")
         if (!args[0]) {

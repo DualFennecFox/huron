@@ -1,15 +1,14 @@
 const Discord = require('discord.js');
 const Guild = require('./models/Guild')
 const mongoose = require('mongoose');
-const {search, updateGuild, createGuild, getUser } = require('./models/functions')
+const {search, createGuild, getUser } = require('./models/functions')
 ;
     module.exports = {
     name : 'warn',
     category: "Moderacion",
     description : 'Este comando warnea al usuario mencionado con su ID o mención, también puedes dar una razón de ello',
-    aliases: ['Warn', 'WARN'],
-    usage: '!warn',
-    examples: ['!warn @Firulais', '!warn 556540723235651584', '!warn @Firulais Razon'],
+    usage: '!warn <Usuario> [Razón]',
+    examples: ['!warn @Wumpus', '!warn 12345678987654321', '!warn @Wumpus Presumir ser Wumpus'],
     run: async (client , message, args, prefix, contentPrefix) => {
 
     if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");

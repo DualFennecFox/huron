@@ -2,10 +2,8 @@ const musicData = require("./requirements/musicData")
     module.exports = {
             name : 'pause',
             category: "Musica",
-            aliases: ['Pause', 'PAUSE'],
             description : 'Este comando pausa la canción que se este escuchando',
             usage: '!pause',
-            examples: ['!pause'],
             run: async(client, message, args) => {
                
                 if (!musicData.server[message.guild.id]) return message.channel.send("No se esta escuchando ninguna canción")

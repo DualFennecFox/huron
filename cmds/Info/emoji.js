@@ -4,9 +4,9 @@ module.exports = {
     name : 'emoji',
     category: "Info",
     description : 'Muestra un rol que haya sido usado en el servidor como una imagen',
-    aliases: ['Emoji', 'EMOJI', 'jumbo', 'Jumbo', 'JUMBO'],
-    usage: '!emoji',
-    examples: ['!emoji :emoji-usado:'],
+    aliases: ['jumbo'],
+    usage: '!emoji <Emoji>',
+    examples: ['!emoji :super-wumpus:', '!emoji 12345678987654321'],
     run: async (client , message, args) => {
         if(!args[0]) return message.channel.send("Debes usar un emoji para poder mostrarlo")
 

@@ -2,10 +2,8 @@ const musicData = require("./requirements/musicData")
     module.exports = {
             name : 'stop',
             category: "Musica",
-            aliases: ['Stop', 'STOP'],
             description : 'Este comando termina y borra todas las canciones de la cola',
             usage: '!stop',
-            examples: ['!stop'],
             run: async(client, message, args) => {
                 if (!musicData.server[message.guild.id]) return message.channel.send("No se esta escuchando ninguna canción")
                 if (!message.member.voice.channel) return message.channel.send("Debes estar en un canal de voz para usar este comando")

@@ -5,8 +5,8 @@ const { parse } = require('dotenv-flow');
     name : 'clear',
     category: "Moderacion",
     description : 'Este comando borra un número de mensajes seleccionados por el usuario',
-    aliases: ['Clear', 'CLEAR', 'purge', 'Purge', 'PURGE'],
-    usage: '!clear',
+    aliases: ['purge'],
+    usage: '!clear <Número del 1 al 100>',
     examples: ['!clear 50'],
     run: async (client, message, args) => {
     if(!message.member.hasPermission("MANAGE_MESSAGES") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!").then(message => message.delete({timeout: 5000})).catch(err => console.error(err))

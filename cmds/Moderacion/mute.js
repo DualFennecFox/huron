@@ -4,10 +4,9 @@ const { getUser } = require('./models/functions');
     module.exports = {
     name : 'mute',
     category: "Moderacion",
-    aliases: ['Mute', 'MUTE'],
     description : 'Este comando Mutea al usuario mencionado con su ID o mención, también puedes dar una razón de ello',
-    usage: '!mute',
-    examples: ['!mute @Firulais', '!mute 556540723235651584', '!mute @Firulais Razon'],
+    usage: '!mute <Usuario> [Razón]',
+    examples: ['!mute @Wumpus', '!mute 12345678987654321', '!mute @Wumpus No ser Wumpus'],
     run: async (client , message, args, prefix, contentPrefix) => {
     
     if(!message.member.hasPermission("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR" || "MANAGE_ROLES") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");

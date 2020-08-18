@@ -5,9 +5,9 @@ const { search, getUser } = require('./models/functions');
     name : 'infractions',
     category: "Moderacion",
     description : 'Este comando muestra el número de infracciones de un usuario, la razón y el usuario que lo advirtio',
-    aliases: ['Infractions', 'INFRACTIONS', 'warns', 'Warns', 'WARNS'],
-    usage: '!warns',
-    examples: ['!warns @Firulais', '!warns 556540723235651584'],
+    aliases: ['warns'],
+    usage: '!infractions <Usuario>',
+    examples: ['!infractions @Wumpus', '!infractions 12345678987654321'],
     run: async (client , message, args, prefix, contentPrefix) => {
 
     if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");

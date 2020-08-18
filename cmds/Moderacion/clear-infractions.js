@@ -2,12 +2,12 @@ const Guild = require('./models/Guild')
 const {search, searchNumber, getUser } = require('./models/functions');
 
     module.exports = {
-    name : 'clearinfractions',
+    name : 'clear-infractions',
     category: "Moderacion",
     description : 'Este comando borra las infracciones de un usuario mencionado o con su ID, o de todos los miembros si se usa "all"',
-    aliases: ['ClearInfractions', 'Clearinfractions', 'CLEARINFRACTIONS', 'clearwarns', 'ClearWarns', 'CLEARWARNS'],
-    usage: '!warn',
-    examples: ['!clearinfractions @Firulais', '!clearinfractions 556540723235651584', '!clearinfractions all'],
+    aliases: ['clear-warns'],
+    usage: '!clear-infractions <Usuario o \"all\">',
+    examples: ['!clear-infractions @Wumpus', '!clear-infractions 12345678987654321', '!clear-infractions all'],
     run: async (client, message, args, prefix, contentPrefix) => {
     if (!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o remover todas las infracciones con \"all\"")

@@ -1,11 +1,9 @@
-const Discord = require('discord.js');
-
 module.exports = {
     name : 'say',
     category: "Info",
     description : 'El bot envia un mensaje escrito por un usuario, también puedes elegir un canal a donde enviarlo con {sendchannel} #canal',
-    aliases: ['Say', 'SAY', 'announcement', 'Announcement', 'ANNOUNCEMENT'],
-    usage: '!say',
+    aliases: ['announcement', 'acc'],
+    usage: '!say <Canal o Mensaje>',
     examples: ['!say Hola Mundo', '!say {sendchannel} #Canal Hola Mundo'],
     run: async (client, message, args) => {
     let argsresult;

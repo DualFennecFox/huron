@@ -5,9 +5,8 @@ module.exports = {
     name : 'unmute',
     category: "Moderacion",
     description : 'Este comando Desmutea al usuario mencionado con su ID o mención Ej: `!unmute @Firulais`, `!unmute 556540723235651584` También puedes dar una razón de ello',
-    aliases: ['Unmute', 'UNMUTE'],
-    usage: '!unmute',
-    examples: ['!unmute @Firulais', '!unmute 556540723235651584', '!unmute @Firulais Razon'],
+    usage: '!unmute <Usuario>',
+    examples: ['!unmute @Wumpus', '!unmute 123456789876543210', '!unmute @Wumpus'],
     run: async (client , message, args, prefix, contentPrefix) => {
 
     if(!message.member.hasPermission("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!")
@@ -21,9 +20,6 @@ module.exports = {
     if (unmutee.id === client.user.id) return message.channel.send("No puedo banearme a mi mismo")
     if (!unmutee.roles.cache.some((role) => role.name === 'Muteado')) return message.channel.send("Esta persona no esta muteada");
 
-    let umReason = args.slice(1).join(" ");
-    if(!umReason) umReason = "No se específico una Razón"
-
     let umuterole = message.guild.roles.cache.find(r => r.name === "Muteado")
     if(!umuterole) return message.channel.send("No tienes muteado a nadie")
 
@@ -34,7 +30,6 @@ module.exports = {
     .setColor("#0088ff")
     .addField("Usuario Desmuteado", `${unmutee} Y su ID es ${unmutee.id}`)
     .addField("Desmuteado Por", `<@!${message.author.id}> Y su ID es ${message.author.id}`)
-    .addField("Razón de Desmute", umReason);
 
     message.channel.send( unmuteEmbed )
     .catch(err => {

@@ -15,10 +15,9 @@ function search(nameKey, myArray) {
     module.exports = {
             name : 'play',
             category: "Musica",
-            aliases: ['Play', 'PLAY'],
             description : 'Este comando busca una musica en Youtube para escucharla en un chat de voz',
-            usage: '!play',
-            examples: ['!play Musica', '!play "URL de YT"'],
+            usage: '!play <Busqueda, URL, Playlist>',
+            examples: ['!play Super-Canción', '!play ""'],
             run: async(client, message, args) => {   
                       
                     if (!message.member.voice.channel) return message.channel.send("Debes estar en un canal de voz para usar este comando")

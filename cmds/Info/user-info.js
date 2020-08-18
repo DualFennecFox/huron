@@ -5,15 +5,15 @@ module.exports = {
     name : 'user-info',
     category: "Info",
     description : 'Este comando muestra la información del usuario, su creación, el id, sus roles, Etc... \nSi quiere ver los roles del usuario escriba \"roles\", despues del comando o usuario mencionado',
-    aliases: ['User-info', 'USER-INFO', 'userinfo'],
-    usage: '!user-info',
-    examples: ['!user-info', '!user-info @Firulais', '!userinfo roles @Firulais'],
+    usage: '!user-info <Usuario> [roles]',
+    examples: ['!user-info', '!user-info @Wumpus', '!userinfo roles @Wumpus'],
     run: async (client , message, args, prefix, contentPrefix) => {
     function checkDays(date) {
         let now = new Date();
         let diff = now.getTime() - date.getTime();
         let days = Math.floor(diff / 86400000);
-        return `Hace ${days} ${days == 1 ? "día" : "días"}`;
+        if (days == 0) return "Hoy"
+        else return `Hace ${days} ${days == 1 ? "día" : "días"}`;
         };
     let user = message.mentions.users.first() || client.users.cache.get(args[0]) || client.users.cache.get(args[1]) || message.author
     if (contentPrefix !== prefix) user = getUser(args[0], client) || getUser(args[1], client) || message.author

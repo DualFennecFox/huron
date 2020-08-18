@@ -3,10 +3,8 @@ const Discord = require('discord.js')
 module.exports = {
     name : 'queue',
     category: "Musica",
-    aliases: ['Queue', 'QUEUE'],
     description : 'Este comando te muestra las canciones que esten en la cola del server',
     usage: '!queue',
-    examples: ['!queue'],
     run: async(client, message, args) => {   
 
                 if (!musicData.server[message.guild.id]) return message.channel.send("No se esta escuchando ninguna canción")

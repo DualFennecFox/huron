@@ -3,10 +3,8 @@ const { playSong }= require("./requirements/functions")
     module.exports = {
             name : 'skip',
             category: "Musica",
-            aliases: ['Skip', 'SKIP'],
             description : 'Este comando se salta la canción que se este escuchando por la siguiente en la cola',
             usage: '!skip',
-            examples: ['!skip'],
             run: async(client, message, args) => {   
                 if (!musicData.server[message.guild.id]) return message.channel.send("No se esta escuchando ninguna canción")
                 if (!message.member.voice.channel) return message.channel.send("Debes estar en un canal de voz para usar este comando")

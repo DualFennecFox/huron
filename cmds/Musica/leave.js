@@ -2,10 +2,9 @@ const musicData = require('./requirements/musicData')
 module.exports = {
     name : 'leave',
     category: "Musica",
-    aliases: ['Leave', 'LEAVE', 'disconnect', 'Disconnect', 'DISCONNECT'],
+    aliases: ['disconnect'],
     description : 'Este comando saca al bot del canal de voz del usuario si es que esta',
-    usage: '!disconnect',
-    examples: ['!disconnect'],
+    usage: '!leave',
     run: async(client, message, args) => {
 
         if (!message.member.voice.channel) return message.channel.send("Debes estar en un canal de voz para usar este comando")

@@ -2,12 +2,11 @@ const Guild = require("./models/Guild")
 const { updateGuild, createGuild } = require("./models/functions")
 
 module.exports = {
-    name : 'logchannel',
+    name : 'log-channel',
     category: "Moderacion",
     description : 'Este comando activa un canal para los registros, importante para que funcionen los logs',
-    aliases: ['Logchannel', 'LogChannel', 'LOGCHANNEL'],
-    usage: '!logchannel',
-    examples: ['!logchannel #Canal-mencionado', '!logchannel ID'],
+    usage: '!logchannel [Canal]',
+    examples: ['!logchannel #Logs', '!logchannel 12345678987654321'],
     run: async (client , message, args) => {
         
         if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_MEMBERS")) return message.channel.send("No tienes permisos para usar este comando")

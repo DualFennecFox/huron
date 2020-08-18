@@ -5,8 +5,7 @@ const { getUser } = require('./models/functions')
     name : 'ban',
     category: "Moderacion",
     description : 'Este comando banea al usuario mencionado con su ID o mención, también puedes dar una razón de ello',
-    aliases: ['Ban', 'BAN'],
-    usage: '!ban',
+    usage: '!ban <Usuario> [Razón]',
     examples: ['!ban @Firulais', '!ban 556540723235651584', '!ban @Firulais Razon'],
     run: async (client , message, args, prefix, contentPrefix) => {
 

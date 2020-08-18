@@ -2,10 +2,8 @@ const musicData = require("./requirements/musicData")
     module.exports = {
             name : 'loop',
             category: "Musica",
-            aliases: ['Loop', 'LOOP'],
             description : 'Este comando hace que se escuche una canción infinitamente hasta que se desactive',
             usage: '!loop',
-            examples: ['!loop'],
             run: async(client, message, args) => {
 
                 if (!musicData.server[message.guild.id]) return message.channel.send("No se esta escuchando ninguna canción")

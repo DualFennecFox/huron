@@ -5,9 +5,8 @@ const { getUser } = require('./models/functions');
     name : 'kick',
     category: "Moderacion",
     description : 'Este comando kickea al usuario mencionado con su ID o mención, también puedes dar una razón de ello',
-    aliases: ['Kick', 'KICK'],
-    usage: '!kick',
-    examples: ['!kick @Firulais', '!kick 556540723235651584', '!kick @Firulais Razon'],
+    usage: '!kick <Usuario> [Razón]',
+    examples: ['!kick @Wumpus', '!kick 12345678987654321', '!kick @Wumpus Este no es Wumpus'],
     run: async (client , message, args, prefix, contentPrefix) => {
 
     if(!message.member.hasPermission("KICK_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");

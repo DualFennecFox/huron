@@ -108,6 +108,7 @@ function checkDays(date) {
   if (days == 0) return "Hoy"
   else return `Hace ${days} ${days == 1 ? "día" : "días"}`;
 };
+
 const changeRole = {
   "ADMINISTRATOR": "Administrador",
   "CREATE_INSTANT_INVITE": "Crear invitación",
@@ -203,7 +204,7 @@ function getCMD(client, message, input) {
   if (cmd.examples) info += `\n**Ejemplos**: ${cmd.examples.map(a => `\`${a}\``).join(", ")}`;
   }
 
-  return message.channel.send(embed.setColor("GREEN").setDescription(info))
+  return message.channel.send(embed.setColor("#0088ff").setDescription(info).setFooter("<> es obligatorio, [] es opcional"))
   .catch(err => {
       console.log(err)
   })

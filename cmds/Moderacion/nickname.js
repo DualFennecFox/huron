@@ -3,10 +3,10 @@ const { getUser } = require("./models/functions");
     module.exports = {
     name : 'nickname',
     category: "Moderacion",
-    aliases: ['Nickname', 'NICKNAME', 'setnickname', 'Setnickname', 'SETNICKNAME', 'SetNickname'],
+    aliases: ['setnickname'],
     description : 'Este comando cambia el apodo de un miembro mencionado con su ID o mención',
-    usage: '!nickname',
-    examples: ['!nickname @Firulais Nombre', '!nickname 556540723235651584 Nombre'],
+    usage: '!nickname <Usuario> [Razón]',
+    examples: ['!nickname @Wumpus Wumpus321', '!nickname 12345678987654321 Wumpus321'],
     run: async (client , message, args, prefix, contentPrefix) => {
 
         if (!message.member.hasPermission("MANAGE_NICKNAMES" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando")

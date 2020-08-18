@@ -2,10 +2,9 @@ const musicData = require("./requirements/musicData")
     module.exports = {
             name : 'resume',
             category: "Musica",
-            aliases: ['Resume', 'RESUME', 'continue', 'Continue', 'CONTINUE'],
+            aliases: ['continue'],
             description : 'Este comando continua la canción que se haya pausado',
             usage: '!resume',
-            examples: ['!resume'],
             run: async(client, message, args) => {
                 if (!musicData.server[message.guild.id]) return message.channel.send("No se esta escuchando ninguna canción")
                 if (!message.member.voice.channel) return message.channel.send("Debes estar en un canal de voz para usar este comando")
