@@ -9,6 +9,8 @@ module.exports = {
     examples: ['!unban @Wumpus', '!unban 12345678987654321', '!unban @Wumpus Spam'],
     run: async (client , message, args, prefix, contentPrefix) => {
    
+    if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
+    if(!message.guild.me.hasPermission(["BAN_MEMBERS" || "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para Banear miembros");
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o darme su id")
     let User = message.mentions.users.first() || client.users.cache.get(args[0])
     if (contentPrefix !== prefix) User = getUser(args[0], client)
@@ -34,9 +36,6 @@ module.exports = {
     } catch (err) {
         console.error(err)
     }
-
-    if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
-    if(!message.guild.me.hasPermission(["BAN_MEMBERS" || "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para Banear miembros");
 
     try {
         message.guild.members.unban(User, {reason: bReason})
