@@ -20,9 +20,9 @@ const { getUser } = require('./models/functions');
     if(!kReason) kReason = "No se específico una razón"
 
     if (kUser.id === client.user.id) return message.channel.send("No puedo expulsarme a mi mismo")
-    if(!message.guild.me.hasPermission(["KICK_MEMBERS" || "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para banear miembros");
+    if(!message.guild.me.hasPermission(["KICK_MEMBERS" || "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para expulsar miembros");
     if(kUser.hasPermission("KICK_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("Esta persona no puede ser expulsada!");
-    if (kUser.id === message.author.id) return message.channel.send("No te puedes kickear a ti mismo")
+    if (kUser.id === message.author.id) return message.channel.send("No te puedes expulsar a ti mismo")
 
     let role = kUser.roles.highest;
 
