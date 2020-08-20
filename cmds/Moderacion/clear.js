@@ -1,7 +1,4 @@
-const Discord = require('discord.js');
-const { parse } = require('dotenv-flow');
-
-    module.exports  = {
+   module.exports  = {
     name : 'clear',
     category: "Moderacion",
     description : 'Este comando borra un número de mensajes seleccionados por el usuario',

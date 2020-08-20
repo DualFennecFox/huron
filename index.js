@@ -18,4 +18,24 @@ client.categories = fs.readdirSync("./cmds/");
     require(`./handlers/${handler}`)(client)
 })
 
+client.on('guildMemberAdd', async member => {
+
+    let verifrole = member.guild.roles.cache.get("743567666907840674")
+    let membeRole = member.guild.roles.cache.get("745635603638386700")
+
+    member.roles.add(verifrole.id)
+    member.roles.add(membeRole.id)
+})
+
+client.on("messageReactionRemove", (reaction, user) => {
+
+    if (reaction.emoji.name !== "✅") return
+    if (reaction.message.id !== "745768389083004949") return
+
+    let us = reaction.message.guild.member(user).roles.remo
+
+        let role = reaction.message.guild.roles.cache.find(r => r.id === "743567666907840674")
+
+        us.roles.remove(role.id)
+
 client.login(process.env.TOKEN);
