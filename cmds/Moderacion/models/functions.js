@@ -110,9 +110,10 @@ function checkDays(date) {
 };
 
 function isHexColor (hex) {
-  return typeof hex === 'string'
-      && hex.length === 6
-      && !isNaN(Number('0x' + hex))
+  let valid = false
+  if (typeof hex === 'string'&& hex.length === 6 && !isNaN(Number('0x' + hex))) valid = true
+
+  return valid
 }
 
 const changeRole = {
