@@ -51,6 +51,7 @@ const guildSchema = mongoose.Schema({
       autoRoleChannel: Boolean,
       Roles: []
     }],
-    muterole: String
+    muterole: String,
+    muteUsers: []
   })
   module.exports = mongoose.model("Guild", guildSchema)
