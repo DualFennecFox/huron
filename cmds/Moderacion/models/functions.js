@@ -109,11 +109,14 @@ function checkDays(date) {
   else return `Hace ${days} ${days == 1 ? "día" : "días"}`;
 };
 
-function isHexColor (hex) {
-  let valid = false
-  if (typeof hex === 'string'&& hex.length === 6 && !isNaN(Number('0x' + hex))) valid = true
-
-  return valid
+  function isValidHex(testNum){
+    let validHex = false;
+    let numLength = testNum.length;
+    let parsedNum = parseInt(testNum, 16);
+    if(!isNan(parsedNum) && parsedNum.length === numLength){
+       validHex = true;
+    }
+    return validHex;
 }
 
 const changeRole = {
@@ -235,7 +238,7 @@ module.exports = {
     getCMD,
     updateLog,
     getUser,
-    isHexColor,
+    isValidHex,
     changeRole,
     changePerm
 }
