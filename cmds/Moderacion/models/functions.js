@@ -109,17 +109,6 @@ function checkDays(date) {
   else return `Hace ${days} ${days == 1 ? "día" : "días"}`;
 };
 
-  function isValidHex(testNum){
-    if (!testNum) return false
-    let validHex = false;
-    let numLength = testNum.length;
-    let parsedNum = parseInt(testNum, 16);
-    if(!isNaN(parsedNum) && parsedNum.length === numLength){
-       validHex = true;
-    }
-    return validHex;
-}
-
 const changeRole = {
   "ADMINISTRATOR": "Administrador",
   "CREATE_INSTANT_INVITE": "Crear invitación",
@@ -239,7 +228,6 @@ module.exports = {
     getCMD,
     updateLog,
     getUser,
-    isValidHex,
     changeRole,
     changePerm
 }

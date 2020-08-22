@@ -20,6 +20,8 @@
     "miniget": "^2.0.1",
     "mongoose": "^5.10.0",
     "node-fetch": "^2.6.0",
+    "react": "^16.13.1",
+    "validate-color": "^2.1.0",
     "ytdl-core": "^3.2.1",
     "ytdl-core-discord": "^1.2.1",
     "ytpl": "^0.3.0",
