@@ -42,7 +42,7 @@ module.exports = {
     let unmuteEmbed = new Discord.MessageEmbed()
     .setAuthor("UnMute", unmutee.user.displayAvatarURL({ format: "png", dynamic: true}))
     .setColor("#0088ff")
-    .addField("Usuario Muteado", `${unmutee}\n**ID:** ${unmutee.id}`)
+    .addField("Usuario Desmuteado", `${unmutee}\n**ID:** ${unmutee.id}`)
     .addField("Razón", mReason)
 
     message.channel.send( unmuteEmbed )
