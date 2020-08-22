@@ -37,7 +37,7 @@ if (message.guild.me.roles.highest.comparePositionTo(muterole) < 1) {
 }
 if (mutee.roles.cache.some(r => r.id === muterole.id)) return message.channel.send("Este usuario ya esta muteado")
 
- mutee.roles.add(muterole.id, { reason: mReason });
+ mutee.roles.add(muterole.id, mReason );
 
 let muteEmbed = new Discord.MessageEmbed()
     .setAuthor("Mute", mutee.user.displayAvatarURL({ format: "png", dynamic: true}))

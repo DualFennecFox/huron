@@ -31,7 +31,7 @@ module.exports = {
     if(!muterole) return message.channel.send("No existe un rol para mutear, asegurate de declararlo en las configuraciones")
 
     if (!unmutee.roles.cache.some(r => r.id === muterole.id)) return message.channel.send("Este usuario no esta muteado")
-    unmutee.roles.remove(muterole.id, { reason: mReason });
+    unmutee.roles.remove(muterole.id, mReason );
 
     let unmuteEmbed = new Discord.MessageEmbed()
     .setAuthor("UnMute", unmutee.user.displayAvatarURL({ format: "png", dynamic: true}))

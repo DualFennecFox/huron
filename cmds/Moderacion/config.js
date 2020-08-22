@@ -20,8 +20,10 @@ module.exports = {
                 .addField("Prefix", `Para cambiar el prefix eliga uno diciendo \"prefix\"\nEjemplo: ${prefix}config prefix - \n`)
                 .addField("WelcomeMsg", `Para cambiar el mensaje de bienvenida diga \"welcomemsg\"\nEjemplo: ${prefix}config welcomemsg \`#Canal-mencionado\` Bienvenido {user} a {server}\n`)
                 .addField("Leavemsg", `Para cambiar el mensaje de despedida diga \"welcomemsg\"\nEjemplo: ${prefix}config leavemsg \`#Canal-mencionado\` {user} a dejado {server}\n`)
+                .addField("MuteRole", `Para establecer el rol Muteado, mencione uno, su ID o cree uno con <Nombre> [Color HTML]\nEjemplo: ${prefix}config muterole Muteado #ff0000\n`)
                 .addField("DisableWelcome", "Elimina el mensaje de bienvenida, si es que esta activado\n")
                 .addField("DisableLeave", "Elimina el mensaje de despedida, si es que esta activado\n")
+                .addField("RemoveMute", "Elimina el Rol para Mutear, si es que existe\n")
                 .addField("Tags", "Los tags para los mensajes de bienvenida y despedida son:\n\n**{user}** : Menciona al usuario\n**{username}** : Muestra el nombre y el tag del usuario\n**{server}** : Muestra el nombre del servidor\n**{owner}** : Nombra al Owner del servidor con su tag\n**{members}** : Muestra el número de miembros desde que el usuario se unio o dejo el server.")
 
                 message.channel.send({ embed })
@@ -256,7 +258,6 @@ module.exports = {
             break;
             case "muterole":
                 if (!message.member.hasPermission("MANAGE_ROLES" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando")
-                if (message.author.id !== process.env.OWNER) return
                 if (!args[1]) return message.channel.send(`Menciona un rol, su ID o crea uno especificandolo`)
                 if (!message.guild.me.hasPermission("MANAGE_ROLES", "MANAGE_CHANNELS")) return message.channel.send("No tengo permisos para Gestionar Roles o Gestionar Canales!")
 
