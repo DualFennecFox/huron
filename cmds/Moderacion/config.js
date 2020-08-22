@@ -250,7 +250,7 @@ module.exports = {
             break;
             case "muterole":
                 if (message.author.id !== process.env.OWNER) return
-                if (!args.length > 1) return message.channel.send(`Menciona un rol, su ID o crea uno especificandolo`)
+                if (!args[1]) return message.channel.send(`Menciona un rol, su ID o crea uno especificandolo`)
                 if (!message.guild.me.hasPermission("MANAGE_ROLES", "MANAGE_CHANNELS")) return message.channel.send("No tengo permisos para Gestionar Roles o Gestionar Canales!")
 
 
