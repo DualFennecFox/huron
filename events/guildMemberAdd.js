@@ -9,7 +9,7 @@ module.exports = async member => {
         if (doc.muteUsers) {
           if (doc.muteUsers.includes(member.id) && member.guild.me.hasPermission("MANAGE_ROLES")) {
             
-            let role = member.guild.cache.get(doc.muterole)
+            let role = member.guild.roles.cache.get(doc.muterole)
             if (role) {
             member.roles.add(role.id)
             }
