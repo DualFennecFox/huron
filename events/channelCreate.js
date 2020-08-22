@@ -32,6 +32,23 @@ module.exports = async channel => {
         "store": "Tienda",
         "unknown": "Desconocido"
       }
+      let muterole = channel.guild.roles.cache.get(doc.muterole)
+      if (muterole) {
+      try {
+        message.guild.channels.cache.forEach(async (channel, id) => {
+            await channel.createOverwrite(muterole,  {
+                SEND_MESSAGES: false,
+                CREATE_INSTANT_INVITE: false,
+                ADD_REACTIONS: false,
+                SEND_TTS_MESSAGES: false,
+                ATTACH_FILES: false,
+                SPEAK: false
+            })
+        })
+    } catch (err) {
+        console.error(err)
+}
+}
 
       if (channel.permissionOverwrites) {
         perm = true
