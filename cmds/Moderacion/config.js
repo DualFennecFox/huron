@@ -73,7 +73,8 @@ module.exports = {
                             roleDelete: false,
                             roleUpdate: false,
                             },
-                            warns: []
+                            warns: [],
+                            muteUsers: []
                           };
                           try {
                             createGuild(newGuild);
@@ -136,7 +137,8 @@ module.exports = {
                             roleDelete: false,
                             roleUpdate: false,
                             },
-                            warns: []
+                            warns: [],
+                            muteUsers: []
                           };
                           try {
                             createGuild(newGuild);
@@ -201,7 +203,8 @@ module.exports = {
                             roleUpdate: false,
                             },
                             warns: [],
-                            role: []
+                            role: [],
+                            muteUsers: []
                           };
                           try {
                             createGuild(newGuild);
@@ -329,7 +332,8 @@ module.exports = {
                             },
                             warns: [],
                             role: [],
-                            muterole: mRole.id
+                            muterole: mRole.id,
+                            muteUsers: []
                           };
                           try {
                             createGuild(newGuild);
@@ -414,7 +418,8 @@ module.exports = {
                     voiceState: false
                     },
                     warns: [],
-                    role: []
+                    role: [],
+                    muteUsers: []
                   };
                   try {
                     createGuild(newGuild);

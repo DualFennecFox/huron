@@ -46,7 +46,8 @@ let getGuild = async (guild) => {
         voiceState: false
         },
         warns: [],
-        role: []
+        role: [],
+        muteUsers: []
       };
       try {
         createGuild(newGuild);

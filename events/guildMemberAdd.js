@@ -6,6 +6,15 @@ module.exports = async member => {
     let client = member.client
     Guild.findOne({ guildID: member.guild.id }).then(async doc => {
         if (!doc) return
+        if (doc.muteUsers) {
+          if (doc.muteUsers.includes(member.id) && member.guild.me.hasPermission("MANAGE_ROLES")) {
+            
+            let role = member.guild.cache.get(doc.muterole)
+            if (role) {
+            member.roles.add(role.id)
+            }
+          }
+        }
         if (doc.JoinBool == true) {
         if (!doc.JoinMsg) return
         if (!doc.WelcomeChannel) return
