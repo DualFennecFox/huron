@@ -35,6 +35,7 @@ const { getUser } = require('./models/functions')
         } catch (err) {
             console.error(err)
         }
+    let bUser
     if (message.guild.member(User)) {
     bUser = message.guild.member(User)
     let role = bUser.roles.highest;
@@ -51,8 +52,7 @@ const { getUser } = require('./models/functions')
     let banEmbed = new Discord.MessageEmbed()
     .setAuthor("Ban", User.displayAvatarURL({ format: "png", dynamic: true}))
     .setColor("#0088ff")
-    .addField("Usuario Baneado", `<@!${User.id}> Y su ID es ${User.id}`)
-    .addField("Baneado Por", `<@!${message.author.id}> Y su ID es ${message.author.id}`)
+    .addField("Usuario Baneado", `${User}\n**ID:** ${User.id}`)
     .addField("Razón de Baneo", bReason);
 
     try {

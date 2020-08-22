@@ -34,8 +34,7 @@ const { getUser } = require('./models/functions');
     let kickEmbed = new Discord.MessageEmbed()
     .setAuthor("Kick", kUser.user.displayAvatarURL({ format: "png", dynamic: true}))
     .setColor("#0088ff")
-    .addField("Usuario Kickeado", `${kUser} Y su ID es ${kUser.id}`)
-    .addField("Kickeado Por", `<@!${message.author.id}> Y su ID es ${message.author.id}`)
+    .addField("Usuario Muteado", `${mutee}\n**ID:** ${mutee.id}`)
     .addField("Razón de Expulsión", kReason);
     try {
     message.guild.member(kUser).kick(kReason);

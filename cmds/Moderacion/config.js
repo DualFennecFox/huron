@@ -347,6 +347,23 @@ module.exports = {
                     message.channel.send("Ha ocurrido un error")
                 })               
             break;
+            case "disablemute":
+                Guild.findOne({ guildID: message.guild.id }).then(doc => {
+                    if (!doc) {
+                        message.channel.send("No existe un rol de Muteado")
+                        return getGuild(message.guild)
+                     }
+                   else if (!doc.muterole) return message.channel.send("No existe un rol de Muteado")
+                else {
+                updateGuild(message.guild, { muterole: "" })
+        
+                message.channel.send("Se ha eliminado el rol")
+                }
+            }).catch(err => {
+                console.error(err)
+                message.channel.send("Ha ocurrido un error")
+            })
+            break;
             case "logchannel": 
             if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_MEMBERS")) return message.channel.send("No tienes permisos para usar este comando")
         

@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const { getUser } = require('./models/functions');
-
+const Guild = require('./models/Guild')
     module.exports = {
     name : 'mute',
     category: "Moderacion",
@@ -27,42 +27,22 @@ const { getUser } = require('./models/functions');
     let mReason = args.slice(1).join(" ");
     if(!mReason) mReason = "No se específico una Razón"
 
-    let muterole = message.guild.roles.cache.find(r => r.name === "Muteado")
-    if(!muterole) {
-        try{
-            muterole = await message.guild.roles.create({ data: {  
-                name : "Muteado",
-                color : "#9b9b9b",
-                permissions : []
-            }
-            })
-            message.guild.channels.cache.forEach(async (channel, id) => {
-                await channel.createOverwrite(muterole,  {
-                    SEND_MESSAGES: false,
-                    CREATE_INSTANT_INVITE: false,
-                    ADD_REACTIONS: false,
-                    SEND_TTS_MESSAGES: false,
-                    ATTACH_FILES: false,
-                    SPEAK: false
-                })
-            })
-        } catch (err) {
-            console.error(err)
-            message.channel.send("Se ha ocurrido un error al crear o modificar el rol Muteado")
-    }
-}
+    let doc = await Guild.findOne({ guildID: message.guild.id })
+    if (!doc) return message.channel.send("No existe un rol para mutear, asegurate de declararlo en las configuraciones")
+    
+    let muterole = message.guild.roles.cache.get(doc.muterole)
+    if(!muterole) return message.channel.send("No existe un rol para mutear, asegurate de declararlo en las configuraciones")
 
 if (message.guild.me.roles.highest.comparePositionTo(muterole) < 1) {
     return message.channel.send("Mi rol es muy bajo para asignar el rol mute!");
 }
 
-mutee.roles.add(muterole.id)
+user.roles.remove(muterole, { reason: mReason });
 
 let muteEmbed = new Discord.MessageEmbed()
     .setAuthor("Mute", mutee.user.displayAvatarURL({ format: "png", dynamic: true}))
     .setColor("#0088ff")
-    .addField("Usuario Muteado", `${mutee} Y su ID es ${mutee.id}`)
-    .addField("Muteado Por", `<@!${message.author.id}> Y su ID es ${message.author.id}`)
+    .addField("Usuario Muteado", `${mutee}\n**ID:** ${mutee.id}`)
     .addField("Razón de Mute", mReason);
 
     message.channel.send( muteEmbed )

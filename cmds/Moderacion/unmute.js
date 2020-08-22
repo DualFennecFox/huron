@@ -5,8 +5,8 @@ module.exports = {
     name : 'unmute',
     category: "Moderacion",
     description : 'Este comando Desmutea al usuario mencionado con su ID o mención Ej: `!unmute @Firulais`, `!unmute 556540723235651584` También puedes dar una razón de ello',
-    usage: '!unmute <Usuario>',
-    examples: ['!unmute @Wumpus', '!unmute 123456789876543210', '!unmute @Wumpus'],
+    usage: '!unmute <Usuario> [Razón]',
+    examples: ['!unmute @Wumpus', '!unmute 123456789876543210', '!unmute @Wumpus Me equivoque si es Wumpus'],
     run: async (client , message, args, prefix, contentPrefix) => {
 
     if(!message.member.hasPermission("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!")
@@ -21,16 +21,23 @@ module.exports = {
     if (unmutee.id === client.user.id) return message.channel.send("No estoy muteado y no puedo mutearme")
     if (!unmutee.roles.cache.some((role) => role.name === 'Muteado')) return message.channel.send("Esta persona no esta muteada");
 
-    let umuterole = message.guild.roles.cache.find(r => r.name === "Muteado")
-    if(!umuterole) return message.channel.send("No tienes muteado a nadie")
+    let mReason = args.slice(1).join(" ");
+    if(!mReason) mReason = "No se específico una Razón"
 
-    unmutee.roles.remove(umuterole.id);
+    let doc = await Guild.findOne({ guildID: message.guild.id })
+    if (!doc) return message.channel.send("No existe un rol para mutear, asegurate de declararlo en las configuraciones")
+    
+    let muterole = message.guild.roles.cache.get(doc.muterole)
+    if(!muterole) return message.channel.send("No existe un rol para mutear, asegurate de declararlo en las configuraciones")
+
+
+    user.roles.remove(muterole.id, { reason: mReason });
 
     let unmuteEmbed = new Discord.MessageEmbed()
     .setAuthor("UnMute", unmutee.user.displayAvatarURL({ format: "png", dynamic: true}))
     .setColor("#0088ff")
-    .addField("Usuario Desmuteado", `${unmutee} Y su ID es ${unmutee.id}`)
-    .addField("Desmuteado Por", `<@!${message.author.id}> Y su ID es ${message.author.id}`)
+    .addField("Usuario Muteado", `${mutee}\n**ID:** ${mutee.id}`)
+    .addField("Razón", mReason)
 
     message.channel.send( unmuteEmbed )
     .catch(err => {
