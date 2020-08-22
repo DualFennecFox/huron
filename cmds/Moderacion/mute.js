@@ -29,7 +29,7 @@ const Guild = require('./models/Guild')
 
     let doc = await Guild.findOne({ guildID: message.guild.id })
     if (!doc) return message.channel.send("No existe un rol para mutear, asegurate de declararlo en las configuraciones")
-    
+
     let muterole = message.guild.roles.cache.get(doc.muterole)
     if(!muterole) return message.channel.send("No existe un rol para mutear, asegurate de declararlo en las configuraciones")
 
@@ -37,7 +37,7 @@ if (message.guild.me.roles.highest.comparePositionTo(muterole) < 1) {
     return message.channel.send("Mi rol es muy bajo para asignar el rol mute!");
 }
 
-user.roles.remove(muterole, { reason: mReason });
+user.roles.add(muterole.id, { reason: mReason });
 
 let muteEmbed = new Discord.MessageEmbed()
     .setAuthor("Mute", mutee.user.displayAvatarURL({ format: "png", dynamic: true}))
