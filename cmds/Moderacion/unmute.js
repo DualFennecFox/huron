@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const { getUser } = require('./models/functions');
+const Guild = require('./models/Guild')
 
 module.exports = {
     name : 'unmute',
