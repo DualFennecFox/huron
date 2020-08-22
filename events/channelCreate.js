@@ -35,7 +35,7 @@ module.exports = async channel => {
       let muterole = channel.guild.roles.cache.get(doc.muterole)
       if (muterole) {
       try {
-        message.guild.channels.cache.forEach(async (channel, id) => {
+        channel.guild.channels.cache.forEach(async (channel, id) => {
             await channel.createOverwrite(muterole,  {
                 SEND_MESSAGES: false,
                 CREATE_INSTANT_INVITE: false,
