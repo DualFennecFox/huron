@@ -114,7 +114,7 @@ function checkDays(date) {
     let validHex = false;
     let numLength = testNum.length;
     let parsedNum = parseInt(testNum, 16);
-    if(!isNan(parsedNum) && parsedNum.length === numLength){
+    if(!isNaN(parsedNum) && parsedNum.length === numLength){
        validHex = true;
     }
     return validHex;
