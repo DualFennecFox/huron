@@ -19,7 +19,6 @@ module.exports = {
     if(!unmutee) return message.channel.send("Ese no parece ser un usuario valido");
     if(unmutee.id === message.author.id) return message.channel.send("No te puedes mutear a ti mismo!");
     if (unmutee.id === client.user.id) return message.channel.send("No estoy muteado y no puedo mutearme")
-    if (!unmutee.roles.cache.some((role) => role.name === 'Muteado')) return message.channel.send("Esta persona no esta muteada");
 
     let mReason = args.slice(1).join(" ");
     if(!mReason) mReason = "No se específico una Razón"
@@ -30,8 +29,8 @@ module.exports = {
     let muterole = message.guild.roles.cache.get(doc.muterole)
     if(!muterole) return message.channel.send("No existe un rol para mutear, asegurate de declararlo en las configuraciones")
 
-
-    user.roles.remove(muterole.id, { reason: mReason });
+    if (!unmutee.roles.cache.some(r => r.id === muterole.id)) return message.channel.send("Este usuario no esta muteado")
+    unmutee.roles.remove(muterole.id, { reason: mReason });
 
     let unmuteEmbed = new Discord.MessageEmbed()
     .setAuthor("UnMute", unmutee.user.displayAvatarURL({ format: "png", dynamic: true}))
