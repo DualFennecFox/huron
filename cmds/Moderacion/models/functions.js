@@ -109,6 +109,12 @@ function checkDays(date) {
   else return `Hace ${days} ${days == 1 ? "día" : "días"}`;
 };
 
+function isHexColor (hex) {
+  return typeof hex === 'string'
+      && hex.length === 6
+      && !isNaN(Number('0x' + hex))
+}
+
 const changeRole = {
   "ADMINISTRATOR": "Administrador",
   "CREATE_INSTANT_INVITE": "Crear invitación",
@@ -228,6 +234,7 @@ module.exports = {
     getCMD,
     updateLog,
     getUser,
+    isHexColor,
     changeRole,
     changePerm
 }

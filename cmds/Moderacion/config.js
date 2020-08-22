@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const Guild = require('./models/Guild')
-const { updateGuild, getGuild, createGuild } = require('./models/functions')
+const { updateGuild, getGuild, createGuild, isHexColor } = require('./models/functions')
 
 module.exports = {
     name : 'config',
@@ -247,6 +247,98 @@ module.exports = {
                 console.error(err)
                 message.channel.send("Ha ocurrido un error")
             })
+            break;
+            case "muterole":
+                if (message.author.id !== process.env.OWNER) return
+                if (!args.length > 1) return message.channel.send(`Menciona un rol, su ID o crea uno especificandolo`)
+                if (!message.guild.me.hasPermission("MANAGE_ROLES", "MANAGE_CHANNELS")) return message.channel.send("No tengo permisos para Gestionar Roles o Gestionar Canales!")
+
+
+                    let mRole = message.mentions.roles.first() || message.guild.roles.cache.get(args[1])
+                    if (!mRole) {
+                    let Color = args[2]
+                    if (!args.length > 2 && !isHexColor(Color)) Color = "#9b9b9b"
+                        try {
+                            var muterole = await message.guild.roles.create({ data: {  
+                                name : args[1],
+                                color : Color,
+                                permissions : []
+                            }
+                            })
+                            message.guild.channels.cache.forEach(async (channel, id) => {
+                                await channel.createOverwrite(muterole,  {
+                                    SEND_MESSAGES: false,
+                                    CREATE_INSTANT_INVITE: false,
+                                    ADD_REACTIONS: false,
+                                    SEND_TTS_MESSAGES: false,
+                                    ATTACH_FILES: false,
+                                    SPEAK: false
+                                })
+                            })
+                            mRole = muterole
+                        } catch (err) {
+                            console.error(err)
+                           return message.channel.send(`Se ha ocurrido un error al crear o modificar el rol ${mRole}`)
+                    }
+                }
+                Guild.findOne({ guildID: message.guild.id }).then(doc => {
+                    if (!doc) {
+                        const newGuild = {
+                            guildID: message.guild.id,
+                            guildName: message.guild.name,
+                            guildOwner: message.guild.owner.user.username,
+                            guildOwnerID: message.guild.ownerID,
+                            prefix: '!',
+                            JoinMsg: "",
+                            JoinBool: false,
+                            LeaveMsg: "",
+                            LeaveBool: false,
+                            WelcomeChannel: "",
+                            LeaveChannel: "",
+                            LogChannel: "",
+                            log: {
+                            Premium: false,
+                            channelCreate: false,
+                            channelDelete: false,
+                            channelUpdate: false,
+                            emojiCreate: false,
+                            emojiDelete: false,
+                            emojiUpdate: false,
+                            banAdd: false,
+                            banRemove: false,
+                            MemberAdd: false,
+                            MemberRemove: false,
+                            MemberUpdate: false,
+                            guildUpdate: false,
+                            inviteCreate: false,
+                            inviteDelete: false,
+                            messageDelete: false,
+                            messageDeleteBulk: false,
+                            messageUpdate: false,
+                            roleCreate: false,
+                            roleDelete: false,
+                            roleUpdate: false,
+                            },
+                            warns: [],
+                            role: [],
+                            muterole: mRole.id
+                          };
+                          try {
+                            createGuild(newGuild);
+                            
+                          } catch (error) {
+                            console.error(error);
+                          }
+                          return message.channel.send("Se ha establecido el Rol de Muteado") 
+                    }
+                    else {
+                        updateGuild(message.guild, { muterole: mRole.id })
+                        return message.channel.send("Se ha establecido el Rol de Muteado") 
+                    }
+                }).catch(err => {
+                    console.error(err)
+                    message.channel.send("Ha ocurrido un error")
+                })               
             break;
             default:
                 const embed = new Discord.MessageEmbed()
