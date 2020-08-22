@@ -110,6 +110,7 @@ function checkDays(date) {
 };
 
   function isValidHex(testNum){
+    if (!testNum) return false
     let validHex = false;
     let numLength = testNum.length;
     let parsedNum = parseInt(testNum, 16);
