@@ -34,7 +34,7 @@ module.exports = {
     unmutee.roles.remove(muterole.id, mReason);
 
     if (doc.muteUsers.includes(unmutee.id)) {
-    doc.muteUsers.splice(doc.muteUsers.indexOf(mutee.id), 1)
+    doc.muteUsers.splice(doc.muteUsers.indexOf(unmutee.id), 1)
     }
 
     let unmuteEmbed = new Discord.MessageEmbed()
