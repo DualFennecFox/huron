@@ -35,6 +35,8 @@ module.exports = {
 
     if (doc.muteUsers.includes(unmutee.id)) {
     doc.muteUsers.splice(doc.muteUsers.indexOf(unmutee.id), 1)
+
+    await doc.save()
     }
 
     let unmuteEmbed = new Discord.MessageEmbed()
