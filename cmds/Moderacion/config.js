@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const Guild = require('./models/Guild')
-const { updateGuild, getGuild, createGuild, isHexColor } = require('./models/functions')
+const { updateGuild, getGuild, createGuild, isValidHex } = require('./models/functions')
 
 module.exports = {
     name : 'config',
@@ -257,7 +257,7 @@ module.exports = {
                     let mRole = message.mentions.roles.first() || message.guild.roles.cache.get(args[1])
                     if (!mRole) {
                     let Color = args[2]
-                    if (!args.length > 2 && !isHexColor(Color)) Color = "#9b9b9b"
+                    if (!args.length > 2 && !isValidHex(Color)) Color = "#9b9b9b"
                         try {
                             var muterole = await message.guild.roles.create({ data: {  
                                 name : args[1],
