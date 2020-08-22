@@ -5,7 +5,7 @@ const { updateGuild, getGuild, createGuild, isHexColor } = require('./models/fun
 module.exports = {
     name : 'config',
     category: "Moderacion",
-    description : 'El Bot muestra varios comandos para configurar ciertas cosas, como el prefix, mensaje de bienvenida y despedida',
+    description : 'El Bot muestra varios comandos para configurar ciertas cosas, como el prefix, para más información use !config',
     aliases: ['settings'],
     usage: '!config <Configuración> <Valor>',
     examples: ['!config prefix -', '!config welcomemsg'],
@@ -329,11 +329,11 @@ module.exports = {
                           } catch (error) {
                             console.error(error);
                           }
-                          return message.channel.send("Se ha establecido el Rol de Muteado") 
+                          return message.channel.send(`Se ha establecido el Rol **${mRole.name}**`) 
                     }
                     else {
                         updateGuild(message.guild, { muterole: mRole.id })
-                        return message.channel.send("Se ha establecido el Rol de Muteado") 
+                        return message.channel.send(`Se ha establecido el Rol **${mRole.name}**`) 
                     }
                 }).catch(err => {
                     console.error(err)
