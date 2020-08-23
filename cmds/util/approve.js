@@ -29,6 +29,7 @@ module.exports = {
                 
                 let approved = false
                 if (!message.embeds[0]) return message.channel.send("Ese no es un mensaje de sugerencias")
+                if (!message.embeds[0].author) return message.channel.send("Ese no es un mensaje de sugerencias")
                 if (!message.embeds[0].author.name.includes("Sugerencia #")) return message.channel.send("Ese no es un mensaje de sugerencias")
 
                     if (message.embeds[0].fields) {
@@ -36,7 +37,6 @@ module.exports = {
                             approved = true
                         }
                     }
-                }
                 if (approved === true) return message.channel.send("Esta sugerencia ya esta respondida")
 
                 let reason = args.slice(1).join(" ")
