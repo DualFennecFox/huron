@@ -179,7 +179,7 @@ const commands = (category) => {
 } 
 
 const configCommands = () => {
-  let command = ["prefix", "welcomemsg", "leavemsg", "muterole", "disablewelcome", "disableleave", "disablemute"]
+  let command = [  "disableleave", "disablelog", "disablesuggestions", "disablewelcome", "muterole", "suggestionchannel", "suggestioncolor", "prefix", "welcomemsg"]
 
   return command
         .map(name => `\`${name}\``)
@@ -190,7 +190,8 @@ const configCommands = () => {
     .addField("Comandos de Información", commands("Info"))
     .addField("Comandos de Moderación", commands("Moderacion"))
     .addField("Comandos de Música", commands("Musica"))
-    .addField("Comandos de Configuración", `Estos son comandos dentro del comando config, se deben usar despues de ${prefix}config\n\n${configCommands()}`)
+    .addField("Comandos Útiles", commands("Util"))
+    .addField("Comandos de Configuración", `Estos son comandos dentro del comando config, se deben usar despues de ${prefix}config.\n\n${configCommands()}`)
     .addField('Invite', `[Server de Soporte](https://discord.gg/WpGqHCJ) | [Invitar al Bot](https://discord.com/oauth2/authorize?client_id=${client.user.id}&permissions=-8&scope=bot) | [Patreon](https://patreon.com/EPBK) | [Vota](https://top.gg/bot/${client.user.id})`));
 }
 
