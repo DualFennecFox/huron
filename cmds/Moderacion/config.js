@@ -439,7 +439,7 @@ module.exports = {
             case "suggestioncolor":
                 if (!args[1]) return message.channel.send("Debes usar un color HTML o cualquiera con \"RANDOM\"")
 
-            let color = args[2]
+            let color = args[1]
             if (color !== "RANDOM") {
             if (!validateColor.validateHTMLColorHex(color)) return message.channel.send("Ese no parece ser un color válido")
             }

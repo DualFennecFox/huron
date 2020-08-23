@@ -29,10 +29,9 @@ module.exports = {
         let suggestion = args.join(" ")
         
         const embed = new Discord.MessageEmbed()
-        .setAuthor(`Sugerencia #${level}`, message.author.displayAvatarURL({ format: "png", dynamic: true }))
+        .setAuthor(`Sugerencia #${level} Por ${message.author.tag}`, message.author.displayAvatarURL({ format: "png", dynamic: true }))
         .setColor(color)
         .addField("\u200b", suggestion)
-        .setFooter(`Por: ${message.author.tag} ID: ${message.author.id}`)
 
         channel.send({ embed })
 
