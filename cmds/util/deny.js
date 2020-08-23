@@ -2,11 +2,11 @@ const Discord = require('discord.js')
 const Guild = require("../Moderacion/models/Guild")
 
 module.exports = {
-        name : 'approve',
+        name : 'deny',
         category: "Util",
-        description : 'Este comando Aprueba sugerencias que se hayan creado en el canal de sugerencias',
-        usage: '!approve <Mensaje> <Razón>',
-        examples: ['!approve 12345678987654321 Lo agregaremos en un instante'],
+        description : 'Este comando Denega sugerencias que se hayan creado en el canal de sugerencias',
+        usage: '!deny <Mensaje> <Razón>',
+        examples: ['!deny 12345678987654321 No me parece necesario'],
         run: async (client , message, args) => {
             Guild.findOne({ guildID: message.guild.id }).then(async doc => {
 
@@ -38,9 +38,9 @@ module.exports = {
                 if (approved === true) return message.channel.send("Esta sugerencia ya esta respondida")
 
                 let reason = args.slice(1).join(" ")
-                msg.edit(null, { embed: { fields: [{ name: "Denegada", value: reason }] } })
+                message.embeds[0].addField("Denegada", reason)
 
-                return message.channel.send("Se ha denegada la sugerencia")
+                return message.channel.send("Se ha denegado la sugerencia")
             }).catch(err => {
                 console.error(err)
                 message.channel.send("Ha ocurrido un error")
