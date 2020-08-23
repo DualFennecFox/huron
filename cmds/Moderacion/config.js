@@ -505,10 +505,10 @@ module.exports = {
             case "logchannel": 
             if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_MEMBERS")) return message.channel.send("No tienes permisos para usar este comando")
         
-        let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[1]);
-        if (!channel) return message.channel.send("Debes especificar un canal")
+        let Channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[1]);
+        if (!Channel) return message.channel.send("Debes especificar un canal")
 
-        if (!channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para hablar en ese canal")
+        if (!Channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para hablar en ese canal")
 
         Guild.findOne({ guildID: message.guild.id }).then(doc => {
             if (!doc) {
@@ -524,7 +524,7 @@ module.exports = {
                     LeaveBool: false,
                     WelcomeChannel: "",
                     LeaveChannel: "",
-                    LogChannel: channel,
+                    LogChannel: Channel,
                     log: {
                     Premium: false,
                     channelCreate: false,
