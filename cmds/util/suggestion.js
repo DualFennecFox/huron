@@ -4,7 +4,7 @@ const validateColor = require("validate-color")
 
 module.exports = {
         name : 'suggestion',
-        category: "Moderacion",
+        category: "Util",
         aliases: ["suggest"],
         description : 'Este comando sugiere cosas para el servidor en un canal especificado.',
         usage: '!suggestion <Sugerencia>',
