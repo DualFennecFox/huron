@@ -38,7 +38,7 @@ module.exports = {
                 if (approved === true) return message.channel.send("Esta sugerencia ya esta respondida")
 
                 let reason = args.slice(1).join(" ")
-                msg.embeds[0].addField("Aprobada", reason)
+                msg.edit(msg.embeds[0].addField("Aprobada", reason))
 
                 return message.channel.send("Se ha aprobado la sugerencia")
             }).catch(err => {
