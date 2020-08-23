@@ -34,7 +34,10 @@ module.exports = {
         .setDescription(suggestion)
         .setFooter(`Por: ${message.author.tag} ID: ${message.author.id}`)
 
-        channel.send({ embed })
+        channel.send({ embed }).then(msg => {
+        msg.react("✅")
+        msg.react("❌")
+        })
 
         doc.suggestionLevel = level + 1
 

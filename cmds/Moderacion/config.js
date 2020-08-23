@@ -502,6 +502,40 @@ module.exports = {
                 message.channel.send("Ha ocurrido un error al establecer el color")
             })
             break;
+            case "disablesuggestions": 
+            Guild.findOne({ guildID: message.guild.id }).then(doc => {
+                if (!doc) {
+                    message.channel.send("No existe un canal de sugerencias")
+                    return getGuild(message.guild)
+                 }
+               else if (!doc.suggestionChannel) return message.channel.send("No existe un canal de sugerencias")
+            else {
+            updateGuild(message.guild, { suggestionChannel: "", suggestionColor: "", suggestionLevel: 0 })
+    
+            message.channel.send("Se han eliminado las sugerencias")
+            }
+        }).catch(err => {
+            console.error(err)
+            message.channel.send("Ha ocurrido un error")
+        })
+            break;
+            case "resetsuggestions":
+                Guild.findOne({ guildID: message.guild.id }).then(doc => {
+                    if (!doc) {
+                        message.channel.send("No hay ninguna sugerencia")
+                        return getGuild(message.guild)
+                     }
+                   else if (doc.suggestionLevel === 0) return message.channel.send("No hay ninguna sugerencia")
+                else {
+                updateGuild(message.guild, { suggestionLevel: 0 })
+        
+                message.channel.send("Se han restablecido las sugerencias")
+                }
+            }).catch(err => {
+                console.error(err)
+                message.channel.send("Ha ocurrido un error")
+            })  
+            break;
             case "logchannel": 
             if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_MEMBERS")) return message.channel.send("No tienes permisos para usar este comando")
         
@@ -576,8 +610,10 @@ module.exports = {
                 .addField("Prefix", "Para cambiar el prefix eliga uno diciendo \"prefix\"\n Ejemplo: config prefix - \n")
                 .addField("WelcomeMsg", "Para cambiar el mensaje de bienvenida diga \"welcomemsg\"\n Ejemplo: config welcomemsg \`#Canal-mencionado\` Bienvenido {user} a {server}\n")
                 .addField("Leavemsg", "Para cambiar el mensaje de despedida diga \"welcomemsg\"\n Ejemplo: config leavemsg \`#Canal-mencionado\` {user} a dejado {server}\n")
+                .addField("MuteRole", `Para establecer el rol Muteado, mencione uno, su ID o cree uno con <Nombre> [Color HTML]\nEjemplo: ${prefix}config muterole Muteado #ff0000\n`)
                 .addField("DisableWelcome", "Elimina el mensaje de bienvenida, si es que esta activado\n")
                 .addField("DisableLeave", "Elimina el mensaje de despedida, si es que esta activado\n")
+                .addField("DisableMute", "Elimina el Rol para Mutear, si es que existe\n")
                 .addField("Tags", "Los tags para los mensajes de bienvenida y despedida son:\n {user} : Menciona al usuario\n {username} : Muestra el nombre y el tag del usuario\n {server} : Muestra el nombre del servidor\n {owner} : Nombra al Owner del servidor con su tag\n {members} : Muestra el número de miembros desde que el usuario se unio o dejo el server.")
 
                 message.channel.send({ embed })
