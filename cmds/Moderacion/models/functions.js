@@ -47,7 +47,9 @@ let getGuild = async (guild) => {
         },
         warns: [],
         role: [],
-        muteUsers: []
+        muteUsers: [],
+        suggestionColor: "RANDOM",
+        suggestionLevel: 0
       };
       try {
         createGuild(newGuild);
@@ -176,11 +178,20 @@ const commands = (category) => {
         .join("\n");
 } 
 
+const configCommands = () => {
+  let command = ["prefix", "welcomemsg", "leavemsg", "muterole", "disablewelcome", "disableleave", "disablemute"]
+
+  return command
+        .map(name => `\`${name}\``)
+        .join("\n");
+}
+
     return message.channel.send(embed.setDescription(`Estos son todos los comandos, si necesita ayuda vea la sección **Invite**.`)
     .addField("Comandos de Información", commands("Info"))
     .addField("Comandos de Moderación", commands("Moderacion"))
     .addField("Comandos de Música", commands("Musica"))
-    .addField('Invite', '[Server de Soporte](https://discord.gg/WpGqHCJ) | [Invitar al Bot](https://discord.com/oauth2/authorize?client_id=708377742340653137&permissions=-8&scope=bot) | [Patreon](https://patreon.com/EPBK) | [Vota](https://top.gg/bot/728100449047019534)'));
+    .addField("Comandos de Configuración", `Estos son comandos dentro del comando config, se deben usar despues de ${prefix}config\n\n${configCommands()}`)
+    .addField('Invite', `[Server de Soporte](https://discord.gg/WpGqHCJ) | [Invitar al Bot](https://discord.com/oauth2/authorize?client_id=${client.user.id}&permissions=-8&scope=bot) | [Patreon](https://patreon.com/EPBK) | [Vota](https://top.gg/bot/${client.user.id})`));
 }
 
 function getCMD(client, message, input) {

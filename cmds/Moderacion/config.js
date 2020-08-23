@@ -23,13 +23,13 @@ module.exports = {
                 .addField("MuteRole", `Para establecer el rol Muteado, mencione uno, su ID o cree uno con <Nombre> [Color HTML]\nEjemplo: ${prefix}config muterole Muteado #ff0000\n`)
                 .addField("DisableWelcome", "Elimina el mensaje de bienvenida, si es que esta activado\n")
                 .addField("DisableLeave", "Elimina el mensaje de despedida, si es que esta activado\n")
-                .addField("RemoveMute", "Elimina el Rol para Mutear, si es que existe\n")
+                .addField("DisableMute", "Elimina el Rol para Mutear, si es que existe\n")
                 .addField("Tags", "Los tags para los mensajes de bienvenida y despedida son:\n\n**{user}** : Menciona al usuario\n**{username}** : Muestra el nombre y el tag del usuario\n**{server}** : Muestra el nombre del servidor\n**{owner}** : Nombra al Owner del servidor con su tag\n**{members}** : Muestra el número de miembros desde que el usuario se unio o dejo el server.")
 
                 message.channel.send({ embed })
                 return
         }
-        switch (args[0]) {
+        switch (args[0].toLowerCase()) {
             case "prefix":
                 if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando")
                 if (!args[1]) return message.channel.send(`Mi prefix en este server es ${prefix}`)
@@ -369,6 +369,139 @@ module.exports = {
                 message.channel.send("Ha ocurrido un error")
             })
             break;
+            case "suggestionchannel": 
+            if (!args[1]) return message.channel.send("Debes mencionar un canal o su ID")
+
+            let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[1])
+            if (!channel) return message.channel.send("Ese no parece ser un canal válido")
+
+            Guild.findOne({ guildID: message.guild.id }).then(async doc => {
+                if (!doc) {
+                    const newGuild = {
+                        guildID: message.guild.id,
+                        guildName: message.guild.name,
+                        guildOwner: message.guild.owner.user.username,
+                        guildOwnerID: message.guild.ownerID,
+                        prefix: '!',
+                        JoinMsg: "",
+                        JoinBool: false,
+                        LeaveMsg: "",
+                        LeaveBool: false,
+                        WelcomeChannel: "",
+                        LeaveChannel: "",
+                        LogChannel: "",
+                        log: {
+                        Premium: false,
+                        channelCreate: false,
+                        channelDelete: false,
+                        channelUpdate: false,
+                        emojiCreate: false,
+                        emojiDelete: false,
+                        emojiUpdate: false,
+                        banAdd: false,
+                        banRemove: false,
+                        MemberAdd: false,
+                        MemberRemove: false,
+                        MemberUpdate: false,
+                        guildUpdate: false,
+                        inviteCreate: false,
+                        inviteDelete: false,
+                        messageDelete: false,
+                        messageDeleteBulk: false,
+                        messageUpdate: false,
+                        roleCreate: false,
+                        roleDelete: false,
+                        roleUpdate: false,
+                        userUpdate: false,
+                        voiceState: false
+                        },
+                        warns: [],
+                        role: [],
+                        muteUsers: [],
+                        suggestionChannel: channel,
+                        suggestionColor: "RANDOM",
+                        suggestionLevel: 0
+                      };
+                      try {
+                        createGuild(newGuild);
+                      } catch (error) {
+                        console.error(error);
+                      }
+                }
+                else updateGuild(message.guild, { suggestionChannel: channel })
+                
+                return message.channel.send("Se ha establecido el canal de sugerencias")
+            }).catch(err => {
+                console.error(err)
+                message.channel.send("Ha ocurrido un error al establecer el canal de sugerencias")
+            })
+            break;
+            case "suggestioncolor":
+                if (!args[1]) return message.channel.send("Debes usar un color HTML o cualquiera con \"RANDOM\"")
+
+            let color = args[2]
+            if (color !== "RANDOM") {
+            if (!validateColor.validateHTMLColorHex(color)) return message.channel.send("Ese no parece ser un color válido")
+            }
+            Guild.findOne({ guildID: message.guild.id }).then(async doc => {
+                if (!doc) {
+                    const newGuild = {
+                        guildID: message.guild.id,
+                        guildName: message.guild.name,
+                        guildOwner: message.guild.owner.user.username,
+                        guildOwnerID: message.guild.ownerID,
+                        prefix: '!',
+                        JoinMsg: "",
+                        JoinBool: false,
+                        LeaveMsg: "",
+                        LeaveBool: false,
+                        WelcomeChannel: "",
+                        LeaveChannel: "",
+                        LogChannel: channel,
+                        log: {
+                        Premium: false,
+                        channelCreate: false,
+                        channelDelete: false,
+                        channelUpdate: false,
+                        emojiCreate: false,
+                        emojiDelete: false,
+                        emojiUpdate: false,
+                        banAdd: false,
+                        banRemove: false,
+                        MemberAdd: false,
+                        MemberRemove: false,
+                        MemberUpdate: false,
+                        guildUpdate: false,
+                        inviteCreate: false,
+                        inviteDelete: false,
+                        messageDelete: false,
+                        messageDeleteBulk: false,
+                        messageUpdate: false,
+                        roleCreate: false,
+                        roleDelete: false,
+                        roleUpdate: false,
+                        userUpdate: false,
+                        voiceState: false
+                        },
+                        warns: [],
+                        role: [],
+                        muteUsers: [],
+                        suggestionColor: color
+                      };
+                      try {
+                        createGuild(newGuild);
+                      } catch (error) {
+                        console.error(error);
+                      }
+                }
+                else updateGuild(message.guild, { suggestionColor: color })
+                
+                return message.channel.send("Se ha establecido el color para las sugerencias")
+            }).catch(err => {
+                console.error(err)
+                message.channel.send("Ha ocurrido un error al establecer el color")
+            })
+            break;
             case "logchannel": 
             if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_MEMBERS")) return message.channel.send("No tienes permisos para usar este comando")
         
@@ -434,6 +567,7 @@ module.exports = {
             console.error(err)
             message.channel.send("Ha ocurrido un error al establecer el canal de registros")
         })
+        break;
             default:
                 const embed = new Discord.MessageEmbed()
                 .setAuthor("Configuración", client.user.displayAvatarURL())
