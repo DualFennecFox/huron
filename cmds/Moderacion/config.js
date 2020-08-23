@@ -582,7 +582,7 @@ module.exports = {
                     console.error(error);
                   }
             }
-            else updateGuild(message.guild, { LogChannel: channel })
+            else updateGuild(message.guild, { LogChannel: Channel })
             
             return message.channel.send("Se ha establecido el canal de registros")
         }).catch(err => {
