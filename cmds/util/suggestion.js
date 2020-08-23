@@ -24,7 +24,7 @@ module.exports = {
         let color = doc.suggestionColor
         if (!color || !validateColor.validateHTMLColorHex(color)) color = "RANDOM"
         let level = doc.suggestionLevel
-        if (isNaN(level)) level = 1
+        if (doc.suggestionLevel === 0) level = 1
 
         let suggestion = args.join(" ")
         
