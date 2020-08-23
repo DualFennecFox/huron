@@ -1,11 +1,12 @@
 const Guild = require('../Moderacion/models/Guild')
+const { updateGuild } = require("../Moderacion/models/functions")
 
 module.exports = {
     name: "resetsuggestions",
     category: "Util",
     description: "Resetea todas las sugerencias",
     run: async (client, message, args) => {
-        
+
         Guild.findOne({ guildID: message.guild.id }).then(doc => {
             if (!doc) {
                 message.channel.send("No hay ninguna sugerencia")
