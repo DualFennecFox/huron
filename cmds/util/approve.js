@@ -28,12 +28,12 @@ module.exports = {
                 if (!msg.editable) return message.channel.send("No puedo editar ese mensaje")
                 
                 let approved = false
-                if (!message.embeds[0]) return message.channel.send("Ese no es un mensaje de sugerencias")
-                if (!message.embeds[0].author) return message.channel.send("Ese no es un mensaje de sugerencias")
-                if (!message.embeds[0].author.name.includes("Sugerencia")) return message.channel.send("Ese no es un mensaje de sugerencias")
+                if (!msg.embeds[0]) return message.channel.send("Ese no es un mensaje de sugerencias")
+                if (!msg.embeds[0].author) return message.channel.send("Ese no es un mensaje de sugerencias")
+                if (!msg.embeds[0].author.name.includes("Sugerencia #")) return message.channel.send("Ese no es un mensaje de sugerencias")
 
-                    if (message.embeds[0].fields) {
-                        if (message.embeds[0].fields[0].name === "Aprobada" || message.embeds[0].fields[0].name === "Denegada") {
+                    if (msg.embeds[0].fields) {
+                        if (msg.embeds[0].fields[0].name === "Aprobada" || msg.embeds[0].fields[0].name === "Denegada") {
                             approved = true
                         }
                     }
