@@ -20,7 +20,7 @@ module.exports = {
         if (!channel) return message.channel.send("El canal de sugerencias no parece ser válido")
 
         if (!channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para enviar mensajes en el canal de sugerencias")
-        
+        if (message.guild.me.hasPermission("MANAGE_MESSAGES")) message.delete()
         let color = doc.suggestionColor
         if (!color || !validateColor.validateHTMLColorHex(color)) color = "RANDOM"
         let level = doc.suggestionLevel
@@ -36,7 +36,7 @@ module.exports = {
 
         channel.send({ embed })
 
-        doc.suggestionLevel = level++
+        doc.suggestionLevel = level + 1
 
         await doc.save()
 
