@@ -29,10 +29,8 @@ module.exports = {
                 
                 let approved = false
                 if (!message.embeds[0]) return message.channel.send("Ese no es un mensaje de sugerencias")
-                if (!message.embeds[0].fields) return message.channel.send("Ese no es un mensaje de sugerencias")
                 if (!message.embeds[0].author.name.includes("Sugerencia #")) return message.channel.send("Ese no es un mensaje de sugerencias")
-                
-                if (message.embeds[0]) {
+
                     if (message.embeds[0].fields) {
                         if (message.embeds[0].fields[0].name === "Aprobada" || message.embeds[0].fields[0].name === "Denegada") {
                             approved = true
