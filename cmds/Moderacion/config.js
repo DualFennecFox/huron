@@ -21,9 +21,14 @@ module.exports = {
                 .addField("WelcomeMsg", `Para cambiar el mensaje de bienvenida diga \"welcomemsg\"\nEjemplo: ${prefix}config welcomemsg \`#Canal-mencionado\` Bienvenido {user} a {server}\n`)
                 .addField("Leavemsg", `Para cambiar el mensaje de despedida diga \"welcomemsg\"\nEjemplo: ${prefix}config leavemsg \`#Canal-mencionado\` {user} a dejado {server}\n`)
                 .addField("MuteRole", `Para establecer el rol Muteado, mencione uno, su ID o cree uno con <Nombre> [Color HTML]\nEjemplo: ${prefix}config muterole Muteado #ff0000\n`)
-                .addField("DisableWelcome", "Elimina el mensaje de bienvenida, si es que esta activado\n")
-                .addField("DisableLeave", "Elimina el mensaje de despedida, si es que esta activado\n")
+                .addField("SuggestionChannel", `Establece un canal de sugerencias con mención o ID\nEjemplo: ${prefix}config suggestionchannel \`#Canal-mencionado\`\n`)
+                .addField("SuggestionColor", `Establece un color HTML Hex como color para las sugerencias, puede ser cualquiera con \"RANDOM\"\nEjemplo: ${prefix}config suggestioncolor #ff0000\n`)
+                .addField("LogChannel", `Establece un canal para logear con su mención o ID\nEjemplo: ${prefix}config logchannel \`Canal-mencionado\`\n`)
+                .addField("DisableWelcome", "Elimina el mensaje de bienvenida, si es que existe\n")
+                .addField("DisableLeave", "Elimina el mensaje de despedida, si es que existe\n")
                 .addField("DisableMute", "Elimina el Rol para Mutear, si es que existe\n")
+                .addField("DisableSuggestions", "Elimina el canal de sugerencias, el color y el número de sugerencias existentes\n")
+                .addField("DisableLog", "Elimina el canal para los logs, si es que esta existe\n")
                 .addField("Tags", "Los tags para los mensajes de bienvenida y despedida son:\n\n**{user}** : Menciona al usuario\n**{username}** : Muestra el nombre y el tag del usuario\n**{server}** : Muestra el nombre del servidor\n**{owner}** : Nombra al Owner del servidor con su tag\n**{members}** : Muestra el número de miembros desde que el usuario se unio o dejo el server.")
 
                 message.channel.send({ embed })
@@ -519,23 +524,6 @@ module.exports = {
             message.channel.send("Ha ocurrido un error")
         })
             break;
-            case "resetsuggestions":
-                Guild.findOne({ guildID: message.guild.id }).then(doc => {
-                    if (!doc) {
-                        message.channel.send("No hay ninguna sugerencia")
-                        return getGuild(message.guild)
-                     }
-                   else if (doc.suggestionLevel === 0) return message.channel.send("No hay ninguna sugerencia")
-                else {
-                updateGuild(message.guild, { suggestionLevel: 0 })
-        
-                message.channel.send("Se han restablecido las sugerencias")
-                }
-            }).catch(err => {
-                console.error(err)
-                message.channel.send("Ha ocurrido un error")
-            })  
-            break;
             case "logchannel": 
             if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_MEMBERS")) return message.channel.send("No tienes permisos para usar este comando")
         
@@ -602,19 +590,41 @@ module.exports = {
             message.channel.send("Ha ocurrido un error al establecer el canal de registros")
         })
         break;
+        case "disablelog":
+            Guild.findOne({ guildID: message.guild.id }).then(doc => {
+                if (!doc) {
+                    message.channel.send("No existe un canal para logear")
+                    return getGuild(message.guild)
+                 }
+               else if (!doc.LogChannel) return message.channel.send("No existe un canal para logear")
+            else {
+            updateGuild(message.guild, { LogChannel: "" })
+    
+            message.channel.send("Se ha eliminado el canal de logeos")
+            }
+        }).catch(err => {
+            console.error(err)
+            message.channel.send("Ha ocurrido un error")
+        })
+        break;
             default:
                 const embed = new Discord.MessageEmbed()
                 .setAuthor("Configuración", client.user.displayAvatarURL())
                 .setColor("#FFFF00")
                 .setDescription("Estos son los comandos de configuración:")
-                .addField("Prefix", "Para cambiar el prefix eliga uno diciendo \"prefix\"\n Ejemplo: config prefix - \n")
-                .addField("WelcomeMsg", "Para cambiar el mensaje de bienvenida diga \"welcomemsg\"\n Ejemplo: config welcomemsg \`#Canal-mencionado\` Bienvenido {user} a {server}\n")
-                .addField("Leavemsg", "Para cambiar el mensaje de despedida diga \"welcomemsg\"\n Ejemplo: config leavemsg \`#Canal-mencionado\` {user} a dejado {server}\n")
+                .addField("Prefix", `Para cambiar el prefix eliga uno diciendo \"prefix\"\nEjemplo: ${prefix}config prefix - \n`)
+                .addField("WelcomeMsg", `Para cambiar el mensaje de bienvenida diga \"welcomemsg\"\nEjemplo: ${prefix}config welcomemsg \`#Canal-mencionado\` Bienvenido {user} a {server}\n`)
+                .addField("Leavemsg", `Para cambiar el mensaje de despedida diga \"welcomemsg\"\nEjemplo: ${prefix}config leavemsg \`#Canal-mencionado\` {user} a dejado {server}\n`)
                 .addField("MuteRole", `Para establecer el rol Muteado, mencione uno, su ID o cree uno con <Nombre> [Color HTML]\nEjemplo: ${prefix}config muterole Muteado #ff0000\n`)
-                .addField("DisableWelcome", "Elimina el mensaje de bienvenida, si es que esta activado\n")
-                .addField("DisableLeave", "Elimina el mensaje de despedida, si es que esta activado\n")
+                .addField("SuggestionChannel", `Establece un canal de sugerencias con mención o ID\nEjemplo: ${prefix}config suggestionchannel \`#Canal-mencionado\`\n`)
+                .addField("SuggestionColor", `Establece un color HTML Hex como color para las sugerencias, puede ser cualquiera con \"RANDOM\"\nEjemplo: ${prefix}config suggestioncolor #ff0000\n`)
+                .addField("LogChannel", `Establece un canal para logear con su mención o ID\nEjemplo: ${prefix}config logchannel \`Canal-mencionado\`\n`)
+                .addField("DisableWelcome", "Elimina el mensaje de bienvenida, si es que existe\n")
+                .addField("DisableLeave", "Elimina el mensaje de despedida, si es que existe\n")
                 .addField("DisableMute", "Elimina el Rol para Mutear, si es que existe\n")
-                .addField("Tags", "Los tags para los mensajes de bienvenida y despedida son:\n {user} : Menciona al usuario\n {username} : Muestra el nombre y el tag del usuario\n {server} : Muestra el nombre del servidor\n {owner} : Nombra al Owner del servidor con su tag\n {members} : Muestra el número de miembros desde que el usuario se unio o dejo el server.")
+                .addField("DisableSuggestions", "Elimina el canal de sugerencias, el color y el número de sugerencias existentes\n")
+                .addField("DisableLog", "Elimina el canal para los logs, si es que esta existe\n")
+                .addField("Tags", "Los tags para los mensajes de bienvenida y despedida son:\n\n**{user}** : Menciona al usuario\n**{username}** : Muestra el nombre y el tag del usuario\n**{server}** : Muestra el nombre del servidor\n**{owner}** : Nombra al Owner del servidor con su tag\n**{members}** : Muestra el número de miembros desde que el usuario se unio o dejo el server.")
 
                 message.channel.send({ embed })
             break;

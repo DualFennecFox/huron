@@ -1,4 +1,3 @@
-const Discord = require('discord.js')
 const Guild = require("../Moderacion/models/Guild")
 
 module.exports = {
