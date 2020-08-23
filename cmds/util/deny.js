@@ -38,7 +38,7 @@ module.exports = {
                 if (approved === true) return message.channel.send("Esta sugerencia ya esta respondida")
 
                 let reason = args.slice(1).join(" ")
-                message.embeds[0].addField("Denegada", reason)
+                msg.embeds[0].addField("Denegada", reason)
 
                 return message.channel.send("Se ha denegado la sugerencia")
             }).catch(err => {
