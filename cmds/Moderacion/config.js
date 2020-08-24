@@ -39,10 +39,14 @@ module.exports = {
             command = client.configs.get(cmd)
         }
 
-        if (!args[1] && cmd !== "reset") return message.channel.send("Ese no parece ser un bune uso del comando")
+        if (!args[1] && cmd !== "reset") return message.channel.send("Ese no parece ser un buen del comando");
+
         if (args[1].toLowerCase() === "enable") method = args[1].toLowerCase()
         else if (args[1].toLowerCase() === "disable") method = args[1].toLowerCase()
-        else if (cmd !== "prefix" || cmd !== "reset") return message.channel.send("Ese no parece ser un buen uso del comando");
+        
+        if (!method) {
+            if (cmd !== "prefix" || cmd !== "reset") return message.channel.send("Ese no parece ser un buen uso del comando");
+        }
 
         if (command) command.run(message, args, method)
         else return message.channel.send("Esa no es una configuración válida");
