@@ -30,7 +30,7 @@ module.exports = {
             return message.channel.send({ embed })
         }
         
-        let cmd = args[1].toLowerCase()
+        let cmd = args[0].toLowerCase()
         let command;
         let method;
 
@@ -39,8 +39,8 @@ module.exports = {
             command = client.configs.get(cmd)
         }
 
-        if (args[2].toLowerCase() === "enable") method = args[2].toLowerCase()
-        else if (args[2].toLowerCase() === "disable") method = args[2].toLowerCase()
+        if (args[1].toLowerCase() === "enable") method = args[1].toLowerCase()
+        else if (args[1].toLowerCase() === "disable") method = args[1].toLowerCase()
         else if (!method && cmd !== "prefix" || !method && cmd !== "reset") return message.channel.send("Ese no parece ser un buen uso del comando");
 
         if (command) command.run(message, args, method)
