@@ -3,7 +3,7 @@ const { getGuild, updateGuild } = require("../cmds/Moderacion/models/functions")
 const { validateHTMLColorHex } = require('validate-color')
 
 module.exports = {
-    name: "prefix",
+    name: "suggestion",
     run: async (message, args, method) => {
 
     if (method === "enable") {

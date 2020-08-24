@@ -37,7 +37,8 @@ module.exports = {
         
         if (client.configs.has(cmd)) {
             command = client.configs.get(cmd)
-        }
+        };
+        
         if (cmd !== "prefix" || cmd !== "reset") {
         if (!args[1]) return message.channel.send("Ese no parece ser un buen del comando");
 
