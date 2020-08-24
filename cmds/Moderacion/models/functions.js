@@ -62,7 +62,7 @@ let getGuild = async (guild) => {
     }).catch(err => {
       console.error(err)
     })
-    let db = await Guild.findOne({ guildID: message.guild.id })
+    let db = await Guild.findOne({ guildID: guild.id })
     doc = db
     if (doc) return doc
   }
