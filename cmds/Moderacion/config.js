@@ -45,7 +45,8 @@ module.exports = {
         else if (args[1].toLowerCase() === "disable") method = args[1].toLowerCase()
         
         if (!method) {
-            if (cmd !== "prefix" || cmd !== "reset") return message.channel.send("Ese no parece ser un buen uso del comando");
+            if (cmd === "prefix" || cmd === "reset") continue
+            else return message.channel.send("Ese no parece ser un buen uso del comando");
         }
 
         if (command) command.run(message, args, method)
