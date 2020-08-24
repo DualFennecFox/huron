@@ -109,7 +109,7 @@ module.exports = {
                 unable += `${changePerm[key]}\n`
             }
         }
-        
+        let arg = args[0].toLowerCase()
         if (!args.length >= 1) {
             const embed = new Discord.MessageEmbed()
                 .setAuthor("Registros", client.user.displayAvatarURL())
@@ -122,16 +122,19 @@ module.exports = {
                 message.channel.send({ embed })
                 return
         }
+         else if (arg === "enable" || arg === "disable") {
+         if (arg === "enable") method = "enable"
+         else if (arg === "disable") method = "disable";
         
-        else if (args[0] === "enable" || args[0] || "disable") {
-         if (args[0] === "enable") method = "enable"
-         else if (args[0] === "disable") method = "disable";
+         let cmd = args[1].toLowerCase()
 
-         if (client.log.has(args[1])) {
-            command = client.log.get(args[1])
+         if (client.log.has(cmd)) {
+            command = client.log.get(cmd)
         };
             if (command) command.run(message, method)
+            else return message.channel.send("Ese no es un evento válido")
     }
+    else return message.channel.send("Dime si quieres activarlo o desactivarlo")
 }).catch(err => {
     console.error(err)
 })

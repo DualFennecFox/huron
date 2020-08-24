@@ -35,8 +35,10 @@ module.exports = {
         .setFooter(`Por: ${message.author.tag} ID: ${message.author.id}`)
 
         channel.send({ embed }).then(msg => {
+        if (message.guild.me.hasPermission("ADD_REACTIONS")) {
         msg.react("✅")
         msg.react("❌")
+        }
         })
 
         doc.suggestionLevel = level + 1

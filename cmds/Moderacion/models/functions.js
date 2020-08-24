@@ -4,8 +4,10 @@ const mongoose = require('mongoose');
 const { MessageEmbed } = require('discord.js')
 
 let getGuild = async (guild) => {
-    Guild.findOne({ guildID: guild.id }).then(result => {
-   if (result) defaultSettings.prefix = result.prefix
+    var doc
+    Guild.findOne({ guildID: guild.id }).then(async result => {
+
+   if (result) doc = result
     else {
       const newGuild = {
         guildID: guild.id,
@@ -52,7 +54,7 @@ let getGuild = async (guild) => {
         suggestionLevel: 0
       };
       try {
-        createGuild(newGuild);
+        await createGuild(newGuild);
       } catch (error) {
         console.error(error);
       }
@@ -60,6 +62,9 @@ let getGuild = async (guild) => {
     }).catch(err => {
       console.error(err)
     })
+    let db = await Guild.findOne({ guildID: message.guild.id })
+    doc = db
+    if (doc) return doc
   }
   
   let updateGuild = async (guild, settings) => {

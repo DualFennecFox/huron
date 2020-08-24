@@ -18,7 +18,6 @@ const { getUser } = require('./models/functions')
            try {
             User = await client.users.fetch(UserID);
            } catch (err) {
-               console.error(err)
                return message.channel.send("Ese no parece ser un usuario valido")
            }
         }

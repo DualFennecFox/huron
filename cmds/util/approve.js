@@ -7,6 +7,10 @@ module.exports = {
         usage: '!approve <Mensaje> <Razón>',
         examples: ['!approve 12345678987654321 Lo agregaremos en un instante'],
         run: async (client , message, args) => {
+
+            if (!args[0]) return message.channel.send("Debes especificar un mensaje")
+            if (!message.member.hasPermission("MANAGE_GUILD" || "MANAGE_MEMBERS"|| "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando")
+            
             Guild.findOne({ guildID: message.guild.id }).then(async doc => {
 
                 let channel = message.guild.channels.cache.get(doc.suggestionChannel)
@@ -14,10 +18,10 @@ module.exports = {
             
                 let msg = channel.messages.cache.get(args[0])
                 if (!msg) {
+                    let MsgID = args[0].replace(/([^0-9])/g, '')
                     try {
-                        msg = await channel.messages.fetch(args[0])
+                        msg = await channel.messages.fetch(MsgID)
                     } catch (err) {
-                        console.error(err)
                         return message.channel.send("Ese no parece ser un ID de mensaje válido")
                     }
                 }
@@ -38,6 +42,7 @@ module.exports = {
                     }
                 if (approved === true) return message.channel.send("Esta sugerencia ya esta respondida")
 
+                if (!args[1]) return message.channel.send("Debes especificar una razón")
                 let reason = args.slice(1).join(" ")
                 msg.edit(msg.embeds[0].addField("Aprobada", reason))
 
