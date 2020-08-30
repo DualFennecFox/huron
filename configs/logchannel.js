@@ -1,5 +1,5 @@
 const Guild = require("../cmds/Moderacion/models/Guild")
-const { updateGuild } = require("../cmds/Moderacion/models/functions")
+const { updateGuild, createGuild } = require("../cmds/Moderacion/models/functions")
 
 module.exports = {
     name: "logchannel",
