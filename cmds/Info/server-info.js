@@ -4,6 +4,7 @@ module.exports = {
     name : 'server-info',
     category: "Info",
     description : 'Este comando muestra la información del server, como el nombre, el id, el dueño, Etc... Se pueden ver los roles del servidor con \"roles\" y los canales con \"channels\" ',
+    aliases: ['serverinfo'],
     usage: '!server-info',
     run: async (client , message, args) => {
     function checkDays(date) {
