@@ -6,6 +6,7 @@ module.exports = {
     category: "Info",
     description : 'Este comando muestra la información del usuario, su creación, el id, sus roles, Etc... \nSi quiere ver los roles del usuario escriba \"roles\", despues del comando o usuario mencionado',
     usage: '!user-info <Usuario> [roles]',
+    aliases: ['userinfo'],
     examples: ['!user-info', '!user-info @Wumpus', '!userinfo roles @Wumpus'],
     run: async (client , message, args, prefix, contentPrefix) => {
     function checkDays(date) {
