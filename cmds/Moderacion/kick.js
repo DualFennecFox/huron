@@ -40,7 +40,7 @@ const { getUser } = require('./models/functions');
     message.guild.member(kUser).kick(kReason);
     } catch (err) {
         console.error(err)
-        return message.channel.send("A ocurrido un error al expulsar a este usuario")
+        return message.channel.send("Ha ocurrido un error al expulsar a este usuario")
     }
     message.channel.send( kickEmbed )
     .catch(err => {
