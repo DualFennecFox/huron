@@ -50,7 +50,6 @@ module.exports = {
             warns: [],
             role: [],
             muteUsers: [],
-            suggestionColor: ""
           };
 
           updateGuild(message.guild, newGuild)
