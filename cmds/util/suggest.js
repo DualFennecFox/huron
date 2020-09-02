@@ -31,7 +31,7 @@ module.exports = {
         .setAuthor(`Sugerencia #${level}`, message.author.displayAvatarURL({ format: "png", dynamic: true }))
         .setColor(color)
         .setDescription(suggestion)
-        .setFooter(`Por: ${message.author.tag} ID: ${message.author.id}`)
+        .setFooter(`Por: ${message.author.tag}`)
 
         channel.send({ embed }).then(msg => {
         if (message.guild.me.hasPermission("ADD_REACTIONS")) {
