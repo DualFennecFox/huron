@@ -3,12 +3,11 @@ const Guild = require("../Moderacion/models/Guild")
 const validateColor = require("validate-color")
 
 module.exports = {
-        name : 'suggestion',
+        name : 'suggest',
         category: "Util",
-        aliases: ["suggest"],
         description : 'Este comando sugiere cosas para el servidor en un canal especificado.',
-        usage: '!suggestion <Sugerencia>',
-        examples: ['!suggestion Pongan al Bot de Wumpus'],
+        usage: '!suggest <Sugerencia>',
+        examples: ['!suggest Pongan al Bot de Wumpus'],
         run: async (client , message, args) => {
 
         if (!args[0]) return message.channel.send("Debes sugerir algo")
@@ -22,7 +21,7 @@ module.exports = {
         if (!channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para enviar mensajes en el canal de sugerencias")
         if (message.guild.me.hasPermission("MANAGE_MESSAGES")) message.delete()
         let color = doc.suggestionColor
-        if (!color || !validateColor.validateHTMLColorHex(color)) color = "RANDOM"
+        if (!color || !validateColor.validateHTMLColorHex(color)) color = "#0000FF"
         let level = doc.suggestionLevel
         if (doc.suggestionLevel === 0) level = 1
 

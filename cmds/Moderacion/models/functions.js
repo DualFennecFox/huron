@@ -184,7 +184,7 @@ const commands = (category) => {
 } 
 
 const configCommands = () => {
-  let command = [  "disableleave", "disablelog", "disablesuggestions", "disablewelcome", "muterole", "suggestionchannel", "suggestioncolor", "prefix", "welcomemsg"]
+  let command = [ "joinmsg", "leavemsg", "logchannel", "muterole", "suggestion", "prefix"]
 
   return command
         .map(name => `\`${name}\``)

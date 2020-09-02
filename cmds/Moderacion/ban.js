@@ -52,7 +52,7 @@ const { getUser } = require('./models/functions')
     .setAuthor("Ban", User.displayAvatarURL({ format: "png", dynamic: true}))
     .setColor("#0088ff")
     .addField("Usuario Baneado", `${User}\n**ID:** ${User.id}`)
-    .addField("Razón de Baneo", bReason);
+    .addField("Razón", bReason);
 
     try {
     message.guild.members.ban(User.id, { reason: bReason })

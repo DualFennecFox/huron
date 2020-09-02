@@ -48,7 +48,7 @@ module.exports = {
     .setAuthor("UnBan", User.displayAvatarURL({ format: "png", dynamic: true}))
     .setColor("#0088ff")
     .addField("Usuario Desbaneado", `${User}\n**ID:** ${User.id}`)
-    .addField("Razón de Desbaneo", bReason);
+    .addField("Razón", bReason);
     
     message.channel.send( unbanEmbed )
 }

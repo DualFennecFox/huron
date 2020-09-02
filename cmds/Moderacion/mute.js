@@ -50,7 +50,7 @@ let muteEmbed = new Discord.MessageEmbed()
     .setAuthor("Mute", mutee.user.displayAvatarURL({ format: "png", dynamic: true}))
     .setColor("#0088ff")
     .addField("Usuario Muteado", `${mutee}\n**ID:** ${mutee.id}`)
-    .addField("Razón de Mute", mReason);
+    .addField("Razón", mReason);
 
     message.channel.send( muteEmbed )
     .catch(err => {
