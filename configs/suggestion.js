@@ -12,19 +12,21 @@ module.exports = {
         let color = "RANDOM"
 
         let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[2])
-        if (!channel) {
+
             if (validateHTMLColorHex(args[2].toUpperCase()) || args[2].toUpperCase() === "RANDOM") color = args[2].toUpperCase()
-        }
+        
 
         Guild.findOne({ guildID: message.guild.id }).then(async doc => {
         if (doc) {
             if (doc.suggestionColor || doc.suggestionColor !== "RANDOM") color = doc.suggestionColor
         }
+        if (args[3]) {
         if (!channel) channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[3])
 
-        if (args[3]) {
         if (validateHTMLColorHex(args[3].toUpperCase()) || args[3].toUpperCase() === "RANDOM") color = args[3].toUpperCase()
+
         }
+        
         if (!channel && !color) return message.channel.send("Debes especificar un canal o color válido")
             
             if (!doc) {
