@@ -1,5 +1,5 @@
 const Guild = require('../cmds/Moderacion/models/Guild')
-const { getGuild, updateGuild } = require("../cmds/Moderacion/models/functions")
+const { getGuild, updateGuild, createGuild } = require("../cmds/Moderacion/models/functions")
 const { validateHTMLColorHex } = require('validate-color')
 
 module.exports = {
