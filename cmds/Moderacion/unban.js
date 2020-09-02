@@ -19,7 +19,6 @@ module.exports = {
        try {
         User = await client.users.fetch(UserID);
        } catch (err) {
-           console.error(err)
            message.channel.send("Ese no parece ser un usuario valido")
        }
     }
