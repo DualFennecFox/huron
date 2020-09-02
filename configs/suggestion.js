@@ -12,7 +12,7 @@ module.exports = {
         let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[2])
 
         if (!channel && !color) return message.channel.send("Debes especificar un canal")
-            
+        Guild.findOne({ guildID: message.guild.id }).then(doc => {    
             if (!doc) {
                 const newGuild = {
                     guildID: message.guild.id,
@@ -67,6 +67,10 @@ module.exports = {
             else updateGuild(message.guild, { suggestionChannel: channel })
             
             return message.channel.send("Se ha establecido el canal de sugerencias")
+        }).catch(err => {
+            console.error(err)
+            return message.channel.send("Ha ocurrido un error")
+        })
     }
     else if (method === "disable") {
         Guild.findOne({ guildID: message.guild.id }).then(doc => {
