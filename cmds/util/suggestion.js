@@ -50,7 +50,7 @@ module.exports = {
     
                     if (!args[2]) return message.channel.send("Debes especificar una razón")
                     let reason = args.slice(2).join(" ")
-                    msg.edit(msg.embeds[0].addField("Aprobada", reason).setColor("#00FF00"))
+                    msg.edit(msg.embeds[0].addField("Aprobada", reason).setColor("#7BFFCF"))
     
                     return message.channel.send("Se ha aprobado la sugerencia")
                 }).catch(err => {
@@ -97,7 +97,7 @@ module.exports = {
                 if (!args[2]) return message.channel.send("Debes especificar una razón")
                 let reason = args.slice(2).join(" ")
                 
-                msg.edit(msg.embeds[0].addField("Denegada", reason).setColor("#FF0000"))
+                msg.edit(msg.embeds[0].addField("Denegada", reason).setColor("#FF7B7B"))
 
                 return message.channel.send("Se ha denegado la sugerencia")
             }).catch(err => {
