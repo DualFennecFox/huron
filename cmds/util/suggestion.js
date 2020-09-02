@@ -1,6 +1,7 @@
 const Discord = require('discord.js')
 const Guild = require("../Moderacion/models/Guild")
 const validateColor = require("validate-color")
+const { updateGuild, getGuild } = require('../Moderacion/models/functions')
 
 module.exports = {
         name : 'suggestion',
