@@ -50,7 +50,6 @@ let getGuild = async (guild) => {
         warns: [],
         role: [],
         muteUsers: [],
-        suggestionColor: "RANDOM",
         suggestionLevel: 0
       };
       try {
