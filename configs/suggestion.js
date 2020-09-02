@@ -22,11 +22,11 @@ module.exports = {
         }
         if (!channel) channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[3])
 
-        if (!channel) {
+        if (args[3]) {
         if (validateHTMLColorHex(args[3].toUpperCase()) || args[3].toUpperCase() === "RANDOM") color = args[3].toUpperCase()
         }
         if (!channel && !color) return message.channel.send("Debes especificar un canal o color válido")
-
+            
             if (!doc) {
                 const newGuild = {
                     guildID: message.guild.id,
