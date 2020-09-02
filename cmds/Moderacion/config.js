@@ -22,7 +22,7 @@ module.exports = {
                 .addField("JoinMsg", `Crea o elimina un mensaje de bienvenida.\n**Uso:** ${prefix}config joinmsg <enable o disable> <Canal> <Mensaje>`)
                 .addField("LeaveMsg", `Igual que los mensajes de bienvenida, pero cuando un usuario deja el servidor.\n**Uso:** ${prefix}config leavemsg <enable o disable> <Canal> <Mensaje>`)
                 .addField("MuteRole", `Para que funcione el mute se debe configurar un rol Muteado con este comando, se puede crear uno eligiendo un nombre y un color.\n**Uso:** ${prefix}config muterole <enable o disable> <Rol, ID o Nombre> [Color si se crea]\n`)
-                .addField("Suggestion", `Establece un canal de sugerencias, un color Hex para las sugerencias o ambos.\n**Uso:** ${prefix}config suggestion <enable o disable> <Canal o Color> <Canal o Color>`)
+                .addField("Suggestion", `Establece un canal de sugerencias\n**Uso:** ${prefix}config suggestion <enable o disable> <Canal>`)
                 .addField("LogChannel", `Establece un canal para logear con su mención o ID\n**Uso:** ${prefix}config logchannel <enable o disable> <Canal>`)
                 .addField("Tags", "Los tags para los mensajes de bienvenida y despedida son:\n\n**{user}** : Menciona al usuario\n**{username}** : Muestra el nombre y el tag del usuario\n**{server}** : Muestra el nombre del servidor\n**{owner}** : Nombra al Owner del servidor con su tag\n**{members}** : Muestra el número de miembros desde que el usuario se unio o dejo el server.\n")
                 .setFooter("<> es obligatorio, [] es opcional")

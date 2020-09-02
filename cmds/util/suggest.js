@@ -20,8 +20,6 @@ module.exports = {
 
         if (!channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para enviar mensajes en el canal de sugerencias")
         if (message.guild.me.hasPermission("MANAGE_MESSAGES")) message.delete()
-        let color = doc.suggestionColor
-        if (!color || !validateColor.validateHTMLColorHex(color)) color = "#7BA7FF"
         let level = doc.suggestionLevel
         if (doc.suggestionLevel === 0) level = 1
 
@@ -29,7 +27,7 @@ module.exports = {
         
         const embed = new Discord.MessageEmbed()
         .setAuthor(`Sugerencia #${level}`, message.author.displayAvatarURL({ format: "png", dynamic: true }))
-        .setColor(color)
+        .setColor("#7BA7FF")
         .setDescription(suggestion)
         .setFooter(`Por: ${message.author.tag}`)
 
