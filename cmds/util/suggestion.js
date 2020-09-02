@@ -1,6 +1,4 @@
-const Discord = require('discord.js')
 const Guild = require("../Moderacion/models/Guild")
-const validateColor = require("validate-color")
 const { updateGuild, getGuild } = require('../Moderacion/models/functions')
 
 module.exports = {
@@ -10,6 +8,8 @@ module.exports = {
         usage: '!suggestion <approve, deny o reset> <Razón>',
         examples: ['!suggestion Pongan al Bot de Wumpus'],
         run: async (client , message, args) => {
+
+            if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!")
 
             if (!args[0]) return message.channel.send("Debes especificar si aprobar, denegar o resetear las sugerencias")
 
