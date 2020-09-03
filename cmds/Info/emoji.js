@@ -8,6 +8,9 @@ module.exports = {
     usage: '!emoji <Emoji>',
     examples: ['!emoji :super-wumpus:', '!emoji 12345678987654321'],
     run: async (client , message, args) => {
+
+        if (message.guild.id === "736200583320567820") return message.channel.send("Este comando esta deshabilitado en el servidor")
+
         if(!args[0]) return message.channel.send("Debes usar un emoji para poder mostrarlo")
 
         let emoji = await message.guild.emojis.cache.find(em => `<:${em.name}:${em.id}>` === args[0] || `<a:${em.name}:${em.id}>` === args[0] || em.id === args[0])
