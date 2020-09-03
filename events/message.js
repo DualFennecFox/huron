@@ -27,7 +27,6 @@ module.exports = async message => {
         if (message.content.startsWith(thePrefix)) contentPrefix = thePrefix
       }
       if (!contentPrefix) return;
-      if (!message.content.startsWith(contentPrefix)) return;
 
       let args = message.content.slice(contentPrefix.length).trim().split(/ +/g);
       let cmd = args.shift().toLowerCase();
@@ -49,6 +48,8 @@ module.exports = async message => {
       if (message.content === `<@${client.user.id}>` || message.content === `<@!${client.user.id}>`) {
        message.channel.send(`Mi prefix en este server es ${prefix} o una mención, si es la primera vez que me usa escriba ${prefix}help.`)
      }
+     
+     if (!message.content.startsWith(contentPrefix)) return;
   
        if (client.commands.has(cmd)) {
       message.guild.members.cache.filter(user => user.user.bot !== user.user.id).map(member => `<@!<${member.id}>`)
