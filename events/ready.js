@@ -13,24 +13,18 @@ module.exports = async client => {
 
   client.user.setStatus("online")
 
-  setInterval(() => {
+  setTimeout(() => {
 
-    let presence = presences[Math.floor(Math.random() * (presences.length - 1) + 1)];
-
-  if (presence === presences[0]) {
     client.user.setActivity({
-        name: presence,
+        name: presences[0],
         type: "WATCHING",
         url: "https://www.twitch.tv/unfirulais"
     })
-}
-else if (presence === presences[1]) {
+}, 15000);
 
-  client.user.setActivity({
-    name: presence,
-    type: "WATCHING",
-    url: "https://www.twitch.tv/unfirulais"
-})
-};
-}, 15000); 
+client.user.setActivity({
+  name: presences[1],
+  type: "WATCHING",
+  url: "https://www.twitch.tv/unfirulais"
+}) 
 }
