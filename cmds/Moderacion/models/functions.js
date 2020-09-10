@@ -244,6 +244,7 @@ let status = (client) => {
   client.user.setStatus("online")
 
   setInterval(() => {
+    console.log(client.user.presence)
     if (client.user.presence === presences[0] || !client.user.presence) {
     client.user.setActivity({
         name: presences[1],
