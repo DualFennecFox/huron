@@ -234,6 +234,32 @@ function getUser(mention, client) {
 		return client.users.cache.get(mention);
   }
 
+let status = (client) => {
+
+  const ucount = client.users.cache.size
+
+  let presences = [`Estoy en ${scount} Servidores!`, `${ucount} Usuarios!`]
+
+  client.user.setStatus("online")
+
+  setTimeout(() => {
+
+    client.user.setActivity({
+        name: presences[0],
+        type: "WATCHING",
+        url: "https://www.twitch.tv/unfirulais"
+    })
+}, 15000);
+
+client.user.setActivity({
+  name: presences[1],
+  type: "WATCHING",
+  url: "https://www.twitch.tv/unfirulais"
+}) 
+
+  return status(client)
+}
+
 module.exports = {
     getGuild,
     updateGuild,
