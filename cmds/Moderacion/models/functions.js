@@ -236,23 +236,24 @@ function getUser(mention, client) {
 
 let status = (client) => {
 
-  const scount = client.guilds.cache.size
-  const ucount = client.users.cache.size
-
-  let presences = [`Estoy en ${scount} Servidores!`, `${ucount} Usuarios!`]
-
   client.user.setStatus("online")
 
   setInterval(() => {
-    console.log(client.user.presence.activities)
-    if (client.user.presence.activities.name === presences[0] || !client.user.presence.activities.name) {
+    console.log(client.user.presence.activities[0])
+
+    const scount = client.guilds.cache.size
+  const ucount = client.users.cache.size
+
+  let presences = [`Estoy en ${scount} Servidores!`, `${ucount} Usuarios!`]
+  
+    if (!client.user.presence.activities[0] || client.user.presence.activities[0].name === presences[0]) {
     client.user.setActivity({
         name: presences[1],
         type: "WATCHING",
         url: "https://www.twitch.tv/unfirulais"
     })
   }
-  else if (client.user.presence.activities.name === presences[1] || !client.user.presence.activities.name) {
+  else if (!client.user.presence.activities[0] || client.user.presence.activities[0].name === presences[1]) {
     client.user.setActivity({
       name: presences[0],
       type: "WATCHING",
