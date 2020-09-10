@@ -22,10 +22,13 @@ const {search, createGuild, getUser } = require('./models/functions');
 
     if (bUser.id === message.author.id) return message.channel.send("No te puedes advertir a ti mismo")
     if (bUser.id === client.user.id) return message.channel.send("No me puedo advertir a mi mismo")  
-    
+    if (message.guild.me.roles.highest.comparePositionTo(muterole) < 1) {
+    return message.channel.send("Tus roles no son lo suficientemente altos para advertir a este usuario");
+}
+
    let db = await Guild.findOne({ guildID: message.guild.id })
 
-   await Guild.findOne({ guildID: message.guild.id}, {warns: { $elemMatch: { warnUserID: bUser.id } } }).then((result) => {
+   Guild.findOne({ guildID: message.guild.id}, {warns: { $elemMatch: { warnUserID: bUser.id } } }).then((result) => {
 
     let warnLevel
     let doc = search(bUser.id, db.warns)
