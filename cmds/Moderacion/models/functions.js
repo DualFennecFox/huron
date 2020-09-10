@@ -236,6 +236,7 @@ function getUser(mention, client) {
 
 let status = (client) => {
 
+  const scount = client.guilds.cache.size
   const ucount = client.users.cache.size
 
   let presences = [`Estoy en ${scount} Servidores!`, `${ucount} Usuarios!`]
