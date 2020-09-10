@@ -244,15 +244,15 @@ let status = (client) => {
   client.user.setStatus("online")
 
   setInterval(() => {
-    console.log(client.user.presence)
-    if (client.user.presence === presences[0] || !client.user.presence) {
+    console.log(!client.user.presence.activities)
+    if (client.user.presence.activities.name === presences[0] || !client.user.presence.activities.name) {
     client.user.setActivity({
         name: presences[1],
         type: "WATCHING",
         url: "https://www.twitch.tv/unfirulais"
     })
   }
-  else if (client.user.presence === presences[1] || !client.user.presence) {
+  else if (client.user.presence.activities.name === presences[1] || !client.user.presence.activities.name) {
     client.user.setActivity({
       name: presences[0],
       type: "WATCHING",
