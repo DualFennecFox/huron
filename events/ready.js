@@ -7,8 +7,7 @@ module.exports = async client => {
     const scount = client.guilds.cache.size
     dbl.postStats(scount)
 
-    let scount = client.guilds.cache.size
-  let ucount = client.users.cache.size
+  const ucount = client.users.cache.size
 
   let presences = [`Estoy en ${scount} Servidores!`, `${ucount} Usuarios!`]
 
