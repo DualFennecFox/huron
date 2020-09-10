@@ -1,6 +1,5 @@
 const DBL = require("dblapi.js");
-const http = require('http');
-const querystring = require('querystring');
+const { status } = require("../cmds/Moderacion/models/functions");
 
 module.exports = async client => {
     const dbl = new DBL(process.env.DBL, client)
@@ -8,12 +7,5 @@ module.exports = async client => {
     const scount = client.guilds.cache.size
     dbl.postStats(scount)
 
-    client.user.setPresence({
-      status: "online",
-      activity: {
-          name: `Estoy en ${scount} Servidores!`,
-          type: "WATCHING",
-          url: "https://www.twitch.tv/unfirulais"
-      }
-  }); 
+    status(client)
 }
