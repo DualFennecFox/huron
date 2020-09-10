@@ -11,14 +11,12 @@ module.exports = async client => {
 
   let presences = [`Estoy en ${scount} Servidores!`, `${ucount} Usuarios!`]
 
-  let presence = presences[Math.floor(Math.random() * (presences.length - 1) + 1)];
 
-  let first = true
 
   setInterval(() => {
 
-  
-
+    let presence = presences[Math.floor(Math.random() * (presences.length - 1) + 1)];
+    
   if (presence === presences[0]) {
   client.user.setPresence({
     status: "online",
@@ -30,7 +28,7 @@ module.exports = async client => {
   });
 }
 else if (presence === presences[1]) {
-  first = false
+
   client.user.setPresence({
     status: "online",
     activity: {
