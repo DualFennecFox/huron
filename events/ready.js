@@ -11,32 +11,26 @@ module.exports = async client => {
 
   let presences = [`Estoy en ${scount} Servidores!`, `${ucount} Usuarios!`]
 
-
+  client.user.setStatus("online")
 
   setInterval(() => {
 
     let presence = presences[Math.floor(Math.random() * (presences.length - 1) + 1)];
-    
+
   if (presence === presences[0]) {
-  client.user.setPresence({
-    status: "online",
-    activity: {
+    client.user.setActivity({
         name: presence,
         type: "WATCHING",
         url: "https://www.twitch.tv/unfirulais"
-    }
-  });
+    })
 }
 else if (presence === presences[1]) {
 
-  client.user.setPresence({
-    status: "online",
-    activity: {
-        name: presence,
-        type: "LISTENING",
-        url: "https://www.twitch.tv/unfirulais"
-    }
-  });
+  client.user.setActivity({
+    name: presence,
+    type: "WATCHING",
+    url: "https://www.twitch.tv/unfirulais"
+})
 };
 }, 15000); 
 }
