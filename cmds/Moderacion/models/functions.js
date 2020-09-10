@@ -243,24 +243,22 @@ let status = (client) => {
 
   client.user.setStatus("online")
 
-  setTimeout(() => {
-
+  setInterval(() => {
+    if (client.user.presence === presences[0]) {
     client.user.setActivity({
-        name: presences[0],
+        name: presences[1],
         type: "WATCHING",
         url: "https://www.twitch.tv/unfirulais"
     })
+  }
+  else if (client.user.presence === presences[1]) {
+    client.user.setActivity({
+      name: presences[0],
+      type: "WATCHING",
+      url: "https://www.twitch.tv/unfirulais"
+  })
+  }
 }, 15000);
-
-setTimeout(() => {
-client.user.setActivity({
-  name: presences[1],
-  type: "WATCHING",
-  url: "https://www.twitch.tv/unfirulais"
-}) 
-}, 15000)
-
-  return status(client)
 }
 
 module.exports = {
