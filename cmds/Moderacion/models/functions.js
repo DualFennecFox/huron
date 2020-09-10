@@ -233,47 +233,6 @@ function getUser(mention, client) {
 
 		return client.users.cache.get(mention);
   }
-  
-let status = async (client) => {
-  let scount = client.guilds.cache.size
-  let ucount = client.users.cache.size
-
-  let presences = [`Estoy en ${scount} Servidores!`, `${ucount} Usuarios!`]
-
-  let presence = presences[0]
-
-  let first;
-
-  setInterval(() => {
-
-    if (first === false) {
-      presence = presences[1]
-      first = true
-    }
-
-  if (presence === presences[0]) {
-  client.user.setPresence({
-    status: "online",
-    activity: {
-        name: presence,
-        type: "WATCHING",
-        url: "https://www.twitch.tv/unfirulais"
-    }
-  });
-}
-else if (presence === presences[1]) {
-  first = false
-  client.user.setPresence({
-    status: "online",
-    activity: {
-        name: presence,
-        type: "LISTENING",
-        url: "https://www.twitch.tv/unfirulais"
-    }
-  });
-};
-}, 30000); 
-}
 
 module.exports = {
     getGuild,
@@ -286,7 +245,6 @@ module.exports = {
     getCMD,
     updateLog,
     getUser,
-    status,
     changeRole,
     changePerm
 }
