@@ -271,6 +271,7 @@ module.exports = {
     getCMD,
     updateLog,
     getUser,
+    status,
     changeRole,
     changePerm
 }
