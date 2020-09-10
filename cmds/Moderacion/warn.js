@@ -22,6 +22,8 @@ const {search, createGuild, getUser } = require('./models/functions');
 
     if (bUser.id === message.author.id) return message.channel.send("No te puedes advertir a ti mismo")
     if (bUser.id === client.user.id) return message.channel.send("No me puedo advertir a mi mismo")  
+
+    let muterole = bUser.roles.highest
     if (message.guild.me.roles.highest.comparePositionTo(muterole) < 1) {
     return message.channel.send("Tus roles no son lo suficientemente altos para advertir a este usuario");
 }
