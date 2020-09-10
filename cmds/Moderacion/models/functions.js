@@ -252,11 +252,13 @@ let status = (client) => {
     })
 }, 15000);
 
+setTimeout(() => {
 client.user.setActivity({
   name: presences[1],
   type: "WATCHING",
   url: "https://www.twitch.tv/unfirulais"
 }) 
+}, 15000)
 
   return status(client)
 }
