@@ -11,16 +11,13 @@ module.exports = async client => {
 
   let presences = [`Estoy en ${scount} Servidores!`, `${ucount} Usuarios!`]
 
-  let presence = presences[0]
+  let presence = presences[Math.floor(Math.random() * (presences.length - 1) + 1)];
 
   let first = true
 
   setInterval(() => {
 
-    if (first === false) {
-      presence = presences[1]
-      first = true
-    }
+  
 
   if (presence === presences[0]) {
   client.user.setPresence({
@@ -43,5 +40,5 @@ else if (presence === presences[1]) {
     }
   });
 };
-}, 30000); 
+}, 15000); 
 }
