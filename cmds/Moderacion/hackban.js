@@ -16,7 +16,7 @@ module.exports = {
         let bans = await message.guild.fetchBans();
         let num = parseInt(1)
 
-        args.forEach(arg => {
+        args.forEach(async arg => {
     
             let id = arg.replace(/([^0-9])/g, '')
     
