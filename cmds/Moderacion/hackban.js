@@ -16,7 +16,7 @@ module.exports = {
         let bans = await message.guild.fetchBans();
         let num = parseInt(1)
 
-        args.forEach(async arg => {
+        args.forEach(arg => {
     
             let id = arg.replace(/([^0-9])/g, '')
     
@@ -24,11 +24,14 @@ module.exports = {
     
             if (!user) {
                 try {
-                    user = await client.users.fetch(id)
-                } finally {
+                    client.users.fetch(id).then(u => user = u)
+                } catch (err) {
                     if (!user) return message.channel.send(`**${arg}** no es un usuario válido`)
+                } finally {
+                    continue;
                 }
             }
+            if (!user) return message.channel.send(`**${arg}** no es un usuario válido`)f
     
             if (bans.find(u => u.user.id === user.id)) return message.channel.send(`<@${user.id}> Ya esta baneado`)
     
@@ -47,7 +50,7 @@ module.exports = {
             }
     
             try {
-               await message.guild.members.ban(user, { reason: "HackBan by Moderators" })
+               message.guild.members.ban(user, { reason: "HackBan by Moderators" })
             } catch (err) {
                 return message.channel.send(`Hubo un error al banear a <@${user.id}>`)
             }
