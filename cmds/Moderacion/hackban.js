@@ -16,9 +16,9 @@ module.exports = {
         let bans = await message.guild.fetchBans();
         let num = parseInt(1)
 
-        for (let arg of args) {
+        for (let index = 0; index < args.length; index++) {
     
-            let id = arg.replace(/([^0-9])/g, '')
+            let id = args[index].replace(/([^0-9])/g, '')
     
             let user = client.users.cache.get(id)
     
