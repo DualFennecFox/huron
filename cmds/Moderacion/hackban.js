@@ -26,6 +26,7 @@ module.exports = {
                 try {
                     user = await client.users.fetch(id)
                 } catch (err) {
+                    console.error(err)
                     return message.channel.send(`**${arg}** no es un usuario válido`)
                 }
             }
