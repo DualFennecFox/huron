@@ -53,7 +53,7 @@ module.exports = {
                 return message.channel.send(`Hubo un error al banear a <@${user.id}>`)
             }
 
-            message.channel.send(`Se ha baneado a <@${user.id}> con éxito")  
+            message.channel.send(`Se ha baneado a <@${user.id}> con éxito`)  
             num = num + 1
         })
     
