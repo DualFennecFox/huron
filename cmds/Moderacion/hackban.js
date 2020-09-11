@@ -48,7 +48,7 @@ module.exports = {
             }
     
             try {
-                message.guild.members.ban(user, { reason: "HackBan by Moderators" })
+               await message.guild.members.ban(user, { reason: "HackBan by Moderators" })
             } catch (err) {
                 return message.channel.send(`Hubo un error al banear a <@${user.id}>`)
             }
