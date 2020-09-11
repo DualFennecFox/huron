@@ -14,7 +14,8 @@ module.exports = {
         let msg = await message.channel.send("Baneando usuarios, Por favor espere...")
 
         let bans = await message.guild.fetchBans();
-        let num = 0
+        let num = parseInt(1)
+
         args.forEach(async arg => {
     
             let id = arg.replace(/([^0-9])/g, '')
@@ -51,12 +52,13 @@ module.exports = {
             } catch (err) {
                 return message.channel.send(`Hubo un error al banear a <@${user.id}>`)
             }
-    
+
+            message.channel.send(`Se ha baneado a <@${user.id}> con éxito")  
             num = num + 1
         })
     
         if (msg.deletable) msg.delete()
     
-        message.channel.send(`Se han baneado con exito a **${num}** Usuarios`)
+        message.channel.send(`Se han baneado con exito a **${num - 1}** Usuarios`)
     }
 }
