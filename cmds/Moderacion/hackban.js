@@ -16,9 +16,9 @@ module.exports = {
         let bans = await message.guild.fetchBans();
         let num = parseInt(1)
 
-        for (let index = 0; index < args.length; index++) {
+        args.forEach(arg => {
     
-            let id = args[index].replace(/([^0-9])/g, '')
+            let id = arg.replace(/([^0-9])/g, '')
     
             let user = client.users.cache.get(id)
     
@@ -55,7 +55,7 @@ module.exports = {
 
             message.channel.send(`Se ha baneado a <@${user.id}> con éxito`)  
             num = num + 1
-        }
+        })
     
         if (msg.deletable) msg.delete()
     
