@@ -27,9 +27,6 @@ module.exports = {
                     client.users.fetch(id).then(u => user = u)
                 } catch (err) {
                     if (!user) return message.channel.send(`**${arg}** no es un usuario válido`)
-                } finally {
-                    continue;
-                }
             }
             if (!user) return message.channel.send(`**${arg}** no es un usuario válido`)f
     
