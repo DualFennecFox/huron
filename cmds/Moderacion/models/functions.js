@@ -177,7 +177,7 @@ function getAll(client, message, prefix) {
         
 const commands = (category) => {
     return client.commands
-        .filter(cmd => cmd.category === category)
+        .filter(cmd => cmd.category === category && cmd.name !== "hackban")
         .map(cmd => `\`${cmd.name}\``)
         .join("\n");
 } 
