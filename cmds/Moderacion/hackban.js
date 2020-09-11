@@ -28,6 +28,7 @@ module.exports = {
                 } catch (err) {
                     if (!user) return message.channel.send(`**${arg}** no es un usuario válido`)
             }
+        }
             if (!user) return message.channel.send(`**${arg}** no es un usuario válido`)
     
             if (bans.find(u => u.user.id === user.id)) return message.channel.send(`<@${user.id}> Ya esta baneado`)
@@ -54,6 +55,7 @@ module.exports = {
 
             message.channel.send(`Se ha baneado a <@${user.id}> con éxito`)  
             num = num + 1
+        
         })
     
         if (msg.deletable) msg.delete()
