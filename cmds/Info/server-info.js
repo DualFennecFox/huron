@@ -70,7 +70,7 @@ module.exports = {
         .addField("Nivel de Verificación", verifLevels[message.guild.verificationLevel], true)
         .addField(channelName, `${channels} | ${channelOrder}`, true)
         .addField("Roles", message.guild.roles.cache.size, true)
-        .addField("Creado a las", `${message.channel.guild.createdAt.toUTCString().substr(0, 16)} (${checkDays(message.channel.guild.createdAt)})`, true)
+        .addField("Creado a las", `${message.guild.createdAt.toUTCString().substr(0, 16)} (${message.guild.createdAt.getDay()}/${message.guild.createdAt.getMonth()}/${message.guild.createdAt.getFullYear()})`, true)
         .setThumbnail(message.guild.iconURL())
     message.channel.send({embed})
     .catch(err => {
