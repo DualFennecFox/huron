@@ -38,7 +38,7 @@ module.exports = {
         .addField("Discriminador", user.discriminator, true)
         .addField("Usuario", user.tag, true)    
         .addField("Creado A las", `${user.createdAt.toUTCString().substr(0, 16)} (${user.createdAt.getDay()}/${user.createdAt.getMonth()}/${user.createdAt.getFullYear()})`, true)
-        .addField("Miembro desde", `${memberMention.joinedAt.toUTCString().substr(0, 16)} (${user.joinedAt.getDay()}/${user.joinedAt.getMonth()}/${user.joinedAt.getFullYear()})`, true)
+        .addField("Miembro desde", `${memberMention.joinedAt.toUTCString().substr(0, 16)} (${memberMention.joinedAt.getDay()}/${memberMention.joinedAt.getMonth()}/${memberMention.joinedAt.getFullYear()})`, true)
         .addField("ID", user.id, true)
         .addField("Roles", memberMention.roles.cache.size, true)
         .setThumbnail(user.displayAvatarURL({ format: "png", dynamic: true}))
