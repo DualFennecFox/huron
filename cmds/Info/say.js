@@ -12,24 +12,37 @@ module.exports = {
 
     if(mChannel && args[0] == "{sendchannel}") {
         if (!mChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return
+        if (!mChannel.permissionsFor(message.member).has("SEND_MESSAGES")) mChannel = message.channel
+        
         argsresult = args.join(" ")
         if(!argsresult) return;
-        if(!message.member.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR") || !message.guild.owner) {
-            mChannel = message.channel
-           let replace = argsresult.replace(mChannel, '').replace(args[0], '').replace(/@everyone/g, "@\u200beveryone").replace(/@here/g, "@\u200bhere").replace(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|com)|discordapp\.com\/invite)\/.+[A-z0-9]/, "")
-            mChannel.send(replace)
+        
+        argsresult = argsresult.replace(mChannel, '').replace(args[0], '')
+
+        if (!message.member.hasPermission("MENTION_EVERYONE" || "ADMINISTRATOR") || !message.guild.owner) {
+            argsresult = argsresult.replace(/@everyone/, "@\u200beveryone").replace(/@here/, "@\u200bhere")
         }
-       else {
-        let remplased = argsresult.replace(mChannel, '').replace(args[0], '')
-        mChannel.send(remplased)
-    }
+        if(!message.member.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR") || !message.guild.owner) {
+            
+               argsresult = argsresult.replace(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|com)|discordapp\.com\/invite)\/.+[A-z0-9]/, "")
+
+        }
+        
+        mChannel.send(argsresult)
     } else {
         argsresult = args.join(" ")
         if(!argsresult) return;
+
+        if (!message.member.hasPermission("MENTION_EVERYONE" || "ADMINISTRATOR") || !message.guild.owner) {
+            argsresult = argsresult.replace(/@everyone/, "@\u200beveryone").replace(/@here/, "@\u200bhere")
+        }
         if(!message.member.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR") || !message.guild.owner) {
-               let replace = argsresult.replace(/@everyone/g, "@\u200beveryone").replace(/@here/g, "@\u200bhere").replace(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|com)|discordapp\.com\/invite)\/.+[A-z0-9]/, "")
-               message.channel.send(replace)
-            } else  message.channel.send(argsresult)
+            
+               argsresult = argsresult.replace(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|com)|discordapp\.com\/invite)\/.+[A-z0-9]/, "")
+
+        }
+
+         message.channel.send(argsresult)
         }
     }
 }
