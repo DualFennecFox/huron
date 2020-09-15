@@ -7,7 +7,9 @@ module.exports = {
   aliases: ["servericon"],
   usage: `!server-icon`,
   run: async (client, message, args) => {
- 
+    
+    if (!message.guild.iconURL()) return message.channel.send("Este servidor no tiene ningún icono")
+
     const embed = new Discord.MessageEmbed()
     .setAuthor(`Icono de ${message.guild.name}`)
     .setTitle('')
