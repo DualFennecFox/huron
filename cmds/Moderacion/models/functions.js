@@ -178,7 +178,7 @@ function getAll(client, message, prefix) {
 const commands = (category) => {
     return client.commands
         .filter(cmd => cmd.category === category && cmd.name !== "hackban")
-        .map(cmd => `\`${cmd.name}\``)
+        .map(cmd => `- \`${cmd.name}\``)
         .join("\n");
 } 
 
@@ -186,7 +186,7 @@ const configCommands = () => {
   let command = [ "joinmsg", "leavemsg", "logchannel", "muterole", "suggestion", "prefix"]
 
   return command
-        .map(name => `\`${name}\``)
+        .map(name => `- \`${name}\``)
         .join("\n");
 }
 
