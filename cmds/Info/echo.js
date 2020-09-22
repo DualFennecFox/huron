@@ -27,7 +27,7 @@ module.exports = {
                argsresult = argsresult.replace(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|com)|discordapp\.com\/invite)\/.+[A-z0-9]/, "")
         
          if (message.guild.me.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR")) message.delete()
-        
+        }
          mChannel.send(argsresult)
 }
 }
