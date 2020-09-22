@@ -29,3 +29,5 @@ module.exports = {
          if (message.guild.me.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR")) message.delete()
         
          mChannel.send(argsresult)
+}
+}
