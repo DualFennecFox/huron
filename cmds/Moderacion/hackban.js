@@ -24,7 +24,7 @@ module.exports = {
     
             if (!user) {
                 try {
-                    client.users.resolve(id)
+                    await client.users.resolve(id)
                 } catch (err) {
                     console.error(err)
                     if (!user) return message.channel.send(`**${arg}** no es un usuario válido`)
