@@ -16,7 +16,7 @@ module.exports = {
         let bans = await message.guild.fetchBans();
         let num = parseInt(1)
 
-        for (let arg of args) {
+        await args.forEach(async arg => {
     
             let id = arg.replace(/([^0-9])/g, '')
     
@@ -24,13 +24,13 @@ module.exports = {
     
             if (!user) {
                 try {
-                   await client.users.fetch(id)
+                   user = await client.users.fetch(id)
                 } catch (err) {
                     if (!user) return message.channel.send(`**${arg}** no es un usuario válido`)
             } finally {
+
             }
         }
-        
             if (!user) return message.channel.send(`**${arg}** no es un usuario válido`)
     
             if (bans.find(u => u.user.id === user.id)) return message.channel.send(`<@${user.id}> Ya esta baneado`)
@@ -58,7 +58,7 @@ module.exports = {
             message.channel.send(`Se ha baneado a <@${user.id}> con éxito`)  
             num = num + 1
         
-        }
+        })
     
         if (msg.deletable) msg.delete()
     
