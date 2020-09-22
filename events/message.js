@@ -52,7 +52,7 @@ module.exports = async message => {
      if (!message.content.startsWith(contentPrefix)) return;
   
        if (client.commands.has(cmd)) {
-      message.guild.members.cache.filter(user => user.user.bot !== user.user.id).map(member => `<@!<${member.id}>`)
+
          command = client.commands.get(cmd);
        } else {
          command = client.commands.get(client.aliases.get(cmd));
