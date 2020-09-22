@@ -15,9 +15,9 @@ module.exports = {
         if (!mChannel.permissionsFor(message.member).has("SEND_MESSAGES")) return message.channel.send('No tienes permisos para enviar mensajes en ese canal')
         
         argsresult = args.join(" ")
-        if(!argsresult) return message.channel.send('Vuelve a usar el comando, pero di un mensaje para enviar')
         
         argsresult = argsresult.replace(mChannel, '')
+        if(!argsresult) return message.channel.send('Vuelve a usar el comando, pero di un mensaje para enviar')
 
         if (!message.member.hasPermission("MENTION_EVERYONE" || "ADMINISTRATOR") || !message.guild.owner) {
             argsresult = argsresult.replace(/@everyone/, "@\u200beveryone").replace(/@here/, "@\u200bhere")
