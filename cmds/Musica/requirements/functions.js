@@ -16,6 +16,9 @@ const ytdl = require('ytdl-core')
     message.member.voice.channel
     .join()
     .then(async connection => {
+
+       connection.voice.setSelfDeaf(true)
+  
        const dispatcher = connection
        .play(ytdl(queue[0].url, {filter: 'audioonly' }, {highWaterMark: 50, volume: false}))
 
