@@ -7,7 +7,15 @@ module.exports = {
     examples: ['!echo #general Hola Mundo'],
     run: async (client, message, args) => {
     let argsresult;
-    let mChannel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0]);
+
+    let id = false
+    let mChannel = message.mentions.channels.first()
+ 
+    if (!mChannel && args[0]) {
+    mChannel = message.guild.channels.cache.get(args[0])
+    id = true
+}
+
     if (message.guild.me.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR")) message.delete()
 
     if(!mChannel) return message.channel.send('Debes mencionar un canal o darme su ID')
@@ -16,7 +24,9 @@ module.exports = {
         
         argsresult = args.join(" ")
         
-        argsresult = argsresult.replace(mChannel, '')
+        if (id = false) argsresult = argsresult.replace(mChannel, '')
+        else argsresult = argsresult.replace(args[0], '');
+
         if(!argsresult) return message.channel.send('Vuelve a usar el comando, pero di un mensaje para enviar')
 
         if (!message.member.hasPermission("MENTION_EVERYONE" || "ADMINISTRATOR") || !message.guild.owner) {
