@@ -9,8 +9,9 @@ const Discord = require("discord.js")
 
     const embed = new Discord.MessageEmbed()
     .setAuthor("Pong!", message.author.displayAvatarURL({ size: 2048, format: "png", dynamic: true }))
-    .addField("Ping de mensajes", `${Date.now() - message.createdTimestamp}ms`)
-    .addField("Ping de DiscordAPI", `${Math.round(client.ws.ping)}ms`)
+    .setColor("#FF0000")
+    .addField("Ping de mensajes", `${Date.now() - message.createdTimestamp}ms`, true)
+    .addField("Ping de DiscordAPI", `${Math.round(client.ws.ping)}ms`, true)
 
     message.channel.send(embed)
 }

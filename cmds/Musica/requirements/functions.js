@@ -30,11 +30,12 @@ const ytdl = require('ytdl-core')
             if (musicData.server[message.guild.id].lastEmbed) musicData.server[message.guild.id].lastEmbed.delete();
             
             const videoEmbed = new Discord.MessageEmbed()
+            .setAuthor("Música", message.author.displayAvatarURL({ size: 2048, type: "png", dynamic: true }))
             .setThumbnail(queue[0].thumbnail)
             .setColor('#FF0000')
-            .addField('Escuchando', `[${queue[0].title}](${queue[0].url})`, true)
-            .addField('Duración', queue[0].duration, true)
-            .addField('Canal', `[${queue[0].channel}](${queue[0].channelURL})`, true)
+            .addField('Escuchando', `[${queue[0].title}](${queue[0].url})`)
+            .addField('Duración', queue[0].duration)
+            .addField('Canal', `[${queue[0].channel}](${queue[0].channelURL})`)
             let url = queue[0].url
             const loopURL = {
                 url
