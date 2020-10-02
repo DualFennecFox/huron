@@ -1,3 +1,5 @@
+const Discord = require("discord.js")
+
   module.exports = {
     name : 'ping',
     category: "Info",
@@ -5,7 +7,11 @@
     usage: '!ping',
    run: async (client, message, args) => {
 
-    message.channel.send("Pong!");
-    
+    const embed = new Discord.MessageEmbed()
+    .setAuthor("Pong!", message.author.displayAvatarURL({ size: 2048, format: "png", dynamic: true }))
+    .addField("Ping de mensajes", `${Date.now() - message.createdTimestamp}ms`)
+    .addField("Ping de DiscordAPI", `${Math.round(client.ws.ping)}ms`)
+
+    message.channel.send(embed)
 }
 }
