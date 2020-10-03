@@ -210,7 +210,10 @@ function getCMD(client, message, input) {
   // If no cmd is found, send not found embed
   if (!cmd) {
       return message.channel.send(embed.setColor("RED").setDescription(info));
+  } else if (cmd.category === "owner") {
+    return message.channel.send(embed.setColor("RED").setDescription(info));
   }
+
 
   // Add all cmd info to the embed
   if (cmd.name) info = `**Nombre del comando**: ${cmd.name}`;
