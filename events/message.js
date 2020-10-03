@@ -58,7 +58,7 @@ module.exports = async message => {
          command = client.commands.get(client.aliases.get(cmd));
        }
          if (command) {
-           if (command.category === "owner") return
+          if (command.category === "owner" && message.author.id !== process.env.OWNER) return
 
            command.run(client, message, args, prefix, contentPrefix);
          }

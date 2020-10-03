@@ -3,6 +3,8 @@ module.exports = {
     category: "owner",
     run: async (client, message, args) => {
 
+        if (message.author.id !== process.env.OWNER) return
+        
 try {
     const code = args.join(" ");
     let evaled = eval(code);
