@@ -12,7 +12,7 @@ module.exports = {
             if (!welcomeChannel) return message.channel.send("Debes especificar un canal para enviar el mensaje")
             if (!welcomeChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para hablar en ese canal")
 
-            let welcomeMsg = args.slice(1).join(" ").replace(welcomeChannel, '')
+            let welcomeMsg = args.slice(2).join(" ").replace(welcomeChannel, '')
             if (!welcomeMsg) return message.channel.send("Debes especificar un mensaje de bienvenida")
 
             Guild.findOne({ guildID: message.guild.id }).then(doc => {
