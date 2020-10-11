@@ -12,7 +12,7 @@ module.exports = {
         if(!argsresult) return;
 
         if (!message.member.hasPermission("MENTION_EVERYONE" || "ADMINISTRATOR") || !message.guild.owner) {
-            argsresult = argsresult.replace(/@everyone/, "@\u200beveryone").replace(/@here/, "@\u200bhere")
+            argsresult = argsresult.replace(/@/, "@\u200b")
         }
         if(!message.member.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR") || !message.guild.owner) {
             
