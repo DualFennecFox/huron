@@ -25,7 +25,7 @@
     "ytdl-core": "^3.4.1",
     "ytdl-core-discord": "^1.2.3",
     "ytpl": "^1.0.1",
-    "ytsr": "^0.0.4",
+    "ytsr": "^1.0.4",
     "ytt": "^2.0.6"
   },
   "engines": {
