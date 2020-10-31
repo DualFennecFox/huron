@@ -12,7 +12,7 @@
     "ascii-table": "0.0.9",
     "common-tags": "^1.8.0",
     "dblapi.js": "^2.4.1",
-    "discord.js": "^12.4.0",
+    "discord.js": "^12.4.1",
     "dotenv-flow": "^3.2.0",
     "fs": "0.0.1-security",
     "get-video-id": "^3.1.4",
