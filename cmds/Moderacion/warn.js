@@ -10,7 +10,7 @@ const {search, createGuild, getUser } = require('./models/functions');
     examples: ['!warn @Wumpus', '!warn 12345678987654321', '!warn @Wumpus Presumir ser Wumpus'],
     run: async (client , message, args, prefix, contentPrefix) => {
 
-    if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
+    if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS")) return message.channel.send("No tienes permisos para usar este comando!");
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o darme su id")
 
     let bUser = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
