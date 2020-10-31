@@ -15,8 +15,18 @@ const {search, createGuild, getUser } = require('./models/functions');
 
     let bUser = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
     if (contentPrefix !== prefix) bUser = message.guild.member(getUser(args[0], client))
-    if(!bUser) return message.channel.send("Ese no parece ser un usuario valido");
-    
+
+    if (!bUser) {
+    let UserID = args[0].replace(/([^0-9])/g, '')
+           try {
+            User = await client.users.fetch(UserID);
+           } catch (err) {
+               return message.channel.send("Ese no parece ser un usuario valido")
+           }
+        }
+    if (!bUser) return message.channel.send("Ese no parece ser un usuario valido")
+    if (!message.guild.member(bUser)) return message.channel.send("Ese no parece ser un usuario valido")
+
     let bReason = args.slice(1).join(" ");
     if(!bReason) bReason = "No se específico una razón"
 
