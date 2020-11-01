@@ -1,11 +1,8 @@
-const DBL = require("dblapi.js");
 const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async guild => {
     let client = guild.client
-    const dbl = new DBL(process.env.DBL, client)
     const scount = client.guilds.cache.size
-    dbl.postStats(client.guilds.cache.size)
     client.user.setPresence({
       status: "online",
       activity: {
@@ -14,7 +11,7 @@ module.exports = async guild => {
           url: "https://www.twitch.tv/unfirulais"
       }
     })
-    let data = Guild.findOne({ guildID: guild.id }).then((result) => {
+    Guild.findOne({ guildID: guild.id }).then((result) => {
       if (!result) return;
       else return result.remove()
     }).catch(err => {
