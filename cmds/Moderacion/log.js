@@ -109,7 +109,6 @@ module.exports = {
                 unable += `${changePerm[key]}\n`
             }
         }
-        let arg = args[0].toLowerCase()
         if (!args.length >= 1) {
             const embed = new Discord.MessageEmbed()
                 .setAuthor("Registros", client.user.displayAvatarURL())
@@ -122,10 +121,10 @@ module.exports = {
                 message.channel.send({ embed })
                 return
         }
-         else if (arg === "enable" || arg === "disable") {
-         if (arg === "enable") method = "enable"
-         else if (arg === "disable") method = "disable";
-        
+         else if (args[0].toLowerCase() === "enable" || args[0].toLowerCase() === "disable") {
+         if (args[0].toLowerCase() === "enable") method = "enable"
+         else if (args[0].toLowerCase() === "disable") method = "disable";
+         
          let cmd = args[1].toLowerCase()
 
          if (client.log.has(cmd)) {
