@@ -1,7 +1,6 @@
 module.exports = async client => {
     console.log(`Logged in as ${client.user.tag}!`);
     const scount = client.guilds.cache.size
-    dbl.postStats(scount)
 
     client.user.setPresence({
       status: "online",
