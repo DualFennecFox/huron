@@ -8,7 +8,7 @@ module.exports = {
     usage: '!config <Configuración> <Valor>',
     examples: ['!config prefix -', '!config welcomemsg'],
     run: async (client, message, args, prefix) => {
-        if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando")
+        if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando")
         if (!args[0]) {
                 
             const embed = new Discord.MessageEmbed()
