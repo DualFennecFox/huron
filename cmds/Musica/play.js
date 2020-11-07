@@ -4,6 +4,8 @@ const musicData = require("./requirements/musicData");
 const { playSong } = require('./requirements/functions')
 const ytpl = require('ytpl')
 const ytsr = require('ytsr')
+const Youtube = require('simple-youtube-api')
+const youtube = new Youtube(process.env.YOUTUBE_API_KEY)
 const getVideoId = require('get-video-id')
 function search(nameKey, myArray) {
     for (var i = 0; i < myArray.length; i++) {
@@ -12,6 +14,20 @@ function search(nameKey, myArray) {
         }
     }
   }
+
+ function formatDuration(durationObj) {
+    const duration = `${durationObj.hours ? durationObj.hours + ':' : ''}${
+      durationObj.minutes ? durationObj.minutes : '00'
+    }:${
+      durationObj.seconds < 10
+        ? '0' + durationObj.seconds
+        : durationObj.seconds
+        ? durationObj.seconds
+        : '00'
+    }`;
+    return duration;
+  }
+
     module.exports = {
             name : 'play',
             category: "Musica",
@@ -80,13 +96,12 @@ function search(nameKey, myArray) {
                           try {
                           const url = args[0];
                             let ID = getVideoId(args[0]).id
-                            ytsr(ID, { limit: 10 }).then(toSearch => {
-                            let video = search(ID, toSearch.items)
-                            const title = video.title
-                            const duration = video.duration
-                            const thumbnail = video.thumbnail;
-                            const channel = video.author.name
-                            const channelURL = video.author.ref
+                            youtube.getVideo(ID).then(video => {
+                            const title = video.raw.snippet.title
+                            const duration = formatDuration(video.duration)
+                            const thumbnail = video.thumbnails.high.url;
+                            const channel = video.channel.title
+                            const channelURL = video.channel.customURL || video.channel.url
                             if (duration == '00:00') duration = 'Transmitiendo en Vivo';
                             const voiceChannel = message.member.voice.channel
                             
@@ -119,15 +134,9 @@ function search(nameKey, myArray) {
                     } else {
                     try {
                         let argsresult = args.join(" ")
-                        
-                     ytsr.getFilters(argsresult).then(filters => {
-                      let filter = filters.get('Type').find(o => o.name === 'Video');
-                        var options = {
-                            limit: 10,
-                            nextpageRef: filter.ref
-                        }
+
                     
-                       ytsr(filter, options).then(async (videos) => {
+                       youtube.searchVideos(argsresult, 10).then(async (videos) => {
                         if (videos.items.length < 10) {
                             return message.channel.send("Muy pocos videos tienen ese nombre asegurate de haberlo escrito bien")
                         }
@@ -135,9 +144,9 @@ function search(nameKey, myArray) {
                         const vidNameArr = []
                         const videoID = []
 
-                        for (let v = 0; v < videos.items.length; v++) {
-                             videoID.push(videos.items[v].link)
-                             vidNameArr.push(`${v + 1}: ${videos.items[v].title}`);
+                        for (let v = 0; v < videos.length; v++) {
+                             videoID.push(videos[v].url)
+                             vidNameArr.push(`${v + 1}: ${videos[v].raw.snippet.title}`);
                         }
 
                         vidNameArr.push('exit');
@@ -173,19 +182,19 @@ function search(nameKey, myArray) {
                                   return songEmbed.delete() 
                               }
                               try {
-                                var video = videos.items[videoIndex - 1]       
+                                var video = videos[videoIndex - 1]       
                               } catch (err) {
                                   console.error(err)
                                   if (songEmbed) songEmbed.delete()
                                   return message.channel.send("Hubo un error al obtener el video de Youtube")
                               }       
 
-                          const url = video.link;
-                          const title = video.title
-                          let duration = video.duration;
-                          const thumbnail = video.thumbnail;
-                          const channel = video.author.name;
-                            const channelURL = video.author.ref
+                          const url = video.url;
+                          const title = video.raw.snippet.title
+                          let duration = formatDuration(video.duration);
+                          const thumbnail = video.thumbnails.high.url;
+                          const channel = video.channel.title;
+                            const channelURL = video.channel.customURL || video.channel.url
                             if (duration == '00:00') duration = 'Transmitiendo en Vivo';
                             const voiceChannel = message.member.voice.channel
                             const song = {
@@ -213,9 +222,7 @@ function search(nameKey, myArray) {
                         }).catch(err => {
                             console.error(err)
                         })
-                    }).catch(err => {
-                        console.error(err)
-                    })
+
                         } catch (err) {
                             console.error(err)
                             musicData.server[message.guild.id].awaiting = false
@@ -224,5 +231,5 @@ function search(nameKey, myArray) {
                             return message.channel.send("Hubo un error al buscar el video en Youtube")
                         }
                     }
+                }
             }
-        }
