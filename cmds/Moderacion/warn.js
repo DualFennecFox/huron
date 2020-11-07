@@ -7,6 +7,7 @@ const {search, createGuild, getUser } = require('./models/functions');
     category: "Moderacion",
     description : 'Este comando warnea al usuario mencionado con su ID o mención, también puedes dar una razón de ello',
     usage: '!warn <Usuario> [Razón]',
+    aliases: ['strike'],
     examples: ['!warn @Wumpus', '!warn 12345678987654321', '!warn @Wumpus Presumir ser Wumpus'],
     run: async (client , message, args, prefix, contentPrefix) => {
 
