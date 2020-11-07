@@ -5,8 +5,8 @@ module.exports = async client => {
     client.user.setPresence({
       status: "online",
       activity: {
-          name: `Estoy en ${scount} Servidores!`,
-          type: "WATCHING",
+          name: `Trabajando`,
+          type: "PLAYING",
           url: "https://www.twitch.tv/unfirulais"
       }
   }); 
