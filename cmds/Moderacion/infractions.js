@@ -5,7 +5,7 @@ const { search, getUser } = require('./models/functions');
     name : 'infractions',
     category: "Moderacion",
     description : 'Este comando muestra el número de infracciones de un usuario, la razón y el usuario que lo advirtio',
-    aliases: ['warns'],
+    aliases: ['warns', 'check', 'strikes'],
     usage: '!infractions <Usuario>',
     examples: ['!infractions @Wumpus', '!infractions 12345678987654321'],
     run: async (client , message, args, prefix, contentPrefix) => {

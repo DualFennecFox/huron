@@ -5,7 +5,7 @@ const {search, searchNumber, getUser } = require('./models/functions');
     name : 'clear-infractions',
     category: "Moderacion",
     description : 'Este comando borra las infracciones de un usuario mencionado o con su ID, o de todos los miembros si se usa "all"',
-    aliases: ['clear-warns', 'clearinfractions', 'clearwarns'],
+    aliases: ['clear-warns', 'clearinfractions', 'clearwarns', 'clear-strikes', 'clearstrikes'],
     usage: '!clear-infractions <Usuario o \"all\">',
     examples: ['!clear-infractions @Wumpus', '!clear-infractions 12345678987654321', '!clear-infractions all'],
     run: async (client, message, args, prefix, contentPrefix) => {
