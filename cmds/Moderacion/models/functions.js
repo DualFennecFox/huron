@@ -190,13 +190,12 @@ const configCommands = () => {
         .join("\n");
 }
 
-    return message.channel.send(embed.setDescription(`Estos son todos los comandos, si necesita ayuda vea la sección **Invite**.`)
+    return message.channel.send(embed
     .addField("Comandos de Información", commands("Info"))
     .addField("Comandos de Moderación", commands("Moderacion"))
     .addField("Comandos de Música", commands("Musica"))
     .addField("Comandos Útiles", commands("Util"))
-    .addField("Comandos de Configuración", `Estos son comandos dentro del comando config, se deben usar despues de ${prefix}config.\n\n${configCommands()}`)
-    .addField('Invite', `[Server de Soporte](https://discord.gg/WpGqHCJ) | [Invitar al Bot](https://discord.com/oauth2/authorize?client_id=${client.user.id}&permissions=-8&scope=bot) | [Patreon](https://patreon.com/EPBK) | [Vota](https://top.gg/bot/${client.user.id})`));
+    .addField("Comandos de Configuración", `Estos son comandos dentro del comando config, se deben usar despues de ${prefix}config.\n\n${configCommands()}`))
 }
 
 function getCMD(client, message, input) {
