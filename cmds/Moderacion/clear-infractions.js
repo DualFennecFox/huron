@@ -28,8 +28,18 @@ const {search, searchNumber, getUser } = require('./models/functions');
       
       let number = searchNumber(bUser.id, db.warns)
 
-     db.warns.splice(number, 1)
+      if (args[1] === "all") {
+     db.warns[number] = new Object()
+      }
+      else if (parseInt(number) && isNaN(parseInt(number))) {
 
+        for (let a = 0; a < number - 1; a++) {
+
+          db.warns[number].warnedByID.pop()
+          db.warns[number].warnReason.pop()
+        }
+
+      }
       db.save().then(result => {
         return message.channel.send(`Se han eliminado las infracciones de ${bUser}`)
       }).catch(err => {
