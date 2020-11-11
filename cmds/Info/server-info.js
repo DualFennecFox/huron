@@ -71,7 +71,7 @@ module.exports = {
         .addField(channelName, `${channels} | ${channelOrder}`, true)
         .addField("Roles", message.guild.roles.cache.size, true)
         .addField("Creado a las", `${message.guild.createdAt.toUTCString().substr(0, 16)} (${checkDays(message.guild.createdAt)})`, true)
-        .setThumbnail(message.guild.iconURL())
+        .setThumbnail(message.guild.iconURL({ format: "png", dynamic: true }))
     message.channel.send({embed})
     .catch(err => {
         console.log(err);
