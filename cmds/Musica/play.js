@@ -4,8 +4,7 @@ const musicData = require("./requirements/musicData");
 const { playSong } = require('./requirements/functions')
 const ytpl = require('ytpl')
 const ytsr = require('ytsr')
-const Youtube = require('simple-youtube-api')
-const youtube = new Youtube(process.env.YOUTUBE_API_KEY)
+const YT = require('scrape-yt')
 const getVideoId = require('get-video-id')
 function search(nameKey, myArray) {
     for (var i = 0; i < myArray.length; i++) {
@@ -62,15 +61,16 @@ function search(nameKey, myArray) {
 
                     if (args[0].match(/^(?!.*\?.*\bv=)https:\/\/www\.youtube\.com\/.*\?.*\blist=.*$/)) {
                               try {
-                                ytpl(args[0], { limit: Infinity }).then(playlist => {
-                                    for (let i = 0; i < playlist.items.length; i++) {
+                                
+                                YT.getPlaylist(args[0], { limit: Infinity }).then(playlist => {
+                                    for (let i = 0; i < playlist.videos.length; i++) {
                                         musicData.server[message.guild.id].queue.push({
-                                            url: playlist.items[i].url_simple,
-                                            title: playlist.items[i].title,
-                                            duration: playlist.items[i].duration,
-                                            thumbnail: playlist.items[i].thumbnail,
-                                            channel: playlist.items[i].author.name,
-                                            channelURL: playlist.items[i].author.ref,
+                                            url: `https://www.youtube.com/watch?v=${playlist.videos[i].id}`,
+                                            title: playlist.videos[i].title,
+                                            duration: playlist.videos[i].duration,
+                                            thumbnail: playlist.videos[i].thumbnail,
+                                            channel: playlist.videos[i].channel.name,
+                                            channelURL: playlist.videos[i].channel.url,
                                             voiceChannel: message.member.voice.channel
                                         });
                                     }
@@ -94,15 +94,16 @@ function search(nameKey, myArray) {
             
                     else if (args[0].match(/^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+/)) {
                           try {
-                          const url = args[0];
+
                             let ID = getVideoId(args[0]).id
-                            youtube.getVideo(ID).then(video => {
-                            const title = video.raw.snippet.title
-                            const duration = formatDuration(video.duration)
-                            const thumbnail = video.thumbnails.high.url;
-                            const channel = video.channel.title
-                            const channelURL = video.channel.customURL || video.channel.url
-                            if (duration == '00:00') duration = 'Transmitiendo en Vivo';
+                            YT.getVideo(ID).then(video => {
+                            const url = `https://www.youtube.com/watch?v=${video.id}`
+                            const title = video.title
+                            const duration = video.duration
+                            const thumbnail = video.thumbnail;
+                            const channel = video.channel.name
+                            const channelURL = video.channel.url
+                            if (duration == '0') duration = 'Transmitiendo en Vivo';
                             const voiceChannel = message.member.voice.channel
                             
                             const song = {
@@ -136,8 +137,8 @@ function search(nameKey, myArray) {
                         let argsresult = args.join(" ")
 
                     
-                       youtube.searchVideos(argsresult, 10).then(async (videos) => {
-                        if (videos.items.length < 10) {
+                       YT.search(argsresult, { type: "video", limit: 10 }).then(async (videos) => {
+                        if (videos.length < 10) {
                             return message.channel.send("Muy pocos videos tienen ese nombre asegurate de haberlo escrito bien")
                         }
                         if (musicData.server[message.guild.id].awaiting == true) return message.channel.send("Ya se está esperando la respuesta")
@@ -145,8 +146,8 @@ function search(nameKey, myArray) {
                         const videoID = []
 
                         for (let v = 0; v < videos.length; v++) {
-                             videoID.push(videos[v].url)
-                             vidNameArr.push(`${v + 1}: ${videos[v].raw.snippet.title}`);
+                             videoID.push(`https://www.youtube.com/watch?v=${videos[v].id}`)
+                             vidNameArr.push(`${v + 1}: ${videos[v].title}`);
                         }
 
                         vidNameArr.push('exit');
@@ -189,13 +190,13 @@ function search(nameKey, myArray) {
                                   return message.channel.send("Hubo un error al obtener el video de Youtube")
                               }       
 
-                          const url = video.url;
-                          const title = video.raw.snippet.title
-                          let duration = formatDuration(video.duration);
-                          const thumbnail = video.thumbnails.high.url;
+                          const url = `https://www.youtube.com/watch?v=${video.id}`;
+                          const title = video.title
+                          let duration = video.duration;
+                          const thumbnail = video.thumbnail;
                           const channel = video.channel.title;
-                            const channelURL = video.channel.customURL || video.channel.url
-                            if (duration == '00:00') duration = 'Transmitiendo en Vivo';
+                            const channelURL = video.channel.url
+                            if (duration == '0') duration = 'Transmitiendo en Vivo';
                             const voiceChannel = message.member.voice.channel
                             const song = {
                                 url,
