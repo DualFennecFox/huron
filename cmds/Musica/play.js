@@ -77,11 +77,11 @@ function search(nameKey, myArray) {
                                     
                                   if (musicData.server[message.guild.id].isPlaying == false) {
                                       musicData.server[message.guild.id].isPlaying = true;
-                                      message.channel.send(`Se han añadido a la cola **${playlist.items.length}** canciones`)
+                                      message.channel.send(`Se han añadido a la cola **${playlist.videos.length}** canciones`)
                                       return playSong(musicData.server[message.guild.id].queue, message);
                                   } else if (musicData.server[message.guild.id].isPlaying == true) {
                                     musicData.server[message.guild.id].loop = false
-                                      return message.channel.send(`**${playlist.title}** Se ha añadido a la cola con ${playlist.items.length} videos`)
+                                      return message.channel.send(`**${playlist.title}** Se ha añadido a la cola con ${playlist.videos.length} videos`)
                                   };
                               }).catch(err => {
                                 console.error(err)
