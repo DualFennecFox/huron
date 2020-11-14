@@ -62,7 +62,7 @@ function search(nameKey, myArray) {
                     if (args[0].match(/^(?!.*\?.*\bv=)https:\/\/www\.youtube\.com\/.*\?.*\blist=.*$/)) {
                               try {
                                 
-                                YT.getPlaylist(args[0].slice(38), { limit: Infinity }).then(playlist => {
+                                YT.getPlaylist(args[0].slice(38), { limit: 0 }).then(playlist => {
                                     for (let i = 0; i < playlist.videos.length; i++) {
                                         musicData.server[message.guild.id].queue.push({
                                             url: `https://www.youtube.com/watch?v=${playlist.videos[i].id}`,
