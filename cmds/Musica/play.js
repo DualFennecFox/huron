@@ -194,7 +194,7 @@ function search(nameKey, myArray) {
                           const title = video.title
                           let duration = video.duration;
                           const thumbnail = video.thumbnail;
-                          const channel = video.channel.title;
+                          const channel = video.channel.name;
                             const channelURL = video.channel.url
                             if (duration == '0') duration = 'Transmitiendo en Vivo';
                             const voiceChannel = message.member.voice.channel
