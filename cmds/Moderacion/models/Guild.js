@@ -54,8 +54,6 @@ const guildSchema = mongoose.Schema({
     muterole: String,
     muteUsers: [],
     suggestionChannel: String,
-    suggestionLevel: Number,
-    confessionChannel: String,
-    confessionLevel: Number
+    suggestionLevel: Number
   })
   module.exports = mongoose.model("Guild", guildSchema)

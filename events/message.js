@@ -1,18 +1,9 @@
 const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async message => {
-  let client = message.client
-    if (message.channel.type === "dm") {
-      if (!message.content.startsWith("h!confess")) return
-    }
-    else {
-      let arg = message.content.slice("h!confess".length).trim().split(/ +/g);
-      return client.commands.get("confess").run(client, message, arg, 'h!')
-    }
-      
-      client.commands.get("confess").run(client, message, )
+    if (message.channel.type === "dm") return;
     if (!message.channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return
-
+      let client = message.client
 
       let prefixes;
       let contentPrefix;
