@@ -64,7 +64,7 @@ module.exports = {
                       return message.channel.send("Se ha establecido el canal") 
                 }
                 else {
-                    updateGuild(message.guild, { confessionChannel: leaveChannel.id, confessionChannel: 1})
+                    updateGuild(message.guild, { confessionChannel: leaveChannel.id, confessionLevel: 1})
                     return message.channel.send("Se ha establecido el canal") 
                 }
             }).catch(err => {
