@@ -64,7 +64,7 @@ module.exports = {
                       return message.channel.send("Se ha establecido el canal") 
                 }
                 else {
-                    updateGuild(message.guild, { confessionChannel: leaveChannel.id})
+                    updateGuild(message.guild, { confessionChannel: leaveChannel.id, confessionChannel: 1})
                     return message.channel.send("Se ha establecido el canal") 
                 }
             }).catch(err => {
@@ -79,7 +79,7 @@ module.exports = {
                  }
                else if (doc.LeaveBool == false) return message.channel.send("Ya esta desactivado esta configuración")
             else {
-            updateGuild(message.guild, {  confessionChannel: ""})
+            updateGuild(message.guild, {  confessionChannel: "", confessionLevel: 1})
     
             message.channel.send("Se ha eliminado el canal de mi base de datos")
             }
