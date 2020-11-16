@@ -24,7 +24,7 @@ module.exports = {
             let level = doc.confessionLevel
             
             const embed = new Discord.MessageEmbed()
-            .setAuthor(`Confesión #${level}`, message.guild.iconURL({ format: "png", dynamic: true, size: 2048}))
+            .setAuthor(`Confesión #${level}`, guild.iconURL({ format: "png", dynamic: true, size: 2048}))
             .setColor("#f7f749")
             .setDescription(args.join(" "))
 
