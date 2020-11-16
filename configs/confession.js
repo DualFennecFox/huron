@@ -53,7 +53,7 @@ module.exports = {
                         role: [],
                         muteUsers: [],
                         confessionChannel: leaveChannel,
-                        confessionLevel: 0
+                        confessionLevel: 1
                       };
                       try {
                         createGuild(newGuild);

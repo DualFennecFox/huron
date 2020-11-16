@@ -56,7 +56,7 @@ module.exports = {
                     role: [],
                     muteUsers: [],
                     suggestionChannel: channel,
-                    suggestionLevel: 0
+                    suggestionLevel: 1
                   };
                   try {
                     createGuild(newGuild);

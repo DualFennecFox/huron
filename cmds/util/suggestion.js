@@ -112,9 +112,9 @@ module.exports = {
                         message.channel.send("No hay ninguna sugerencia")
                         return getGuild(message.guild)
                      }
-                   else if (doc.suggestionLevel === 0) return message.channel.send("No hay ninguna sugerencia")
+                   else if (doc.suggestionLevel === 1) return message.channel.send("No hay ninguna sugerencia")
                 else {
-                updateGuild(message.guild, { suggestionLevel: 0 })
+                updateGuild(message.guild, { suggestionLevel: 1 })
         
                 message.channel.send("Se han restablecido las sugerencias")
                 }
