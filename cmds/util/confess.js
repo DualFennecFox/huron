@@ -20,6 +20,9 @@ module.exports = {
                 if (!channel) return message.channel.send("El canal de confesiones no parece ser válido")
 
             if (!channel.permissionsFor(guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para enviar mensajes en el canal de confesiones")
+
+            let level = doc.confessionLevel
+            if (doc.confessionLevel === 0) level = 1
             
             const embed = new Discord.MessageEmbed()
             .setAuthor(`Confesión #${level}`, message.author.displayAvatarURL({ format: "png", dynamic: true }))
@@ -27,6 +30,10 @@ module.exports = {
             .setDescription(args.join(" "))
 
             channel.send({ embed })
+
+            doc.confessionLevel = level + 1
+
+            await doc.save()
             return message.channel.send("Se ha enviado tu confesión con exito")
             })
         }        
