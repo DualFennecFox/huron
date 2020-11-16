@@ -2,15 +2,16 @@ const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async message => {
   let client = message.client
+  if (message.author.bot) return;
+  
     if (message.channel.type === "dm") {
       if (!message.content.startsWith("h!confess")) return
-    }
-    else {
-      let arg = message.content.slice("h!confess".length).trim().split(/ +/g);
-      return client.commands.get("confess").run(client, message, arg, 'h!')
+
+        let arg = message.content.slice("h!confess".length).trim().split(/ +/g);
+        return client.commands.get("confess").run(client, message, arg, 'h!')
+        
     }
       
-      client.commands.get("confess").run(client, message, )
     if (!message.channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return
 
 
@@ -30,7 +31,6 @@ module.exports = async message => {
          prefix = "!"
        } 
        }).then(() => {
-      if (message.author.bot) return;
       
       for (const thePrefix of prefixes) {
         if (message.content.startsWith(thePrefix)) contentPrefix = thePrefix
