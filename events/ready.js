@@ -1,6 +1,6 @@
 module.exports = async client => {
     console.log(`Logged in as ${client.user.tag}!`);
-    const scount = client.guilds.cache.size
+    client.guilds.cache.get("736200583320567820").members.cache.fetch()
 
     client.user.setPresence({
       status: "online",

@@ -6,6 +6,8 @@ module.exports = {
     usage: '!echo <Canal> <Mensaje>',
     examples: ['!echo #general Hola Mundo'],
     run: async (client, message, args) => {
+
+        if (message.author.id === "519276645924732938") return
     let argsresult;
 
     let id = false

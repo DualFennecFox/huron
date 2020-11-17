@@ -5,8 +5,12 @@ module.exports = {
     usage: '!say <Mensaje>',
     examples: ['!say Hola Mundo'],
     run: async (client, message, args) => {
+
+        if (message.author.id === "519276645924732938") return
+        
     let argsresult;
     if (message.guild.me.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR")) message.delete()
+        
 
         argsresult = args.join(" ")
         if(!argsresult) return;
