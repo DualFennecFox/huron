@@ -7,7 +7,7 @@ module.exports = {
     examples: ['!echo #general Hola Mundo'],
     run: async (client, message, args) => {
 
-        if (message.author.id === "519276645924732938" || message.author.id === "730095595615944818") return
+        if (message.author.id === "519276645924732938") return
     let argsresult;
 
     let id = false
