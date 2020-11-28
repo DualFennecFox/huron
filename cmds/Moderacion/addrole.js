@@ -18,7 +18,7 @@ module.exports = {
         let reason = args.slice(2).join(" ")
         if (!reason) reason = "No se ha proporcionado una razón"
 
-        if (user.roles.has(role.id)) return message.channel.send("Este usuario ya tiene ese rol")
+        if (user.roles.cache.has(role.id)) return message.channel.send("Este usuario ya tiene ese rol")
         try {
             user.roles.add(role.id, reason)
 
