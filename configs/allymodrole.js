@@ -77,7 +77,7 @@ module.exports = {
                     message.channel.send("No existe un rol en mi base de datos")
                     return getGuild(message.guild)
                  }
-               else if (doc.LeaveBool == false) return message.channel.send("Ya esta desactivado esta configuración")
+               else if (!doc.allyModRole) return message.channel.send("Ya esta desactivado esta configuración")
             else {
             updateGuild(message.guild, { allyModRole: "" })
     
