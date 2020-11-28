@@ -12,6 +12,10 @@ module.exports = {
         let role = message.mentions.roles.first() || message.guild.roles.cache.get(args[0])
         if (!role) return message.channel.send("Debes mencionar un rol o darme su ID")
 
+        if (message.guild.me.roles.highest.comparePositionTo(role.id) < 1) {
+            return message.channel.send("Mi rol es muy bajo para asignar este rol");
+        }
+
         let user = message.mentions.members.first() || message.guild.members.cache.get(args[1])
         if (!user) return message.channel.send("Debes mencionar a un usuario o darme su ID")
 
