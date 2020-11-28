@@ -7,11 +7,10 @@ module.exports = {
     run: async (message, args, method) => {
 
     if (method === "enable") {
-        if (!args[2]) return message.channel.send("Debes especificar un canal")
 
         let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[2])
 
-        if (!channel && !color) return message.channel.send("Debes especificar un canal")
+        if (!channel) return message.channel.send("Debes especificar un canal")
         Guild.findOne({ guildID: message.guild.id }).then(doc => {    
             if (!doc) {
                 const newGuild = {

@@ -2,42 +2,14 @@ const Guild = require("../cmds/Moderacion/models/Guild")
 const { getGuild, updateGuild, createGuild } = require("../cmds/Moderacion/models/functions")
 
 module.exports = {
-    name: "muterole",
+    name: "allyrole",
     run: async (message, args, method) => {
 
         if (method === "enable") {
-            if (!message.member.hasPermission("MANAGE_ROLES" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando")
-            if (!args[1]) return message.channel.send(`Menciona un rol, su ID o crea uno especificandolo`)
-            if (!message.guild.me.hasPermission("MANAGE_ROLES", "MANAGE_CHANNELS")) return message.channel.send("No tengo permisos para Gestionar Roles o Gestionar Canales!")
+            if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_CHANNELS")) return message.channel.send("No tienes permisos para usar este comando")
+            let role = message.mentions.roles.first() || message.guild.roles.cache.get(args[2])
+            if (!role) return message.channel.send('Debes mencionar un rol o darme su ID')
 
-
-                let mRole = message.mentions.roles.first() || message.guild.roles.cache.get(args[2])
-                if (!mRole) {
-                let Color = args[2].toUpperCase()
-                if (!validateColor.validateHTMLColorHex(Color)) Color = "#9b9b9b"
-                    try {
-                        var muterole = await message.guild.roles.create({ data: {  
-                            name : args[1],
-                            color : Color,
-                            permissions : []
-                        }
-                        })
-                        message.guild.channels.cache.forEach(async (channel, id) => {
-                            await channel.createOverwrite(muterole,  {
-                                SEND_MESSAGES: false,
-                                CREATE_INSTANT_INVITE: false,
-                                ADD_REACTIONS: false,
-                                SEND_TTS_MESSAGES: false,
-                                ATTACH_FILES: false,
-                                SPEAK: false
-                            })
-                        })
-                        mRole = muterole
-                    } catch (err) {
-                        console.error(err)
-                       return message.channel.send(`Se ha ocurrido un error al crear o modificar el rol ${mRole}`)
-                }
-            }
             Guild.findOne({ guildID: message.guild.id }).then(doc => {
                 if (!doc) {
                     const newGuild = {
@@ -48,10 +20,10 @@ module.exports = {
                         prefix: '!',
                         JoinMsg: "",
                         JoinBool: false,
-                        LeaveMsg: "",
-                        LeaveBool: false,
+                        LeaveMsg: leaveMsg,
+                        LeaveBool: true,
                         WelcomeChannel: "",
-                        LeaveChannel: "",
+                        LeaveChannel: leaveChannel.id,
                         LogChannel: "",
                         log: {
                         Premium: false,
@@ -78,8 +50,10 @@ module.exports = {
                         },
                         warns: [],
                         role: [],
-                        muterole: mRole.id,
-                        muteUsers: []
+                        muteUsers: [],
+                        confessionChannel: leaveChannel,
+                        confessionLevel: 1,
+                        allyRole: role
                       };
                       try {
                         createGuild(newGuild);
@@ -87,28 +61,27 @@ module.exports = {
                       } catch (error) {
                         console.error(error);
                       }
-                      return message.channel.send(`Se ha establecido el Rol **${mRole.name}**`) 
+                      return message.channel.send(`Se ha establecido el rol **${role}** para los aliados`) 
                 }
                 else {
-                    updateGuild(message.guild, { muterole: mRole.id })
-                    return message.channel.send(`Se ha establecido el Rol **${mRole.name}**`) 
+                    updateGuild(message.guild, { allyRole: role})
+                    return message.channel.send(`Se ha establecido el rol **${role}** para los aliados`) 
                 }
             }).catch(err => {
                 console.error(err)
-                message.channel.send("Ha ocurrido un error")
             })               
         }
         else if (method === "disable") {
             Guild.findOne({ guildID: message.guild.id }).then(doc => {
                 if (!doc) {
-                    message.channel.send("No existe un rol de Muteado")
+                    message.channel.send("No existe un rol en mi base de datos")
                     return getGuild(message.guild)
                  }
-               else if (!doc.muterole) return message.channel.send("No existe un rol de Muteado")
+               else if (doc.LeaveBool == false) return message.channel.send("Ya esta desactivado esta configuración")
             else {
-            updateGuild(message.guild, { muterole: "" })
+            updateGuild(message.guild, { allyRole: "" })
     
-            message.channel.send("Se ha eliminado el rol")
+            message.channel.send("Se ha eliminado el rol de mi base de datos")
             }
         }).catch(err => {
             console.error(err)

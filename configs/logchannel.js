@@ -8,7 +8,7 @@ module.exports = {
     if (method === "enable") {
 if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_MEMBERS")) return message.channel.send("No tienes permisos para usar este comando")
         
-let Channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[1]);
+let Channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[2]);
 if (!Channel) return message.channel.send("Debes especificar un canal")
 
 if (!Channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para hablar en ese canal")
