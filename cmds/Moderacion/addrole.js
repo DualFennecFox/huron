@@ -8,7 +8,7 @@ module.exports = {
     run: async (client, message, args) => {
 
         if (!message.member.hasPermission("MANAGE_ROLES")) return message.channel.send("No tienes permisos para usar este comando!")
-
+        if (!message.guild.me.hasPermission("MANAGE_ROLES")) return message.channel.send("No tengo permisos para añadir roles")
         let role = message.mentions.roles.first() || message.guild.roles.cache.get(args[0])
         if (!role) return message.channel.send("Debes mencionar un rol o darme su ID")
 
@@ -19,6 +19,11 @@ module.exports = {
         if (!reason) reason = "No se ha proporcionado una razón"
 
         if (user.roles.cache.has(role.id)) return message.channel.send("Este usuario ya tiene ese rol")
+
+        if (message.guild.me.roles.highest.comparePositionTo(user.roles.highest) < 1) {
+            return message.channel.send("Mi rol es muy bajo para gestionar a este usuario!");
+        }
+
         try {
             user.roles.add(role.id, reason)
 
@@ -27,6 +32,6 @@ module.exports = {
             return message.channel.send("Ha ocurrido un error")
         }
 
-        return message.channel.send(`Se ha añadido el rol **${role.name}** de <@${user.id}>`)
+        return message.channel.send(`Se ha añadido el rol **${role.name}** a <@${user.id}>`)
     }
 }
