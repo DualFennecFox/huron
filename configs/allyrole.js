@@ -61,11 +61,11 @@ module.exports = {
                       } catch (error) {
                         console.error(error);
                       }
-                      return message.channel.send(`Se ha establecido el rol **${role}** para los aliados`) 
+                      return message.channel.send(`Se ha establecido el rol **${role.name}** para los aliados`) 
                 }
                 else {
                     updateGuild(message.guild, { allyRole: role})
-                    return message.channel.send(`Se ha establecido el rol **${role}** para los aliados`) 
+                    return message.channel.send(`Se ha establecido el rol **${role.name}** para los aliados`) 
                 }
             }).catch(err => {
                 console.error(err)

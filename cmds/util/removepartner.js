@@ -17,7 +17,6 @@ module.exports = {
 
             if (!modrole && !message.member.hasPermission("MANAGE_GUILD")) return message.channel.send("No tienes permisos para usar este comando!")
             if (!message.guild.me.hasPermission("MANAGE_ROLES")) return message.channel.send("No tengo permisos para añadir roles")
-            if (!modrole) return message.channel.send("No existe un rol para el staff de alianza")
             if (!message.member.roles.cache.has(modrole.id) || !message.member.hasPermission("MANAGE_GUILD")) return message.channel.send("No tienes permisos para usar este comando!")
             if (!allyrole) return message.channel.send("No existe un rol en mi base de datos para los aliados")
         
