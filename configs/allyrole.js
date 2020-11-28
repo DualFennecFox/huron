@@ -64,7 +64,7 @@ module.exports = {
                       return message.channel.send(`Se ha establecido el rol **${role.name}** para los aliados`) 
                 }
                 else {
-                    updateGuild(message.guild, { allyRole: role})
+                    updateGuild(message.guild, { allyRole: role.id})
                     return message.channel.send(`Se ha establecido el rol **${role.name}** para los aliados`) 
                 }
             }).catch(err => {

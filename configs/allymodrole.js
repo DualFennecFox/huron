@@ -64,7 +64,7 @@ module.exports = {
                       return message.channel.send(`Se ha añadido el rol **${role.name}** para los staff de alianzas`) 
                 }
                 else {
-                    updateGuild(message.guild, { allyModRole: role})
+                    updateGuild(message.guild, { allyModRole: role.id})
                     return message.channel.send(`Se ha añadido el rol **${role.name}** para los staff de alianzas`) 
                 }
             }).catch(err => {
