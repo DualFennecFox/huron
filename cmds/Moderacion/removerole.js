@@ -24,10 +24,6 @@ module.exports = {
 
         if (!user.roles.cache.has(role.id)) return message.channel.send("Este usuario no tiene este rol")
 
-        if (message.guild.me.roles.highest.comparePositionTo(user.roles.highest) < 1) {
-            return message.channel.send("Mi rol es muy bajo para gestionar a este usuario!");
-        }
-
         try {
             user.roles.remove(role.id, reason)
             

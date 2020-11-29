@@ -24,10 +24,6 @@ module.exports = {
 
         if (user.roles.cache.has(role.id)) return message.channel.send("Este usuario ya tiene ese rol")
 
-        if (message.guild.me.roles.highest.comparePositionTo(user.roles.highest) < 1) {
-            return message.channel.send("Mi rol es muy bajo para gestionar a este usuario!");
-        }
-
         try {
             user.roles.add(role.id, reason)
 

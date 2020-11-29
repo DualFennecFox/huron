@@ -35,10 +35,6 @@ module.exports = {
                 return message.channel.send("Mi rol es muy bajo para asignar el rol aliado");
             }
 
-            if (message.guild.me.roles.highest.comparePositionTo(user.roles.highest) < 1) {
-                return message.channel.send("Mi rol es muy bajo para gestionar a este usuario!");
-            }
-
             try {
                 user.roles.remove(allyrole.id, "Aliado removido")
             } catch (err) {

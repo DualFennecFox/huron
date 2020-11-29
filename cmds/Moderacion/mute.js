@@ -37,8 +37,6 @@ if (message.guild.me.roles.highest.comparePositionTo(muterole) < 1) {
 }
 if (mutee.roles.cache.some(r => r.id === muterole.id)) return message.channel.send("Este usuario ya esta muteado")
 
-let ar = []
-
  mutee.roles.add(muterole.id, mReason );
  if (!doc.muteUsers.includes(mutee.id)) {
      doc.muteUsers.push(mutee.id)
