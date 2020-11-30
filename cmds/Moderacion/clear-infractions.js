@@ -41,6 +41,7 @@ const {search, searchNumber, getUser } = require('./models/functions');
           warned.pop()
           reason.pop()
 
+        doc.warnLevel = warnLevel - 1
         warnLevel = warnLevel - 1
         }
         }
