@@ -35,14 +35,16 @@ const {search, searchNumber, getUser } = require('./models/functions');
 
         let warned = doc.warnedByID
         let reason = doc.warnReason
+        let warnLevel = doc.warnLevel
         for (let a = 0; a < args[1]; a++) {
           
           warned.pop()
           reason.pop()
 
+        warnLevel = warnLevel - 1
         }
         }
-      
+
       db.save().then(result => {
         return message.channel.send(`Se han eliminado las infracciones de ${bUser}`)
       }).catch(err => {
