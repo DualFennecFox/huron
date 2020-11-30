@@ -109,7 +109,7 @@ const {search, createGuild, getUser } = require('./models/functions');
                 warnUserID: bUser.id,
                 warnedByID: [message.author.id],
                 warnReason: [bReason],
-                warnLevel: warnLevel + 1
+                warnLevel: warnLevel + 1,
                 })
             db.save()
         }

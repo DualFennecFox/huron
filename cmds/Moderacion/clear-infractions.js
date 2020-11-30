@@ -31,18 +31,18 @@ const {search, searchNumber, getUser } = require('./models/functions');
       if (args[1] === "all") {
      db.warns.splice(number, 1)
       }
-      else if (parseInt(number) && isNaN(parseInt(number))) {
+      else if (parseInt(args[1]) && parseInt(args[1]) !== 0) {
 
-        let warned = db.warns[number].warnedByID.reverse()
-        let reason = db.warns[number].warnReason.reverse()
-        for (let a = 0; a < number - 1; a++) {
+        let warned = doc.warnedByID
+        let reason = doc.warnReason
+        for (let a = warned.length - 1; a < args[1]; a++) {
+          
+          warned.pop()
+          reason.pop()
 
-          warned.splice(a, 1)
-          reason.splice(a, 1)
         }
-        warned = warned.reverse()
-        reason = reason.reverse()
-      }
+        }
+      
       db.save().then(result => {
         return message.channel.send(`Se han eliminado las infracciones de ${bUser}`)
       }).catch(err => {
