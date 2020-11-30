@@ -30,8 +30,15 @@ const {search, searchNumber, getUser } = require('./models/functions');
 
       if (args[1] === "all") {
      db.warns.splice(number, 1)
-      }
-      else if (parseInt(args[1]) && parseInt(args[1]) !== 0) {
+     try {
+     await db.save()
+     return message.channel.send(`Se han eliminado todas las infracciones de ${bUser}`)
+     } catch (err) {
+     console.error(err)
+     return message.channel.send("Hubo un error al remover las infracciones")
+     }
+    }
+      else if (parseInt(args[1]) && args[1] !== "0") {
 
         let warned = doc.warnedByID
         let reason = doc.warnReason
@@ -45,13 +52,14 @@ const {search, searchNumber, getUser } = require('./models/functions');
         warnLevel = warnLevel - 1
         }
         }
-
-      db.save().then(result => {
+      try { 
+      await db.save()
         return message.channel.send(`Se han eliminado las infracciones de ${bUser}`)
-      }).catch(err => {
+      } catch (err) {
+
         console.error(err)
         return message.channel.send("Hubo un error al remover las infracciones")
-      })
+    }
     }
    else if (args[0] === 'all') {
    if (!db || !db.warns || db.warns.length == 0) return message.channel.send("Ningún usuario tiene advertencias")
@@ -66,5 +74,6 @@ const {search, searchNumber, getUser } = require('./models/functions');
      message.channel.send("Hubo un error al remover las infracciones")
    }
    }
+   else return message.channel.send("Esa no es una opción válida para eliminar advertencias")
     }
 }
