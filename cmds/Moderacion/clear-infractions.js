@@ -35,7 +35,7 @@ const {search, searchNumber, getUser } = require('./models/functions');
 
         let warned = doc.warnedByID
         let reason = doc.warnReason
-        for (let a = warned.length - 1; a < args[1]; a++) {
+        for (let a = 0; a < args[1]; a++) {
           
           warned.pop()
           reason.pop()
