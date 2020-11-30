@@ -38,8 +38,9 @@ const {search, searchNumber, getUser } = require('./models/functions');
      return message.channel.send("Hubo un error al remover las infracciones")
      }
     }
-      else if (parseInt(args[1]) && args[1] !== "0") {
-
+      else if (parseInt(args[1])) {
+        if (args[1] === "0") return message.channel.send("Debes elegir un número después de 0")
+        
         let warned = doc.warnedByID
         let reason = doc.warnReason
         let warnLevel = doc.warnLevel
@@ -50,11 +51,13 @@ const {search, searchNumber, getUser } = require('./models/functions');
 
         doc.warnLevel = warnLevel - 1
         warnLevel = warnLevel - 1
+        if (warnLevel === 0) break;
         }
         }
       if (doc.warnLevel === 0) {
         db.warns.splice(number, 1)
       }
+
       try { 
       await db.save()
         return message.channel.send(`Se han eliminado las infracciones de ${bUser}`)
