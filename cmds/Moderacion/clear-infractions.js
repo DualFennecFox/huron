@@ -52,6 +52,9 @@ const {search, searchNumber, getUser } = require('./models/functions');
         warnLevel = warnLevel - 1
         }
         }
+      if (doc.warnLevel === 0) {
+        db.warns.splice(number, 1)
+      }
       try { 
       await db.save()
         return message.channel.send(`Se han eliminado las infracciones de ${bUser}`)
