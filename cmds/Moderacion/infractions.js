@@ -19,11 +19,11 @@ const { search, getUser } = require('./models/functions');
 
     let db = await Guild.findOne({ guildID: message.guild.id })
 
-    if (!db) return message.channel.send("Este usuario no tiene infracciones")
+    if (!db) return message.channel.send("Este usuario no tiene advertencias")
 
     let doc = search(bUser.id, db.warns)
 
-    if (!doc) return message.channel.send("Este usuario no tiene infracciones")
+    if (!doc) return message.channel.send("Este usuario no tiene advertencias")
 
     let warns = []
     for (let i = 0; i < doc.warnLevel; i++) {
