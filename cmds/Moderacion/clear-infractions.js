@@ -6,7 +6,7 @@ const {search, searchNumber, getUser } = require('./models/functions');
     category: "Moderacion",
     description : 'Este comando borra las infracciones de un usuario mencionado o con su ID, o de todos los miembros si se usa "all"',
     aliases: ['clear-warns', 'clearinfractions', 'clearwarns', 'clear-strikes', 'clearstrikes'],
-    usage: '!clear-infractions <Usuario o \"all\">',
+    usage: '!clear-infractions <Usuario o \"all\"> <Número>',
     examples: ['!clear-infractions @Wumpus', '!clear-infractions 12345678987654321', '!clear-infractions all'],
     run: async (client, message, args, prefix, contentPrefix) => {
     if (!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
