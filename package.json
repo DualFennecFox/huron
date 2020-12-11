@@ -18,18 +18,18 @@
     "get-video-id": "^3.1.5",
     "http": "0.0.1-security",
     "miniget": "^4.1.0",
-    "mongoose": "^5.10.17",
+    "mongoose": "^5.11.7",
     "node-fetch": "^2.6.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "scrape-yt": "^1.4.6",
+    "scrape-yt": "^1.4.7",
     "simple-youtube-api": "^5.2.1",
-    "validate-color": "^2.1.0",
-    "ytdl-core": "^4.1.0",
+    "validate-color": "^2.1.1",
+    "ytdl-core": "^4.1.4",
     "ytdl-core-discord": "^1.2.3",
-    "ytpl": "^1.0.1",
+    "ytpl": "^2.0.0-alpha.3",
     "ytsr": "^1.0.4",
-    "ytt": "^2.0.6"
+    "ytt": "^2.1.1"
   },
   "engines": {
     "node": "12.x"
