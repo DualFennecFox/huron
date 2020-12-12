@@ -1,6 +1,6 @@
 module.exports = async client => {
     console.log(`Logged in as ${client.user.tag}!`);
-    client.guilds.cache.forEach(guild => {
+    client.guilds.cache.forEach(async guild => {
 
       await guild.members.fetch()
     })
