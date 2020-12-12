@@ -13,7 +13,7 @@ module.exports = {
                 const newGuild = {
                     guildID: message.guild.id,
                     guildName: message.guild.name,
-                    guildOwner: message.guild.members.cache.get(message.guild.ownerID).user.tag,
+                    guildOwner: message.guild.members.cache.get(message.guild.ownerID).user.username,
                     guildOwnerID: message.guild.ownerID,
                     prefix: nPrefix,
                     JoinMsg: "",

@@ -18,7 +18,7 @@ Guild.findOne({ guildID: message.guild.id }).then(doc => {
         const newGuild = {
             guildID: message.guild.id,
             guildName: message.guild.name,
-            guildOwner: message.guild.owner.user.username,
+            guildOwner: message.guild.members.cache.get(message.guild.ownerID).user.username,
             guildOwnerID: message.guild.ownerID,
             prefix: '!',
             JoinMsg: "",
