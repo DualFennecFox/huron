@@ -183,7 +183,8 @@ function search(nameKey, myArray) {
                                   return songEmbed.delete() 
                               }
                               try {
-                                var video = videos[videoIndex - 1]       
+                                var video = videos[videoIndex - 1]  
+                                response.first().delete()     
                               } catch (err) {
                                   console.error(err)
                                   if (songEmbed) songEmbed.delete()
