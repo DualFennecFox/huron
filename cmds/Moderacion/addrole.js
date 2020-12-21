@@ -19,8 +19,7 @@ module.exports = {
             return message.channel.send("Mi rol es muy bajo para asignar este rol");
         }
 
-        let reason = `[${message.author.tag}]: ${args.slice(2).join(" ")}`;
-        if(!reason) reason = `[${message.author.tag}]: No se específico una Razón`
+        let reason = `[${message.author.tag}]: ${args.slice(2).join(" ") || "No se específico una Razón"}`;
 
         if (user.roles.cache.has(role.id)) return message.channel.send("Este usuario ya tiene ese rol")
 

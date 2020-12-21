@@ -23,8 +23,7 @@ const Guild = require('./models/Guild')
     if(mutee.hasPermission("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR" || "MANAGE_ROLES") || !message.guild.owner) return message.channel.send("Esta persona no puede ser muteada!");
     
 
-    let mReason = `[${message.author.tag}]: ${args.slice(1).join(" ")}`;
-    if(!mReason) mReason = `[${message.author.tag}]: No se específico una Razón`
+    let mReason = `[${message.author.tag}]: ${args.slice(1).join(" ") || "No se específico una Razón"}`;
 
     let doc = await Guild.findOne({ guildID: message.guild.id })
     if (!doc) return message.channel.send("No existe un rol para mutear, asegurate de declararlo en las configuraciones")

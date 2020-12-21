@@ -21,8 +21,7 @@ module.exports = {
     if(unmutee.id === message.author.id) return message.channel.send("No te puedes mutear a ti mismo!");
     if (unmutee.id === client.user.id) return message.channel.send("No estoy muteado y no puedo mutearme")
 
-    let mReason = `[${message.author.tag}]: ${args.slice(1).join(" ")}`;
-    if(!mReason) mReason = `[${message.author.tag}]: No se específico una Razón`
+    let mReason = `[${message.author.tag}]: ${args.slice(1).join(" ") || "No se específico una Razón"}`;
 
     let doc = await Guild.findOne({ guildID: message.guild.id })
     if (!doc) return message.channel.send("No existe un rol para mutear, asegurate de declararlo en las configuraciones")

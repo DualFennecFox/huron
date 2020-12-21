@@ -16,8 +16,7 @@ const { getUser } = require('./models/functions');
     if (contentPrefix !== prefix) kUser = message.guild.member(getUser(args[0], client))
     if (!kUser) return message.channel.send("Ese no parece ser un usuario valido");
 
-    let kReason = `[${message.author.tag}]: ${args.slice(1).join(" ")}`;
-    if(!kReason) kReason = `[${message.author.tag}]: No se específico una Razón`
+    let kReason = `[${message.author.tag}]: ${args.slice(1).join(" ") || "No se específico una Razón"}`;
 
     if (kUser.id === client.user.id) return message.channel.send("No puedo expulsarme a mi mismo")
     if(!message.guild.me.hasPermission(["KICK_MEMBERS" || "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para expulsar miembros");

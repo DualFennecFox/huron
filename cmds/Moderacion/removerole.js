@@ -19,8 +19,7 @@ module.exports = {
         let user = message.mentions.members.first() || message.guild.members.cache.get(args[1])
         if (!user) return message.channel.send("Debes mencionar a un usuario o darme su ID")
 
-        let reason = `[${message.author.tag}]: ${args.slice(2).join(" ")}`;
-        if(!reason) reason = `[${message.author.tag}]: No se específico una Razón`
+        let reason = `[${message.author.tag}]: ${args.slice(2).join(" ") || "No se específico una Razón"}`;
 
         if (!user.roles.cache.has(role.id)) return message.channel.send("Este usuario no tiene este rol")
 

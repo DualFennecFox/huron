@@ -22,8 +22,7 @@ const { getUser } = require('./models/functions')
            }
         }
         if (!User) return message.channel.send("Ese no parece ser un usuario valido");
-        let bReason = `[${message.author.tag}]: ${args.slice(1).join(" ")}`;
-        if(!bReason) bReason = `[${message.author.tag}]: No se específico una Razón`
+        let bReason = `[${message.author.tag}]: ${args.slice(1).join(" ") || "No se específico una Razón"}`;
         try {
         let bans = await message.guild.fetchBans();
     
