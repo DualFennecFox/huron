@@ -26,7 +26,7 @@
     "scrape-yt": "^1.4.7",
     "simple-youtube-api": "^5.2.1",
     "validate-color": "^2.1.1",
-    "ytdl-core": "^4.2.0",
+    "ytdl-core": "^4.2.1",
     "ytdl-core-discord": "^1.2.3",
     "ytpl": "^2.0.3",
     "ytsr": "^3.0.0",
