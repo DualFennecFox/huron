@@ -18,7 +18,7 @@ module.exports = {
                 .setAuthor("Configuración", client.user.displayAvatarURL())
                 .setColor("#FFFF00")
                 .setDescription(`Estos son los comandos de configuración:`)
-                .addField("Prefix", `Cambia el prefix.\n**Uso:** ${prefix}config prefix <prefix>`)
+                .addField("Prefix", `Cambia el prefix.\n**Uso:** ${prefix}config prefix <prefix>\n**Configuración:** ${settings.prefix || "!"}`)
                 .addField("JoinMsg", `Crea o elimina un mensaje de bienvenida.\n**Uso:** ${prefix}config joinmsg <enable o disable> <Canal> <Mensaje>\n**Configuración:** \`${settings.JoinMsg || "Ninguno"}\``)
                 .addField("LeaveMsg", `Igual que los mensajes de bienvenida, pero cuando un usuario deja el servidor.\n**Uso:** ${prefix}config leavemsg <enable o disable> <Canal> <Mensaje>\n**Configuración:** \`${settings.LeaveMsg || "Ninguno"}\``)
                 .addField("MuteRole", `Para que funcione el mute se debe configurar un rol Muteado con este comando, se puede crear uno eligiendo un nombre y un color.\n**Uso:** ${prefix}config muterole <enable o disable> <Rol, ID o Nombre> [Color si se crea]\n**Configuración:** ${message.guild.roles.cache.get(settings.muterole) || "Ninguno"}`)
