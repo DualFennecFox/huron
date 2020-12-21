@@ -3,7 +3,7 @@ const Guild = require('../cmds/Moderacion/models/Guild')
 const { checkDays } = require('../cmds/Moderacion/models/functions')
 
 module.exports = async (guild, u) => {
-    let client = user.client
+    let client = u.client
     Guild.findOne({ guildID: guild.id }).then(async doc => {
       if (!doc) return
       if (doc.log.banAdd == true) {
