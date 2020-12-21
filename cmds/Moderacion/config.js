@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+const Guild = require('./models/Guild')
 
 module.exports = {
     name : 'config',
@@ -11,18 +12,20 @@ module.exports = {
         if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando")
         if (!args[0]) {
                 
+            let settings = await Guild.findOne({ guildID: message.guild.id })
+
             const embed = new Discord.MessageEmbed()
                 .setAuthor("Configuración", client.user.displayAvatarURL())
                 .setColor("#FFFF00")
                 .setDescription(`Estos son los comandos de configuración:`)
                 .addField("Prefix", `Cambia el prefix.\n**Uso:** ${prefix}config prefix <prefix>`)
-                .addField("JoinMsg", `Crea o elimina un mensaje de bienvenida.\n**Uso:** ${prefix}config joinmsg <enable o disable> <Canal> <Mensaje>`)
-                .addField("LeaveMsg", `Igual que los mensajes de bienvenida, pero cuando un usuario deja el servidor.\n**Uso:** ${prefix}config leavemsg <enable o disable> <Canal> <Mensaje>`)
-                .addField("MuteRole", `Para que funcione el mute se debe configurar un rol Muteado con este comando, se puede crear uno eligiendo un nombre y un color.\n**Uso:** ${prefix}config muterole <enable o disable> <Rol, ID o Nombre> [Color si se crea]`)
-                .addField("Suggestion", `Establece un canal de sugerencias\n**Uso:** ${prefix}config suggestion <enable o disable> <Canal>`)
-                .addField("LogChannel", `Establece un canal para logear con su mención o ID\n**Uso:** ${prefix}config logchannel <enable o disable> <Canal>`)
-                .addField("AllyRole", `Añade un rol de miembros aliados en el servidor\n**Uso:** ${prefix}config allyrole <enable o disable> <Rol>`)
-                .addField("AllyModRole", `Establece un rol para el staff de alianza y usar el comando addpartner y removepartner\n**Uso:** ${prefix}config allymodrole <enable o disable> <Rol>`)
+                .addField("JoinMsg", `Crea o elimina un mensaje de bienvenida.\n**Uso:** ${prefix}config joinmsg <enable o disable> <Canal> <Mensaje>\n**Configuración:** \`${settings.JoinMsg}\``)
+                .addField("LeaveMsg", `Igual que los mensajes de bienvenida, pero cuando un usuario deja el servidor.\n**Uso:** ${prefix}config leavemsg <enable o disable> <Canal> <Mensaje>\n**Configuración:** ${settings.LeaveMsg}`)
+                .addField("MuteRole", `Para que funcione el mute se debe configurar un rol Muteado con este comando, se puede crear uno eligiendo un nombre y un color.\n**Uso:** ${prefix}config muterole <enable o disable> <Rol, ID o Nombre> [Color si se crea]\n**Configuración:** ${message.guild.roles.cache.get(settings.muterole) || "Ninguno"}`)
+                .addField("Suggestion", `Establece un canal de sugerencias\n**Uso:** ${prefix}config suggestion <enable o disable> <Canal>\n**Configuración:** ${message.guild.channels.cache.get(settings.suggestionChannel) || "Ninguno"}`)
+                .addField("LogChannel", `Establece un canal para logear con su mención o ID\n**Uso:** ${prefix}config logchannel <enable o disable> <Canal>\n**Configuración:** ${message.guild.channels.cache.get(settings.LogChannel) || "Ninguno"}`)
+                .addField("AllyRole", `Añade un rol de miembros aliados en el servidor\n**Uso:** ${prefix}config allyrole <enable o disable> <Rol>\n**Configuración:** ${message.guild.roles.cache.get(settings.allyRole) || "Ninguno"}`)
+                .addField("AllyModRole", `Establece un rol para el staff de alianza y usar el comando addpartner y removepartner\n**Uso:** ${prefix}config allymodrole <enable o disable> <Rol>\n**Configuración:** ${message.guild.roles.cache.get(settings.allyModRole) || "Ninguno"}`)
                 .addField("Tags", "Los tags para los mensajes de bienvenida y despedida son:\n\n**{user}** : Menciona al usuario\n**{username}** : Muestra el nombre y el tag del usuario\n**{server}** : Muestra el nombre del servidor\n**{owner}** : Nombra al Owner del servidor con su tag\n**{members}** : Muestra el número de miembros desde que el usuario se unio o dejo el server.\n")
                 .setFooter("<> es obligatorio, [] es opcional")
 

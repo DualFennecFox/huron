@@ -2,7 +2,7 @@ const Discord = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 const { checkDays } = require('../cmds/Moderacion/models/functions')
 
-module.exports = async (guild, user) => {
+module.exports = async (guild, u) => {
     let client = user.client
     Guild.findOne({ guildID: guild.id }).then(async doc => {
       if (!doc) return
@@ -11,20 +11,19 @@ module.exports = async (guild, user) => {
         let Channel = guild.channels.cache.get(doc.LogChannel)
         if (!Channel) return
         if (!Channel.permissionsFor(guild.me).has("SEND_MESSAGES")) return
-  
-        let log = await guild.fetchAuditLogs({ limit: 1, type: "MEMBER_BAN_ADD", user: user.id})
-        
+
+        let description = `<@!${u.id}> Ha sido baneado\n**ID:** ${u.id}`
+
+        let log = await guild.fetchAuditLogs({ limit: 1, type: "MEMBER_BAN_ADD", user: u.id})
         let ban = log.entries.first();
 
-        let description = `<@!${user.id}> Ha sido baneado\n**ID:** ${user.id}`
-
-        if (ban.target.id === user.id) description = `<@!${user.id}> Ha sido baneado\n**ID:** ${user.id}\n\n**Por:** <@!${ban.executor.id}>\n**ID:** ${ban.executor.id}`
+        if (ban.target.id === u.id) description = `<@!${u.id}> Ha sido baneado\n**ID:** ${u.id}\n\n**Por:** <@!${ban.executor.id}>\n**ID:** ${ban.executor.id}`
         const embed = new Discord.MessageEmbed()
-        .setAuthor("Usuario Baneado", user.displayAvatarURL({ format: "png", dynamic: true}))
+        .setAuthor("Usuario Baneado", u.displayAvatarURL({ format: "png", dynamic: true}))
         .setColor("#FF0000")
         .setDescription(description)
-        .addField("Creado", checkDays(user.createdAt))
-        .addField("Razón", ban.reason)
+        .addField("Creado", checkDays(u.createdAt))
+        .addField("Razón", ban.reason || "No se ha proporcionado una Razón")
   
         Channel.send({ embed })
       }
