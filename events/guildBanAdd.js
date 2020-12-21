@@ -14,7 +14,7 @@ module.exports = async (guild, u) => {
 
         let description = `<@!${u.id}> Ha sido baneado\n**ID:** ${u.id}`
 
-        let log = await guild.fetchAuditLogs({ limit: 1, type: "MEMBER_BAN_ADD", user: u.id})
+        let log = await guild.fetchAuditLogs({ limit: 1, type: "MEMBER_BAN_ADD"})
         let ban = log.entries.first();
 
         if (ban.target.id === u.id) description = `<@!${u.id}> Ha sido baneado\n**ID:** ${u.id}\n\n**Por:** <@!${ban.executor.id}>\n**ID:** ${ban.executor.id}`
