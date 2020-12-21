@@ -24,6 +24,7 @@ module.exports = async (guild, user) => {
         .setColor("#FF0000")
         .setDescription(description)
         .addField("Creado", checkDays(user.createdAt))
+        .addField("Razón", ban.reason || "No se ha proporcionado una Razón")
   
         Channel.send({ embed })
   }
