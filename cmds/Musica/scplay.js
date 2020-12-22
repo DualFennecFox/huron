@@ -52,7 +52,7 @@ function search(nameKey, myArray) {
                                         musicData.server[message.guild.id].queue.push({
                                             url: playlist.tracks[i].permalink_url,
                                             title: playlist.tracks[i].title,
-                                            duration: playlist.tracks[i].duration.slice(-1, -3),
+                                            duration: playlist.tracks[i].duration,
                                             thumbnail: playlist.thumbnail,
                                             channel: playlist.author.name,
                                             channelURL: playlist.author.profile,
