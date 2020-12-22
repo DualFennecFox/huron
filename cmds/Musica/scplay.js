@@ -53,7 +53,7 @@ function search(nameKey, myArray) {
                                             url: playlist.tracks[i].permalink_url,
                                             title: playlist.tracks[i].title,
                                             duration: playlist.tracks[i].duration,
-                                            thumbnail: playlist.tracks[i].thumbnail,
+                                            thumbnail: playlist.thumbnail,
                                             channel: playlist.author.name,
                                             channelURL: playlist.author.profile,
                                             voiceChannel: message.member.voice.channel,
