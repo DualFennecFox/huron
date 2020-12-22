@@ -87,7 +87,7 @@ function search(nameKey, myArray) {
                             const title = video.title
                             const duration = video.duration
                             const thumbnail = video.thumbnail;
-                            const channel = video.author.username
+                            const channel = video.author.name
                             const channelURL = video.author.url
                             const voiceChannel = message.member.voice.channel
                             const provider = "SoundCloud"
@@ -183,7 +183,7 @@ function search(nameKey, myArray) {
                           const title = video.title
                           let duration = video.duration;
                           const thumbnail = video.thumbnail;
-                          const channel = video.author.username;
+                          const channel = video.author.name;
                             const channelURL = video.author.url
                             const voiceChannel = message.member.voice.channel
                             const provider = "SoundCloud"
