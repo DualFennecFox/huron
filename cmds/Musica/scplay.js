@@ -45,7 +45,7 @@ function search(nameKey, myArray) {
                     }
 
                     if (args[0].match(/https{0,1}:\/\/w{0,3}\.*soundcloud\.com\/([A-Za-z0-9_-]+)\/sets\/([A-Za-z0-9_-]+)[^< ]*/)) {
-                              try {
+                               try {
                                 
                                 SC.getPlaylist(args[0], { removeUnknown: true }).then(playlist => {
                                     for (let i = 0; i < playlist.tracks.length; i++) {
