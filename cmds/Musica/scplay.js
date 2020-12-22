@@ -48,7 +48,7 @@ function search(nameKey, myArray) {
                               try {
                                 
                                 SC.getPlaylist(args[0], { removeUnknown: true }).then(playlist => {
-                                    for (let i = 0; i < playlist.videos.length; i++) {
+                                    for (let i = 0; i < playlist.tracks.length; i++) {
                                         musicData.server[message.guild.id].queue.push({
                                             url: playlist.tracks[i].trackURL,
                                             title: playlist.tracks[i].title,
