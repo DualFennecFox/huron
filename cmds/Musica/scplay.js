@@ -44,7 +44,7 @@ function search(nameKey, myArray) {
                         musicData.server[message.guild.id].lastEmbed = null
                     }
 
-                    if (args[0].match(/https{0,1}:\/\/w{0,3}\.*soundcloud\.com\/([A-Za-z0-9_-\/]+)[< ]/)) {
+                    if (args[0].match(/https{0,1}:\/\/w{0,3}\.*soundcloud\.com\/([A-Za-z0-9_-]+)\/sets\/([A-Za-z0-9_-]+)[^< ]*/)) {
                               try {
                                 
                                 SC.getPlaylist(args[0], { removeUnknown: true }).then(playlist => {
