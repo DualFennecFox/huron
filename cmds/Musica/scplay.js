@@ -54,8 +54,8 @@ function search(nameKey, myArray) {
                                             title: playlist.tracks[i].title,
                                             duration: playlist.tracks[i].duration,
                                             thumbnail: playlist.tracks[i].thumbnail,
-                                            channel: playlist.tracks[i].author.name,
-                                            channelURL: playlist.tracks[i].author.url,
+                                            channel: playlist.author.name,
+                                            channelURL: playlist.author.profile,
                                             voiceChannel: message.member.voice.channel,
                                             provider: "SoundCloud",
                                             SC
