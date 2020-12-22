@@ -20,7 +20,9 @@ const ytdl = require('ytdl-core')
        connection.voice.setSelfDeaf(true)
   
        const dispatcher = connection
-       .play(ytdl(queue[0].url, {filter: 'audioonly', quality: 'highestaudio' }, {highWaterMark: 50, volume: false}))
+
+       if (queue[0].provider === "Youtube") {
+       dispatcher.play(ytdl(queue[0].url, {filter: 'audioonly', quality: 'highestaudio' }, {highWaterMark: 50, volume: false}))
 
         .on('start', async () => {
             musicData.server[message.guild.id].songDispatcher = dispatcher
@@ -48,7 +50,40 @@ const ytdl = require('ytdl-core')
             musicData.server[message.guild.id].queue.shift();
             }
         })
-        .on('finish', async () => {
+       }
+       else if (queue[0].provider === "SoundCloud") {
+
+        let song = await queue[0].SC.getSongInfo(queue[0].url)
+        dispatcher.play(await song.downloadProgressive())
+
+        .on('start', async () => {
+            musicData.server[message.guild.id].songDispatcher = dispatcher
+            musicData.server[message.guild.id].pause = false
+
+            if(musicData.server[message.guild.id].loop == false) {
+            if (musicData.server[message.guild.id].lastEmbed) musicData.server[message.guild.id].lastEmbed.delete();
+            
+            const videoEmbed = new Discord.MessageEmbed()
+            .setAuthor("Música", message.author.displayAvatarURL({ size: 2048, type: "png", dynamic: true }))
+            .setThumbnail(queue[0].thumbnail)
+            .setColor('#F25B02')
+            .addField('Escuchando', `[${queue[0].title}](${queue[0].url})`)
+            .addField('Duración', queue[0].duration)
+            .addField('Canal', `[${queue[0].channel}](${queue[0].channelURL})`)
+            let url = queue[0].url
+            const loopURL = {
+                url
+            };
+            musicData.server[message.guild.id].looped.push(loopURL)
+            
+            if (queue[1]) videoEmbed.addField('Siguiente Canción', `[${queue[1].title}](${queue[1].url})`);
+            let embed = await message.channel.send(videoEmbed)
+            musicData.server[message.guild.id].lastEmbed = embed
+            musicData.server[message.guild.id].queue.shift();
+            }
+        })
+       }
+        dispatcher.on('finish', async () => {
          if (musicData.server[message.guild.id].loop == true) { 
              playSong(musicData.server[message.guild.id].looped, message)
             

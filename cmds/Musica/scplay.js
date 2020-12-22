@@ -1,10 +1,8 @@
 const Discord = require('discord.js');
-const ytdl = require('ytdl-core');
+const soundcloud = require('soundcloud-scraper')
+const SC = new soundcloud.Client(process.env.SOUNDCLOUD_API_KEY)
 const musicData = require("./requirements/musicData");
 const { playSong } = require('./requirements/functions')
-const ytpl = require('ytpl')
-const ytsr = require('ytsr')
-const YT = require('scrape-yt')
 const getVideoId = require('get-video-id')
 function search(nameKey, myArray) {
     for (var i = 0; i < myArray.length; i++) {
@@ -15,11 +13,11 @@ function search(nameKey, myArray) {
   }
 
     module.exports = {
-            name : 'play',
+            name : 'scplay',
             category: "Musica",
-            description : 'Este comando busca una musica en Youtube para escucharla en un chat de voz',
-            usage: '!play <Busqueda, URL, Playlist>',
-            examples: ['!play Super-Canción', '!play ""'],
+            description : 'Este comando busca una musica en SoundCloud para escucharla en un chat de voz',
+            usage: '!scplay <Busqueda, URL, Playlist>',
+            examples: ['!scplay Super-Canción', '!scplay ""'],
             run: async(client, message, args) => {   
                       
                     if (!message.member.voice.channel) return message.channel.send("Debes estar en un canal de voz para usar este comando")
@@ -46,30 +44,31 @@ function search(nameKey, myArray) {
                         musicData.server[message.guild.id].lastEmbed = null
                     }
 
-                    if (args[0].match(/^(?!.*\?.*\bv=)https:\/\/www\.youtube\.com\/.*\?.*\blist=.*$/)) {
+                    if (args[0].match(/https{0,1}:\/\/w{0,3}\.*soundcloud\.com\/([A-Za-z0-9_-]+)\/([A-Za-z0-9_-]+)[^< ]*/)) {
                               try {
                                 
-                                YT.getPlaylist(args[0].slice(38), { limit: 0 }).then(playlist => {
+                                SC.getPlaylist(args[0], { removeUnknown: true }).then(playlist => {
                                     for (let i = 0; i < playlist.videos.length; i++) {
                                         musicData.server[message.guild.id].queue.push({
-                                            url: `https://www.youtube.com/watch?v=${playlist.videos[i].id}`,
-                                            title: playlist.videos[i].title,
-                                            duration: playlist.videos[i].duration,
-                                            thumbnail: playlist.videos[i].thumbnail,
-                                            channel: playlist.videos[i].channel.name,
-                                            channelURL: playlist.videos[i].channel.url,
+                                            url: playlist.tracks[i].trackURL,
+                                            title: playlist.tracks[i].title,
+                                            duration: playlist.tracks[i].duration,
+                                            thumbnail: playlist.tracks[i].thumbnail,
+                                            channel: playlist.tracks[i].author.name,
+                                            channelURL: playlist.tracks[i].author.url,
                                             voiceChannel: message.member.voice.channel,
-                                            provider: "Youtube"
+                                            provider: "SoundCloud",
+                                            SC
                                         });
                                     }
                                     
                                   if (musicData.server[message.guild.id].isPlaying == false) {
                                       musicData.server[message.guild.id].isPlaying = true;
-                                      message.channel.send(`Se han añadido a la cola **${playlist.videos.length}** canciones`)
+                                      message.channel.send(`Se han añadido a la cola **${playlist.tracks.length}** canciones`)
                                       return playSong(musicData.server[message.guild.id].queue, message);
                                   } else if (musicData.server[message.guild.id].isPlaying == true) {
                                     musicData.server[message.guild.id].loop = false
-                                      return message.channel.send(`**${playlist.title}** Se ha añadido a la cola con ${playlist.videos.length} videos`)
+                                      return message.channel.send(`**${playlist.title}** Se ha añadido a la cola con ${playlist.tracks.length} videos`)
                                   };
                               }).catch(err => {
                                 console.error(err)
@@ -80,20 +79,18 @@ function search(nameKey, myArray) {
                             }       
                     }
             
-                    else if (args[0].match(/^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+/)) {
+                    else if (args[0].match(/((https:\/\/)|(http:\/\/)|(www.)|(m\.)|(\s))+(soundcloud.com\/)+[a-zA-Z0-9\-\.]+(\/)+[a-zA-Z0-9\-\.]+/)) {
                           try {
 
-                            let ID = getVideoId(args[0]).id
-                            YT.getVideo(ID).then(video => {
-                            const url = `https://www.youtube.com/watch?v=${video.id}`
+                            SC.getSongInfo(args[0]).then(video => {
+                            const url = video.url
                             const title = video.title
                             const duration = video.duration
                             const thumbnail = video.thumbnail;
-                            const channel = video.channel.name
-                            const channelURL = video.channel.url
-                            if (duration == '0') duration = 'Transmitiendo en Vivo';
+                            const channel = video.author.username
+                            const channelURL = video.author.url
                             const voiceChannel = message.member.voice.channel
-                            const provider = "Youtube"
+                            const provider = "SoundCloud"
                             
                             const song = {
                                 url,
@@ -103,7 +100,8 @@ function search(nameKey, myArray) {
                                 channel,
                                 channelURL,
                                 voiceChannel,
-                                provider
+                                provider,
+                                SC
                             };
                             musicData.server[message.guild.id].queue.push(song);
                             if (
@@ -127,35 +125,34 @@ function search(nameKey, myArray) {
                         let argsresult = args.join(" ")
 
                     
-                       YT.search(argsresult, { type: "video", limit: 10 }).then(async (videos) => {
-                        if (videos.length < 10) {
-                            return message.channel.send("Muy pocos videos tienen ese nombre asegurate de haberlo escrito bien")
-                        }
+                       SC.search(argsresult, "track").then(async (videos) => {
+
                         if (musicData.server[message.guild.id].awaiting == true) return message.channel.send("Ya se está esperando la respuesta")
                         const vidNameArr = []
                         const videoID = []
 
                         for (let v = 0; v < videos.length; v++) {
-                             videoID.push(`https://www.youtube.com/watch?v=${videos[v].id}`)
-                             vidNameArr.push(`${v + 1}: ${videos[v].title}`);
+                             videoID.push(videos[v].url)
+                             vidNameArr.push(`${v + 1}: ${videos[v].name}`);
                         }
 
                         vidNameArr.push('exit');
             
                           const embed = new Discord.MessageEmbed()
-                          .setColor('#FF0000')
+                          .setColor('#F25B02')
                           .setTitle("Elige la canción que quieres escuchar según el número")
-                          .addField("\`1\`", vidNameArr[0])
-                          .addField("\`2\`", vidNameArr[1])
-                          .addField("\`3\`", vidNameArr[2])
-                          .addField("\`4\`", vidNameArr[3])
-                          .addField("\`5\`", vidNameArr[4])
-                          .addField("\`6\`", vidNameArr[5])
-                          .addField("\`7\`", vidNameArr[6])
-                          .addField("\`8\`", vidNameArr[7])
-                          .addField("\`9\`", vidNameArr[8])
-                          .addField("\`10\`", vidNameArr[9])
+                          if (vidNameArr[0]) embed.addField("\`1\`", vidNameArr[0])
+                          if (vidNameArr[1]) embed.addField("\`2\`", vidNameArr[1])
+                          if (vidNameArr[2]) embed.addField("\`3\`", vidNameArr[2])
+                          if (vidNameArr[3]) embed.addField("\`4\`", vidNameArr[3])
+                          if (vidNameArr[4]) embed.addField("\`5\`", vidNameArr[4])
+                          if (vidNameArr[5]) embed.addField("\`6\`", vidNameArr[5])
+                          if (vidNameArr[6]) embed.addField("\`7\`", vidNameArr[6])
+                          if (vidNameArr[7]) embed.addField("\`8\`", vidNameArr[7])
+                          if (vidNameArr[8]) embed.addField("\`9\`", vidNameArr[8])
+                          if (vidNameArr[9]) embed.addField("\`10\`", vidNameArr[9])
                           .setFooter('Escribe "exit" para salir')
+
                           var songEmbed = await message.channel.send({ embed });
                           musicData.server[message.guild.id].awaiting = true
                           try {
@@ -178,18 +175,18 @@ function search(nameKey, myArray) {
                               } catch (err) {
                                   console.error(err)
                                   if (songEmbed) songEmbed.delete()
-                                  return message.channel.send("Hubo un error al obtener el video de Youtube")
+                                  return message.channel.send("Hubo un error al obtener la canción")
                               }       
 
-                          const url = `https://www.youtube.com/watch?v=${video.id}`;
+                          SC.getSongInfo(video.url).then(video => {
+                          const url = video.url;
                           const title = video.title
                           let duration = video.duration;
                           const thumbnail = video.thumbnail;
-                          const channel = video.channel.name;
-                            const channelURL = video.channel.url
-                            if (duration == '0') duration = 'Transmitiendo en Vivo';
+                          const channel = video.author.username;
+                            const channelURL = video.author.url
                             const voiceChannel = message.member.voice.channel
-                            const provider = "Youtube"
+                            const provider = "SoundCloud"
 
                             const song = {
                                 url,
@@ -199,7 +196,8 @@ function search(nameKey, myArray) {
                                 channel,
                                 channelURL,
                                 voiceChannel,
-                                provider
+                                provider,
+                                SC
                             };
                             
                             musicData.server[message.guild.id].queue.push(song);
@@ -217,13 +215,16 @@ function search(nameKey, myArray) {
                         }).catch(err => {
                             console.error(err)
                         })
+                    }).catch(err => {
+                        console.error(err)
+                    })
 
                         } catch (err) {
                             console.error(err)
                             musicData.server[message.guild.id].awaiting = false
                             if (songEmbed) songEmbed.delete()
                             musicData.server[message.guild.id].loop = false
-                            return message.channel.send("Hubo un error al buscar el video en Youtube")
+                            return message.channel.send("Hubo un error al buscar la canción")
                         }
                     }
                 }
