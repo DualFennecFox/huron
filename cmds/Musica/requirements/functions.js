@@ -50,6 +50,31 @@ const ytdl = require('ytdl-core')
             musicData.server[message.guild.id].queue.shift();
             }
         })
+        .on('finish', async () => {
+            if (musicData.server[message.guild.id].loop == true) { 
+                playSong(musicData.server[message.guild.id].looped, message)
+               
+           } else if (musicData.server[message.guild.id].queue.length >= 1) {
+                   musicData.server[message.guild.id].looped.shift();
+                   playSong(musicData.server[message.guild.id].queue, message)
+           } else {
+                   musicData.server[message.guild.id].isPlaying = false
+                   musicData.server[message.guild.id].looped.length = 0
+                   message.channel.send("Se han terminado todas las canciones")
+               }
+               })
+           .on('error', async e => {
+               message.channel.send('No se puede escuchar esa canción');
+               musicData.server[message.guild.id].queue.length = 0;
+               musicData.server[message.guild.id].isPlaying = false;
+               musicData.server[message.guild.id].pause = false
+               musicData.server[message.guild.id].loop = false
+               musicData.server[message.guild.id].looped.length = 0
+               musicData.server[message.guild.id].songDispatcher = null
+               musicData.server[message.guild.id].lastEmbed = null
+               console.error(e);
+               return message.member.voice.channel.leave();
+               })
        }
        else if (queue[0].provider === "SoundCloud") {
 
@@ -82,32 +107,33 @@ const ytdl = require('ytdl-core')
             musicData.server[message.guild.id].queue.shift();
             }
         })
+        .on('finish', async () => {
+            if (musicData.server[message.guild.id].loop == true) { 
+                playSong(musicData.server[message.guild.id].looped, message)
+               
+           } else if (musicData.server[message.guild.id].queue.length >= 1) {
+                   musicData.server[message.guild.id].looped.shift();
+                   playSong(musicData.server[message.guild.id].queue, message)
+           } else {
+                   musicData.server[message.guild.id].isPlaying = false
+                   musicData.server[message.guild.id].looped.length = 0
+                   message.channel.send("Se han terminado todas las canciones")
+               }
+               })
+           .on('error', async e => {
+               message.channel.send('No se puede escuchar esa canción');
+               musicData.server[message.guild.id].queue.length = 0;
+               musicData.server[message.guild.id].isPlaying = false;
+               musicData.server[message.guild.id].pause = false
+               musicData.server[message.guild.id].loop = false
+               musicData.server[message.guild.id].looped.length = 0
+               musicData.server[message.guild.id].songDispatcher = null
+               musicData.server[message.guild.id].lastEmbed = null
+               console.error(e);
+               return message.member.voice.channel.leave();
+               })
        }
-        dispatcher.on('finish', async () => {
-         if (musicData.server[message.guild.id].loop == true) { 
-             playSong(musicData.server[message.guild.id].looped, message)
-            
-        } else if (musicData.server[message.guild.id].queue.length >= 1) {
-                musicData.server[message.guild.id].looped.shift();
-                playSong(musicData.server[message.guild.id].queue, message)
-        } else {
-                musicData.server[message.guild.id].isPlaying = false
-                musicData.server[message.guild.id].looped.length = 0
-                message.channel.send("Se han terminado todas las canciones")
-            }
-            })
-        .on('error', async e => {
-            message.channel.send('No se puede escuchar esa canción');
-            musicData.server[message.guild.id].queue.length = 0;
-            musicData.server[message.guild.id].isPlaying = false;
-            musicData.server[message.guild.id].pause = false
-            musicData.server[message.guild.id].loop = false
-            musicData.server[message.guild.id].looped.length = 0
-            musicData.server[message.guild.id].songDispatcher = null
-            musicData.server[message.guild.id].lastEmbed = null
-            console.error(e);
-            return message.member.voice.channel.leave();
-            })
+       
     }).catch(e => {
         console.error(e)
         return message.member.voice.channel.leave();
