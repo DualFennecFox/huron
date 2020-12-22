@@ -50,7 +50,7 @@ function search(nameKey, myArray) {
                                 SC.getPlaylist(args[0], { removeUnknown: true }).then(playlist => {
                                     for (let i = 0; i < playlist.tracks.length; i++) {
                                         musicData.server[message.guild.id].queue.push({
-                                            url: playlist.tracks[i].url,
+                                            url: playlist.tracks[i].permalink_url,
                                             title: playlist.tracks[i].title,
                                             duration: playlist.tracks[i].duration,
                                             thumbnail: playlist.tracks[i].thumbnail,
