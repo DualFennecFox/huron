@@ -28,7 +28,7 @@
     "soundcloud-scraper": "^4.0.1",
     "spotify-web-api-node": "^5.0.0",
     "validate-color": "^2.1.1",
-    "ytdl-core": "^4.2.1",
+    "ytdl-core": "^4.4.0",
     "ytdl-core-discord": "^1.2.3",
     "ytpl": "^2.0.3",
     "ytsr": "^3.0.0",
