@@ -128,10 +128,9 @@ function search(nameKey, myArray) {
 
                     
                        YT.search(argsresult, { type: "video", limit: 10 }).then(async (videos) => {
-                        if (videos.length < 10) {
-                            return message.channel.send("Muy pocos videos tienen ese nombre asegurate de haberlo escrito bien")
-                        }
+
                         if (musicData.server[message.guild.id].awaiting == true) return message.channel.send("Ya se está esperando la respuesta")
+                        if (videos.length < 1) return message.channel.send("No existe ningún resultado con ese nombre trate cambiando las palabras")
                         const vidNameArr = []
                         const videoID = []
 
@@ -145,17 +144,18 @@ function search(nameKey, myArray) {
                           const embed = new Discord.MessageEmbed()
                           .setColor('#FF0000')
                           .setTitle("Elige la canción que quieres escuchar según el número")
-                          .addField("\`1\`", vidNameArr[0])
-                          .addField("\`2\`", vidNameArr[1])
-                          .addField("\`3\`", vidNameArr[2])
-                          .addField("\`4\`", vidNameArr[3])
-                          .addField("\`5\`", vidNameArr[4])
-                          .addField("\`6\`", vidNameArr[5])
-                          .addField("\`7\`", vidNameArr[6])
-                          .addField("\`8\`", vidNameArr[7])
-                          .addField("\`9\`", vidNameArr[8])
-                          .addField("\`10\`", vidNameArr[9])
                           .setFooter('Escribe "exit" para salir')
+                          .addField("\`1\`", vidNameArr[0])
+                          if (vidNameArr[1]) embed.addField("\`2\`", vidNameArr[1])
+                          if (vidNameArr[2]) embed.addField("\`3\`", vidNameArr[2])
+                          if (vidNameArr[3]) embed.addField("\`4\`", vidNameArr[3])
+                          if (vidNameArr[4]) embed.addField("\`5\`", vidNameArr[4])
+                          if (vidNameArr[5]) embed.addField("\`6\`", vidNameArr[5])
+                          if (vidNameArr[6]) embed.addField("\`7\`", vidNameArr[6])
+                          if (vidNameArr[7]) embed.addField("\`8\`", vidNameArr[7])
+                          if (vidNameArr[8]) embed.addField("\`9\`", vidNameArr[8])
+                          if (vidNameArr[9]) embed.addField("\`10\`", vidNameArr[9])
+
                           var songEmbed = await message.channel.send({ embed });
                           musicData.server[message.guild.id].awaiting = true
                           try {
