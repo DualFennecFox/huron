@@ -136,8 +136,6 @@ function search(nameKey, myArray) {
                              videoID.push(videos[v].url)
                              vidNameArr.push(`${v + 1}: ${videos[v].name}`);
                         }
-
-                        vidNameArr.push('exit');
             
                           const embed = new Discord.MessageEmbed()
                           .setColor('#F25B02')

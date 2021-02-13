@@ -138,8 +138,6 @@ function search(nameKey, myArray) {
                              videoID.push(`https://www.youtube.com/watch?v=${videos[v].id}`)
                              vidNameArr.push(`${v + 1}: ${videos[v].title}`);
                         }
-
-                        vidNameArr.push('exit');
             
                           const embed = new Discord.MessageEmbed()
                           .setColor('#FF0000')
