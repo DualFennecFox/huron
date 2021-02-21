@@ -36,7 +36,7 @@
     "ytt": "^2.1.2"
   },
   "engines": {
-    "node": "15.x"
+    "node": "12.x"
   },
   "repository": {
     "url": "https://glitch.com/edit/#!/el-perro-bot-kawaii"
