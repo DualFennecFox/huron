@@ -18,11 +18,3 @@ client.categories = fs.readdirSync("./cmds/");
 }); 
 
 client.login(process.env.TOKEN);
-
-client.on('message', message => {
-message.member.voice.channel
-.join()
-.then(async connection => {
-
-})
-})
