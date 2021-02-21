@@ -21,7 +21,7 @@ const ytdl = require('ytdl-core')
   
        const dispatcher = connection
 
-       if (queue[0].provider === "Youtube") {
+       if (queue[0].provider === "Youtube" || musicData.server[message.guild.id].looped[0]) {
        dispatcher.play(ytdl(queue[0].url, {filter: 'audioonly', quality: 'highestaudio' }, {highWaterMark: 50, volume: false}))
 
         .on('start', async () => {
@@ -76,7 +76,7 @@ const ytdl = require('ytdl-core')
                return message.member.voice.channel.leave();
                })
        }
-       else if (queue[0].provider === "SoundCloud") {
+       else if (queue[0].provider === "SoundCloud" || musicData.server[message.guild.id].looped[0]) {
 
         let song = await queue[0].SC.getSongInfo(queue[0].url)
         dispatcher.play(await song.downloadProgressive())
@@ -94,7 +94,9 @@ const ytdl = require('ytdl-core')
             .setColor('#F25B02')
             .addField('Escuchando', `[${queue[0].title}](${queue[0].url})`)
             .addField('Duración', `${queue[0].duration}`.substring(0, 3))
-            .addField('Canal', `[${queue[0].channel}](${queue[0].channelURL})`)
+            .addField('Canal', `[${queue[0].channel}](${queue[0].channelURL})`
+
+            )
             let url = queue[0].url
             const loopURL = {
                 url
