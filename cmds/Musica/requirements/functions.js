@@ -137,7 +137,7 @@ const ytdl = require('ytdl-core')
     }).catch(e => {
         console.error(e)
         return message.member.voice.channel.leave();
-    });
+    })
 }
 module.exports = {
     playSong
