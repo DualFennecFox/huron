@@ -94,9 +94,7 @@ const ytdl = require('ytdl-core')
             .setColor('#F25B02')
             .addField('Escuchando', `[${queue[0].title}](${queue[0].url})`)
             .addField('Duración', `${queue[0].duration}`.substring(0, 3))
-            .addField('Canal', `[${queue[0].channel}](${queue[0].channelURL})`
-
-            )
+            .addField('Canal', `[${queue[0].channel}](${queue[0].channelURL})`)
             let url = queue[0].url
             const loopURL = {
                 url
