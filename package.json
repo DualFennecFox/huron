@@ -19,24 +19,24 @@
     "get-video-id": "^3.1.9",
     "http": "0.0.1-security",
     "miniget": "^4.2.0",
-    "mongoose": "^5.11.16",
+    "mongoose": "^5.11.17",
     "node-fetch": "^2.6.1",
     "node-pre-gyp": "^0.17.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "scrape-yt": "^1.4.7",
+    "scrape-yt": "^1.4.8",
     "simple-youtube-api": "^5.2.1",
     "soundcloud-scraper": "^4.0.3",
     "spotify-web-api-node": "^5.0.2",
     "validate-color": "^2.1.1",
-    "ytdl-core": "^4.4.5",
+    "ytdl-core": "^4.5.0",
     "ytdl-core-discord": "^1.2.3",
     "ytpl": "^2.0.5",
-    "ytsr": "^3.2.4",
+    "ytsr": "^3.3.1",
     "ytt": "^2.1.2"
   },
   "engines": {
-    "node": "12.x"
+    "node": "15.x"
   },
   "repository": {
     "url": "https://glitch.com/edit/#!/el-perro-bot-kawaii"
