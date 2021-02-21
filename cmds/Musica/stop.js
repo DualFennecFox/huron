@@ -17,7 +17,7 @@ const musicData = require("./requirements/musicData")
                 musicData.server[message.guild.id].loop = false
                 musicData.server[message.guild.id].looped.length = 0
                 musicData.server[message.guild.id].awaiting = false
-                await musicData.server[message.guild.id].songDispatcher.destroy()
+                await musicData.server[message.guild.id].songDispatcher.dispatcher.destroy()
                 musicData.server[message.guild.id].songDispatcher = null
                 return message.channel.send("Se han detenido y borrado de la cola todas las canciones")
             }

@@ -15,7 +15,7 @@ const musicData = require("./requirements/musicData")
 
                 musicData.server[message.guild.id].pause = true
                 try {
-                musicData.server[message.guild.id].songDispatcher.pause()
+                musicData.server[message.guild.id].songDispatcher.dispatcher.pause()
                 } catch (err) {
                     console.error(err)
                     return message.channel.send("A ocurrido un error al pausar la canción")
