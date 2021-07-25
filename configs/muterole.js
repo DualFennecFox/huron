@@ -14,8 +14,12 @@ module.exports = {
 
                 let mRole = message.mentions.roles.first() || message.guild.roles.cache.get(args[2])
                 if (!mRole) {
+                let Color = "#9b9b9b"
+                if (args[3]) {
                 let Color = args[3].toUpperCase()
                 if (!validateColor.validateHTMLColorHex(Color)) Color = "#9b9b9b"
+}
+
                     try {
                         var muterole = await message.guild.roles.create({ data: {  
                             name : args[2],
