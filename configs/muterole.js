@@ -8,17 +8,17 @@ module.exports = {
 
         if (method === "enable") {
             if (!message.member.hasPermission("MANAGE_ROLES" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando")
-            if (!args[1]) return message.channel.send(`Menciona un rol, su ID o crea uno especificandolo`)
+            if (!args[2]) return message.channel.send(`Menciona un rol, su ID o crea uno especificandolo`)
             if (!message.guild.me.hasPermission("MANAGE_ROLES", "MANAGE_CHANNELS")) return message.channel.send("No tengo permisos para Gestionar Roles o Gestionar Canales!")
 
 
                 let mRole = message.mentions.roles.first() || message.guild.roles.cache.get(args[2])
                 if (!mRole) {
-                let Color = args[2].toUpperCase()
+                let Color = args[3].toUpperCase()
                 if (!validateColor.validateHTMLColorHex(Color)) Color = "#9b9b9b"
                     try {
                         var muterole = await message.guild.roles.create({ data: {  
-                            name : args[1],
+                            name : args[2],
                             color : Color,
                             permissions : []
                         }
