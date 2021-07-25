@@ -1,5 +1,6 @@
 const Guild = require("../cmds/Moderacion/models/Guild")
 const { getGuild, updateGuild, createGuild } = require("../cmds/Moderacion/models/functions")
+const validateColor = require("validate-color")
 
 module.exports = {
     name: "muterole",
