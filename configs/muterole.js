@@ -16,7 +16,7 @@ module.exports = {
                 if (!mRole) {
                 let Color = "#9b9b9b"
                 if (args[3]) {
-                let Color = args[3].toUpperCase()
+                Color = args[3].toUpperCase()
                 if (!validateColor.validateHTMLColorHex(Color)) Color = "#9b9b9b"
 }
 
