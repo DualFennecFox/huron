@@ -24,7 +24,7 @@ module.exports = async member => {
         
         let msg = doc.JoinMsg.replace(/{user}/g, member).replace(/{server}/g, member.guild.name).replace(/{username}/g, member.user.tag).replace(/{members}/g, member.guild.memberCount).replace(/{owner}/g, member.guild.owner.user.tag)
        
-       Channel.send(msg, {files: [`https://cdn.discordapp.com/attachments/735158670899413013/781713550644871188/GIF-201122_201546.gif`]})
+       Channel.send(msg)
         }
        if (doc.log.MemberAdd == true) {
         if (!doc.LogChannel) return
