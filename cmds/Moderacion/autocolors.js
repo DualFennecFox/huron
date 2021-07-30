@@ -18,9 +18,11 @@ run: async (client, message, args) => {
     
     if (!message.guild.me.permissionsIn(channel).has("SEND_MESSAGES", "ADD_REACTIONS")) return message.channel.send("No tengo permisos para enviar mensajes o añadir reacciones en ese canal")
     
-    let pmsg = '\`Colores Personalizados\`\n\n**Reacciona dependiendo el emoji para obtener el color que desee**\n\n**❤️ ▹ Rojo**\n**📙 ▹ Naranja**\n**🧀 ▹ Amarillo**\n**🧼 ▹ Rosado**\n**😈 ▹ Morado**\n**🌚 ▹ Gris**\n**🎮 ▹ Negro**\n**🏳️ ▹ Blanco**\n**🚙 ▹ Azul**\n**📘 ▹ Celeste**\n**🕵️‍♂️ ▹ Invisible**'
+    let pmsg = '\`Colores Personalizados\`\n**Reacciona dependiendo el emoji para obtener el color que desee**\n**❤️ ▹ Rojo**\n**📙 ▹ Naranja**\n**🧀 ▹ Amarillo**\n**🧼 ▹ Rosado**\n**😈 ▹ Morado**\n**🌚 ▹ Gris**\n**🎮 ▹ Negro**\n**🏳️ ▹ Blanco**\n**🚙 ▹ Azul**\n**📘 ▹ Celeste**\n**🕵️‍♂️ ▹ Invisible**'
     
-    await channel.send(pmsg)
+    let msg = await channel.send(pmsg)
+   
+    await msg.react(":heart:")
    
     }
 }
