@@ -22,9 +22,9 @@ run: async (client, message, args) => {
     
     let msg = await channel.send(pmsg)
    
-    await msg.react("❤️")
-    await msg.react("📙")
-    await msg.react("🧀")
+    await msg.react('❤️')
+    await msg.react('📙')
+    await msg.react('🧀')
     await msg.react("🧼")
     await msg.react("😈")
     await msg.react("🌚")
