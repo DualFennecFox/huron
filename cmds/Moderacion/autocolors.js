@@ -1,6 +1,6 @@
 module.exports = { 
 name : 'autocolors', 
-description : 'Envia un mensaje predeterminado para un autorol básico, no funciona como autorol solo es una plantilla', 
+description : 'Envia un mensaje predeterminado para un autorol básico, junto con roles y reacciones, no funciona como autorol solo es una plantilla', 
 category: "Moderacion", 
 usage: `!autocolors <Canal>`, 
 examples: ['!autocolors #autoroles', '!autocolors 12345678987654321'],
@@ -22,7 +22,17 @@ run: async (client, message, args) => {
     
     let msg = await channel.send(pmsg)
    
-    await msg.react(":heart:")
-   
+    await msg.react('❤️')
+    await msg.react('📙')
+    await msg.react('🧀')
+    await msg.react("🧼")
+    await msg.react("😈")
+    await msg.react("🌚")
+    await msg.react("🎮")
+    await msg.react("🏳️")
+    await msg.react("🚙")
+    await msg.react("📘")
+    await msg.react("🕵️‍♂️")
+    
     }
 }
