@@ -29,7 +29,7 @@ run: async (client, message, args) => {
     
 try {
 
-    msg = message.channel.messages.fetch(args[1])
+    msg = await message.channel.messages.fetch(args[1])
 
 } catch {
     
