@@ -18,7 +18,9 @@ run: async (client, message, args) => {
     
     if (!channel) return message.channel.send("Ese no parece ser un canal válido")
 
-    if (!args[1] && args[1].match(/([^0-9])/g)) return message.channel.send("Debes enviar un id de mensaje válido para reaccionarlo")
+    if (!args[1]) return message.channel.send("Debes enviar un id de mensaje válido para reaccionarlo")
+
+    if (args[1].match(/([^0-9])/g)) return message.channel.send("Ese no es un id de mensaje Válido")
     
     if (!message.guild.me.permissionsIn(channel).has("SEND_MESSAGES", "ADD_REACTIONS")) return message.channel.send("No tengo permisos para enviar mensajes o añadir reacciones en ese canal")
 
