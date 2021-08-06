@@ -50,7 +50,7 @@ try {
     await msg.react("📘")
     await msg.react("🕵️‍♂️")
 
-    for (let i; i = 0; i++) {
+    for (let i = 0; i < autoRoles.length; i++) {
 
     await message.guild.roles.create({ data: {  
         name : autoRoles[i].name,
@@ -58,10 +58,6 @@ try {
         permissions : []
     }
     })
-
-    if (i === 10) {
-        break;
-    }
 }
     return pmsg.edit("Listo.").then(message => message.delete({timeout: 5000}))
 
