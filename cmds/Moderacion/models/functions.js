@@ -236,6 +236,53 @@ function getUser(mention, client) {
 		return client.users.cache.get(mention);
   }
 
+let autoRoles = [
+{
+  name: "Rojo",
+  color: "#ff0f00"
+},
+{
+  name: "Naranja",
+  color: "#ff7300"
+},
+{
+  name: "Amarillo",
+  color: "#ffc900"
+},
+{
+  name: "Rosado",
+  color: "#fb71a3"
+},
+{
+  name: "Morado",
+  color: "#6e248f"
+},
+{
+  name: "Gris",
+  color: "#4e5556"
+},
+{
+  name: "Negro",
+  color: "#000001"
+},
+{
+  name: "Blanco",
+  color: "#fdfeff"
+},
+{
+  name: "Azul",
+  color: "#277ecd"
+},
+{
+  name: "Celeste",
+  color: "#00aae4"
+},
+{
+  name: "Invisible",
+  color: "#36393f"
+}
+]
+
 module.exports = {
     getGuild,
     updateGuild,
@@ -248,5 +295,6 @@ module.exports = {
     updateLog,
     getUser,
     changeRole,
-    changePerm
+    changePerm,
+    autoRoles
 }
