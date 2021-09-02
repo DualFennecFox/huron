@@ -1,7 +1,42 @@
 const Guild = require('./Guild')
 const defaultSettings = require('./config')
 const mongoose = require('mongoose');
-const { MessageEmbed, Intents } = require('discord.js')
+const { MessageEmbed, Intents, Permissions } = require('discord.js')
+
+const perms = {
+
+  administrator: Permissions.FLAGS.ADMINISTRATOR,
+  create_instant_invite: Permissions.FLAGS.CREATE_INSTANT_INVITE,
+  kick_members: Permissions.FLAGS.KICK_MEMBERS,
+  ban_members: Permissions.FLAGS.BAN_MEMBERS,
+  manage_channels: Permissions.FLAGS.MANAGE_CHANNELS,
+  manage_guild: Permissions.FLAGS.MANAGE_GUILD,
+  add_reactions: Permissions.FLAGS.ADD_REACTIONS,
+  view_audit_log: Permissions.FLAGS.VIEW_AUDIT_LOG,
+  priority_speaker: Permissions.FLAGS.PRIORITY_SPEAKER,
+  stream: Permissions.FLAGS.STREAM,
+  view_channel: Permissions.FLAGS.VIEW_CHANNEL,
+  send_messages: Permissions.FLAGS.SEND_MESSAGES,
+  send_tts_messages: Permissions.FLAGS.SEND_TTS_MESSAGES,
+  manage_messages: Permissions.FLAGS.MANAGE_MESSAGES, 
+  embed_links: Permissions.FLAGS.EMBED_LINKS,
+  attach_files: Permissions.FLAGS.ATTACH_FILES,
+  read_message_history: Permissions.FLAGS.READ_MESSAGE_HISTORY,
+  mention_everyone: Permissions.FLAGS.MENTION_EVERYONE,
+  use_external_emojis: Permissions.FLAGS.USE_EXTERNAL_EMOJIS,
+  view_guild_insights: Permissions.FLAGS.VIEW_GUILD_INSIGHTS,
+  connect: Permissions.FLAGS.CONNECT,
+  speak: Permissions.FLAGS.SPEAK,
+  mute_members : Permissions.FLAGS.MUTE_MEMBERS,
+  deafen_members: Permissions.FLAGS.DEAFEN_MEMBERS,
+  move_members: Permissions.FLAGS.MOVE_MEMBERS,
+  use_vad: Permissions.FLAGS.USE_VAD,
+  change_nickname: Permissions.FLAGS.CHANGE_NICKNAME,
+  manage_nicknames: Permissions.FLAGS.MANAGE_NICKNAMES, 
+  manage_roles: Permissions.FLAGS.MANAGE_ROLES,
+  manage_webhooks: Permissions.FLAGS.MANAGE_WEBHOOKS,
+  manage_emojis_and_stickers: Permissions.FLAGS.MANAGE_EMOJIS_AND_STICKERS
+}
 
 const requiredIntent = [ 
   Intents.FLAGS.GUILDS,
@@ -159,7 +194,7 @@ const changeRole = {
   "MANAGE_NICKNAMES": "Gestionar apodos", 
   "MANAGE_ROLES": "Gestionar roles",
   "MANAGE_WEBHOOKS": "Gestionar webhooks",
-  "MANAGE_EMOJIS": "Gestionar emojis"
+  "MANAGE_EMOJIS_AND_STICKERS": "Gestionar emojis y stickers"
   };
 const changePerm = {
     "channelCreate": "Canal Creado",
@@ -202,13 +237,15 @@ const configCommands = () => {
         .join("\n");
 }
 
-    return message.channel.send(embed
+    return message.channel.send({ embeds: [embed
     .addField("Comandos de Información", commands("Info"))
     .addField("Comandos de Moderación", commands("Moderacion"))
     .addField("Comandos de Música", commands("Musica"))
     .addField("Comandos Útiles", commands("Util"))
-    .addField("Comandos de Configuración", `Estos son comandos dentro del comando config, se deben usar despues de ${prefix}config.\n\n${configCommands()}`))
+    .addField("Comandos de Configuración", `Estos son comandos dentro del comando config, se deben usar despues de ${prefix}config.\n\n${configCommands()}`)]})
+
 }
+
 
 function getCMD(client, message, input) {
   const embed = new MessageEmbed()
@@ -235,7 +272,7 @@ function getCMD(client, message, input) {
   if (cmd.examples) info += `\n**Ejemplos**: ${cmd.examples.map(a => `\`${a}\``).join(", ")}`;
   }
 
-  return message.channel.send(embed.setColor("#0088ff").setDescription(info).setFooter("<> es obligatorio, [] es opcional"))
+  return message.channel.send({ embeds: [embed.setColor("#0088ff").setDescription(info).setFooter("<> es obligatorio, [] es opcional")]})
   .catch(err => {
       console.log(err)
   })
@@ -309,5 +346,6 @@ module.exports = {
     changeRole,
     changePerm,
     autoRoles,
-    requiredIntent
+    requiredIntent,
+    perms
 }

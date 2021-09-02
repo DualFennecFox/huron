@@ -17,7 +17,7 @@ module.exports = {
 	.setTimestamp()
 	.setImage(message.guild.iconURL({ format: "png", dynamic: true, size: 2048}))
     .setColor('RANDOM')
-    message.channel.send({ embed })
+    message.channel.send({ embeds: [embed] })
     .catch(err => {
       console.log(err);
     })

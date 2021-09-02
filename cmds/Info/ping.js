@@ -13,6 +13,6 @@ const Discord = require("discord.js")
     .addField("Ping de mensajes", `${Date.now() - message.createdTimestamp}ms`, true)
     .addField("Ping de DiscordAPI", `${Math.round(client.ws.ping)}ms`, true)
 
-    message.channel.send(embed)
+    message.channel.send({ embeds: [embed]})
 }
 }

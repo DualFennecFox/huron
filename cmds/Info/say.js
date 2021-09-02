@@ -1,3 +1,5 @@
+const { perms } = require("../Moderacion/models/functions")
+
 module.exports = {
     name : 'say',
     category: "Info",
@@ -7,16 +9,16 @@ module.exports = {
     run: async (client, message, args) => {
         
     let argsresult;
-    if (message.guild.me.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR")) message.delete()
+    if (message.guild.me.permissions.has(perms.manage_messages || perms.administrator)) message.delete()
         
 
         argsresult = args.join(" ")
         if(!argsresult) return;
 
-        if (!message.member.hasPermission("MENTION_EVERYONE" || "ADMINISTRATOR") || !message.guild.owner) {
+        if (!message.member.permissions.has(perms.mention_everyone || perms.administrator)) {
             argsresult = argsresult.replace(/@/, "@\u200b")
         }
-        if(!message.member.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR") || !message.guild.owner) {
+        if(!message.member.permissions.has(perms.manage_messages || perms.administrator)) {
             
                argsresult = argsresult.replace(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|com)|discordapp\.com\/invite)\/.+[A-z0-9]/, "")
 

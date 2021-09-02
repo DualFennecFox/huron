@@ -1,3 +1,5 @@
+const { perms } = require('../Moderacion/models/functions')
+
 module.exports = {
     name : 'echo',
     category: "Info",
@@ -17,7 +19,7 @@ module.exports = {
     id = true
 }
 
-    if (message.guild.me.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR")) message.delete()
+    if (message.guild.me.permissions.has(perms.manage_messages || perms.administrator)) message.delete()
 
     if(!mChannel) return message.channel.send('Debes mencionar un canal o darme su ID')
         if (!mChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send('No tengo permisos para hablar en ese canal')
@@ -30,14 +32,14 @@ module.exports = {
 
         if(!argsresult) return message.channel.send('Vuelve a usar el comando, pero di un mensaje para enviar')
 
-        if (!message.member.hasPermission("MENTION_EVERYONE" || "ADMINISTRATOR") || !message.guild.owner) {
+        if (!message.member.permissions.has(perms.mention_everyone || perms.administrator)) {
             argsresult = argsresult.replace(/@everyone/, "@\u200beveryone").replace(/@here/, "@\u200bhere")
         }
-        if(!message.member.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR") || !message.guild.owner) {
+        if(!message.member.permissions.has(perms.manage_messages || perms.administrator)) {
             
                argsresult = argsresult.replace(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li|com)|discordapp\.com\/invite)\/.+[A-z0-9]/, "")
         
-         if (message.guild.me.hasPermission("MANAGE_MESSAGES" || "ADMINISTRATOR")) message.delete()
+         if (message.guild.me.permissions.has(perms.manage_messages || perms.administrator)) message.delete()
         }
          mChannel.send(argsresult)
 }

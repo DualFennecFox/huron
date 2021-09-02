@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const { perms } = require('../Moderacion/models/functions');
 
 module.exports = {
     name : 'server-info',
@@ -39,26 +40,29 @@ module.exports = {
     };
     const roleEmbed = new Discord.MessageEmbed()
     if (args[0] == "roles" || args[0] === 'r' || args[0] === 'role') {
-       if(!message.member.hasPermission("ADMINISTRATOR" || "MANAGE_ROLES") || !message.guild.owner) return message.channel.send("No tienes permisos para ver los roles del servidor")
+       if(!message.member.permissions.has(perms.administrator || perms.manage_roles)) return message.channel.send("No tienes permisos para ver los roles del servidor")
        let roles = await message.guild.roles.cache.map(r => `<@&${r.id}>`).join(", ")
 
-       await message.channel.send(roleEmbed.setColor("RANDOM").setDescription(roles).setAuthor(`Roles del servidor`, message.guild.iconURL()).setThumbnail(message.guild.iconURL()).setFooter(`${message.guild.name} | ${message.guild.id}`))
+       await message.channel.send({ embeds: [roleEmbed.setColor("RANDOM").setDescription(roles).setAuthor(`Roles del servidor`, message.guild.iconURL()).setThumbnail(message.guild.iconURL()).setFooter(`${message.guild.name} | ${message.guild.id}`)]})
     }
     else if (args[0] === "channels" || args[0] === "channel") {
-        if(!message.member.hasPermission("ADMINISTRATOR" || "MANAGE_CHANNELS") || !message.guild.owner) return message.channel.send("No tienes permisos para ver los canales del servidor")
+        if(!message.member.permissions.has(perms.administrator || perms.manage_channels)) return message.channel.send("No tienes permisos para ver los canales del servidor")
         const channelEmbed = new Discord.MessageEmbed()
-        let channels = await message.guild.channels.cache.filter(channel => channel.type !== "category" && channel.type !== "voice").map(channel => `<#${channel.id}>`).join(", ")
+        let channels = await message.guild.channels.cache.filter(channel => channel.type === "GUILD_TEXT" || channel.type === "GUILD_NEWS" || channel.type === "GUILD_STORE").map(channel => `<#${channel.id}>`).join(", ")
 
-        await message.channel.send(channelEmbed.setColor("RANDOM").setDescription(channels).setAuthor(`Canales del servidor`, message.guild.iconURL()).setThumbnail(message.guild.iconURL()).setFooter(`${message.guild.name} | ${message.guild.id}`))
+        await message.channel.send({ embeds: [channelEmbed.setColor("RANDOM").setDescription(channels).setAuthor(`Canales del servidor`, message.guild.iconURL()).setThumbnail(message.guild.iconURL()).setFooter(`${message.guild.name} | ${message.guild.id}`)]})
     }
     else {
        let channels = message.guild.channels.cache.size 
-       let textChannel = message.guild.channels.cache.filter(channel => channel.type !== "voice" && channel.type !== "category" && channel.type !== "news" && channel.type !== "store").size
-       let voiceChannel = message.guild.channels.cache.filter(channel => channel.type !== "category" && channel.type !== "news" && channel.type !== "store" && channel.type !== "text").size
-       let newsChannel = message.guild.channels.cache.filter(channel => channel.type !== "category" && channel.type !== "voice" && channel.type !== "store" && channel.type !== "text").size
-       let storeChannel = message.guild.channels.cache.filter(channel => channel.type !== "category" && channel.type !== "news" && channel.type !== "voice" && channel.type !== "text").size
+       let textChannel = message.guild.channels.cache.filter(channel => channel.type === "GUILD_TEXT").size
+       let voiceChannel = message.guild.channels.cache.filter(channel => channel.type === "GUILD_VOICE").size
+       let newsChannel = message.guild.channels.cache.filter(channel => channel.type === "GUILD_NEWS").size
+       let storeChannel = message.guild.channels.cache.filter(channel => channel.type === "GUILD_STORE").size
+       let storeChannel = message.guild.channels.cache.filter(channel => channel.type === "GUILD_STORE").size
+
        let channelName = `Canales | ${textChannel == 0 ? "" : `Texto | `}${voiceChannel == 0 ? "" : `Voz | `}${newsChannel == 0 ? "" : `Noticias | `}${storeChannel == 0 ? "" : "Tienda"}`
        let channelOrder = `${textChannel == 0 ? "" : `${textChannel} | `}${voiceChannel == 0 ? "" : `${voiceChannel} | `}${newsChannel == 0 ? "" : `${newsChannel} | `}${storeChannel == 0 ? "" : storeChannel}`
+
     const embed = new Discord.MessageEmbed()
         .setAuthor(message.guild.name, message.guild.iconURL())
         .setColor("RANDOM")
@@ -72,7 +76,8 @@ module.exports = {
         .addField("Roles", message.guild.roles.cache.size, true)
         .addField("Creado a las", `${message.guild.createdAt.toUTCString().substr(0, 16)} (${checkDays(message.guild.createdAt)})`, true)
         .setThumbnail(message.guild.iconURL({ format: "png", dynamic: true }))
-    message.channel.send({embed})
+
+    message.channel.send({ embeds: [embed] })
     .catch(err => {
         console.log(err);
     })

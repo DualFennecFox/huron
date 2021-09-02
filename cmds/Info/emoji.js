@@ -20,7 +20,7 @@ module.exports = {
 		.setTimestamp()
 		.setImage(emoji.url)
         .setColor('RANDOM')
-    message.channel.send({ embed })
+    message.channel.send({ embeds: [embed] })
     .catch(err => {
       console.log(err);
   })
