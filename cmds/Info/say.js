@@ -13,7 +13,7 @@ module.exports = {
         
 
         argsresult = args.join(" ")
-        if(!argsresult) return;
+        if(!argsresult) return message.channel.send({ content: "Debes escribir un mensaje para yo enviarlo" })
 
         if (!message.member.permissions.has(perms.mention_everyone || perms.administrator)) {
             argsresult = argsresult.replace(/@/, "@\u200b")

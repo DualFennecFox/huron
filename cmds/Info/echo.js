@@ -21,16 +21,16 @@ module.exports = {
 
     if (message.guild.me.permissions.has(perms.manage_messages || perms.administrator)) message.delete()
 
-    if(!mChannel) return message.channel.send('Debes mencionar un canal o darme su ID')
-        if (!mChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send('No tengo permisos para hablar en ese canal')
-        if (!mChannel.permissionsFor(message.member).has("SEND_MESSAGES")) return message.channel.send('No tienes permisos para enviar mensajes en ese canal')
+    if(!mChannel) return message.channel.send({ content: 'Debes mencionar un canal o darme su ID'})
+        if (!mChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send({ content: 'No tengo permisos para hablar en ese canal'})
+        if (!mChannel.permissionsFor(message.member).has("SEND_MESSAGES")) return message.channel.send({ content: 'No tienes permisos para enviar mensajes en ese canal'})
         
         argsresult = args.join(" ")
         
         if (id = false) argsresult = argsresult.replace(mChannel, '')
         else argsresult = argsresult.replace(args[0], '');
 
-        if(!argsresult) return message.channel.send('Vuelve a usar el comando, pero di un mensaje para enviar')
+        if(!argsresult) return message.channel.send({ content: 'Vuelve a usar el comando, pero di un mensaje para enviar'} )
 
         if (!message.member.permissions.has(perms.mention_everyone || perms.administrator)) {
             argsresult = argsresult.replace(/@everyone/, "@\u200beveryone").replace(/@here/, "@\u200bhere")
@@ -41,6 +41,6 @@ module.exports = {
         
          if (message.guild.me.permissions.has(perms.manage_messages || perms.administrator)) message.delete()
         }
-         mChannel.send(argsresult)
+         mChannel.send({ content: argsresult})
 }
 }
