@@ -7,10 +7,10 @@ module.exports = async client => {
 
     client.user.setPresence({
       status: "online",
-      activity: {
+      activities: [{
           name: `Trabajando`,
           type: "PLAYING",
           url: "https://www.twitch.tv/unfirulais"
-      }
+      }]
   }); 
 }
