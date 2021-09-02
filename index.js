@@ -1,7 +1,8 @@
 const Discord = require('discord.js');
+const { requiredIntent } = require('./cmds/Moderacion/models/functions')
 const fs = require('fs');
 require('dotenv-flow').config();
-const client = new Discord.Client({ intents: Discord.Intents.toArray() });
+const client = new Discord.Client({ intents: requiredIntent });
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 client.log = new Discord.Collection();
