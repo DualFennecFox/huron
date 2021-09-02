@@ -19,7 +19,7 @@ const { perms } = require("./models/functions")
     message.channel.messages.fetch({ limit: amount }).then(messages => {
       message.channel.bulkDelete(messages, true);
 
-    messagesDeleted = [messages.values()].length;
+    messagesDeleted = [...messages.values()].length;
     message.channel.send({ content: `Se han borrado ${messagesDeleted} mensajes`}).then(message => setTimeout(() => message.delete(), 5000))
     }).catch(err => {
       message.channel.send({ content: "No se han podido borrar los mensajes"}).then(message => setTimeout(() => message.delete(), 5000))
