@@ -24,6 +24,6 @@ module.exports = {
 
         }
 
-         message.channel.send(argsresult)
+         message.channel.send({ content: argsresult})
         }
 }

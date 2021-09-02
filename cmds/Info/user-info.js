@@ -42,7 +42,7 @@ module.exports = {
         .addField("ID", user.id, true)
         .addField("Roles", memberMention.roles.cache.size, true)
         .setThumbnail(user.displayAvatarURL({ format: "png", dynamic: true}))
-    message.channel.send(myInfo)
+    message.channel.send({content: myInfo})
     .catch(err => {
         console.log(err);
         })
