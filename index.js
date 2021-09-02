@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 require('dotenv-flow').config();
-const client = new Discord.Client();
+const client = new Discord.Client({ intents: Discord.Intents.toArray() });
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 client.log = new Discord.Collection();
