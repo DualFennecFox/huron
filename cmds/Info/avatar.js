@@ -20,7 +20,7 @@ module.exports = {
 		.setTimestamp()
 		.setImage(user.displayAvatarURL({ format: "png", dynamic: true, size: 2048}))
     .setColor('RANDOM')
-    message.channel.send({ embed })
+    message.channel.send({ embeds: [embed] })
     .catch(err => {
       console.log(err);
     })
