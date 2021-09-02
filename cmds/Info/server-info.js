@@ -58,7 +58,6 @@ module.exports = {
        let voiceChannel = message.guild.channels.cache.filter(channel => channel.type === "GUILD_VOICE").size
        let newsChannel = message.guild.channels.cache.filter(channel => channel.type === "GUILD_NEWS").size
        let storeChannel = message.guild.channels.cache.filter(channel => channel.type === "GUILD_STORE").size
-       let storeChannel = message.guild.channels.cache.filter(channel => channel.type === "GUILD_STORE").size
 
        let channelName = `Canales | ${textChannel == 0 ? "" : `Texto | `}${voiceChannel == 0 ? "" : `Voz | `}${newsChannel == 0 ? "" : `Noticias | `}${storeChannel == 0 ? "" : "Tienda"}`
        let channelOrder = `${textChannel == 0 ? "" : `${textChannel} | `}${voiceChannel == 0 ? "" : `${voiceChannel} | `}${newsChannel == 0 ? "" : `${newsChannel} | `}${storeChannel == 0 ? "" : storeChannel}`
