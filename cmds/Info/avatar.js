@@ -10,9 +10,11 @@ module.exports = {
   run: async (client, message, args, prefix, contentPrefix) => {
     let user = message.mentions.users.first() || client.users.cache.get(args[0]);
     if (contentPrefix !== prefix) user = getUser(args[0], client)
-  
-    if (!message.guild.member(user)) user = message.author
-    if(!user) user = message.author;
+    
+    if (user) {
+    if (!message.guild.members.cache.get(user.id)) user = message.author 
+    } else if (!user) user = message.author;
+    
     const embed = new Discord.MessageEmbed()
     .setAuthor(`Avatar de ${user.tag}`)
     .setTitle('')
