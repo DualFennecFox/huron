@@ -22,7 +22,7 @@ module.exports = async message => {
             .setFooter(`De: ${message.author.tag} | ${message.author.id}`, message.author.displayAvatarURL({ format: "png", dynamic: true}))
             if (message.attachments.first()) embed.addField("Archivos Adjuntados", message.attachments.map(r => r.name).join(", "))
         
-        Channel.send(`Mensaje Eliminado En: <#${message.channel.id}>`, {embed})
+        Channel.send({ content: `Mensaje Eliminado En: <#${message.channel.id}>`, embeds: [embed]})
     }
     }).catch(err => {
             console.error(err)
