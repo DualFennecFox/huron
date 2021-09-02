@@ -10,7 +10,7 @@ module.exports = async client => {
       activities: [{
           name: `Trabajando`,
           type: "PLAYING",
-          url: "https://www.twitch.tv/unfirulais"
+          url: "https://trovo.live/DualFennecFox"
       }]
   }); 
 }
