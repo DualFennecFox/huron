@@ -24,12 +24,17 @@ module.exports = {
 
     const roleEmbed = new Discord.MessageEmbed()
     if (args[0] == "roles" || args[0] === 'r' || args[0] === 'role') {
+
+        if (message.guild.roles.cache.size == 1) return message.channel.send({ content: "Este servidor no tiene roles" })
        if(!message.member.permissions.has(perms.administrator || perms.manage_roles)) return message.channel.send({ content: "No tienes permisos para ver los roles del servidor"})
        let roles = await message.guild.roles.cache.map(r => `<@&${r.id}>`).join(", ")
 
        await message.channel.send({ embeds: [roleEmbed.setColor("RANDOM").setDescription(roles).setAuthor(`Roles del servidor`, message.guild.iconURL()).setThumbnail(message.guild.iconURL()).setFooter(`${message.guild.name} | ${message.guild.id}`)]})
     }
     else if (args[0] === "channels" || args[0] === "channel" || args[0] === "c") {
+
+        if (message.guild.channels.cache.size == 0) return message.channel.send({ content: "Este servidor no tiene canales" })
+
         if(!message.member.permissions.has(perms.administrator || perms.manage_channels)) return message.channel.send({ content: "No tienes permisos para ver los canales del servidor"})
         const channelEmbed = new Discord.MessageEmbed()
         let channels = await message.guild.channels.cache.filter(channel => channel.type === "GUILD_TEXT" || channel.type === "GUILD_NEWS" || channel.type === "GUILD_STORE").map(channel => `<#${channel.id}>`).join(", ")
@@ -56,9 +61,13 @@ module.exports = {
         .addField("Miembros | Usuarios | Bots", `${message.guild.members.cache.size} | ${message.guild.members.cache.filter(member => !member.user.bot).size} | ${message.guild.members.cache.filter(member => member.user.bot).size}`, true)
         .addField("Nivel de Verificación", verifLevels[message.guild.verificationLevel], true)
         .addField(channelName, `${channels} | ${channelOrder}`, true)
-        .addField("Roles", `${message.guild.roles.cache.size}`, true)
         .addField("Creado a las", `${message.guild.createdAt.toUTCString().substr(0, 16)} (${checkDays(message.guild.createdAt)})`, true)
         .setThumbnail(message.guild.iconURL({ format: "png", dynamic: true }))
+
+        if (memberMention.roles.cache.size != 1) {
+            embed.addField("Roles", `${message.guild.roles.cache.size - 1}`, true)
+    }
+
 
     message.channel.send({ embeds: [embed] })
     .catch(err => {

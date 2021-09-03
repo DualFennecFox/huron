@@ -39,13 +39,16 @@ module.exports = {
     let myInfo = new Discord.MessageEmbed()
         .setAuthor(user.username, user.displayAvatarURL({ format: "png", dynamic: true}))
         .setColor('RANDOM')
-        .addField("Nombre de Usuario y discriminador", user.tag, true)
+        .addField("Nombre y discriminador", user.tag, true)
         .addField("Usuario", memberMention.toString(), true)    
         .addField("Creado A las", `${user.createdAt.toUTCString().substr(0, 16)} (${checkDays(user.createdAt)})`, true)
         .addField("Miembro desde", `${memberMention.joinedAt.toUTCString().substr(0, 16)} (${checkDays(memberMention.joinedAt)})`, true)
         .addField("ID", user.id, true)
-        .addField("Roles", `${memberMention.roles.cache.size - 1}`, true)
         .setThumbnail(user.displayAvatarURL({ format: "png", dynamic: true}))
+
+        if (memberMention.roles.cache.size != 1) {
+        myInfo.addField("Roles", `${memberMention.roles.cache.size - 1}`, true)
+    }
 
     message.channel.send({ embeds: [myInfo] })
     .catch(err => {
