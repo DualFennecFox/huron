@@ -68,8 +68,11 @@ module.exports = async message => {
        }
          if (command) {
           if (command.category === "owner" && message.author.id !== process.env.OWNER) return
-
+      try {
            command.run(client, message, args, prefix, contentPrefix);
+      } catch (err) {
+      console.log(err)
+      }
          }
     }).catch(err => {
       console.error(err)
