@@ -9,7 +9,7 @@ module.exports = {
     aliases: ['userinfo'],
     examples: ['!user-info', '!user-info @Wumpus', '!userinfo roles @Wumpus'],
     run: async (client , message, args, prefix, contentPrefix) => {
-        
+
     function checkDays(date) {
         let now = new Date();
         let diff = now.getTime() - date.getTime();
@@ -44,7 +44,7 @@ module.exports = {
         .addField("Creado A las", `${user.createdAt.toUTCString().substr(0, 16)} (${checkDays(user.createdAt)})`, true)
         .addField("Miembro desde", `${memberMention.joinedAt.toUTCString().substr(0, 16)} (${checkDays(memberMention.joinedAt)})`, true)
         .addField("ID", user.id, true)
-        .addField("Roles", memberMention.roles.cache.size, true)
+        .addField("Roles", `${memberMention.roles.cache.size}`, true)
         .setThumbnail(user.displayAvatarURL({ format: "png", dynamic: true}))
 
     message.channel.send({ embeds: [myInfo] })
