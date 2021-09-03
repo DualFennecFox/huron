@@ -29,6 +29,7 @@ module.exports = {
 
   if (args[0] === 'roles' || args[0] === 'r' || args[0] === 'role' || args[1] === 'roles' || args[1] === 'r' || args[1] === 'role') {
 
+        if (memberMention.roles.cache.size == 1) return message.channel.send({ content: "Este usuario no tiene roles" })
         let embed = new Discord.MessageEmbed()
         let rolesOfTheMember = memberMention.roles.cache.filter(r => r.name !== '@everyone').map(role => `<@&${role.id}>`).join('\n')
         await message.channel.send({ embeds: [embed.setColor("RANDOM").setDescription(rolesOfTheMember).setAuthor(`Roles de ${user.username}`, user.displayAvatarURL()).setThumbnail(user.displayAvatarURL())]})
@@ -44,7 +45,7 @@ module.exports = {
         .addField("Creado A las", `${user.createdAt.toUTCString().substr(0, 16)} (${checkDays(user.createdAt)})`, true)
         .addField("Miembro desde", `${memberMention.joinedAt.toUTCString().substr(0, 16)} (${checkDays(memberMention.joinedAt)})`, true)
         .addField("ID", user.id, true)
-        .addField("Roles", `${memberMention.roles.cache.size}`, true)
+        .addField("Roles", `${memberMention.roles.cache.size - 1}`, true)
         .setThumbnail(user.displayAvatarURL({ format: "png", dynamic: true}))
 
     message.channel.send({ embeds: [myInfo] })
