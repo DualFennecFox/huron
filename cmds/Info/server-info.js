@@ -29,7 +29,7 @@ module.exports = {
 
        await message.channel.send({ embeds: [roleEmbed.setColor("RANDOM").setDescription(roles).setAuthor(`Roles del servidor`, message.guild.iconURL()).setThumbnail(message.guild.iconURL()).setFooter(`${message.guild.name} | ${message.guild.id}`)]})
     }
-    else if (args[0] === "channels" || args[0] === "channel") {
+    else if (args[0] === "channels" || args[0] === "channel" || args[0] === "c") {
         if(!message.member.permissions.has(perms.administrator || perms.manage_channels)) return message.channel.send({ content: "No tienes permisos para ver los canales del servidor"})
         const channelEmbed = new Discord.MessageEmbed()
         let channels = await message.guild.channels.cache.filter(channel => channel.type === "GUILD_TEXT" || channel.type === "GUILD_NEWS" || channel.type === "GUILD_STORE").map(channel => `<#${channel.id}>`).join(", ")
@@ -42,16 +42,17 @@ module.exports = {
        let voiceChannel = message.guild.channels.cache.filter(channel => channel.type === "GUILD_VOICE").size
        let newsChannel = message.guild.channels.cache.filter(channel => channel.type === "GUILD_NEWS").size
        let storeChannel = message.guild.channels.cache.filter(channel => channel.type === "GUILD_STORE").size
+       let stageChannel = message.guild.channels.cache.filter(channel => channel.type === "GUILD_STAGE_VOICE").size 
 
-       let channelName = `Canales | ${textChannel == 0 ? "" : `Texto | `}${voiceChannel == 0 ? "" : `Voz | `}${newsChannel == 0 ? "" : `Noticias | `}${storeChannel == 0 ? "" : "Tienda"}`
-       let channelOrder = `${textChannel == 0 ? "" : `${textChannel} | `}${voiceChannel == 0 ? "" : `${voiceChannel} | `}${newsChannel == 0 ? "" : `${newsChannel} | `}${storeChannel == 0 ? "" : storeChannel}`
+       let channelName = `Canales | ${textChannel == 0 ? "" : `Texto | `}${voiceChannel == 0 ? "" : `Voz | `}${newsChannel == 0 ? "" : `Noticias | `}${storeChannel == 0 ? "" : "Tienda | "}${stageChannel == 0 ? "" : "Estadios"}`
+       let channelOrder = `${textChannel == 0 ? "" : `${textChannel} | `}${voiceChannel == 0 ? "" : `${voiceChannel} | `}${newsChannel == 0 ? "" : `${newsChannel} | `}${storeChannel == 0 ? "" : `${storeChannel} | `} ${stageChannel == 0 ? "" : stageChannel}`
 
     const embed = new Discord.MessageEmbed()
         .setAuthor(message.guild.name, message.guild.iconURL())
         .setColor("RANDOM")
         .addField("Nombre", message.guild.name, true)
         .addField("ID", message.guild.id, true)
-        .addField("Dueñ@", `<@!${message.guild.members.cache.get(message.guild.ownerId)}>`, true)
+        .addField("Dueñ@", `${message.guild.members.cache.get(message.guild.ownerId)}`, true)
         .addField("Miembros | Usuarios | Bots", `${message.guild.members.cache.size} | ${message.guild.members.cache.filter(member => !member.user.bot).size} | ${message.guild.members.cache.filter(member => member.user.bot).size}`, true)
         .addField("Nivel de Verificación", verifLevels[message.guild.verificationLevel], true)
         .addField(channelName, `${channels} | ${channelOrder}`, true)
