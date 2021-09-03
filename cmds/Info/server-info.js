@@ -55,7 +55,7 @@ module.exports = {
         .addField("Miembros | Usuarios | Bots", `${message.guild.members.cache.size} | ${message.guild.members.cache.filter(member => !member.user.bot).size} | ${message.guild.members.cache.filter(member => member.user.bot).size}`, true)
         .addField("Nivel de Verificación", verifLevels[message.guild.verificationLevel], true)
         .addField(channelName, `${channels} | ${channelOrder}`, true)
-        .addField("Roles", message.guild.roles.cache.size, true)
+        .addField("Roles", `${message.guild.roles.cache.size}`, true)
         .addField("Creado a las", `${message.guild.createdAt.toUTCString().substr(0, 16)} (${checkDays(message.guild.createdAt)})`, true)
         .setThumbnail(message.guild.iconURL({ format: "png", dynamic: true }))
 
