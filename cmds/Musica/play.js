@@ -157,7 +157,8 @@ function search(nameKey, myArray) {
                           var songEmbed = await message.channel.send({ embeds: [embed] });
                           musicData.server[message.guild.id].awaiting = true
                           try {
-                              var response = await message.channel.awaitMessages(msg => (msg.content > 0 && msg.content < 11 || msg.content === 'exit') && msg.author.id === message.author.id, {max: 1, time: 60000, errors: ['time']})
+                              const filter = msg => msg.content > 0 && msg.content < 11 || msg.content === 'exit' && msg.author.id === message.author.id,
+                              var response = await message.channel.awaitMessages({filter, max: 1, time: 30000, errors: ['time']})
                               if (response.first().content) musicData.server[message.guild.id].awaiting = false
                               var videoIndex = parseInt(response.first().content);
                               } catch (err) {
