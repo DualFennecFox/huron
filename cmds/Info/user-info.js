@@ -40,7 +40,7 @@ module.exports = {
         .setAuthor(user.username, user.displayAvatarURL({ format: "png", dynamic: true}))
         .setColor('RANDOM')
         .addField("Nombre de Usuario y discriminador", user.tag, true)
-        .addField("Usuario", memberMention, true)    
+        .addField("Usuario", memberMention.toString(), true)    
         .addField("Creado A las", `${user.createdAt.toUTCString().substr(0, 16)} (${checkDays(user.createdAt)})`, true)
         .addField("Miembro desde", `${memberMention.joinedAt.toUTCString().substr(0, 16)} (${checkDays(memberMention.joinedAt)})`, true)
         .addField("ID", user.id, true)
