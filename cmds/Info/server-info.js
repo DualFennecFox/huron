@@ -21,23 +21,7 @@ module.exports = {
         "HIGH": "Alto",
         "VERY_HIGH": "Muy Alto"
     };
-    let region = {
-        "brazil": ":flag_br: Brazil",
-        "eu-central": ":flag_eu: Central Europe",
-        "singapore": ":flag_sg: Singapore",
-        "us-central": ":flag_us: U.S. Central",
-        "sydney": ":flag_au: Sydney",
-        "us-east": ":flag_us: U.S. East",
-        "us-south": ":flag_us: U.S. South",
-        "us-west": ":flag_us: U.S. West",
-        "eu-west": ":flag_eu: Western Europe",
-        "vip-us-east": ":flag_us: VIP U.S. East",
-        "london": ":flag_gb: London",
-        "amsterdam": ":flag_nl: Amsterdam",
-        "hongkong": ":flag_hk: Hong Kong",
-        "russia": ":flag_ru: Russia",
-        "southafrica": ":flag_za:  South Africa"
-    };
+
     const roleEmbed = new Discord.MessageEmbed()
     if (args[0] == "roles" || args[0] === 'r' || args[0] === 'role') {
        if(!message.member.permissions.has(perms.administrator || perms.manage_roles)) return message.channel.send({ content: "No tienes permisos para ver los roles del servidor"})
@@ -68,7 +52,6 @@ module.exports = {
         .addField("Nombre", message.guild.name, true)
         .addField("ID", message.guild.id, true)
         .addField("Dueñ@", `<@!${message.guild.members.cache.get(message.guild.ownerId)}>`, true)
-        .addField("Región", region[message.guild.region], true)
         .addField("Miembros | Usuarios | Bots", `${message.guild.members.cache.size} | ${message.guild.members.cache.filter(member => !member.user.bot).size} | ${message.guild.members.cache.filter(member => member.user.bot).size}`, true)
         .addField("Nivel de Verificación", verifLevels[message.guild.verificationLevel], true)
         .addField(channelName, `${channels} | ${channelOrder}`, true)
