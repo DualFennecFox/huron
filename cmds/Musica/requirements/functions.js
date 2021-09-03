@@ -45,7 +45,7 @@ const ytdl = require('ytdl-core')
             musicData.server[message.guild.id].looped.push(loopURL)
             
             if (queue[1]) videoEmbed.addField('Siguiente Canción', `[${queue[1].title}](${queue[1].url})`);
-            let embed = await message.channel.send(videoEmbed)
+            let embed = await message.channel.send({ embeds: [videoEmbed] })
             musicData.server[message.guild.id].lastEmbed = embed
             musicData.server[message.guild.id].queue.shift();
             }
@@ -60,11 +60,11 @@ const ytdl = require('ytdl-core')
            } else {
                    musicData.server[message.guild.id].isPlaying = false
                    musicData.server[message.guild.id].looped.length = 0
-                   message.channel.send("Se han terminado todas las canciones")
+                   message.channel.send({ content: "Se han terminado todas las canciones" })
                }
                })
            .on('error', async e => {
-               message.channel.send('No se puede escuchar esa canción');
+               message.channel.send({ content: 'No se puede escuchar esa canción' });
                musicData.server[message.guild.id].queue.length = 0;
                musicData.server[message.guild.id].isPlaying = false;
                musicData.server[message.guild.id].pause = false
@@ -102,7 +102,7 @@ const ytdl = require('ytdl-core')
             musicData.server[message.guild.id].looped.push(loopURL)
             
             if (queue[1]) videoEmbed.addField('Siguiente Canción', `[${queue[1].title}](${queue[1].url})`);
-            let embed = await message.channel.send(videoEmbed)
+            let embed = await message.channel.send({ embeds: [videoEmbed] })
             musicData.server[message.guild.id].lastEmbed = embed
             musicData.server[message.guild.id].queue.shift();
             }
@@ -117,11 +117,11 @@ const ytdl = require('ytdl-core')
            } else {
                    musicData.server[message.guild.id].isPlaying = false
                    musicData.server[message.guild.id].looped.length = 0
-                   message.channel.send("Se han terminado todas las canciones")
+                   message.channel.send({ content: "Se han terminado todas las canciones"})
                }
                })
            .on('error', async e => {
-               message.channel.send('No se puede escuchar esa canción');
+               message.channel.send({ content: 'No se puede escuchar esa canción' });
                musicData.server[message.guild.id].queue.length = 0;
                musicData.server[message.guild.id].isPlaying = false;
                musicData.server[message.guild.id].pause = false

@@ -22,11 +22,11 @@ function search(nameKey, myArray) {
             examples: ['!play Super-Canción', '!play ""'],
             run: async(client, message, args) => {   
                       
-                    if (!message.member.voice.channel) return message.channel.send("Debes estar en un canal de voz para usar este comando")
+                    if (!message.member.voice.channel) return message.channel.send({ content: "Debes estar en un canal de voz para usar este comando" })
                     if (message.guild.me.voice.channel) {
-                        if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.channel.send("Debes estar conectado a mi canal de voz para usar este comando")
+                        if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.channel.send({ content: "Debes estar conectado a mi canal de voz para usar este comando" })
                         }
-                    if (!args.length >= 1) return message.channel.send("Dime que canción quieres escuchar")
+                    if (!args.length >= 1) return message.channel.send({ content: "Dime que canción quieres escuchar" })
                     if (!musicData.server[message.guild.id]) musicData.server[message.guild.id] = {
                         queue: [],
                         loop: false,
@@ -65,18 +65,18 @@ function search(nameKey, myArray) {
                                     
                                   if (musicData.server[message.guild.id].isPlaying == false) {
                                       musicData.server[message.guild.id].isPlaying = true;
-                                      message.channel.send(`Se han añadido a la cola **${playlist.videos.length}** canciones`)
+                                      message.channel.send({ content: `Se han añadido a la cola **${playlist.videos.length}** canciones` })
                                       return playSong(musicData.server[message.guild.id].queue, message);
                                   } else if (musicData.server[message.guild.id].isPlaying == true) {
                                     musicData.server[message.guild.id].loop = false
-                                      return message.channel.send(`**${playlist.title}** Se ha añadido a la cola con ${playlist.videos.length} videos`)
+                                      return message.channel.send({ content:`**${playlist.title}** Se ha añadido a la cola con ${playlist.videos.length} videos` })
                                   };
                               }).catch(err => {
                                 console.error(err)
                             })
                             } catch (err) {
                                 console.error(err)
-                                return message.channel.send("Esta Playlist es privada o no existe")
+                                return message.channel.send({ content: "Esta Playlist es privada o no existe" })
                             }       
                     }
             
@@ -113,14 +113,14 @@ function search(nameKey, myArray) {
                                 return playSong(musicData.server[message.guild.id].queue, message);
                             } else if (musicData.server[message.guild.id].isPlaying == true) {
                                 musicData.server[message.guild.id].loop = false
-                                return message.channel.send(`**${song.title}** Se ha añadido a la cola`)
+                                return message.channel.send({ content: `**${song.title}** Se ha añadido a la cola` })
                             }
                         }).catch(err => {
                             console.error(err)
                         })
                       } catch (err) {
                           console.error(err)
-                          message.channel.send("Algo salio mal vuelva a intentarlo")
+                          message.channel.send({ content: "Algo salio mal vuelva a intentarlo" })
                       }
                     } else {
                     try {
@@ -129,8 +129,8 @@ function search(nameKey, myArray) {
                     
                        YT.search(argsresult, { type: "video", limit: 10 }).then(async (videos) => {
 
-                        if (musicData.server[message.guild.id].awaiting == true) return message.channel.send("Ya se está esperando la respuesta")
-                        if (videos.length < 1) return message.channel.send("No existe ningún resultado con ese nombre trate cambiando las palabras")
+                        if (musicData.server[message.guild.id].awaiting == true) return message.channel.send({ content: "Ya se está esperando la respuesta" })
+                        if (videos.length < 1) return message.channel.send({ content: "No existe ningún resultado con ese nombre trate cambiando las palabras" })
                         const vidNameArr = []
                         const videoID = []
 
@@ -154,7 +154,7 @@ function search(nameKey, myArray) {
                           if (vidNameArr[8]) embed.addField("\`9\`", vidNameArr[8])
                           if (vidNameArr[9]) embed.addField("\`10\`", vidNameArr[9])
 
-                          var songEmbed = await message.channel.send({ embed });
+                          var songEmbed = await message.channel.send({ embeds: [embed] });
                           musicData.server[message.guild.id].awaiting = true
                           try {
                               var response = await message.channel.awaitMessages(msg => (msg.content > 0 && msg.content < 11 || msg.content === 'exit') && msg.author.id === message.author.id, {max: 1, time: 60000, errors: ['time']})
@@ -164,7 +164,7 @@ function search(nameKey, myArray) {
                                   console.error(err)
                                   musicData.server[message.guild.id].awaiting = false
                                  if (songEmbed) songEmbed.delete()
-                                 return message.channel.send("No respondiste a tiempo, asegurate de elegir un número del 1 al 10")
+                                 return message.channel.send({ content: "No respondiste a tiempo, asegurate de elegir un número del 1 al 10" })
                               }
                               if (response.first().content === 'exit') {
                                 musicData.server[message.guild.id].awaiting = false
@@ -176,7 +176,7 @@ function search(nameKey, myArray) {
                               } catch (err) {
                                   console.error(err)
                                   if (songEmbed) songEmbed.delete()
-                                  return message.channel.send("Hubo un error al obtener el video de Youtube")
+                                  return message.channel.send({ content: "Hubo un error al obtener el video de Youtube" })
                               }       
 
                           const url = `https://www.youtube.com/watch?v=${video.id}`;
@@ -210,7 +210,7 @@ function search(nameKey, myArray) {
                                if (songEmbed) songEmbed.delete();
                                musicData.server[message.guild.id].loop = false
             
-                                return message.channel.send(`**${song.title}** Se ha añadido a la cola`);
+                                return message.channel.send({ content: `**${song.title}** Se ha añadido a la cola` });
                             }
                         }).catch(err => {
                             console.error(err)
@@ -221,7 +221,7 @@ function search(nameKey, myArray) {
                             musicData.server[message.guild.id].awaiting = false
                             if (songEmbed) songEmbed.delete()
                             musicData.server[message.guild.id].loop = false
-                            return message.channel.send("Hubo un error al buscar el video en Youtube")
+                            return message.channel.send({ content: "Hubo un error al buscar el video en Youtube" })
                         }
                     }
                 }

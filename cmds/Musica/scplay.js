@@ -153,7 +153,7 @@ function search(nameKey, myArray) {
                           if (vidNameArr[9]) embed.addField("\`10\`", vidNameArr[9])
                          
 
-                          var songEmbed = await message.channel.send({ embed });
+                          var songEmbed = await message.channel.send({ embeds: [embed] });
                           musicData.server[message.guild.id].awaiting = true
                           try {
                               var response = await message.channel.awaitMessages(msg => (msg.content > 0 && msg.content < 11 || msg.content === 'exit') && msg.author.id === message.author.id, {max: 1, time: 60000, errors: ['time']})

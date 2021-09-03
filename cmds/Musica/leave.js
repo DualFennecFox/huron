@@ -7,12 +7,12 @@ module.exports = {
     usage: '!leave',
     run: async(client, message, args) => {
 
-        if (!message.member.voice.channel) return message.channel.send("Debes estar en un canal de voz para usar este comando")
-        if (!message.guild.me.voice.channel) return message.channel.send("No estoy en un canal de voz")
-        if (message.guild.me.voice.channel.id !== message.member.voice.channel.id) return message.channel.send("Debes estar conectado a mi canal de voz para usar este comando")
+        if (!message.member.voice.channel) return message.channel.send({ content: "Debes estar en un canal de voz para usar este comando" })
+        if (!message.guild.me.voice.channel) return message.channel.send({ content: "No estoy en un canal de voz" })
+        if (message.guild.me.voice.channel.id !== message.member.voice.channel.id) return message.channel.send({ content: "Debes estar conectado a mi canal de voz para usar este comando" })
         if (!musicData.server[message.guild.id]) {
             message.guild.me.voice.channel.leave()
-            return message.channel.send("Dejando el canal de voz")
+            return message.channel.send({ content: "Dejando el canal de voz" })
         }
 
     musicData.server[message.guild.id].queue.length = 0
@@ -23,6 +23,6 @@ module.exports = {
     musicData.server[message.guild.id].looped.length = 0
     musicData.server[message.guild.id].songDispatcher = null
     message.guild.me.voice.channel.leave()
-    message.channel.send("Dejando el canal de voz")
+    message.channel.send({ content: "Dejando el canal de voz" })
     }
 }

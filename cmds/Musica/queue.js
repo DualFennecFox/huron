@@ -27,6 +27,6 @@ module.exports = {
                 }      
               const SongsMapped = Songs.join("\n\n")
    
-              message.channel.send(embed.setDescription(SongsMapped))         
+              message.channel.send({ embeds: [embed.setDescription(SongsMapped)] })         
     }
 } 
