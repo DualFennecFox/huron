@@ -24,6 +24,7 @@
     "mongoose": "^6.0.4",
     "node-fetch": "^3.0.0",
     "node-pre-gyp": "^0.17.0",
+    "opusscript": "^0.0.8",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "scrape-yt": "^1.4.8",
