@@ -9,6 +9,7 @@ module.exports = {
     aliases: ['userinfo'],
     examples: ['!user-info', '!user-info @Wumpus', '!userinfo roles @Wumpus'],
     run: async (client , message, args, prefix, contentPrefix) => {
+        
     function checkDays(date) {
         let now = new Date();
         let diff = now.getTime() - date.getTime();
@@ -16,21 +17,24 @@ module.exports = {
         if (days == 0) return "Hoy"
         else return `Hace ${days} ${days == 1 ? "día" : "días"}`;
         };
+
     let user = message.mentions.users.first() || client.users.cache.get(args[0]) || client.users.cache.get(args[1]) || message.author
-    if (contentPrefix !== prefix) user = getUser(args[0], client) || getUser(args[1], client) || message.author
+    if (contentPrefix != prefix) user = getUser(args[0], client) || getUser(args[1], client) || message.author
 
-    if (!message.guild.member(user)) user = message.author
-    let memberMention = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.get(args[1]) || message.member;
-    if (contentPrefix !== prefix) memberMention = message.guild.member(getUser(args[0], client)) || message.guild.member(getUser(args[1], client)) || message.member;
+    if (user) {
+    if (!message.guild.members.cache.get(user.id)) user = message.author
+    } else if (!user) user = message.author
 
-       let rolesOfTheMember = memberMention.roles.cache.filter(r => r.name !== '@everyone').map(role => `<@&${role.id}>`).join('\n')
+    let memberMention = message.guild.members.cache.get(user.id)
 
   if (args[0] === 'roles' || args[0] === 'r' || args[0] === 'role' || args[1] === 'roles' || args[1] === 'r' || args[1] === 'role') {
+
         let embed = new Discord.MessageEmbed()
+        let rolesOfTheMember = memberMention.roles.cache.filter(r => r.name !== '@everyone').map(role => `<@&${role.id}>`).join('\n')
         await message.channel.send({ embeds: [embed.setColor("RANDOM").setDescription(rolesOfTheMember).setAuthor(`Roles de ${user.username}`, user.displayAvatarURL()).setThumbnail(user.displayAvatarURL())]})
         return;
-    }
-    else {
+    }   else {
+        
     let myInfo = new Discord.MessageEmbed()
         .setAuthor(user.username, user.displayAvatarURL({ format: "png", dynamic: true}))
         .setColor('RANDOM')
@@ -42,11 +46,11 @@ module.exports = {
         .addField("ID", user.id, true)
         .addField("Roles", memberMention.roles.cache.size, true)
         .setThumbnail(user.displayAvatarURL({ format: "png", dynamic: true}))
-    message.channel.send({content: myInfo})
+
+    message.channel.send({ embeds: [myInfo] })
     .catch(err => {
         console.log(err);
         })
     }
     }
-    
-    }
+}
