@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { getUser } = require('./models/functions')
+const { getUser, perms } = require('./models/functions')
 
 module.exports = {
     name : 'unban',
@@ -9,8 +9,8 @@ module.exports = {
     examples: ['!unban @Wumpus', '!unban 12345678987654321', '!unban @Wumpus Spam'],
     run: async (client , message, args, prefix, contentPrefix) => {
    
-    if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
-    if(!message.guild.me.hasPermission(["BAN_MEMBERS" || "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para Banear miembros");
+    if(!message.member.permissions.has(perms.ban_members || perms.administrator)) return message.channel.send("No tienes permisos para usar este comando!");
+    if(!message.guild.me.hasPermission(perms.ban_members || perms.administrator)) return message.channel.send("No tengo permisos para Banear miembros");
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o darme su id")
     let User = message.mentions.users.first() || client.users.cache.get(args[0])
     if (contentPrefix !== prefix) User = getUser(args[0], client)
@@ -25,7 +25,7 @@ module.exports = {
     if (!User) return message.channel.send("Ese no parece ser un usuario valido");
     let bReason = `[${message.author.tag}]: ${args.slice(1).join(" ") || "No se específico una Razón"}`;
     try {
-    let bans = await message.guild.fetchBans();
+    let bans = await message.guild.bans.fetch();
 
     let bannedMember = bans.find(user => user.user.id === User.id)
     
@@ -48,6 +48,6 @@ module.exports = {
     .addField("Usuario Desbaneado", `${User}\n**ID:** ${User.id}`)
     .addField("Razón", bReason);
     
-    message.channel.send( unbanEmbed )
+    message.channel.send({ embeds: [unbanEmbed] })
 }
 }
