@@ -24,7 +24,7 @@ const { getUser, perms } = require('./models/functions')
         if (!User) return message.channel.send("Ese no parece ser un usuario valido");
         let bReason = `[${message.author.tag}]: ${args.slice(1).join(" ") || "No se específico una Razón"}`;
         try {
-        let bans = await message.guild.fetchBans();
+        let bans = await message.guild.bans.fetch();
     
         let bannedMember = bans.find(user => user.user.id === User.id)
     
@@ -39,8 +39,8 @@ const { getUser, perms } = require('./models/functions')
         if(!message.guild.me.permissions.has(perms.ban_members || perms.administrator)) return message.channel.send("No tengo permisos para Banear miembros");
 
     let bUser
-    if (message.guild.member(User)) {
-    bUser = message.guild.member(User)
+    if (message.guild.members.cache.get(User?.id)) {
+    bUser = message.guild.members.cache.get(User?.id)
     let role = bUser.roles.highest;
     if(bUser.permissions.has(perms.ban_members || perms.administrator)) return message.channel.send("Esta persona no puede ser baneada!");
 
