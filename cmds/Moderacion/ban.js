@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { getUser, Perms } = require('./models/functions')
+const { getUser, perms } = require('./models/functions')
 
     module.exports = {
     name : 'ban',
@@ -9,7 +9,7 @@ const { getUser, Perms } = require('./models/functions')
     examples: ['!ban @Firulais', '!ban 556540723235651584', '!ban @Firulais Razon'],
     run: async (client , message, args, prefix, contentPrefix) => {
 
-        if(!message.member.permissions.has(Perms.ban_members || Perms.administrator)) return message.channel.send("No tienes permisos para usar este comando!");
+        if(!message.member.permissions.has(perms.ban_members || perms.administrator)) return message.channel.send("No tienes permisos para usar este comando!");
         if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o darme su id")
         let User = message.mentions.users.first() || client.users.cache.get(args[0])
         if (contentPrefix !== prefix) User = getUser(args[0], client)
@@ -36,13 +36,13 @@ const { getUser, Perms } = require('./models/functions')
 
         if (User.id === message.author.id) return message.channel.send("No te puedes banear a ti mismo")
         if (User.id === client.user.id) return message.channel.send("No puedo banearme a mi mismo")
-        if(!message.guild.me.permissions.has(Perms.ban_members || Perms.administrator)) return message.channel.send("No tengo permisos para Banear miembros");
+        if(!message.guild.me.permissions.has(perms.ban_members || perms.administrator)) return message.channel.send("No tengo permisos para Banear miembros");
 
     let bUser
     if (message.guild.member(User)) {
     bUser = message.guild.member(User)
     let role = bUser.roles.highest;
-    if(bUser.permissions.has(Perms.ban_members || Perms.administrator)) return message.channel.send("Esta persona no puede ser baneada!");
+    if(bUser.permissions.has(perms.ban_members || perms.administrator)) return message.channel.send("Esta persona no puede ser baneada!");
 
     if (message.guild.me.roles.highest.comparePositionTo(role) < 1) {
         return message.channel.send("Mi rol es muy bajo para banearlo!");
