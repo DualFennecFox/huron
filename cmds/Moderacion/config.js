@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const Guild = require('./models/Guild')
+const { perms } = require("./models/functions")
 
 module.exports = {
     name : 'config',
@@ -9,7 +10,7 @@ module.exports = {
     usage: '!config <Configuración> <Valor>',
     examples: ['!config prefix -', '!config welcomemsg'],
     run: async (client, message, args, prefix) => {
-        if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando")
+        if (!message.member.permissions.has(perms.manage_guild || perms.administrator)) return message.channel.send("No tienes permisos para usar este comando")
         if (!args[0]) {
                 
             let settings = await Guild.findOne({ guildID: message.guild.id })
@@ -29,7 +30,7 @@ module.exports = {
                 .addField("Tags", "Los tags para los mensajes de bienvenida y despedida son:\n\n**{user}** : Menciona al usuario\n**{username}** : Muestra el nombre y el tag del usuario\n**{server}** : Muestra el nombre del servidor\n**{owner}** : Nombra al Owner del servidor con su tag\n**{members}** : Muestra el número de miembros desde que el usuario se unio o dejo el server.\n")
                 .setFooter("<> es obligatorio, [] es opcional")
 
-            return message.channel.send({ embed })
+            return message.channel.send({ embeds: [embed] })
         }
         
         let cmd = args[0].toLowerCase()

@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const Guild = require('./models/Guild')
-const { search, getUser } = require('./models/functions');
+const { search, getUser, perms } = require('./models/functions');
+
     module.exports = {
     name : 'infractions',
     category: "Moderacion",
@@ -10,11 +11,11 @@ const { search, getUser } = require('./models/functions');
     examples: ['!infractions @Wumpus', '!infractions 12345678987654321'],
     run: async (client , message, args, prefix, contentPrefix) => {
 
-    if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
+    if(!message.member.permissions.has(perms.ban_members || perms.administrator || perms.kick_members)) return message.channel.send("No tienes permisos para usar este comando!");
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o darme su id")
 
-    let bUser = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
-    if (contentPrefix !== prefix) bUser = message.guild.member(getUser(args[0], client))
+    let bUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+    if (contentPrefix !== prefix) bUser = message.guild.members.cache.get(getUser(args[0], client))
     if(!bUser) return message.channel.send("Ese no parece ser un usuario valido");
 
     let db = await Guild.findOne({ guildID: message.guild.id })
@@ -37,6 +38,6 @@ const { search, getUser } = require('./models/functions');
     .setDescription(`**Este usuario tiene ${warns.length} advertencias.**\n\n${map}`)
     .setFooter(`${bUser.user.username} | ${bUser.user.id}`)
 
-    message.channel.send({ embed })
+    message.channel.send({ embeds: [embed] })
     }
 }

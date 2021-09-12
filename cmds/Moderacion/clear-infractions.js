@@ -9,11 +9,11 @@ const {search, searchNumber, getUser } = require('./models/functions');
     usage: '!clear-infractions <Usuario o \"all\"> <Número>',
     examples: ['!clear-infractions @Wumpus', '!clear-infractions 12345678987654321', '!clear-infractions all'],
     run: async (client, message, args, prefix, contentPrefix) => {
-    if (!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
+    if (!message.member.permissions.has("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS")) return message.channel.send("No tienes permisos para usar este comando!");
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o remover todas las infracciones con \"all\"")
 
-    let bUser = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
-    if (contentPrefix !== prefix) bUser = message.guild.member(getUser(args[0], client))
+    let bUser = mmessage.mentions.members.first() || message.guild.members.cache.get(args[0])
+    if (contentPrefix !== prefix) bUser = message.guild.members.cache.get(getUser(args[0], client))
     
     let bReason = args.slice(1).join(" ");
     if(!bReason) bReason = "No se específico una razón"

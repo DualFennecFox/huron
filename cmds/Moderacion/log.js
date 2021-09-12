@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const Guild = require("./models/Guild")
-const { createGuild, updateGuild, changePerm } = require("./models/functions")
+const { createGuild, updateGuild, changePerm, perms } = require("./models/functions")
 
 module.exports = {
     name : 'log',
@@ -11,7 +11,7 @@ module.exports = {
     examples: ['!log messagedelete', '!log nickname', '!log channel'],
     run: async (client , message, args, prefix) => {
 
-        if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_MEMBERS")) return message.channel.send("No tienes permisos para usar este comando")
+        if (!message.member.permissions.has(perms.manage_guild || perms.administrator)) return message.channel.send("No tienes permisos para usar este comando")
 
         let active = undefined
         let unable = undefined
@@ -118,7 +118,7 @@ module.exports = {
                 if (active != undefined) embed.addField("Activados", active.replace("undefined", ""))
                 if (unable != undefined) embed.addField("Desactivados", unable.replace("undefined", ""));
 
-                message.channel.send({ embed })
+                message.channel.send({ embeds: [embed] })
                 return
         }
          else if (args[0].toLowerCase() === "enable" || args[0].toLowerCase() === "disable") {

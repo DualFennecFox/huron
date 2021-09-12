@@ -1,6 +1,6 @@
 const Guild = require('./models/Guild')
 const mongoose = require('mongoose');
-const {search, createGuild, getUser } = require('./models/functions');
+const {search, createGuild, getUser, perms } = require('./models/functions');
 
     module.exports = {
     name : 'warn',
@@ -11,11 +11,11 @@ const {search, createGuild, getUser } = require('./models/functions');
     examples: ['!warn @Wumpus', '!warn 12345678987654321', '!warn @Wumpus Presumir ser Wumpus'],
     run: async (client , message, args, prefix, contentPrefix) => {
 
-    if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS")) return message.channel.send("No tienes permisos para usar este comando!");
+    if(!message.member.permissions.has(perms.ban_members || perms.administrator || perms.kick_members)) return message.channel.send("No tienes permisos para usar este comando!");
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o darme su id")
 
-    let bUser = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
-    if (contentPrefix !== prefix) bUser = message.guild.member(getUser(args[0], client))
+    let bUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+    if (contentPrefix !== prefix) bUser = message.guild.members.cache.get(getUser(args[0], client))
 
     if (!bUser) {
     let UserID = args[0].replace(/([^0-9])/g, '')
@@ -26,7 +26,7 @@ const {search, createGuild, getUser } = require('./models/functions');
            }
         }
     if (!bUser) return message.channel.send("Ese no parece ser un usuario valido")
-    if (!message.guild.member(bUser)) return message.channel.send("Ese no parece ser un usuario valido")
+    if (!message.guild.members.cache.get(bUser)) return message.channel.send("Ese no parece ser un usuario valido")
 
     let bReason = args.slice(1).join(" ");
     if(!bReason) bReason = "No se específico una razón"
@@ -35,7 +35,7 @@ const {search, createGuild, getUser } = require('./models/functions');
     if (bUser.id === client.user.id) return message.channel.send("No me puedo advertir a mi mismo")  
 
     let muterole = bUser.roles.highest
-    if (message.guild.ownerID !== message.author.id) {
+    if (message.guild.ownerId !== message.author.id) {
 
     if (message.member.roles.highest.comparePositionTo(muterole) < 1) {
     return message.channel.send("Tus roles no son lo suficientemente altos para advertir a este usuario");
