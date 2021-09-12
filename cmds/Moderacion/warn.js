@@ -26,7 +26,7 @@ const {search, createGuild, getUser, perms } = require('./models/functions');
            }
         }
     if (!bUser) return message.channel.send("Ese no parece ser un usuario valido")
-    if (!message.guild.members.cache.get(bUser)) return message.channel.send("Ese no parece ser un usuario valido")
+    if (!message.guild.members.cache.get(bUser?.id)) return message.channel.send("Ese no parece ser un usuario valido")
 
     let bReason = args.slice(1).join(" ");
     if(!bReason) bReason = "No se específico una razón"
