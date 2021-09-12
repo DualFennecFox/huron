@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { getUser } = require('./models/functions')
+const { getUser, perms } = require('./models/functions')
 
     module.exports = {
     name : 'ban',
@@ -9,7 +9,7 @@ const { getUser } = require('./models/functions')
     examples: ['!ban @Firulais', '!ban 556540723235651584', '!ban @Firulais Razon'],
     run: async (client , message, args, prefix, contentPrefix) => {
 
-        if(!message.member.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando!");
+        if(!message.member.permissions.has(perms.ban_members || perms.administrator)) return message.channel.send("No tienes permisos para usar este comando!");
         if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o darme su id")
         let User = message.mentions.users.first() || client.users.cache.get(args[0])
         if (contentPrefix !== prefix) User = getUser(args[0], client)
@@ -24,7 +24,7 @@ const { getUser } = require('./models/functions')
         if (!User) return message.channel.send("Ese no parece ser un usuario valido");
         let bReason = `[${message.author.tag}]: ${args.slice(1).join(" ") || "No se específico una Razón"}`;
         try {
-        let bans = await message.guild.fetchBans();
+        let bans = await message.guild.bans.fetch();
     
         let bannedMember = bans.find(user => user.user.id === User.id)
     
@@ -36,13 +36,13 @@ const { getUser } = require('./models/functions')
 
         if (User.id === message.author.id) return message.channel.send("No te puedes banear a ti mismo")
         if (User.id === client.user.id) return message.channel.send("No puedo banearme a mi mismo")
-        if(!message.guild.me.hasPermission(["BAN_MEMBERS" || "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para Banear miembros");
+        if(!message.guild.me.permissions.has(perms.ban_members || perms.administrator)) return message.channel.send("No tengo permisos para Banear miembros");
 
     let bUser
-    if (message.guild.member(User)) {
-    bUser = message.guild.member(User)
+    if (message.guild.members.cache.get(User?.id)) {
+    bUser = message.guild.members.cache.get(User?.id)
     let role = bUser.roles.highest;
-    if(bUser.hasPermission("BAN_MEMBERS" || "ADMINISTRATOR")) return message.channel.send("Esta persona no puede ser baneada!");
+    if(bUser.permissions.has(perms.ban_members || perms.administrator)) return message.channel.send("Esta persona no puede ser baneada!");
 
     if (message.guild.me.roles.highest.comparePositionTo(role) < 1) {
         return message.channel.send("Mi rol es muy bajo para banearlo!");
@@ -62,7 +62,7 @@ const { getUser } = require('./models/functions')
         return message.channel.send("Se ha ocurrido un error al banear a este usuario")
     }
 
-    message.channel.send( banEmbed )
+    message.channel.send({ embeds: [banEmbed] })
     .catch(err => {
         console.log(err);
     })
