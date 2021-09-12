@@ -12,7 +12,7 @@ const {search, searchNumber, getUser } = require('./models/functions');
     if (!message.member.permissions.has("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS")) return message.channel.send("No tienes permisos para usar este comando!");
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o remover todas las infracciones con \"all\"")
 
-    let bUser = mmessage.mentions.members.first() || message.guild.members.cache.get(args[0])
+    let bUser = message.mentions.members.first() || message.guild.members.cache.get(args[0])
     if (contentPrefix !== prefix) bUser = message.guild.members.cache.get(getUser(args[0], client))
     
     let bReason = args.slice(1).join(" ");
