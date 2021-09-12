@@ -4,7 +4,7 @@ const { checkDays, changeRole } = require('../cmds/Moderacion/models/functions')
 
 module.exports = async role => {
     let perms = []
-    let client = role.client
+
     Guild.findOne({ guildID: role.guild.id }).then(doc => {
         if (!doc) return
         if (doc.log.roleDelete == true) {

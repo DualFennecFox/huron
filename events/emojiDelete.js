@@ -2,7 +2,7 @@ const Discord = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async emoji => {
-    let client = emoji.client
+
     Guild.findOne({ guildID: emoji.guild.id }).then(doc => {
       if (!doc) return
       if (doc.log.emojiDelete == true) {

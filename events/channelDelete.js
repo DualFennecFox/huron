@@ -3,7 +3,6 @@ const Guild = require('../cmds/Moderacion/models/Guild')
 const { checkDays } = require('../cmds/Moderacion/models/functions')
 
 module.exports = async channel => {
-    let client = channel.client
     if (channel.type === "dm") return
   Guild.findOne({ guildID: channel.guild.id }).then(doc => {
   if (!doc) return

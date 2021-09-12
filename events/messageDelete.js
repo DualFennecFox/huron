@@ -3,7 +3,7 @@ const Guild = require('../cmds/Moderacion/models/Guild')
 const { checkDays } = require('../cmds/Moderacion/models/functions')
 
 module.exports = async message => {
-        let client = message.client
+    
         Guild.findOne({ guildID: message.guild.id }).then(doc => {
             if (!doc) return
             if (doc.log.messageDelete == true) {

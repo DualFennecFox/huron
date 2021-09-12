@@ -2,7 +2,7 @@ const Discord = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async channel => {
-  let client = channel.client
+
   if (channel.type === "dm") return
   Guild.findOne({ guildID: channel.guild.id }).then(doc => {
     if (!doc) return

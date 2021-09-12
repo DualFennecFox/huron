@@ -2,7 +2,6 @@ const Discord = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async (oldMessage, newMessage) => {
-    let client = newMessage.client
 
     Guild.findOne({ guildID: newMessage.guild.id }).then(doc => {
         if (!doc) return

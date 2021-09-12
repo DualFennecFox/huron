@@ -2,7 +2,7 @@ const Discord = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async (oldMember, newMember) => {
-    let client = newMember.client
+
     Guild.findOne({ guildID: newMember.guild.id }).then(doc => {
     if (!doc) return
     if (doc.log.MemberUpdate == true) {

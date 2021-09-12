@@ -3,7 +3,6 @@ const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async role => {
     
-    let client = role.client
     Guild.findOne({ guildID: role.guild.id }).then(doc => {
         if (!doc) return
         if (doc.log.roleCreate == true) {
