@@ -26,7 +26,7 @@ module.exports = async (guild, user) => {
         .addField("Creado", checkDays(user.createdAt))
         .addField("Razón", ban.reason || "No se ha proporcionado una Razón")
   
-        Channel.send({ embed })
+        Channel.send({ embeds: [embed] })
   }
     }).catch(err => {
       console.error(err)

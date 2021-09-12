@@ -1,4 +1,7 @@
 const Discord = require('discord.js')
+const { joinVoiceChannel, createAudioPlayer, createAudioResource, entersState, 
+StreamType, AudioPlayerStatus, VoiceConnectionStatus, } = require('@discordjs/voice')
+
 const musicData = require('./musicData')
 const ytdl = require('ytdl-core')
 
@@ -13,7 +16,7 @@ const ytdl = require('ytdl-core')
         awaiting: false,
         lastEmbed: null
     }  
-    message.member.voice.channel
+     joinVoiceChannel({ channelId: message.member.voice.channel })
     .join()
     .then(async connection => {
 
