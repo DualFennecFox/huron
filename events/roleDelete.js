@@ -14,15 +14,17 @@ module.exports = async role => {
           if (!Channel.permissionsFor(role.guild.me).has("SEND_MESSAGES")) return
 
           for (const perm of role.permissions.toArray()) {
+                if (changeRole[perm]) {
                 let rol = changeRole[perm]
                 perms.push(rol)
+                }
             }
 
           const embed = new Discord.MessageEmbed()
           .setAuthor("Rol Eliminado", role.guild.iconURL())
           .setColor("#FF0000")
           .setFooter(`${role.name} | ${role.id}`)
-          .setDescription(`${role.name} \n\n**Posición:** ${role.rawPosition}\n**Creado:**${checkDays(role.createdAt)}\n**Permisos:** ${perms.map(r => r).join(", ")}`)
+          .setDescription(`${role.name} \n\n**Posición:** ${role.rawPosition}\n**Creado:**${checkDays(role.createdAt)}\n**Permisos:** ${perms.join(", ")}`)
           
           Channel.send({ embeds: [embed] })
         }
