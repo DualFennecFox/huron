@@ -53,7 +53,7 @@ module.exports = async channel => {
 
       if (channel.permissionOverwrites) {
         perm = true
-        for (const perm of channel.permissionOverwrites.values()) {
+        for (const perm of channel.permissionOverwrites.cache.values()) {
 
           if (perm.type === "member") {
             user = true
