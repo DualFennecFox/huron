@@ -57,22 +57,22 @@ module.exports = async channel => {
 
           if (perm.type === "member") {
             user = true
-          if (perm.allow.toArray().length >= 1) {
+          if ([...perm.allow].length >= 1) {
           allowedUser = true
           overwritesAllowedUser.push(`<@!${perm.id}>: ${perm.allow.toArray().join(", ")}`)
           }
-          if (perm.deny.toArray().length >= 1) {
+          if ([...perm.deny].length >= 1) {
           denyUser = true
           overwritesDenyUser.push(`<@!${perm.id}>: ${perm.deny.toArray().join(", ")}`)
           }
           }
           if (perm.type === "role") {
             role = true
-            if (perm.allow.toArray().length >= 1) {
+            if ([...perm.allow].length >= 1) {
             allowedrole = true
             overwritesAllowedRole.push(`<@&${perm.id}>: ${perm.allow.toArray().join(", ")}`)
             }
-            if (perm.deny.toArray().length >= 1) {
+            if ([...perm.deny].length >= 1) {
             denyRole = true
             overwritesDenyRole.push(`<@&${perm.id}>: ${perm.deny.toArray().join(", ")}`)
             }
