@@ -3,7 +3,7 @@ const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async (oldGuild, newGuild) => {
     let client = newGuild.client
-    Guild.findOne({ guildID: newGuild.id }).then(doc => {
+    Guild.findOne({ guildID: newGuild.id }).then(async doc => {
     if (!doc) return
     if (doc.log.guildUpdate == true) {
       if (!doc.LogChannel) return
@@ -25,9 +25,6 @@ module.exports = async (oldGuild, newGuild) => {
         name = true
     }
 
-    if (oldGuild.region != newGuild.region) {
-        region = true
-    }
     if (oldGuild.iconURL() != newGuild.iconURL()) {
         icon = true
     }
@@ -52,25 +49,8 @@ module.exports = async (oldGuild, newGuild) => {
       iconURL = newGuild.iconURL()
     }
   
-    if (name == false && region == false && icon == false && afk == false && afkTime == false && verification == false && owner == false) return
+    if (name == false && icon == false && afk == false && afkTime == false && verification == false && owner == false) return
   
-    let regionChange = {
-        "brazil": ":flag_br: Brazil",
-        "eu-central": ":flag_eu: Central Europe",
-        "singapore": ":flag_sg: Singapore",
-        "us-central": ":flag_us: U.S. Central",
-        "sydney": ":flag_au: Sydney",
-        "us-east": ":flag_us: U.S. East",
-        "us-south": ":flag_us: U.S. South",
-        "us-west": ":flag_us: U.S. West",
-        "eu-west": ":flag_eu: Western Europe",
-        "vip-us-east": ":flag_us: VIP U.S. East",
-        "london": ":flag_gb: London",
-        "amsterdam": ":flag_nl: Amsterdam",
-        "hongkong": ":flag_hk: Hong Kong",
-        "russia": ":flag_ru: Russia",
-        "southafrica": ":flag_za:  South Africa"
-    };
     let verifLevels = {
         "NONE": "No Hay",
         "LOW": "Bajo",
@@ -84,12 +64,11 @@ module.exports = async (oldGuild, newGuild) => {
     .setFooter(`${newGuild.name} | ${newGuild.id}`)
     .setColor("#FF0000")
     if (name == true) embed.addField("Nombre Antes | Después", `${oldGuild.name} | ${newGuild.name}`)
-    if (region == true) embed.addField("Región Actualizada", `**De:** ${region[oldGuild.region]}\n**A:** ${regionChange[newGuild.region]}`)
     if (icon == true) embed.addField("Icono Actualizado",`[Antes](${oldGuild.iconURL()}) | [Después](${newGuild.iconURL()})`)
     if (afk == true) embed.addField("Canal AFK Actualizado", `**De: ${oldGuild.name} | ${oldGuild.id}\n**A:** ${newGuild.name} | ${newGuild.id}`)
     if (afkTime == true) embed.addField("Tiempo AFK Actualizado", `**De:** ${oldGuild.afkTimeout}\n**A:** ${newGuild.afkTimeout}`)
     if (verification == true) embed.addField("Verificación Actualizada", `**De:** ${verifLevels[oldGuild.verificationLevel]}\n**A:** ${verifLevels[newGuild.verificationLevel]}`)
-    if (owner == true) embed.addField("Nuevo Dueño", `**De:** <@!${oldGuild.ownerID}>\n**A:** <@!${newGuild.ownerID}>`)
+    if (owner == true) embed.addField("Nuevo Dueño", `**De:** <@!${oldGuild.ownerId}>\n**A:** <@!${newGuild.ownerId}>`)
 
     Channel.send({ embed })
   }

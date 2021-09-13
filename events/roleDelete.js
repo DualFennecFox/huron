@@ -5,7 +5,7 @@ const { checkDays, changeRole } = require('../cmds/Moderacion/models/functions')
 module.exports = async role => {
     let perms = []
 
-    Guild.findOne({ guildID: role.guild.id }).then(doc => {
+    Guild.findOne({ guildID: role.guild.id }).then(async doc => {
         if (!doc) return
         if (doc.log.roleDelete == true) {
           if (!doc.LogChannel) return
@@ -24,7 +24,7 @@ module.exports = async role => {
           .setFooter(`${role.name} | ${role.id}`)
           .setDescription(`${role.name} \n\n**Posición:** ${role.rawPosition}\n**Creado:**${checkDays(role.createdAt)}\n**Permisos:** ${perms.join(", ")}`)
           
-          Channel.send({ embed })
+          Channel.send({ embeds: [embed] })
         }
 }).catch(err => {
     console.error(err)

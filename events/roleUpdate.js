@@ -75,7 +75,7 @@ module.exports = async (oldRole, newRole) => {
         if (mentionable == true) embed.addField("Mencionable", `**${boolean[newRole.mentionable]}**`)
         if (hoist == true) embed.addField("Mostrar Separado", `**${boolean[newRole.hoist]}**`)
     
-        Channel.send({ embed }) 
+        Channel.send({ embeds: [embed] }) 
     }
 }).catch(err => {
     console.error(err)

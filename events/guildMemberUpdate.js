@@ -3,7 +3,7 @@ const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async (oldMember, newMember) => {
 
-    Guild.findOne({ guildID: newMember.guild.id }).then(doc => {
+    Guild.findOne({ guildID: newMember.guild.id }).then(async doc => {
     if (!doc) return
     if (doc.log.MemberUpdate == true) {
       if (!doc.LogChannel) return
@@ -17,14 +17,14 @@ module.exports = async (oldMember, newMember) => {
     let getRemovedRole;
     let nickname = false
   
-    for (const role of newMember.roles.cache.map(x => x.id)) {
+    for (const role of newMember.roles.cache.map(x => x?.id)) {
       if (!oldMember.roles.cache.has(role)) {
           newRole = true
           getNewRole = newMember.guild.roles.cache.get(role)
       }
   }
   
-  for (const role of oldMember.roles.cache.map(x => x.id)) {
+  for (const role of oldMember.roles.cache.map(x => x?.id)) {
     if (!newMember.roles.cache.has(role)) {
         removeRole = true
         getRemovedRole = newMember.guild.roles.cache.get(role)
@@ -45,7 +45,7 @@ module.exports = async (oldMember, newMember) => {
     if (removeRole == true) embed.addField("Rol Removido",`<@&${getRemovedRole.id}>`)
     if (nickname == true) embed.addField("Apodo Antes | Después", `${oldMember.displayName} | ${newMember.displayName}`)
   
-    Channel.send({ embed })
+    Channel.send({ embeds: [embed] })
   }
   }).catch(err => {
     console.error(err)

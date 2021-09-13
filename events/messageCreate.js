@@ -4,13 +4,7 @@ module.exports = async message => {
   let client = message.client
   if (message.author.bot) return;
   
-    if (message.channel.type === "dm") {
-      if (!message.content.startsWith("h!confess")) return
-
-        let arg = message.content.slice("h!confess".length).trim().split(/ +/g);
-        return client.commands.get("confess").run(client, message, arg, 'h!')
-        
-    }
+    if (message.channel.type === "dm") return
       
     if (!message.channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return
 
@@ -18,10 +12,10 @@ module.exports = async message => {
       let prefixes;
       let contentPrefix;
       let prefix;
-      const token = process.env.TOKEN
+
       const owner = process.env.OWNER
       
-      Guild.findOne({ guildID: message.guild.id }).then((result) => {
+      Guild.findOne({ guildID: message.guild.id }).then(async result => {
        if (result) {
          prefixes = [result.prefix, `<@${client.user.id}>`, `<@!${client.user.id}>`]
          prefix = result.prefix
@@ -30,7 +24,6 @@ module.exports = async message => {
          prefixes = ["!", `<@${client.user.id}>`, `<@!${client.user.id}>`]
          prefix = "!"
        } 
-       }).then(() => {
       
       for (const thePrefix of prefixes) {
         if (message.content.startsWith(thePrefix)) contentPrefix = thePrefix
@@ -42,16 +35,16 @@ module.exports = async message => {
       let command;
   
       if (message.content === "Reset Status") {
-        if (message.author.id !== owner) return
+        if (message.author.id != owner) return
         
         const scount = client.guilds.cache.size
         client.user.setPresence({
           status: "online",
-          activity: {
+          activities: [{
               name: `Estoy en ${scount} Servidores!`,
               type: "WATCHING",
               url: "https://www.twitch.tv/unfirulais"
-          }
+          }]
       }); 
       }
       if (message.content === `<@${client.user.id}>` || message.content === `<@!${client.user.id}>`) {
@@ -68,13 +61,11 @@ module.exports = async message => {
        }
          if (command) {
           if (command.category === "owner" && message.author.id !== process.env.OWNER) return
-      try {
+
            command.run(client, message, args, prefix, contentPrefix);
-      } catch (err) {
-      console.log(err)
-      }
          }
-    }).catch(err => {
-      console.error(err)
-    })
-     }
+         }).catch(err => {
+
+          console.error(err)
+         })
+         }

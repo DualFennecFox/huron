@@ -3,7 +3,7 @@ const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async (oldMessage, newMessage) => {
 
-    Guild.findOne({ guildID: newMessage.guild.id }).then(doc => {
+    Guild.findOne({ guildID: newMessage.guild.id }).then(async doc => {
         if (!doc) return
         if (doc.log.messageUpdate == true) {
           if (!doc.LogChannel) return
@@ -25,7 +25,7 @@ module.exports = async (oldMessage, newMessage) => {
     .setDescription(`**De:** <@!${newMessage.author.id}>\n\n**Antes:** ${oldMessage.content}\n**Después:** ${newMessage.content}`)
     .setFooter(`${newMessage.author.tag} | ${newMessage.author.id}`)
 
-    Channel.send({ embed })
+    Channel.send({ embeds: [embed] })
 }
 }).catch(err => {
     console.error(err)

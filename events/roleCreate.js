@@ -3,7 +3,7 @@ const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async role => {
     
-    Guild.findOne({ guildID: role.guild.id }).then(doc => {
+    Guild.findOne({ guildID: role.guild.id }).then(async doc => {
         if (!doc) return
         if (doc.log.roleCreate == true) {
           if (!doc.LogChannel) return
@@ -21,7 +21,7 @@ module.exports = async role => {
           .setFooter(`${role.name} | ${role.id}`)
           .setDescription(`<@&${role.id}> \n\n**Color:** ${role.hexColor}\n**Mencionable:** ${boolean[role.mentionable]}\n**Mostrar Separado:** ${boolean[role.hoist]}`)
 
-          Channel.send({ embed })
+          Channel.send({ embeds: [embed] })
         }
 }).catch(err => {
     console.error(err)

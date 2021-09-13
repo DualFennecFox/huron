@@ -13,12 +13,13 @@ module.exports = async channel => {
     if (!Channel.permissionsFor(channel.guild.me).has(perms.send_messages)) return
 
     let type = {
-      "category": "Categoría",
-      "text": "Texto",
-      "voice": "Voz",
-      "news": "Noticias",
-      "store": "Tienda",
-      "unknown": "Desconocido"
+      "GUILD_CATEGORY": "Categoría",
+      "GUILD_TEXT": "Texto",
+      "GUILD_VOICE": "Voz",
+      "GUILD_NEWS": "Noticias",
+      "GUILD_STORE": "Tienda",
+      "GUILD_STAGE_VOICE": "Escenario",
+      "UNKNOWN": "Desconocido"
     }
     
     const embed = new Discord.MessageEmbed()

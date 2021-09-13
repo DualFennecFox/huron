@@ -7,11 +7,11 @@ module.exports = async member => {
     Guild.findOne({ guildID: member.guild.id }).then(async doc => {
         if (!doc) return
         if (doc.muteUsers) {
-          if (doc.muteUsers.includes(member.id) && member.guild.me.hasPermission("MANAGE_ROLES")) {
+          if (doc.muteUsers.includes(member.id) && member.guild.me.permissions.has("MANAGE_ROLES")) {
             
             let role = member.guild.roles.cache.get(doc.muterole)
             if (role) {
-            member.roles.add(role.id)
+            member.roles.add(role?.id)
             }
           }
         }
@@ -39,7 +39,7 @@ module.exports = async member => {
         .addField("Creado", checkDays(member.user.createdAt))
         .setFooter(`${member.user.username} | ${member.user.id}`);
       
-        Channel.send({ embed })
+        Channel.send({ embeds: [embed] })
       }
       }).catch(err => {
         console.error(err)
