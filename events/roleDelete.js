@@ -13,7 +13,7 @@ module.exports = async role => {
           if (!Channel) return
           if (!Channel.permissionsFor(role.guild.me).has("SEND_MESSAGES")) return
 
-          for (const perm of [...role.permissions.values()]) {
+          for (const perm of role.permissions.toArray()) {
                 let rol = changeRole[perm]
                 perms.push(rol)
             }
@@ -22,7 +22,7 @@ module.exports = async role => {
           .setAuthor("Rol Eliminado", role.guild.iconURL())
           .setColor("#FF0000")
           .setFooter(`${role.name} | ${role.id}`)
-          .setDescription(`${role.name} \n\n**Posición:** ${role.rawPosition}\n**Creado:**${checkDays(role.createdAt)}\n**Permisos:** ${perms.join(", ")}`)
+          .setDescription(`${role.name} \n\n**Posición:** ${role.rawPosition}\n**Creado:**${checkDays(role.createdAt)}\n**Permisos:** ${perms.map(r => r).join(", ")}`)
           
           Channel.send({ embeds: [embed] })
         }
