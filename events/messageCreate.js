@@ -42,10 +42,10 @@ module.exports = async message => {
           status: "online",
           activities: [{
               name: `Estoy en ${scount} Servidores!`,
-              type: "WATCHING",
-              url: "https://www.twitch.tv/unfirulais"
+              type: "PLAYING",
+              url: "https://trovo.live/DualFennecFox"
           }]
-      }); 
+      });  
       }
       if (message.content === `<@${client.user.id}>` || message.content === `<@!${client.user.id}>`) {
        message.channel.send(`Mi prefix en este server es ${prefix} o una mención, si es la primera vez que me usa escriba ${prefix}help.`)
