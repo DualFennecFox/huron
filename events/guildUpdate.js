@@ -29,7 +29,7 @@ module.exports = async (oldGuild, newGuild) => {
         icon = true
     }
   
-    if (oldGuild.afkChannel.id != newGuild.afkChannel.id) {
+    if (oldGuild.afkChannel?.id != newGuild.afkChannel?.id) {
       afk = true
     }
     if (oldGuild.afkTimeout != newGuild.afkTimeout) {
@@ -39,7 +39,7 @@ module.exports = async (oldGuild, newGuild) => {
     if (oldGuild.verificationLevel != newGuild.verificationLevel) {
         verification = true
     }
-    if (oldGuild.ownerID != newGuild.ownerID) {
+    if (oldGuild.ownerId != newGuild.ownerId) {
         owner = true
     }
   
@@ -70,7 +70,7 @@ module.exports = async (oldGuild, newGuild) => {
     if (verification == true) embed.addField("Verificación Actualizada", `**De:** ${verifLevels[oldGuild.verificationLevel]}\n**A:** ${verifLevels[newGuild.verificationLevel]}`)
     if (owner == true) embed.addField("Nuevo Dueño", `**De:** <@!${oldGuild.ownerId}>\n**A:** <@!${newGuild.ownerId}>`)
 
-    Channel.send({ embed })
+    Channel.send({ embeds: [embed] })
   }
   }).catch(err => {
     console.error(err)
