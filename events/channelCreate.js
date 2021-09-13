@@ -59,22 +59,22 @@ module.exports = async channel => {
             user = true
           if ([...perm.allow].length >= 1) {
           allowedUser = true
-          overwritesAllowedUser.push(`<@!${perm.id}>: ${perm.allow.toArray().join(", ")}`)
+          overwritesAllowedUser.push(`<@!${perm.id}>: ${[...perm.allow].join(", ")}`)
           }
           if ([...perm.deny].length >= 1) {
           denyUser = true
-          overwritesDenyUser.push(`<@!${perm.id}>: ${perm.deny.toArray().join(", ")}`)
+          overwritesDenyUser.push(`<@!${perm.id}>: ${[...perm.deny].join(", ")}`)
           }
           }
           if (perm.type === "role") {
             role = true
             if ([...perm.allow].length >= 1) {
             allowedrole = true
-            overwritesAllowedRole.push(`<@&${perm.id}>: ${perm.allow.toArray().join(", ")}`)
+            overwritesAllowedRole.push(`<@&${perm.id}>: ${[...perm.allow].join(", ")}`)
             }
             if ([...perm.deny].length >= 1) {
             denyRole = true
-            overwritesDenyRole.push(`<@&${perm.id}>: ${perm.deny.toArray().join(", ")}`)
+            overwritesDenyRole.push(`<@&${perm.id}>: ${[...perm.deny].join(", ")}`)
             }
           }
         }
@@ -126,38 +126,14 @@ module.exports = async channel => {
       .replace(/MANAGE_WEBHOOKS/g, "Gestionar webhooks")
       .replace(/MANAGE_EMOJIS/g, "Gestionar emojis");
 
-      if (perm == true && overwritesAllowedRole) AllowR = overwritesAllowedRole.map(r => r).join("\n\n")
-      .replace(/ADMINISTRATOR/g, "Administrador")
-      .replace(/CREATE_INSTANT_INVITE/g, "Crear Invitación")
-      .replace(/KICK_MEMBERS/g, "Expulsar miembros")
-      .replace(/BAN_MEMBERS/g, "Banear Miembros")
-      .replace(/MANAGE_CHANNELS/g, "Gestionar Canales")
-      .replace(/MANAGE_GUILD/g, "Gestionar Servidor")
-      .replace(/ADD_REACTIONS/g, "Añadir reacciones")
-      .replace(/VIEW_AUDIT_LOG/g, "Ver el registro de auditoría")
-      .replace(/PRIORITY_SPEAKER/g, "Prioridad de palabra")
-      .replace(/STREAM/g, "Video")
-      .replace(/VIEW_CHANNEL/g, "Leer canales de texto y canales de voz")
-      .replace(/SEND_MESSAGES/g, "Enviar mensajes")
-      .replace(/SEND_TTS_MESSAGES/g, "Enviar mensajes de texto a voz")
-      .replace(/MANAGE_MESSAGES/g, "Gestionar mensajes")
-      .replace(/EMBED_LINKS/g, "Insertar enlaces")
-      .replace(/ATTACH_FILES/g, "Adjuntar archivos")
-      .replace(/READ_MESSAGE_HISTORY/g, "Leer el historial de mensajes")
-      .replace(/MENTION_EVERYONE/g, "Mencionar \@everyone, \@here y todos los roles")
-      .replace(/USE_EXTERNAL_EMOJIS/g, "Usar emojis externos")
-      .replace(/VIEW_GUILD_INSIGHTS/g, "Ver información del servidor")
-      .replace(/CONNECT/g, "Conectar")
-      .replace(/SPEAK/g, "Hablar")
-      .replace(/MUTE_MEMBERS/g, "Silenciar miembros")
-      .replace(/DEAFEN_MEMBERS/g, "Ensordecer Miembros")
-      .replace(/MOVE_MEMBERS/g, "Mover miembros")
-      .replace(/USE_VAD/g, "Usar Actividad de voz")
-      .replace(/CHANGE_NICKNAME/g, "Cambiar apodo")
-      .replace(/MANAGE_NICKNAMES/g, "Gestionar apodos")
-      .replace(/MANAGE_ROLES/g, "Gestionar roles")
-      .replace(/MANAGE_WEBHOOKS/g, "Gestionar webhooks")
-      .replace(/MANAGE_EMOJIS/g, "Gestionar emojis");
+      if (perm == true && overwritesAllowedRole) {
+
+        for (i = 0; i < overwritesAllowedRole.length; i++) {
+
+          AllowR = overwritesAllowedRole.map(r => changePerm[overwritesAllowedRole[i]]).join("\n\n")
+          
+        }
+      }
       
       if (perm == true && overwritesDenyRole) DenyR = overwritesDenyRole.map(r => r).join("\n\n")
       .replace(/ADMINISTRATOR/g, "Administrador")
