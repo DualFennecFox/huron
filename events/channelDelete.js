@@ -1,16 +1,16 @@
 const Discord = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
-const { checkDays } = require('../cmds/Moderacion/models/functions')
+const { checkDays, perms } = require('../cmds/Moderacion/models/functions')
 
 module.exports = async channel => {
     if (channel.type === "dm") return
-  Guild.findOne({ guildID: channel.guild.id }).then(doc => {
+  Guild.findOne({ guildID: channel.guild.id }).then(async doc => {
   if (!doc) return
   if (doc.log.channelDelete == true) {
     if (!doc.LogChannel) return
     let Channel = channel.guild.channels.cache.get(doc.LogChannel)
     if (!Channel) return
-    if (!Channel.permissionsFor(channel.guild.me).has("SEND_MESSAGES")) return
+    if (!Channel.permissionsFor(channel.guild.me).has(perms.send_messages)) return
 
     let type = {
       "category": "Categoría",
@@ -29,7 +29,7 @@ module.exports = async channel => {
       .addField("Tipo de canal", type[channel.type])
       .setFooter(`${channel.name} | ${channel.id}`);
 
-  Channel.send({ embed })
+  Channel.send({ embeds: [embed] })
   }
   }).catch(err => {
     console.error(err)

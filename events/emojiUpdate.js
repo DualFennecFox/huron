@@ -1,15 +1,16 @@
 const Discord = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
+const { perms } = require('../cmds/Moderacion/models/functions')
 
 module.exports = async (oldEmoji, newEmoji) => {
 
-    Guild.findOne({ guildID: newEmoji.guild.id }).then(doc => {
+    Guild.findOne({ guildID: newEmoji.guild.id }).then(async doc => {
       if (!doc) return
       if (doc.log.emojiUpdate == true) {
         if (!doc.LogChannel) return
         let Channel = newEmoji.guild.channels.cache.get(doc.LogChannel)
         if (!Channel) return
-        if (!Channel.permissionsFor(newEmoji.guild.me).has("SEND_MESSAGES")) return
+        if (!Channel.permissionsFor(newEmoji.guild.me).has(perms.send_messages)) return
         
         if (oldEmoji.name === newEmoji.name) return
         newEmoji.fetchAuthor().then(author => {
@@ -24,7 +25,7 @@ module.exports = async (oldEmoji, newEmoji) => {
         .setThumbnail(animated)
         .setFooter(`Por: ${author.username} | ${author.id}`);
   
-        Channel.send({ embed })
+        Channel.send({ embeds: [embed] })
       }).catch(err => {
         console.error(err)
       })
