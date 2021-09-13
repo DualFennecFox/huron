@@ -4,19 +4,16 @@ const {search, searchNumber, getUser } = require('./models/functions');
     module.exports = {
     name : 'clear-infractions',
     category: "Moderacion",
-    description : 'Este comando borra las infracciones de un usuario mencionado o con su ID, o de todos los miembros si se usa "all"',
+    description : 'Este comando borra cierta cantidad de infracciones de un usuario mencionado o todas ellas, o de todos los miembros si se usa "all"',
     aliases: ['clear-warns', 'clearinfractions', 'clearwarns', 'clear-strikes', 'clearstrikes'],
     usage: '!clear-infractions <Usuario o \"all\"> <Número>',
-    examples: ['!clear-infractions @Wumpus', '!clear-infractions 12345678987654321', '!clear-infractions all'],
+    examples: ['!clear-infractions @Wumpus', '!clear-infractions 12345678987654321 all', '!clear-infractions all 1'],
     run: async (client, message, args, prefix, contentPrefix) => {
     if (!message.member.permissions.has("BAN_MEMBERS" || "ADMINISTRATOR" || "KICK_MEMBERS" || "MANAGE_MEMBERS")) return message.channel.send("No tienes permisos para usar este comando!");
     if (!args.length >= 1) return message.channel.send("Debes mencionar a un usuario o remover todas las infracciones con \"all\"")
 
     let bUser = message.mentions.members.first() || message.guild.members.cache.get(args[0])
     if (contentPrefix !== prefix) bUser = message.guild.members.cache.get(getUser(args[0], client))
-    
-    let bReason = args.slice(1).join(" ");
-    if(!bReason) bReason = "No se específico una razón"
     
     let db = await Guild.findOne({ guildID: message.guild.id })
 
@@ -27,7 +24,7 @@ const {search, searchNumber, getUser } = require('./models/functions');
       if (!doc) return message.channel.send("Ese usuario no tiene advertencias")
       
       let number = searchNumber(bUser.id, db.warns)
-
+      
       if (args[1] === "all") {
      db.warns.splice(number, 1)
      try {
@@ -39,12 +36,15 @@ const {search, searchNumber, getUser } = require('./models/functions');
      }
     }
       else if (parseInt(args[1])) {
-        if (args[1] === "0") return message.channel.send("Debes elegir un número después de 0")
+
+        let num = parseInt(args[1])
+
+        if (num <= 0) return message.channel.send("Debes elegir un número después de 0")
         
         let warned = doc.warnedByID
         let reason = doc.warnReason
         let warnLevel = doc.warnLevel
-        for (let a = 0; a < args[1]; a++) {
+        for (let a = 0; a < num; a++) {
           
           warned.pop()
           reason.pop()
