@@ -37,7 +37,7 @@ module.exports = async channel => {
       if (muterole && channel.guild.me.permissions.has(perms.manage_channels)) {
       try {
         channel.guild.channels.cache.forEach(async (channel, id) => {
-            await channel.createOverwrite(muterole,  {
+            await channel.permissionOverwrites.create(muterole,  {
                 SEND_MESSAGES: false,
                 CREATE_INSTANT_INVITE: false,
                 ADD_REACTIONS: false,
