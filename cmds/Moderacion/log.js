@@ -115,8 +115,8 @@ module.exports = {
                 .setColor("#FFFF00")
                 .setDescription(`Para que funcionen los registros se debe poner un canal con ${prefix}config logchannel enable #Canal-Mencionado, se pueden seleccionar todos los eventos con \"All\"\n\n**Eventos:**\nchannel, channelcreate, channeldelete, channelupdate, emoji, emojicreate, emojidelete, emojiupdate, bans, ban, unban, member, memberadd, memberremove, memberupdate, guildupdate, message, messagedelete, messageupdate, role, rolecreate, roledelete`)
                 embed.addField("Todos",  "Canal Creado\nCanal Eliminado\nEmoji Creado\nEmoji Eliminado\nEmoji Actualizado\nBaneo\nDesbaneo\nNuevo Miembro\nMiembro se va\nMiembro Actualizado\nServidor Actualizado\nMensaje Eliminado\nMensaje Editado\nRol Creado\nRol Eliminado")
-                if (active != undefined) embed.addField("Activados", active.replace("undefined", ""))
-                if (unable != undefined) embed.addField("Desactivados", unable.replace("undefined", ""));
+                if (active != undefined) embed.addField("Activados", active.replace(/undefined/g, ""))
+                if (unable != undefined) embed.addField("Desactivados", unable.replace(/undefined/g, ""));
 
                 message.channel.send({ embeds: [embed] })
                 return

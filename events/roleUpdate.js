@@ -3,7 +3,6 @@ const Guild = require('../cmds/Moderacion/models/Guild')
 const  { changeRole } = require('../cmds/Moderacion/models/functions')
 
 module.exports = async (oldRole, newRole) => {
-    if (newRole.guild.id !== "722921182386716702") return
 
     Guild.findOne({ guildID: newRole.guild.id }).then(async doc => {
         if (!doc) return
