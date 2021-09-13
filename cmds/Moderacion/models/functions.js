@@ -199,7 +199,7 @@ const changeRole = {
   "EMBED_LINKS": "Insertar enlaces",
   "ATTACH_FILES": "Adjuntar archivos",
   "READ_MESSAGE_HISTORY": "Leer el historial de mensajes",
-  "MENTION_EVERYONE": "Mencionar \@everyone, \@here y todos los roles",
+  "MENTION_EVERYONE": "Mencionar @\u200beveryone, @\u200bhere y todos los roles",
   "USE_EXTERNAL_EMOJIS": "Usar emojis externos",
   "VIEW_GUILD_INSIGHTS": "Ver información del servidor",
   "CONNECT": "Conectar",
@@ -299,7 +299,7 @@ function getUser(mention, client) {
   if (!mention) return;
   
     mention = mention.replace(/([^0-9])/g, '')
-  
+
 		return client.users.cache.get(mention?.id);
   }
 

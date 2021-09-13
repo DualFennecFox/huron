@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async (oldMessage, newMessage) => {
+    let client = newMessage.client
 
     Guild.findOne({ guildID: newMessage.guild.id }).then(async doc => {
         if (!doc) return
@@ -10,6 +11,7 @@ module.exports = async (oldMessage, newMessage) => {
           let Channel = newMessage.guild.channels.cache.get(doc.LogChannel)
           if (!Channel) return
           if (!Channel.permissionsFor(newMessage.guild.me).has("SEND_MESSAGES")) return
+          if (newMessage.author.id === client.user.id) return
 
     let content = false
 

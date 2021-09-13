@@ -3,6 +3,7 @@ const Guild = require('../cmds/Moderacion/models/Guild')
 const { checkDays } = require('../cmds/Moderacion/models/functions')
 
 module.exports = async message => {
+    let client = message.client
     
         Guild.findOne({ guildID: message.guild.id }).then(async doc => {
             if (!doc) return
@@ -11,6 +12,7 @@ module.exports = async message => {
                 let Channel = message.guild.channels.cache.get(doc.LogChannel)
                 if (!Channel) return
                 if (!Channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return
+                if (message.author.id === client.user.id) return
             
             let msg = message.content
 
