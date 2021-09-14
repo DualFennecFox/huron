@@ -10,7 +10,7 @@ module.exports = {
 
         if (method === "enable") {
             if (!args[2]) return message.channel.send(`Menciona un rol, su ID o crea uno especificandolo`)
-            if (!message.guild.me.hasPermission("MANAGE_ROLES", "MANAGE_CHANNELS")) return message.channel.send("No tengo permisos para Gestionar Roles o Gestionar Canales!")
+            if (!message.guild.me.permissions.has("MANAGE_ROLES", "MANAGE_CHANNELS")) return message.channel.send("No tengo permisos para Gestionar Roles o Gestionar Canales!")
 
 
                 let mRole = message.mentions.roles.first() || message.guild.roles.cache.get(args[2])
