@@ -9,14 +9,14 @@ module.exports = {
         examples: ['!suggestion Pongan al Bot de Wumpus'],
         run: async (client , message, args) => {
 
-            if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando!")
+            if (!message.member.permissions.has("MANAGE_GUILD" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando!")
 
             if (!args[0]) return message.channel.send("Debes especificar si aprobar, denegar o resetear las sugerencias")
 
             switch (args[0].toLowerCase()) {
             case "approve":
                 if (!args[1]) return message.channel.send("Debes especificar un mensaje")
-                if (!message.member.hasPermission("MANAGE_GUILD" || "MANAGE_MEMBERS"|| "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando")
+                if (!message.member.permissions.has("MANAGE_GUILD" || "MANAGE_MEMBERS"|| "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando")
                 
                 Guild.findOne({ guildID: message.guild.id }).then(async doc => {
     
@@ -51,7 +51,7 @@ module.exports = {
     
                     if (!args[2]) return message.channel.send("Debes especificar una razón")
                     let reason = args.slice(2).join(" ")
-                    msg.edit(msg.embeds[0].addField("Aprobada", reason).setColor("#7BFFCF"))
+                    msg.edit({ embeds: [msg.embeds[0].addField("Aprobada", reason).setColor("#7BFFCF")] })
     
                     return message.channel.send("Se ha aprobado la sugerencia")
                 }).catch(err => {
@@ -62,7 +62,7 @@ module.exports = {
                 case "deny":
                     
             if (!args[1]) return message.channel.send("Debes especificar un mensaje")
-            if (!message.member.hasPermission("MANAGE_GUILD" || "MANAGE_MEMBERS"|| "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando")
+            if (!message.member.permissions.has("MANAGE_GUILD" || "MANAGE_MEMBERS"|| "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando")
 
             Guild.findOne({ guildID: message.guild.id }).then(async doc => {
 
@@ -98,7 +98,7 @@ module.exports = {
                 if (!args[2]) return message.channel.send("Debes especificar una razón")
                 let reason = args.slice(2).join(" ")
                 
-                msg.edit(msg.embeds[0].addField("Denegada", reason).setColor("#FF7B7B"))
+                msg.edit({ embeds: [msg.embeds[0].addField("Denegada", reason).setColor("#FF7B7B")] })
 
                 return message.channel.send("Se ha denegado la sugerencia")
             }).catch(err => {

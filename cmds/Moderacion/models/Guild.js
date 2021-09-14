@@ -57,7 +57,5 @@ const guildSchema = mongoose.Schema({
     suggestionLevel: Number,
     confessionChannel: String,
     confessionLevel: Number,
-    allyRole: String,
-    allyModRole: String
   })
   module.exports = mongoose.model("Guild", guildSchema)

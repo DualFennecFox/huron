@@ -25,8 +25,6 @@ module.exports = {
                 .addField("MuteRole", `Para que funcione el mute se debe configurar un rol Muteado con este comando, se puede crear uno eligiendo un nombre y un color.\n**Uso:** ${prefix}config muterole <enable o disable> <Rol, ID o Nombre> [Color si se crea]\n**Configuración:** ${message.guild.roles.cache.get(settings.muterole) || "Ninguno"}`)
                 .addField("Suggestion", `Establece un canal de sugerencias\n**Uso:** ${prefix}config suggestion <enable o disable> <Canal>\n**Configuración:** ${message.guild.channels.cache.get(settings.suggestionChannel) || "Ninguno"}`)
                 .addField("LogChannel", `Establece un canal para logear con su mención o ID\n**Uso:** ${prefix}config logchannel <enable o disable> <Canal>\n**Configuración:** ${message.guild.channels.cache.get(settings.LogChannel) || "Ninguno"}`)
-                .addField("AllyRole", `Añade un rol de miembros aliados en el servidor\n**Uso:** ${prefix}config allyrole <enable o disable> <Rol>\n**Configuración:** ${message.guild.roles.cache.get(settings.allyRole) || "Ninguno"}`)
-                .addField("AllyModRole", `Establece un rol para el staff de alianza y usar el comando addpartner y removepartner\n**Uso:** ${prefix}config allymodrole <enable o disable> <Rol>\n**Configuración:** ${message.guild.roles.cache.get(settings.allyModRole) || "Ninguno"}`)
                 .addField("Tags", "Los tags para los mensajes de bienvenida y despedida son:\n\n**{user}** : Menciona al usuario\n**{username}** : Muestra el nombre y el tag del usuario\n**{server}** : Muestra el nombre del servidor\n**{owner}** : Nombra al Owner del servidor con su tag\n**{members}** : Muestra el número de miembros desde que el usuario se unio o dejo el server.\n")
                 .setFooter("<> es obligatorio, [] es opcional")
 
@@ -43,7 +41,7 @@ module.exports = {
         };
         
         if (cmd !== "prefix" || cmd !== "reset") {
-        if (!args[1]) return message.channel.send("Ese no parece ser un buen del comando");
+        if (!args[1]) return message.channel.send("Ese no es un parametro valido");
 
         if (args[1].toLowerCase() === "enable") method = args[1].toLowerCase()
         else if (args[1].toLowerCase() === "disable") method = args[1].toLowerCase()

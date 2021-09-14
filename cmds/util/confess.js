@@ -4,48 +4,23 @@ const Guild = require('../Moderacion/models/Guild')
 module.exports = {
     name: "confess",
     category: "Util",
-    description: "Envia tu confesión anonima al canal de confesiones, puedes usar este comando tanto en el servidor como en el md para privacidad",
+    description: "Envia tu confesión anonima al canal de confesiones",
     usage: "!confess",
     examples: ["!confess <confesión>"],
-    run: async (client, message, args, prefix) => {
+    run: async (client, message, args) => {
 
-        if (!args[0]) return message.channel.send("Dime que quieres confesar")
-
-        if (message.channel.type === "dm") {
-            let guild = client.guilds.cache.get("736200583320567820")
-            Guild.findOne({ guildID: guild.id }).then(async doc => {
-                if (!doc) return message.channel.send("No hay ningún canal de confesiones declarado")
-
-                let channel = guild.channels.cache.get(doc.confessionChannel)
-                if (!channel) return message.channel.send("El canal de confesiones no parece ser válido")
-
-            if (!channel.permissionsFor(guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para enviar mensajes en el canal de confesiones")
-
-            let level = doc.confessionLevel
-            
-            const embed = new Discord.MessageEmbed()
-            .setAuthor(`Confesión #${level}`, guild.iconURL({ format: "png", dynamic: true, size: 2048}))
-            .setColor("#f7f749")
-            .setDescription(args.join(" "))
-
-            channel.send({ embed })
-
-            doc.confessionLevel = level + 1
-
-            await doc.save()
-            return message.channel.send("Se ha enviado tu confesión con exito")
-            })
-        }        
-        else {
+        if (message.guild.me.permissions.has("MANAGE_MESSAGES")) return message.channel.send("Por privacidad es necesario que yo pueda borrar mensajes")
+        message.delete()
+        
+        if (!args[0]) return message.channel.send("Dime que quieres confesar").then(message => setTimeout(() => message.delete(), 5000)).catch(err => console.error(err))
         
         Guild.findOne({ guildID: message.guild.id }).then(async doc => {
-        if (!doc) return message.channel.send("No hay ningún canal de confesiones declarado")
+        if (!doc) return message.channel.send("No hay ningún canal de confesiones declarado").then(message => setTimeout(() => message.delete(), 5000)).catch(err => console.error(err))
 
         let channel = message.guild.channels.cache.get(doc.confessionChannel)
-        if (!channel) return message.channel.send("El canal de confesiones no parece ser válido")
+        if (!channel) return message.channel.send("El canal de confesiones no parece ser válido").then(message => setTimeout(() => message.delete(), 5000)).catch(err => console.error(err))
 
-        if (!channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para enviar mensajes en el canal de confesiones")
-        if (message.guild.me.hasPermission("MANAGE_MESSAGES")) message.delete()
+        if (!channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para enviar mensajes en el canal de confesiones").then(message => setTimeout(() => message.delete(), 5000)).catch(err => console.error(err))
         let level = doc.confessionLevel
 
         let confession = args.join(" ")
@@ -55,7 +30,7 @@ module.exports = {
         .setColor("#f7f749")
         .setDescription(confession)
 
-        channel.send({ embed })
+        channel.send({ embeds: [embed] })
 
         doc.confessionLevel = level + 1
 
@@ -67,4 +42,3 @@ module.exports = {
         })
     }
     }
-}

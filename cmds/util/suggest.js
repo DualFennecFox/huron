@@ -18,7 +18,7 @@ module.exports = {
         if (!channel) return message.channel.send("El canal de sugerencias no parece ser válido")
 
         if (!channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para enviar mensajes en el canal de sugerencias")
-        if (message.guild.me.hasPermission("MANAGE_MESSAGES")) message.delete()
+        if (message.guild.me.permissions.has("MANAGE_MESSAGES")) message.delete()
         let level = doc.suggestionLevel
 
         let suggestion = args.join(" ")
@@ -29,10 +29,10 @@ module.exports = {
         .setDescription(suggestion)
         .setFooter(`Por: ${message.author.tag}`)
 
-        channel.send({ embed }).then(msg => {
-        if (message.guild.me.hasPermission("ADD_REACTIONS")) {
-        msg.react("✅")
-        msg.react("❌")
+        channel.send({ embeds: [embed] }).then(async msg => {
+        if (message.guild.me.permissions.has("ADD_REACTIONS")) {
+        await msg.react("✅")
+        await msg.react("❌")
         }
         })
 
