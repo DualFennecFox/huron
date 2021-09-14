@@ -96,8 +96,11 @@ module.exports = {
                       return message.channel.send(`Se ha establecido el Rol **${mRole.name}**`) 
                 }
                 else {
-                    updateGuild(message.guild, { muterole: mRole.id })
-                    return message.channel.send(`Se ha establecido el Rol **${mRole.name}**`) 
+                    
+                if (mRole.id == doc?.muterole) return message.channel.send("Este rol ya fue establecido")
+
+                updateGuild(message.guild, { muterole: mRole.id })
+                return message.channel.send(`Se ha establecido el Rol **${mRole.name}**`) 
                 }
             }).catch(err => {
                 console.error(err)
