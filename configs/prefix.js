@@ -5,7 +5,7 @@ module.exports = {
     name: "prefix",
     run: async (message, args) => {
 
-        if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando")
+        if (!message.member.permissions.has("MANAGE_GUILD" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando")
         if (!args[1]) return message.channel.send(`Mi prefix en este server es ${prefix}`)
         let nPrefix = args.slice(1).join(" ");
         Guild.findOne({ guildID: message.guild.id }).then(doc => {

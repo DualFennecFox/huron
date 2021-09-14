@@ -5,9 +5,9 @@ module.exports = {
     name: "logchannel",
     run: async (message, args, method) => {
 
+
+    if (!message.member.permissions.has("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_MEMBERS")) return message.channel.send("No tienes permisos para usar este comando")
     if (method === "enable") {
-if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_MEMBERS")) return message.channel.send("No tienes permisos para usar este comando")
-        
 let Channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[2]);
 if (!Channel) return message.channel.send("Debes especificar un canal")
 

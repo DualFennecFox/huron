@@ -6,8 +6,9 @@ module.exports = {
     name: "muterole",
     run: async (message, args, method) => {
 
+        if (!message.member.permissions.has("MANAGE_ROLES" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando")
+
         if (method === "enable") {
-            if (!message.member.hasPermission("MANAGE_ROLES" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando")
             if (!args[2]) return message.channel.send(`Menciona un rol, su ID o crea uno especificandolo`)
             if (!message.guild.me.hasPermission("MANAGE_ROLES", "MANAGE_CHANNELS")) return message.channel.send("No tengo permisos para Gestionar Roles o Gestionar Canales!")
 

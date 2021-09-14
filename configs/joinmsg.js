@@ -5,7 +5,7 @@ module.exports = {
     name: "joinmsg",
     run: async (message, args, method) => {
         
-        if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_CHANNELS")) return message.channel.send("No tienes permisos para usar este comando")
+        if (!message.member.permissions.has("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_CHANNELS")) return message.channel.send("No tienes permisos para usar este comando")
         if (method === "enable") {
                 
             let welcomeChannel = message.mentions.channels.first() || message.guild.channels.cache.get(args[2])

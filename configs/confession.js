@@ -5,11 +5,11 @@ module.exports = {
     name: "confession",
     run: async (message, args, method) => {
 
+        if (!message.member.permissions.has("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_CHANNELS")) return message.channel.send("No tienes permisos para usar este comando")
         if (method === "enable") {
-            if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR" || "MANAGE_CHANNELS")) return message.channel.send("No tienes permisos para usar este comando")
             let leaveChannel = message.mentions.channels.first() || message.guild.channels.cache.get(args[2])
             if (!leaveChannel) return message.channel.send("Debes especificar un canal")
-            if (!leaveChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para hablar en ese canal")
+            if (!leaveChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para enviar mensajes en ese canal")
 
             Guild.findOne({ guildID: message.guild.id }).then(doc => {
                 if (!doc) {

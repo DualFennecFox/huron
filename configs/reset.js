@@ -4,7 +4,7 @@ const Guild = require("../cmds/Moderacion/models/Guild");
 module.exports = {
     name: "reset",
     run: async (message) => {
-        if (!message.member.hasPermission("MANAGE_GUILD" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando")
+        if (!message.member.permissions.has("MANAGE_GUILD" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando")
 
         Guild.findOne({ guildID: message.guild.id }).then(doc => {
             if (!doc) return message.channel.send("No se ha modificado ningún ajuste")

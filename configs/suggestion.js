@@ -1,11 +1,12 @@
 const Guild = require('../cmds/Moderacion/models/Guild')
 const { getGuild, updateGuild, createGuild } = require("../cmds/Moderacion/models/functions")
-const { validateHTMLColorHex } = require('validate-color')
 
 module.exports = {
     name: "suggestion",
     run: async (message, args, method) => {
 
+
+    if (!message.member.permissions.has("MANAGE_GUILD" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando")
     if (method === "enable") {
 
         let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[2])
