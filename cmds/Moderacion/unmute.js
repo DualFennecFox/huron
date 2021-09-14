@@ -10,13 +10,13 @@ module.exports = {
     examples: ['!unmute @Wumpus', '!unmute 123456789876543210', '!unmute @Wumpus Me equivoque si es Wumpus'],
     run: async (client , message, args, prefix, contentPrefix) => {
 
-    if(!message.member.hasPermission("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!")
+    if(!message.member.permissions.has("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando!")
     if (!args.length >= 1) return message.channel.send("Debe mencionar un usuario muteado o darme su id")
 
-    if(!message.guild.me.hasPermission(["MANAGE_ROLES" || "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para añadir roles");
+    if(!message.guild.me.permissions.has("MANAGE_ROLES" || "ADMINISTRATOR")) return message.channel.send("No tengo permisos para añadir roles");
 
     let unmutee = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
-    if (contentPrefix !== prefix) unmutee = message.guild.member(getUser(args[0], client))
+    if (contentPrefix !== prefix) unmutee = message.guild.members.cache.get(getUser(args[0], client))
     if(!unmutee) return message.channel.send("Ese no parece ser un usuario valido");
     if(unmutee.id === message.author.id) return message.channel.send("No te puedes mutear a ti mismo!");
     if (unmutee.id === client.user.id) return message.channel.send("No estoy muteado y no puedo mutearme")
@@ -44,7 +44,7 @@ module.exports = {
     .addField("Usuario Desmuteado", `${unmutee}\n**ID:** ${unmutee.id}`)
     .addField("Razón", mReason)
 
-    message.channel.send( unmuteEmbed )
+    message.channel.send({ embeds: [unmuteEmbed] })
     .catch(err => {
         console.log(err);
     })

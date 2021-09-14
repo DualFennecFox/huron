@@ -39,7 +39,7 @@ const {search, searchNumber, getUser } = require('./models/functions');
 
         let num = parseInt(args[1])
 
-        if (num <= 0) return message.channel.send("Debes elegir un número después de 0")
+        if (num == 0) return message.channel.send("Debes elegir un número después de 0")
         
         let warned = doc.warnedByID
         let reason = doc.warnReason

@@ -9,11 +9,11 @@ const Guild = require('./models/Guild')
     examples: ['!mute @Wumpus', '!mute 12345678987654321', '!mute @Wumpus No ser Wumpus'],
     run: async (client , message, args, prefix, contentPrefix) => {
     
-    if(!message.member.hasPermission("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR" || "MANAGE_ROLES") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando!");
+    if(!message.member.permissions.has("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR" || "MANAGE_ROLES")) return message.channel.send("No tienes permisos para usar este comando!");
     if (!args.length >= 1) return message.channel.send("Debe mencionar un usuario muteado o darme su id")
 
     let mutee = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
-    if (contentPrefix !== prefix) mutee = message.guild.member(getUser(args[0], client))
+    if (contentPrefix !== prefix) mutee = message.guild.members.cache.get(getUser(args[0], client))
     if(!mutee) return message.channel.send("Ese no parece ser un usuario valido");
 
     if(mutee.id === message.author.id) return message.channel.send("No te puedes mutear a ti mismo!");
@@ -49,7 +49,7 @@ let muteEmbed = new Discord.MessageEmbed()
     .addField("Usuario Muteado", `${mutee}\n**ID:** ${mutee.id}`)
     .addField("Razón", mReason);
 
-    message.channel.send( muteEmbed )
+    message.channel.send({ embeds: [muteEmbed] })
     .catch(err => {
         console.error(err);
     })

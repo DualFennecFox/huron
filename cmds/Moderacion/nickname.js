@@ -9,12 +9,12 @@ const { getUser } = require("./models/functions");
     examples: ['!nickname @Wumpus Wumpus321', '!nickname 12345678987654321 Wumpus321'],
     run: async (client , message, args, prefix, contentPrefix) => {
 
-        if (!message.member.hasPermission("MANAGE_NICKNAMES" || "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando")
-        if (!message.guild.me.hasPermission("MANAGE_NICKNAMES" || "ADMINISTRATOR")) return message.channel.send("No tengo permisos para cambiar apodos")
+        if (!message.member.permissions.has("MANAGE_NICKNAMES" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando")
+        if (!message.guild.me.permissions.has("MANAGE_NICKNAMES" || "ADMINISTRATOR")) return message.channel.send("No tengo permisos para cambiar apodos")
         if (!args.length >= 1) return message.channel.send("Debes elegir un nombre para el usuario")
 
-        let user = message.guild.member(message.mentions.users.first() || client.users.cache.get(args[0]));
-        if (contentPrefix !== prefix) user = message.guild.member(getUser(args[0], client))
+        let user = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+        if (contentPrefix !== prefix) user = message.guild.members.cache.get(getUser(args[0], client))
         if (!user) user = message.member
 
         let name = args.slice(1).join(" ");
