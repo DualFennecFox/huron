@@ -9,7 +9,7 @@ module.exports = {
     examples: ["!confess <confesión>"],
     run: async (client, message, args) => {
 
-        if (message.guild.me.permissions.has("MANAGE_MESSAGES")) return message.channel.send("Por privacidad es necesario que yo pueda borrar mensajes")
+        if (!message.guild.me.permissions.has("MANAGE_MESSAGES")) return message.channel.send("Por privacidad es necesario que yo pueda borrar mensajes")
         message.delete()
         
         if (!args[0]) return message.channel.send("Dime que quieres confesar").then(message => setTimeout(() => message.delete(), 5000)).catch(err => console.error(err))
