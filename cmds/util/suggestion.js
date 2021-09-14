@@ -16,7 +16,7 @@ module.exports = {
             switch (args[0].toLowerCase()) {
             case "approve":
                 if (!args[1]) return message.channel.send("Debes especificar un mensaje")
-                if (!message.member.permissions.has("MANAGE_GUILD" || "MANAGE_MEMBERS"|| "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando")
+                if (!message.member.permissions.has("MANAGE_GUILD" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando")
                 
                 Guild.findOne({ guildID: message.guild.id }).then(async doc => {
     
@@ -62,7 +62,7 @@ module.exports = {
                 case "deny":
                     
             if (!args[1]) return message.channel.send("Debes especificar un mensaje")
-            if (!message.member.permissions.has("MANAGE_GUILD" || "MANAGE_MEMBERS"|| "ADMINISTRATOR") || !message.guild.owner) return message.channel.send("No tienes permisos para usar este comando")
+            if (!message.member.permissions.has("MANAGE_GUILD" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando")
 
             Guild.findOne({ guildID: message.guild.id }).then(async doc => {
 

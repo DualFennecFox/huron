@@ -36,7 +36,7 @@ module.exports = {
         }
         })
 
-        message.channel.send("Se ha enviado tu sugerencia con exito").then(msg => msg.delete({timeout: 5000})).catch(err => console.error(err))
+        message.channel.send("Se ha enviado tu sugerencia con exito").then(message => setTimeout(() => message.delete(), 5000)).catch(err => console.error(err))
 
         doc.suggestionLevel = level + 1
 
