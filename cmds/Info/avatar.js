@@ -12,11 +12,11 @@ module.exports = {
     if (contentPrefix !== prefix) user = getUser(args[0], client)
     
     if (user) {
-    if (!message.guild.members.cache.get(user.id)) user = message.author 
+    if (!message.guild.members.cache.get(user.id).id) user = message.author 
     } else if (!user) user = message.author;
     
     const embed = new Discord.MessageEmbed()
-    .setAuthor(`Avatar de ${user.tag}`)
+    .setAuthor(`Avatar de ${user.tag}`) 
     .setTitle('')
     .addField('Formato de Imagen', `[png](${user.displayAvatarURL({ format: "png", size: 2048})}) | [jpg](${user.displayAvatarURL({ format: "jpg", size: 2048})}) | [webm](${user.displayAvatarURL({size: 2048})})`)
 		.setTimestamp()

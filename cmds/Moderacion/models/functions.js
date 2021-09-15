@@ -300,7 +300,7 @@ function getUser(mention, client) {
   
     mention = mention.replace(/([^0-9])/g, '')
 
-		return client.users.cache.get(mention?.id);
+		return client.users.cache.get(mention);
   }
 
 let autoRoles = [
