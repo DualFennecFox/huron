@@ -1,4 +1,6 @@
 const musicData = require('./requirements/musicData')
+const { getVoiceConnection } = require("@discordjs/voice")
+
 module.exports = {
     name : 'leave',
     category: "Musica",
@@ -14,15 +16,18 @@ module.exports = {
             message.guild.me.voice.channel.leave()
             return message.channel.send({ content: "Dejando el canal de voz" })
         }
+    
+    let connection = getVoiceConnection(message.guild.id)
 
+    if (connection) connection?.disconnect()
     musicData.server[message.guild.id].queue.length = 0
     musicData.server[message.guild.id].isPlaying = false
     musicData.server[message.guild.id].pause = false
     musicData.server[message.guild.id].loop = false
     musicData.server[message.guild.id].awaiting = false
     musicData.server[message.guild.id].looped.length = 0
+    musicData.server[message.guild.id].songDispatcher.destroy()
     musicData.server[message.guild.id].songDispatcher = null
-    message.guild.me.voice.channel.leave()
     message.channel.send({ content: "Dejando el canal de voz" })
     }
 }
