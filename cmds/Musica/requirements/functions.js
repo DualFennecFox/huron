@@ -16,7 +16,7 @@ const ytdl = require('ytdl-core')
         awaiting: false,
         lastEmbed: null
     }  
-     joinVoiceChannel({ channelId: message.member.voice.channel, guildId: message.guild.id, adapterCreator: message.voiceAdapterCreator })
+     joinVoiceChannel({ channelId: message.member.voice.channel, guildId: message.guild.id, adapterCreator: message.guild.voiceAdapterCreator() })
     .then(async connection => {
 
        connection.voice.setSelfDeaf(true)
