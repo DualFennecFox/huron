@@ -11,24 +11,23 @@ const ytdl = require('ytdl-core')
         loop: false,
         isPlaying: false,
         looped: [],
-        songDispatcher: null,
+        songDispatcher: createAudioPlayer(),
         pause: false,
         awaiting: false,
         lastEmbed: null
     }  
-     joinVoiceChannel({ channelId: message.member.voice.channel })
-    .join()
+     joinVoiceChannel({ channelId: message.member.voice.channel, guildId: message.guild.id, adapterCreator: message.voiceAdapterCreator })
     .then(async connection => {
 
        connection.voice.setSelfDeaf(true)
   
-       const dispatcher = connection
+       const dispatcher = connection.subscribe(musicData.server[message.guild.id].songDispatcher)
 
        if (queue[0].provider === "Youtube" || musicData.server[message.guild.id].looped[0]) {
-       dispatcher.play(ytdl(queue[0].url, {filter: 'audioonly', quality: 'highestaudio' }, {highWaterMark: 50, volume: false}))
+       const voice = createAudioResource(ytdl(queue[0].url, {filter: 'audioonly', quality: 'highestaudio' }), { inlineVolume: false })
+       musicData.server[message.guild.id].songDispatcher.subscribe(voice)
+        .on(AudioPlayerStatus.Playing, async () => {
 
-        .on('start', async () => {
-            musicData.server[message.guild.id].songDispatcher = dispatcher
             musicData.server[message.guild.id].pause = false
 
             if(musicData.server[message.guild.id].loop == false) {
@@ -53,7 +52,7 @@ const ytdl = require('ytdl-core')
             musicData.server[message.guild.id].queue.shift();
             }
         })
-        .on('finish', async () => {
+        .on(AudioPlayerStatus.Idle, async () => {
             if (musicData.server[message.guild.id].loop == true) { 
                 playSong(musicData.server[message.guild.id].looped, message)
                
