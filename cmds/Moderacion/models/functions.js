@@ -77,7 +77,7 @@ let getGuild = async (guild) => {
       const newGuild = {
         guildID: guild.id,
         guildName: guild.name,
-        guildOwner: guild.members.cache.get(guild.ownerID).username,
+        guildOwner: guild.client.users.cache.get(guild.ownerId).username,
         guildOwnerID: guild.ownerID,
         prefix: '!',
         JoinMsg: "",

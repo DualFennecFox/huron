@@ -17,7 +17,7 @@ module.exports = {
                 const newGuild = {
                     guildID: message.guild.id,
                     guildName: message.guild.name,
-                    guildOwner: message.guild.members.cache.get(message.guild.ownerID).user.username,
+                    guildOwner: message.client.users.cache.get(message.guild.ownerId).username,
                     guildOwnerID: message.guild.ownerID,
                     prefix: '!',
                     JoinMsg: "",
@@ -64,7 +64,7 @@ module.exports = {
                     console.error(error);
                   }
             }
-            else updateGuild(message.guild, { suggestionChannel: channel })
+            else updateGuild(message.guild, { suggestionChannel: channel, suggestionLevel: 1 })
             
             return message.channel.send("Se ha establecido el canal de sugerencias")
         }).catch(err => {
