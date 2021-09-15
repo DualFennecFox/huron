@@ -75,7 +75,7 @@ const ytdl = require('ytdl-core')
                return message.member.voice.channel.leave();
                })
        }
-       else if (queue[0].provider === "SoundCloud" || musicData.server[message.guild.id].looped[0]) {
+      /* else if (queue[0].provider === "SoundCloud" || musicData.server[message.guild.id].looped[0]) {
 
         let song = await queue[0].SC.getSongInfo(queue[0].url)
         dispatcher.play(await song.downloadProgressive())
@@ -131,7 +131,7 @@ const ytdl = require('ytdl-core')
                console.error(e);
                return message.member.voice.channel.leave();
                })
-       }
+              } */
     
 }
 module.exports = {
