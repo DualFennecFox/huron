@@ -9,7 +9,7 @@ const Guild = require('./models/Guild')
     examples: ['!mute @Wumpus', '!mute 12345678987654321', '!mute @Wumpus No ser Wumpus'],
     run: async (client , message, args, prefix, contentPrefix) => {
     
-    if(!message.member.permissions.has("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR" || "MANAGE_ROLES")) return message.channel.send("No tienes permisos para usar este comando!");
+    if(!message.member.permissions.has("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando!");
     if (!args.length >= 1) return message.channel.send("Debe mencionar un usuario muteado o darme su id")
 
     let mutee = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
@@ -17,10 +17,10 @@ const Guild = require('./models/Guild')
     if(!mutee) return message.channel.send("Ese no parece ser un usuario valido");
 
     if(mutee.id === message.author.id) return message.channel.send("No te puedes mutear a ti mismo!");
-    if (mutee.id === client.user.id) return message.channel.send("No puedo banearme a mi mismo")
-    if(!message.guild.me.hasPermission(["MANAGE_ROLES" || "ADMINISTRATOR"])) return message.channel.send("No tengo permisos para añadir roles");
+    if (mutee.id === client.user.id) return message.channel.send("No me voy a mutear 🙄")
+    if(!message.guild.me.permissions.has("MANAGE_ROLES" || "ADMINISTRATOR")) return message.channel.send("No tengo permisos para añadir roles");
 
-    if(mutee.hasPermission("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR" || "MANAGE_ROLES") || !message.guild.owner) return message.channel.send("Esta persona no puede ser muteada!");
+    if(mutee.permissions.has("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR")) return message.channel.send("Esta persona no puede ser muteada!");
     
 
     let mReason = `[${message.author.tag}]: ${args.slice(1).join(" ") || "No se específico una Razón"}`;

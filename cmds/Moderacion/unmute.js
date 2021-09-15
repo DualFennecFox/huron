@@ -19,7 +19,7 @@ module.exports = {
     if (contentPrefix !== prefix) unmutee = message.guild.members.cache.get(getUser(args[0], client))
     if(!unmutee) return message.channel.send("Ese no parece ser un usuario valido");
     if(unmutee.id === message.author.id) return message.channel.send("No te puedes mutear a ti mismo!");
-    if (unmutee.id === client.user.id) return message.channel.send("No estoy muteado y no puedo mutearme")
+    if (unmutee.id === client.user.id) return message.channel.send("No estoy muteado y no quiero callarme")
 
     let mReason = `[${message.author.tag}]: ${args.slice(1).join(" ") || "No se específico una Razón"}`;
 

@@ -12,7 +12,7 @@ module.exports = {
     if (contentPrefix !== prefix) user = getUser(args[0], client)
     
     if (user) {
-    if (!message.guild.members.cache.get(user.id).id) user = message.author 
+    if (!message.guild.members.cache.get(user.id)) user = message.author 
     } else if (!user) user = message.author;
     
     const embed = new Discord.MessageEmbed()
