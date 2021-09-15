@@ -36,7 +36,7 @@ const { getUser, perms } = require('./models/functions');
     .addField("Usuario Expulsado", `${kUser}\n**ID:** ${kUser.id}`)
     .addField("Razón", kReason);
     try {
-    message.guild.members.cache.get(kUser?.id).kick({ reason: kReason });
+    message.guild.members.cache.get(kUser?.id).kick(kReason);
     } catch (err) {
         console.error(err)
         return message.channel.send("Ha ocurrido un error al expulsar a este usuario")

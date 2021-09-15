@@ -36,7 +36,7 @@ module.exports = {
     }
 
     try {
-        message.guild.members.unban(User, { reason: [bReason] })
+        message.guild.members.unban(User, { reason: bReason })
     } catch(err) {
         console.log(err)
         return message.channel.send("Se ha ocurrido un error al desbanear a este usuario")
