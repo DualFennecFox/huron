@@ -5,7 +5,7 @@ StreamType, AudioPlayerStatus, VoiceConnectionStatus, } = require('@discordjs/vo
 const musicData = require('./musicData')
 const ytdl = require('ytdl-core')
 
-  function playSong(queue, message) {
+ async function playSong(queue, message) {
     if (!musicData.server[message.guild.id]) musicData.server[message.guild.id] = {
         queue: [],
         loop: false,
@@ -72,7 +72,7 @@ const ytdl = require('ytdl-core')
                musicData.server[message.guild.id].songDispatcher = null
                musicData.server[message.guild.id].lastEmbed = null
                console.error(e);
-               return message.member.voice.channel.leave();
+               return connection.destroy()
                })
        }
       /* else if (queue[0].provider === "SoundCloud" || musicData.server[message.guild.id].looped[0]) {
