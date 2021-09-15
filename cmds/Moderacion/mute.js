@@ -12,7 +12,7 @@ const Guild = require('./models/Guild')
     if(!message.member.permissions.has("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando!");
     if (!args.length >= 1) return message.channel.send("Debe mencionar un usuario muteado o darme su id")
 
-    let mutee = message.guild.member(message.mentions.members.first() || message.guild.members.cache.get(args[0]));
+    let mutee = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
     if (contentPrefix !== prefix) mutee = message.guild.members.cache.get(getUser(args[0], client))
     if(!mutee) return message.channel.send("Ese no parece ser un usuario valido");
 
