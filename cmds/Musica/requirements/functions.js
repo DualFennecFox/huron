@@ -16,9 +16,9 @@ const ytdl = require('ytdl-core')
         awaiting: false,
         lastEmbed: null
     }  
-    const connection = joinVoiceChannel({ channelId: message.member.voice.channelId, guildId: message.guild.id, adapterCreator: message.guild.voiceAdapterCreator })
+    const connection = await joinVoiceChannel({ channelId: message.member.voice.channelId, guildId: message.guild.id, adapterCreator: message.guild.voiceAdapterCreator })
   
-       const dispatcher = connection.subscribe(musicData.server[message.guild.id].songDispatcher)
+       connection.subscribe(musicData.server[message.guild.id].songDispatcher)
 
        if (queue[0].provider === "Youtube" || musicData.server[message.guild.id].looped[0]) {
        const voice = createAudioResource(ytdl(queue[0].url, {filter: 'audioonly', quality: 'highestaudio' }), { inlineVolume: false })
