@@ -17,7 +17,7 @@ module.exports = async member => {
         .replace(/{server}/g, member.guild.name)
         .replace(/{username}/g, member.user.tag)
         .replace(/{members}/g, member.guild.memberCount)
-        .replace(/{owner}/g, member.guild.owner.user.tag)
+        .replace(/{owner}/g, member.client.users.cache.get(member.guild.ownerId).tag)
     
         Channel.send(msg)
         }
