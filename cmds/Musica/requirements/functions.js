@@ -16,10 +16,7 @@ const ytdl = require('ytdl-core')
         awaiting: false,
         lastEmbed: null
     }  
-     joinVoiceChannel({ channelId: message.member.voice.channelId, guildId: message.guild.id, adapterCreator: message.guild.voiceAdapterCreator })
-    .then(async connection => {
-
-       connection.voice.setSelfDeaf(true)
+    const connection = joinVoiceChannel({ channelId: message.member.voice.channelId, guildId: message.guild.id, adapterCreator: message.guild.voiceAdapterCreator })
   
        const dispatcher = connection.subscribe(musicData.server[message.guild.id].songDispatcher)
 
@@ -135,11 +132,7 @@ const ytdl = require('ytdl-core')
                return message.member.voice.channel.leave();
                })
        }
-       
-    }).catch(e => {
-        console.error(e)
-        return message.member.voice.channel.leave();
-    })
+    
 }
 module.exports = {
     playSong
