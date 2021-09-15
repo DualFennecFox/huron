@@ -57,11 +57,7 @@ const ytdl = require('ytdl-core')
         })
         .on(AudioPlayerStatus.Idle, async () => {
 
-            if (musicData.server[message.guild.id].pause == false && musicData.server[message.guild.id].isPlaying == true) {
-
-                setTimeout(() => getVoiceConnection(message.guild.id)?.destroy(), 60000)
-            }
-
+            
             if (musicData.server[message.guild.id].loop == true) { 
                 playSong(musicData.server[message.guild.id].looped, message)
                
@@ -70,8 +66,18 @@ const ytdl = require('ytdl-core')
                    playSong(musicData.server[message.guild.id].queue, message)
            } else {
                    musicData.server[message.guild.id].isPlaying = false
+
                    musicData.server[message.guild.id].looped.length = 0
                    message.channel.send({ content: "Se han terminado todas las canciones" })
+
+                   if (musicData.server[message.guild.id].pause == false && musicData.server[message.guild.id].isPlaying == false) {
+
+                    setTimeout(() => {
+                        if (musicData.server[message.guild.id].pause == false && musicData.server[message.guild.id].isPlaying == false) {
+                            getVoiceConnection(message.guild.id)?.destroy()
+                        }
+                    }, 60000)
+                } 
                }
                })
            .on('error', async e => {
