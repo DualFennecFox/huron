@@ -248,7 +248,7 @@ const commands = (category) => {
 } 
 
 const configCommands = () => {
-  let command = [ "joinmsg", "leavemsg", "logchannel", "muterole", "suggestion", "prefix"]
+  let command = [ "confession", "joinmsg", "leavemsg", "logchannel", "muterole", "suggestion", "prefix"]
 
   return command
         .map(name => `- \`${name}\``)
