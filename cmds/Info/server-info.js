@@ -64,7 +64,7 @@ module.exports = {
         .addField("Creado a las", `${message.guild.createdAt.toUTCString().substr(0, 16)} (${checkDays(message.guild.createdAt)})`, true)
         .setThumbnail(message.guild.iconURL({ format: "png", dynamic: true }))
 
-        if (memberMention.roles.cache.size != 1) {
+        if (message.guild.roles.cache.size != 1) {
             embed.addField("Roles", `${message.guild.roles.cache.size - 1}`, true)
     }
 
