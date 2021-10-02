@@ -1,10 +1,11 @@
 const Discord = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 const { checkDays } = require('../cmds/Moderacion/models/functions')
-
+let snipe 
 module.exports = async message => {
     let client = message.client
-    
+    snipe = message
+
         Guild.findOne({ guildID: message.guild.id }).then(async doc => {
             if (!doc) return
             if (doc.log.messageDelete == true) {
