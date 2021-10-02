@@ -57,7 +57,8 @@ const ytdl = require('ytdl-core')
         })
         .on(AudioPlayerStatus.Idle, async () => {
 
-            
+            if (musicData.server[message.guild.id].pause == true) return
+
             if (musicData.server[message.guild.id].loop == true) { 
                 playSong(musicData.server[message.guild.id].looped, message)
                
