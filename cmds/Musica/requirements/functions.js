@@ -40,12 +40,12 @@ const ytdl = require('ytdl-core')
 
             const videoEmbed = new Discord.MessageEmbed()
             .setAuthor("Música", message.author.displayAvatarURL({ size: 2048, type: "png", dynamic: true }))
-            .setThumbnail(playing[0].thumbnail)
+            .setThumbnail(playing.thumbnail)
             .setColor('#FF0000')
-            .addField('Escuchando', `[${playing[0].title}](${playing[0].url})`)
-            .addField('Duración', `${playing[0].duration}`)
-            .addField('Canal', `[${playing[0].channel}](${playing[0].channelURL})`)
-            let url = playing[0].url
+            .addField('Escuchando', `[${playing.title}](${playing.url})`)
+            .addField('Duración', `${playing.duration}`)
+            .addField('Canal', `[${playing.channel}](${playing.channelURL})`)
+            let url = playing.url
             const loopURL = {
                 url
             };
