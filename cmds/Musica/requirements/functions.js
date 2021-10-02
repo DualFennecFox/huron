@@ -34,7 +34,7 @@ const ytdl = require('ytdl-core')
 
             musicData.server[message.guild.id].pause = false
             if (musicData.server[message.guild.id].unPaused == true {
-
+            musicData.server[message.guild.id].unPaused == false
             const videoEmbed = new Discord.MessageEmbed()
             .setAuthor("Música", message.author.displayAvatarURL({ size: 2048, type: "png", dynamic: true }))
             .setThumbnail(queue[0].thumbnail)
@@ -71,7 +71,8 @@ const ytdl = require('ytdl-core')
             }
         })
         .on(AudioPlayerStatus.Idle, async () => {
-
+           
+            if (musicData.server[message.guild.id].unPaused == true) return
             if (musicData.server[message.guild.id].loop == true) { 
                 playSong(musicData.server[message.guild.id].looped, message)
                
@@ -85,10 +86,10 @@ const ytdl = require('ytdl-core')
                    musicData.server[message.guild.id].looped.length = 0
                    message.channel.send({ content: "Se han terminado todas las canciones" })
 
-                   if (musicData.server[message.guild.id].pause == false && musicData.server[message.guild.id].isPlaying == false) {
+                   if (musicData.server[message.guild.id].pause == false && !musicData.server[message.guild.id].isPlaying) {
 
                     setTimeout(() => {
-                        if (musicData.server[message.guild.id].pause == false && musicData.server[message.guild.id].isPlaying == false) {
+                        if (musicData.server[message.guild.id].pause == false && !musicData.server[message.guild.id].isPlaying) {
                             getVoiceConnection(message.guild.id)?.destroy()
                         }
                     }, 60000)
