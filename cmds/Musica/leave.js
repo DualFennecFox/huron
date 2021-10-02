@@ -26,7 +26,7 @@ module.exports = {
     musicData.server[message.guild.id].loop = false
     musicData.server[message.guild.id].awaiting = false
     musicData.server[message.guild.id].looped.length = 0
-    musicData.server[message.guild.id].songDispatcher.destroy()
+    connection.destroy()
     musicData.server[message.guild.id].songDispatcher = null
     message.channel.send({ content: "Dejando el canal de voz" })
     }
