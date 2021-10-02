@@ -33,7 +33,7 @@ const ytdl = require('ytdl-core')
        musicData.server[message.guild.id].songDispatcher.on(AudioPlayerStatus.Playing, async () => {
 
             musicData.server[message.guild.id].pause = false
-            if (musicData.server[message.guild.id].unPaused == true {
+            if (musicData.server[message.guild.id].unPaused == true) {
             musicData.server[message.guild.id].unPaused == false
             const videoEmbed = new Discord.MessageEmbed()
             .setAuthor("Música", message.author.displayAvatarURL({ size: 2048, type: "png", dynamic: true }))
