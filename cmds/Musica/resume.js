@@ -15,6 +15,7 @@ const musicData = require("./requirements/musicData")
 
                 
                 musicData.server[message.guild.id].pause = false
+                musicData.server[message.guild.id].unPaused = true
                 try {
                 musicData.server[message.guild.id].songDispatcher.unpause()
                 } catch (err) {
