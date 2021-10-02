@@ -33,16 +33,19 @@ const ytdl = require('ytdl-core')
        musicData.server[message.guild.id].songDispatcher.on(AudioPlayerStatus.Playing, async () => {
 
             musicData.server[message.guild.id].pause = false
+
             if (musicData.server[message.guild.id].unPaused == true) {
             musicData.server[message.guild.id].unPaused == false
+            let playing = musicData.server[message.guild.id].isPlaying[0]
+
             const videoEmbed = new Discord.MessageEmbed()
             .setAuthor("Música", message.author.displayAvatarURL({ size: 2048, type: "png", dynamic: true }))
-            .setThumbnail(queue[0].thumbnail)
+            .setThumbnail(playing[0].thumbnail)
             .setColor('#FF0000')
-            .addField('Escuchando', `[${queue[0].title}](${queue[0].url})`)
-            .addField('Duración', `${queue[0].duration}`)
-            .addField('Canal', `[${queue[0].channel}](${queue[0].channelURL})`)
-            let url = queue[0].url
+            .addField('Escuchando', `[${playing[0].title}](${playing[0].url})`)
+            .addField('Duración', `${playing[0].duration}`)
+            .addField('Canal', `[${playing[0].channel}](${playing[0].channelURL})`)
+            let url = playing[0].url
             const loopURL = {
                 url
             };
