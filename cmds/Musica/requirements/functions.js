@@ -15,6 +15,7 @@ const ytdl = require('ytdl-core')
         looped: [],
         songDispatcher: null,
         pause: false,
+        unPaused: false,
         awaiting: false,
         lastEmbed: null
     }  
@@ -32,8 +33,20 @@ const ytdl = require('ytdl-core')
        musicData.server[message.guild.id].songDispatcher.on(AudioPlayerStatus.Playing, async () => {
 
             musicData.server[message.guild.id].pause = false
+            if (musicData.server[message.guild.id].unPaused == true {
 
-            if(musicData.server[message.guild.id].loop == false) {
+            const videoEmbed = new Discord.MessageEmbed()
+            .setAuthor("Música", message.author.displayAvatarURL({ size: 2048, type: "png", dynamic: true }))
+            .setThumbnail(queue[0].thumbnail)
+            .setColor('#FF0000')
+            .addField('Escuchando', `[${queue[0].title}](${queue[0].url})`)
+            .addField('Duración', `${queue[0].duration}`)
+            .addField('Canal', `[${queue[0].channel}](${queue[0].channelURL})`)
+            let url = queue[0].url
+            const loopURL = {
+                url
+            };
+            } else if(musicData.server[message.guild.id].loop == false) {
             if (musicData.server[message.guild.id].lastEmbed) musicData.server[message.guild.id].lastEmbed.delete();
             
             const videoEmbed = new Discord.MessageEmbed()
