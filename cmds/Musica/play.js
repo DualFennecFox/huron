@@ -63,11 +63,11 @@ function search(nameKey, myArray) {
                                         });
                                     }
                                     
-                                  if (musicData.server[message.guild.id].isPlaying == false) {
-                                      musicData.server[message.guild.id].isPlaying = true;
+                                  if (!musicData.server[message.guild.id].isPlaying) {
+                                      musicData.server[message.guild.id].isPlaying = playlist.videos[0];
                                       message.channel.send({ content: `Se han añadido a la cola **${playlist.videos.length}** canciones` })
                                       return playSong(musicData.server[message.guild.id].queue, message);
-                                  } else if (musicData.server[message.guild.id].isPlaying == true) {
+                                  } else if (musicData.server[message.guild.id].isPlaying) {
                                     musicData.server[message.guild.id].loop = false
                                       return message.channel.send({ content:`**${playlist.title}** Se ha añadido a la cola con ${playlist.videos.length} videos` })
                                   };
@@ -107,11 +107,11 @@ function search(nameKey, myArray) {
                             };
                             musicData.server[message.guild.id].queue.push(song);
                             if (
-                                 musicData.server[message.guild.id].isPlaying == false
+                                 !musicData.server[message.guild.id].isPlaying
                             ) {
-                               musicData.server[message.guild.id].isPlaying = true;
+                               musicData.server[message.guild.id].isPlaying = musicData.server[message.guild.id].queue[0];
                                 return playSong(musicData.server[message.guild.id].queue, message);
-                            } else if (musicData.server[message.guild.id].isPlaying == true) {
+                            } else if (musicData.server[message.guild.id].isPlaying) {
                                 musicData.server[message.guild.id].loop = false
                                 return message.channel.send({ content: `**${song.title}** Se ha añadido a la cola` })
                             }
@@ -204,11 +204,11 @@ function search(nameKey, myArray) {
                             
                             musicData.server[message.guild.id].queue.push(song);
             
-                            if (musicData.server[message.guild.id].isPlaying == false) {
-                             musicData.server[message.guild.id].isPlaying = true
+                            if (!musicData.server[message.guild.id].isPlaying) {
+                             musicData.server[message.guild.id].isPlaying = musicData.server[message.guild.id].queue[0]
                                if (songEmbed) songEmbed.delete();
                                return playSong(musicData.server[message.guild.id].queue, message);
-                            } else if (musicData.server[message.guild.id].isPlaying == true) {
+                            } else if (musicData.server[message.guild.id].isPlaying) {
                                if (songEmbed) songEmbed.delete();
                                musicData.server[message.guild.id].loop = false
             
