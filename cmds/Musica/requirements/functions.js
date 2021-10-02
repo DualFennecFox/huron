@@ -51,14 +51,14 @@ const ytdl = require('ytdl-core')
             
             if (queue[1]) videoEmbed.addField('Siguiente Canción', `[${queue[1].title}](${queue[1].url})`);
             let embed = await message.channel.send({ embeds: [videoEmbed] })
+            musicData.server[message.guild.id].isPlaying = queue[0]
+            musicData.server[message.guild.id].queue.shift();
             musicData.server[message.guild.id].lastEmbed = embed
             
             }
         })
         .on(AudioPlayerStatus.Idle, async () => {
 
-           
-            musicData.server[message.guild.id].queue.shift();
             if (musicData.server[message.guild.id].loop == true) { 
                 playSong(musicData.server[message.guild.id].looped, message)
                
