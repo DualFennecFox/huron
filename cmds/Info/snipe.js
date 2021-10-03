@@ -1,4 +1,4 @@
-const { snipe } = require('../../events/messageDelete')
+const { snipe } = require('../Moderacion/models/functions')
 
 module.exports = {
     name : 'echo',

@@ -2,6 +2,8 @@ const Guild = require('./Guild')
 const mongoose = require('mongoose');
 const { MessageEmbed, Intents, Permissions } = require('discord.js')
 
+let snipe = []
+
 let region = {
   "brazil": ":flag_br: Brazil",
   "eu-central": ":flag_eu: Central Europe",
@@ -365,5 +367,6 @@ module.exports = {
     autoRoles,
     requiredIntent,
     perms,
-    region
+    region,
+    snipe
 }
