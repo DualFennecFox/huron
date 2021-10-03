@@ -9,7 +9,7 @@ module.exports = {
 
     function searchNumber(nameKey, myArray) {
         for (var i = 0; i < myArray.length; i++) {
-        if (myArray[i]._id === nameKey) {
+        if (myArray[i]?.chn[message.channel.id]?._id === nameKey) {
         return i
     }
 }
@@ -17,7 +17,7 @@ module.exports = {
 
     if (!message.member.permissions.has("MANAGE_MESSAGES")) return message.channel.send("No tienes permisos para usar este comando")
     if (!snipe[message.guild.id]) return message.channel.send("No hay ningun mensaje borrado recientemente en este canal")
-    let msg = snipe[message.guild.id][searchNumber(message.channel.id, snipe[message.guild.id])]
+    let msg = snipe[message.guild.id]?.chn[searchNumber(message.channel.id, snipe[message.guild.id])]
 
     if (!msg?._id) return message.channel.send("No hay ningun mensaje borrado recientemente en este canal")
 

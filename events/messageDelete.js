@@ -5,11 +5,14 @@ let { snipe } = require('../cmds/Moderacion/models/functions')
 
 module.exports = async message => {
     let client = message.client
-    snipe[message.guild.id] = [{
+    let chn = message.channel.id
+    snipe[message.guild.id] =  { chn: [{
         _id: message.channel.id,
         message: message.content,
         member: message.member
-    }]
+    }]  
+}
+        
 
 
         Guild.findOne({ guildID: message.guild.id }).then(async doc => {
