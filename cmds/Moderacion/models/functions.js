@@ -1,5 +1,4 @@
 const Guild = require('./Guild')
-const defaultSettings = require('./config')
 const mongoose = require('mongoose');
 const { MessageEmbed, Intents, Permissions } = require('discord.js')
 
