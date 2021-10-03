@@ -9,7 +9,7 @@ module.exports = {
 
     function searchNumber(nameKey, myArray) {
         for (var i = 0; i < myArray.length; i++) {
-        if (myArray[i]?.chn[message.channel.id]?._id === nameKey) {
+        if (myArray[i].chn[message.channel.id]._id === nameKey) {
         return i
     }
 }
