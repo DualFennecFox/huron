@@ -25,7 +25,7 @@ const ytdl = require('ytdl-core')
     musicData.server[message.guild.id].songDispatcher = player
 
        if (queue[0].provider === "Youtube" || musicData.server[message.guild.id].looped[0]) {
-       const voice = createAudioResource(ytdl(queue[0].url, {filter: 'audioonly', quality: 'highestaudio' }), { inlineVolume: false })
+       const voice = createAudioResource(ytdl(queue[0].url, {filter: 'audioonly' }), { inlineVolume: false })
        musicData.server[message.guild.id].songDispatcher.play(voice)
 
        connection.subscribe(musicData.server[message.guild.id].songDispatcher)
