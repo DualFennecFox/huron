@@ -1,11 +1,9 @@
 const Discord = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
-let snipe = []
+let { snipe } = require('../cmds/Moderacion/models/functions')
 
 
-module.exports = { 
-    snipe, 
-    run: async message => {
+module.exports = async message => {
     let client = message.client
     snipe[message.guild.id] = [{
         _id: message.channel.id,
@@ -37,4 +35,3 @@ module.exports = {
             console.error(err)
     })
     }
-}
