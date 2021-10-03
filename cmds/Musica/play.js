@@ -80,7 +80,7 @@ function search(nameKey, myArray) {
                             }       
                     }
             
-                    else if (getVideoId(args[0]?.id) && getVideoId(args[0]?.service === "youtube")) {
+                    else if (getVideoId(args[0])?.id && getVideoId(args[0])?.service === "youtube") {
                           try {
 
                             let ID = getVideoId(args[0]).id
