@@ -1,10 +1,18 @@
 const Discord = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
-const { checkDays } = require('../cmds/Moderacion/models/functions')
-let snipe 
-module.exports = async message => {
+let snipe = []
+
+
+module.exports = { 
+    snipe, 
+    run: async message => {
     let client = message.client
-    snipe = message
+    snipe[message.guild.id] = [{
+        _id: message.channel.id,
+        message: message.content,
+        member: message.member
+    }]
+
 
         Guild.findOne({ guildID: message.guild.id }).then(async doc => {
             if (!doc) return
@@ -14,14 +22,12 @@ module.exports = async message => {
                 if (!Channel) return
                 if (!Channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return
                 if (message.author.id === client.user.id) return
-            
-            let msg = message.content
 
-            if (!msg && !message.attachments.first()) return 
+            if (!message.content && !message.attachments.first()) return 
 
             const embed = new Discord.MessageEmbed()
             .setColor("#FF0000")
-            .setDescription(`${msg}`)
+            .setDescription(message.content)
             .setFooter(`De: ${message.author.tag} | ${message.author.id}`, message.author.displayAvatarURL({ format: "png", dynamic: true}))
             if (message.attachments.first()) embed.addField("Archivos Adjuntados", message.attachments.map(r => r.name).join(", "))
         
@@ -31,3 +37,4 @@ module.exports = async message => {
             console.error(err)
     })
     }
+}
