@@ -1,12 +1,10 @@
 const { snipe } = require('../Moderacion/models/functions')
 
 module.exports = {
-    name : 'echo',
+    name : 'snipe',
     category: "Info",
-    description : 'El bot envia un mensaje escrito por un usuario a un canal mencionado o con su ID',
-    aliases: ['announcement', 'acc'],
-    usage: '!echo <Canal> <Mensaje>',
-    examples: ['!echo #general Hola Mundo'],
+    description : 'Muestra el ultimo mensaje borrado de el canal especificado o el canal donde se ejecuto el comando',
+    usage: '!snipe',
     run: async (client, message, args) => {
 
     function searchNumber(nameKey, myArray) {
