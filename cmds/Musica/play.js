@@ -80,7 +80,7 @@ function search(nameKey, myArray) {
                             }       
                     }
             
-                    else if (args[0].match(/^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+/)) {
+                    else if (YT.getVideoId(args[0]?.id)) {
                           try {
 
                             let ID = getVideoId(args[0]).id
