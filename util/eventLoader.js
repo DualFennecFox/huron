@@ -5,7 +5,7 @@ module.exports = client => {
   client.on('error', reqEvent('error'));
   client.on('disconnect', reqEvent('disconnect'))
   client.on('channelCreate', reqEvent('channelCreate'));
-  client.on('channelDelete', reqEvent('channelDelete').run());
+  client.on('channelDelete', reqEvent('channelDelete'));
   client.on('emojiCreate', reqEvent('emojiCreate'));
   client.on('emojiDelete', reqEvent('emojiDelete'));
   client.on('emojiUpdate', reqEvent('emojiUpdate'));
@@ -17,7 +17,7 @@ module.exports = client => {
   client.on('guildMemberRemove', reqEvent('guildMemberRemove'));
   client.on('guildMemberUpdate', reqEvent('guildMemberUpdate'));
   client.on('guildUpdate', reqEvent('guildUpdate'));
-  client.on('messageDelete', reqEvent('messageDelete'));
+  client.on('messageDelete', reqEvent('messageDelete').run());
   client.on('messageUpdate', reqEvent('messageUpdate'));
   client.on('roleCreate', reqEvent('roleCreate'));
   client.on('roleDelete', reqEvent('roleDelete'));
