@@ -156,15 +156,17 @@ function search(nameKey, myArray) {
                           var songEmbed = await message.channel.send({ embeds: [embed] });
                           musicData.server[message.guild.id].awaiting = true
                           try {
-                              var response = await message.channel.awaitMessages(msg => (msg.content > 0 && msg.content < 11 || msg.content === 'exit') && msg.author.id === message.author.id, {max: 1, time: 60000, errors: ['time']})
-                              if (response.first().content) musicData.server[message.guild.id].awaiting = false
-                              var videoIndex = parseInt(response.first().content);
-                              } catch (err) {
-                                  console.error(err)
-                                  musicData.server[message.guild.id].awaiting = false
-                                 if (songEmbed) songEmbed.delete()
-                                 return message.channel.send("No respondiste a tiempo, asegurate de elegir un número del 1 al 10")
-                              }
+                            const filter = msg => msg.content > 0 && msg.content < 11 || msg.content === 'exit' && msg.author.id === message.author.id
+                            
+                            var response = await message.channel.awaitMessages({filter, max: 1, time: 30000, errors: ['time']})
+                            if (response.first().content) musicData.server[message.guild.id].awaiting = false
+                            var videoIndex = parseInt(response.first().content);
+                            } catch (err) {
+                                console.error(err)
+                                musicData.server[message.guild.id].awaiting = false
+                               if (songEmbed) songEmbed.delete()
+                               return message.channel.send({ content: "No respondiste a tiempo, asegurate de elegir un número del 1 al 10" })
+                            }
                               if (response.first().content === 'exit') {
                                 musicData.server[message.guild.id].awaiting = false
                                   return songEmbed.delete() 
