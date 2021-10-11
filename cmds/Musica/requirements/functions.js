@@ -102,18 +102,26 @@ const ytdl = require('ytdl-core')
                return connection.destroy()
                })
        }
-      /* else if (queue[0].provider === "SoundCloud" || musicData.server[message.guild.id].looped[0]) {
+      else if (queue[0].provider === "SoundCloud" || musicData.server[message.guild.id].looped[0]) {
 
         let song = await queue[0].SC.getSongInfo(queue[0].url)
-        dispatcher.play(await song.downloadProgressive())
+        let stream = await song.downloadProgressive()
+        let voice = createAudioResource(stream)
 
-        .on('start', async () => {
-            musicData.server[message.guild.id].songDispatcher = dispatcher
+        musicData.server[message.guild.id].songDispatcher.play(voice)
+
+       connection.subscribe(musicData.server[message.guild.id].songDispatcher)
+    
+       musicData.server[message.guild.id].songDispatcher.on(AudioPlayerStatus.Playing, async () => {
+
             musicData.server[message.guild.id].pause = false
 
-            if(musicData.server[message.guild.id].loop == false) {
+            if (musicData.server[message.guild.id].unPaused == true) {
+            musicData.server[message.guild.id].unPaused = false
+
+            } else if(musicData.server[message.guild.id].loop == false) {
             if (musicData.server[message.guild.id].lastEmbed) musicData.server[message.guild.id].lastEmbed.delete();
-            
+    
             const videoEmbed = new Discord.MessageEmbed()
             .setAuthor("Música", message.author.displayAvatarURL({ size: 2048, type: "png", dynamic: true }))
             .setThumbnail(queue[0].thumbnail)
@@ -129,38 +137,40 @@ const ytdl = require('ytdl-core')
             
             if (queue[1]) videoEmbed.addField('Siguiente Canción', `[${queue[1].title}](${queue[1].url})`);
             let embed = await message.channel.send({ embeds: [videoEmbed] })
-            musicData.server[message.guild.id].lastEmbed = embed
+            musicData.server[message.guild.id].isPlaying = queue[0]
             musicData.server[message.guild.id].queue.shift();
+            musicData.server[message.guild.id].lastEmbed = embed
+            
             }
         })
-        .on('finish', async () => {
+        .on(AudioPlayerStatus.Idle, async () => {
+           
+            if (musicData.server[message.guild.id].unPaused == true) return
             if (musicData.server[message.guild.id].loop == true) { 
                 playSong(musicData.server[message.guild.id].looped, message)
                
            } else if (musicData.server[message.guild.id].queue.length >= 1) {
                    musicData.server[message.guild.id].looped.shift();
+
                    playSong(musicData.server[message.guild.id].queue, message)
            } else {
                    musicData.server[message.guild.id].isPlaying = false
+
                    musicData.server[message.guild.id].looped.length = 0
-                   message.channel.send({ content: "Se han terminado todas las canciones"})
+                   message.channel.send({ content: "Se han terminado todas las canciones" })
+
+                   if (musicData.server[message.guild.id].pause == false && !musicData.server[message.guild.id].isPlaying) {
+
+                    setTimeout(() => {
+                        if (musicData.server[message.guild.id].pause == false && !musicData.server[message.guild.id].isPlaying) {
+                            getVoiceConnection(message.guild.id)?.destroy()
+                        }
+                    }, 60000)
+                } 
                }
                })
-           .on('error', async e => {
-               message.channel.send({ content: 'No se puede escuchar esa canción' });
-               musicData.server[message.guild.id].queue.length = 0;
-               musicData.server[message.guild.id].isPlaying = false;
-               musicData.server[message.guild.id].pause = false
-               musicData.server[message.guild.id].loop = false
-               musicData.server[message.guild.id].looped.length = 0
-               musicData.server[message.guild.id].songDispatcher = null
-               musicData.server[message.guild.id].lastEmbed = null
-               console.error(e);
-               return message.member.voice.channel.leave();
-               })
-              } */
-    
-}
+            }
+            }
 module.exports = {
     playSong
 }
