@@ -22,11 +22,10 @@ module.exports = {
 }
 
                     try {
-                        var muterole = await message.guild.roles.create({ data: {  
+                        var muterole = await message.guild.roles.create({  
                             name : args[2],
                             color : Color,
                             permissions : []
-                        }
                         })
                         message.guild.channels.cache.forEach(async (channel, id) => {
                             await channel.permissionOverwrites.create(muterole,  {
