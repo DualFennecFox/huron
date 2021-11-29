@@ -276,9 +276,9 @@ function getCMD(client, message, input) {
 
   // If no cmd is found, send not found embed
   if (!cmd) {
-      return message.channel.send(embed.setColor("RED").setDescription(info));
+      return message.channel.send({ embeds: [embed.setColor("RED").setDescription(info)]});
   } else if (cmd.category === "owner") {
-    return message.channel.send(embed.setColor("RED").setDescription(info));
+    return message.channel.send({embeds: [embed.setColor("RED").setDescription(info)]});
   }
 
 
