@@ -29,7 +29,7 @@ module.exports = {
                         }
                         })
                         message.guild.channels.cache.forEach(async (channel, id) => {
-                            await channel.createOverwrite(muterole,  {
+                            await channel.permissionOverwrites.create(muterole,  {
                                 SEND_MESSAGES: false,
                                 CREATE_INSTANT_INVITE: false,
                                 ADD_REACTIONS: false,
