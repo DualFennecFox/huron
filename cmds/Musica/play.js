@@ -53,7 +53,7 @@ function search(nameKey, myArray) {
                                     for (let i = 0; i < playlist.videos.length; i++) {
                                         musicData.server[message.guild.id].queue.push({
                                             url: `https://www.youtube.com/watch?v=${playlist.videos[i].id}`,
-                                            title: playlist.videos[i].title,
+                                            title: playlist.videos[i].title.replace("@", "@\u200b"),
                                             duration: playlist.videos[i].duration,
                                             thumbnail: playlist.videos[i].thumbnail,
                                             channel: playlist.videos[i].channel.name,
@@ -86,7 +86,7 @@ function search(nameKey, myArray) {
                             let ID = getVideoId(args[0]).id
                             YT.getVideo(ID).then(video => {
                             const url = `https://www.youtube.com/watch?v=${video.id}`
-                            const title = video.title
+                            const title = video.title.replace("@", "@\u200b")
                             const duration = video.duration
                             const thumbnail = video.thumbnail;
                             const channel = video.channel.name
@@ -182,7 +182,7 @@ function search(nameKey, myArray) {
                               }       
 
                           const url = `https://www.youtube.com/watch?v=${video.id}`;
-                          const title = video.title
+                          const title = video.title.replace("@", "@\u200b")
                           let duration = video.duration;
                           const thumbnail = video.thumbnail;
                           const channel = video.channel.name;
