@@ -213,7 +213,17 @@ const changeRole = {
   "MANAGE_NICKNAMES": "Gestionar apodos", 
   "MANAGE_ROLES": "Gestionar roles",
   "MANAGE_WEBHOOKS": "Gestionar webhooks",
-  "MANAGE_EMOJIS_AND_STICKERS": "Gestionar emojis y stickers"
+  "MANAGE_EMOJIS_AND_STICKERS": "Gestionar emojis y stickers",
+  "USE_APPLICATION_COMMANDS": "Usar comandos de aplicaciones",
+  "MANAGE_THREADS": "Gestionar hilos",
+  "CREATE_PUBLIC_THREADS": "Crear hilos públicos",
+  "CREATE_PRIVATE_THREADS": "Crear hilos privados,
+  "REQUEST_TO_SPEAK": "Pedir permiso a la palabra",
+  "MANAGE_EVENTS": "Gestionar eventos",
+  "USE_EXTERNAL_STICKERS": "Usar stickers externos",
+  "SEND_MESSAGES_IN_THREADS": "Enviar mensajes en hilos",
+  "MODERATE_MEMBERS": "Moderar miembros",
+  "START_EMBEDDED_ACTIVITIES": "Iniciar actividades"
   };
 const changePerm = {
     "channelCreate": "Canal Creado",
