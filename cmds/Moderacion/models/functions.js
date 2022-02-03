@@ -217,7 +217,7 @@ const changeRole = {
   "USE_APPLICATION_COMMANDS": "Usar comandos de aplicaciones",
   "MANAGE_THREADS": "Gestionar hilos",
   "CREATE_PUBLIC_THREADS": "Crear hilos públicos",
-  "CREATE_PRIVATE_THREADS": "Crear hilos privados,
+  "CREATE_PRIVATE_THREADS": "Crear hilos privados",
   "REQUEST_TO_SPEAK": "Pedir permiso a la palabra",
   "MANAGE_EVENTS": "Gestionar eventos",
   "USE_EXTERNAL_STICKERS": "Usar stickers externos",
