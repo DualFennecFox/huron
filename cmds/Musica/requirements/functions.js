@@ -1,7 +1,8 @@
 const Discord = require('discord.js')
 const { joinVoiceChannel, createAudioPlayer, createAudioResource, entersState, 
 StreamType, AudioPlayerStatus, VoiceConnectionStatus, getVoiceConnection } = require('@discordjs/voice')
-
+const Scl = require('soundcloud-scraper')
+const SC = Scl.Client()
 const musicData = require('./musicData')
 const ytdl = require('ytdl-core')
 
