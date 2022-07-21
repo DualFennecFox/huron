@@ -27,7 +27,7 @@
     "ytdl-core-discord": "^1.2.3"
   },
   "engines": {
-    "node": "16.6.x"
+    "node": "16.9.x"
   },
   "repository": {
     "url": "https://github.com/DualFennecFox/huron"
