@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const Guild = require('./models/Guild')
 const { perms } = require("./models/functions")
 
@@ -15,19 +15,45 @@ module.exports = {
                 
             let settings = await Guild.findOne({ guildID: message.guild.id })
 
-            const embed = new Discord.MessageEmbed()
-                .setAuthor("Configuración", client.user.displayAvatarURL())
+            const embed = new EmbedBuilder()
+                .setAuthor({name: "Configuración", iconURL: client.user.displayAvatarURL()})
                 .setColor("#FFFF00")
                 .setDescription(`Estos son los comandos de configuración:`)
-                .addField("Prefix", `Cambia el prefix.\n**Uso:** ${prefix}config prefix <prefix>\n**Configuración:** ${settings.prefix || "!"}`)
-                .addField("JoinMsg", `Crea o elimina un mensaje de bienvenida.\n**Uso:** ${prefix}config joinmsg <enable o disable> <Canal> <Mensaje>\n**Configuración:** \`${settings.JoinMsg || "Ninguno"}\``)
-                .addField("LeaveMsg", `Igual que los mensajes de bienvenida, pero cuando un usuario deja el servidor.\n**Uso:** ${prefix}config leavemsg <enable o disable> <Canal> <Mensaje>\n**Configuración:** \`${settings.LeaveMsg || "Ninguno"}\``)
-                .addField("MuteRole", `Para que funcione el mute se debe configurar un rol Muteado con este comando, se puede crear uno eligiendo un nombre y un color.\n**Uso:** ${prefix}config muterole <enable o disable> <Rol, ID o Nombre> [Color si se crea]\n**Configuración:** ${message.guild.roles.cache.get(settings.muterole) || "Ninguno"}`)
-                .addField("Confession", `Establece un canal de confesiones.\n**Uso:** ${prefix}config confession <enable o disable> <Canal>\n**Configuración:** ${message.guild.channels.cache.get(settings.confessionChannel) || "Ninguno"}`)
-                .addField("Suggestion", `Establece un canal de sugerencias\n**Uso:** ${prefix}config suggestion <enable o disable> <Canal>\n**Configuración:** ${message.guild.channels.cache.get(settings.suggestionChannel) || "Ninguno"}`)
-                .addField("LogChannel", `Establece un canal para logear con su mención o ID\n**Uso:** ${prefix}config logchannel <enable o disable> <Canal>\n**Configuración:** ${message.guild.channels.cache.get(settings.LogChannel) || "Ninguno"}`)
-                .addField("Tags", "Los tags para los mensajes de bienvenida y despedida son:\n\n**{user}** : Menciona al usuario\n**{username}** : Muestra el nombre y el tag del usuario\n**{server}** : Muestra el nombre del servidor\n**{owner}** : Nombra al Owner del servidor con su tag\n**{members}** : Muestra el número de miembros desde que el usuario se unio o dejo el server.\n")
-                .setFooter("<> es obligatorio, [] es opcional")
+                .setFields([
+                {
+                    name: "Prefix",
+                    value: `Cambia el prefix.\n**Uso:** ${prefix}config prefix <prefix>\n**Configuración:** ${settings.prefix || "!"}`
+                },
+                {
+                    name: "JoinMsg",
+                    value: `Crea o elimina un mensaje de bienvenida.\n**Uso:** ${prefix}config joinmsg <enable o disable> <Canal> <Mensaje>\n**Configuración:** \`${settings.JoinMsg || "Ninguno"}\``
+                },
+                {
+                    name: "LeaveMsg",
+                    value: `Igual que los mensajes de bienvenida, pero cuando un usuario deja el servidor.\n**Uso:** ${prefix}config leavemsg <enable o disable> <Canal> <Mensaje>\n**Configuración:** \`${settings.LeaveMsg || "Ninguno"}\``
+                },
+                {
+                    name: "MuteRole",
+                    value: `Para que funcione el mute se debe configurar un rol Muteado con este comando, se puede crear uno eligiendo un nombre y un color.\n**Uso:** ${prefix}config muterole <enable o disable> <Rol, ID o Nombre> [Color si se crea]\n**Configuración:** ${message.guild.roles.cache.get(settings.muterole) || "Ninguno"}`
+                },
+                {
+                    name: "Confession",
+                    value: `Establece un canal de confesiones.\n**Uso:** ${prefix}config confession <enable o disable> <Canal>\n**Configuración:** ${message.guild.channels.cache.get(settings.confessionChannel) || "Ninguno"}`
+                },
+                {
+                    name: "Suggestion",
+                    value: `Establece un canal de sugerencias\n**Uso:** ${prefix}config suggestion <enable o disable> <Canal>\n**Configuración:** ${message.guild.channels.cache.get(settings.suggestionChannel) || "Ninguno"}`
+                },
+                {
+                    name: "LogChannel",
+                    value: `Establece un canal para logear con su mención o ID\n**Uso:** ${prefix}config logchannel <enable o disable> <Canal>\n**Configuración:** ${message.guild.channels.cache.get(settings.LogChannel) || "Ninguno"}`
+                },
+                {
+                    name: "Tags",
+                    value: `Establece un canal para logear con su mención o ID\n**Uso:** ${prefix}config logchannel <enable o disable> <Canal>\n**Configuración:** ${message.guild.channels.cache.get(settings.LogChannel) || "Ninguno"}`
+                }
+            ])
+            .setFooter({text: "<> es obligatorio, [] es opcional"})
 
             return message.channel.send({ embeds: [embed] })
         }

@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { getUser, perms } = require('./models/functions')
 
     module.exports = {
@@ -49,11 +49,21 @@ const { getUser, perms } = require('./models/functions')
     }
     }
 
-    let banEmbed = new Discord.MessageEmbed()
-    .setAuthor("Ban", User.displayAvatarURL({ format: "png", dynamic: true}))
+    let banEmbed = new EmbedBuilder()
+    .setAuthor({ name: "Ban", value: User.displayAvatarURL({ format: "png", dynamic: true})})
     .setColor("#0088ff")
-    .addField("Usuario Baneado", `${User}\n**ID:** ${User.id}`)
-    .addField("Razón", bReason);
+    .setFields(
+        [
+        {
+            name: "Usuario Baneado", 
+            value: `${User}\n**ID:** ${User.id}`
+        },
+        {
+            name: "Razón",
+            value: bReason
+        }
+]
+)
 
     try {
     message.guild.members.ban(User.id, { reason: bReason })

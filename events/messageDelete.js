@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 let { snipe } = require('../cmds/Moderacion/models/functions')
 
@@ -12,8 +12,6 @@ module.exports = async message => {
         member: message.member
     }]  
 }
-        
-
 
         Guild.findOne({ guildID: message.guild.id }).then(async doc => {
             if (!doc) return
@@ -26,11 +24,14 @@ module.exports = async message => {
 
             if (!message.content && !message.attachments.first()) return 
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new EmbedBuilder()
             .setColor("#FF0000")
             .setDescription(message.content)
-            .setFooter(`De: ${message.author.tag} | ${message.author.id}`, message.author.displayAvatarURL({ format: "png", dynamic: true}))
-            if (message.attachments.first()) embed.addField("Archivos Adjuntados", message.attachments.map(r => r.name).join(", "))
+            .setFooter({ text: `De: ${message.author.tag} | ${message.author.id}`, iconURL: message.author.displayAvatarURL({ format: "png", dynamic: true})})
+            if (message.attachments.first()) {
+                
+                embed.addFields([{ name: "Archivos Adjuntados", value: message.attachments.map(r => r.name).join(", ")}])
+            }
         
         Channel.send({ content: `Mensaje Eliminado En: <#${message.channel.id}>`, embeds: [embed]})
     }

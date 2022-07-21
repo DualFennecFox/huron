@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 const { checkDays } = require('../cmds/Moderacion/models/functions')
 
@@ -32,12 +32,17 @@ module.exports = async member => {
         if (!Channel) return
         if (!Channel.permissionsFor(member.guild.me).has("SEND_MESSAGES")) return
       
-        const embed = new Discord.MessageEmbed()
-        .setAuthor(member.user.tag, member.user.displayAvatarURL({ format: "png", dynamic: true}))
+        const embed = new EmbedBuilder()
+        .setAuthor({ name: member.user.tag, iconURL: member.user.displayAvatarURL({ format: "png", dynamic: true})})
         .setColor("#FF0000")
         .setDescription(`<@!${member.user.id}> Se ha unido a el servidor`)
-        .addField("Creado", checkDays(member.user.createdAt))
-        .setFooter(`${member.user.username} | ${member.user.id}`);
+        .setFields([
+          {
+            name: "Creado",
+            value: checkDays(member.user.createdAt)
+          }
+      ])
+        .setFooter({ text:`${member.user.username} | ${member.user.id}` });
       
         Channel.send({ embeds: [embed] })
       }

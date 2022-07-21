@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { EmbedBuilder }= require('discord.js');
 const { getUser } = require('./models/functions');
 const Guild = require('./models/Guild')
 
@@ -38,11 +38,19 @@ module.exports = {
     await doc.save()
     }
 
-    let unmuteEmbed = new Discord.MessageEmbed()
-    .setAuthor("UnMute", unmutee.user.displayAvatarURL({ format: "png", dynamic: true}))
+    let unmuteEmbed = new EmbedBuilder()
+    .setAuthor({name: "UnMute", iconURL: unmutee.user.displayAvatarURL({ format: "png", dynamic: true})})
     .setColor("#0088ff")
-    .addField("Usuario Desmuteado", `${unmutee}\n**ID:** ${unmutee.id}`)
-    .addField("Razón", mReason)
+    .setFields([
+        {
+            name: "Usuario Desmuteado", 
+            value: `${unmutee}\n**ID:** ${unmutee.id}`
+        },
+        {
+            name: "Razón",
+            value: mReason
+        }
+    ])
 
     message.channel.send({ embeds: [unmuteEmbed] })
     .catch(err => {

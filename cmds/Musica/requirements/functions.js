@@ -1,6 +1,5 @@
-const Discord = require('discord.js')
-const { joinVoiceChannel, createAudioPlayer, createAudioResource, entersState, 
-StreamType, AudioPlayerStatus, VoiceConnectionStatus, getVoiceConnection } = require('@discordjs/voice')
+const { EmbedBuilder } = require('discord.js')
+const { joinVoiceChannel, createAudioPlayer, createAudioResource, StreamType, AudioPlayerStatus, getVoiceConnection } = require('@discordjs/voice')
 const Scl = require('soundcloud-scraper')
 const SC = new Scl.Client()
 const musicData = require('./musicData')
@@ -43,20 +42,32 @@ const ytdl = require('ytdl-core')
             } else if(musicData.server[message.guild.id].loop == false) {
             if (musicData.server[message.guild.id].lastEmbed) musicData.server[message.guild.id].lastEmbed.delete();
             
-            const videoEmbed = new Discord.MessageEmbed()
-            .setAuthor("Música", message.author.displayAvatarURL({ size: 2048, type: "png", dynamic: true }))
+            const videoEmbed = new EmbedBuilder()
+            .setAuthor({name: "Música", iconURL: message.author.displayAvatarURL({ size: 2048, type: "png", dynamic: true })})
             .setThumbnail(queue[0].thumbnail)
             .setColor('#FF0000')
-            .addField('Escuchando', `[${queue[0].title}](${queue[0].url})`)
-            .addField('Duración', `${queue[0].duration}`)
-            .addField('Canal', `[${queue[0].channel}](${queue[0].channelURL})`)
+            .setFields([
+                {
+                    name: "Escuchando",
+                    value: `[${queue[0].title}](${queue[0].url})`
+                },
+                {
+                    name: "Duración",
+                    value: `${queue[0].duration}`
+                },
+                {
+                    name: "Canal",
+                    value: `[${queue[0].channel}](${queue[0].channelURL})`
+                }
+            ])
+            
             let url = queue[0].url
             const loopURL = {
                 url
             };
             musicData.server[message.guild.id].looped.push(loopURL)
             
-            if (queue[1]) videoEmbed.addField('Siguiente Canción', `[${queue[1].title}](${queue[1].url})`);
+            if (queue[1]) videoEmbed.addFields([{ name: 'Siguiente Canción', value: `[${queue[1].title}](${queue[1].url})`}]);
             let embed = await message.channel.send({ embeds: [videoEmbed] })
             musicData.server[message.guild.id].isPlaying = queue[0]
             musicData.server[message.guild.id].queue.shift();
@@ -123,20 +134,32 @@ const ytdl = require('ytdl-core')
             } else if(musicData.server[message.guild.id].loop == false) {
             if (musicData.server[message.guild.id].lastEmbed) musicData.server[message.guild.id].lastEmbed.delete();
     
-            const videoEmbed = new Discord.MessageEmbed()
-            .setAuthor("Música", message.author.displayAvatarURL({ size: 2048, type: "png", dynamic: true }))
+            const videoEmbed = new EmbedBuilder()
+            .setAuthor({name: "Música", iconURL: message.author.displayAvatarURL({ size: 2048, type: "png", dynamic: true })})
             .setThumbnail(queue[0].thumbnail)
             .setColor('#F25B02')
-            .addField('Escuchando', `[${queue[0].title}](${queue[0].url})`)
-            .addField('Duración', `${queue[0].duration}`.substring(0, 3))
-            .addField('Canal', `[${queue[0].channel}](${queue[0].channelURL})`)
+            .setFields([
+                {
+                    name: "Escuchando",
+                    value: `[${queue[0].title}](${queue[0].url})`
+                },
+                {
+                    name: "Duración",
+                    value: `${queue[0].duration}`.substring(0, 3)
+                },
+                {
+                    name: "Canal",
+                    value: `[${queue[0].channel}](${queue[0].channelURL})`
+                }
+            ])
+
             let url = queue[0].url
             const loopURL = {
                 url
             };
             musicData.server[message.guild.id].looped.push(loopURL)
             
-            if (queue[1]) videoEmbed.addField('Siguiente Canción', `[${queue[1].title}](${queue[1].url})`);
+            if (queue[1]) videoEmbed.addFields([{ name: 'Siguiente Canción', value: `[${queue[1].title}](${queue[1].url})`}]);
             let embed = await message.channel.send({ embeds: [videoEmbed] })
             musicData.server[message.guild.id].isPlaying = queue[0]
             musicData.server[message.guild.id].queue.shift();

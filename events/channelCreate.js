@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 const { perms, changeRole, changePerm } = require('../cmds/Moderacion/models/functions')
 module.exports = async channel => {
@@ -225,14 +225,19 @@ module.exports = async channel => {
       if (allowedrole == false && denyRole == true) msgR = `**Denegados:** ${DenyR}`
       if (allowedrole == true && denyRole == true) msgR = `**Permitidos:** ${AllowR}\n\n**Denegados:** ${DenyR}`
 
-      const embed = new Discord.MessageEmbed()
-      .setAuthor("Canal Creado", channel.guild.iconURL())
+      const embed = new EmbedBuilder()
+      .setAuthor({name: "Canal Creado", iconURL: channel.guild.iconURL()})
       .setColor("#FF0000")
       .setDescription(`Se ha creado el canal **${channel.name}**`)
-      .addField("Tipo de canal", type[channel.type])
-      if (perm == true && user == true) embed.addField("Permisos Por Usuario", msgU)
-      if (perm == true && role == true) embed.addField("Permisos Por Rol", msgR)
-      .setFooter(`${channel.name} | ${channel.id}`);
+      .setFields([
+        { 
+          name: "Tipo de canal", 
+          value: type[channel.type]
+        }
+      ])
+      if (perm == true && user == true) embed.addFields([{ name: "Permisos Por Usuario", value: msgU }])
+      if (perm == true && role == true) embed.addFields([{ name: "Permisos Por Rol", value: msgR}])
+      .setFooter({ text: `${channel.name} | ${channel.id}`});
 
   Channel.send({ embeds: [embed] })
     } 

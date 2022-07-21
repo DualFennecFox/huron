@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const soundcloud = require('soundcloud-scraper')
 const SC = new soundcloud.Client(process.env.SOUNDCLOUD_API_KEY)
 const musicData = require("./requirements/musicData");
@@ -140,17 +140,21 @@ function search(nameKey, myArray) {
                           const embed = new Discord.MessageEmbed()
                           .setColor('#F25B02')
                           .setTitle("Elige la canción que quieres escuchar según el número")
-                          .setFooter('Escribe "exit" para salir')
-                          .addField("\`1\`", vidNameArr[0])
-                          if (vidNameArr[1]) embed.addField("\`2\`", vidNameArr[1])
-                          if (vidNameArr[2]) embed.addField("\`3\`", vidNameArr[2])
-                          if (vidNameArr[3]) embed.addField("\`4\`", vidNameArr[3])
-                          if (vidNameArr[4]) embed.addField("\`5\`", vidNameArr[4])
-                          if (vidNameArr[5]) embed.addField("\`6\`", vidNameArr[5])
-                          if (vidNameArr[6]) embed.addField("\`7\`", vidNameArr[6])
-                          if (vidNameArr[7]) embed.addField("\`8\`", vidNameArr[7])
-                          if (vidNameArr[8]) embed.addField("\`9\`", vidNameArr[8])
-                          if (vidNameArr[9]) embed.addField("\`10\`", vidNameArr[9])
+                          .setFooter({ text: 'Escribe "exit" para salir' })
+                          
+                          let arr = [{ name: "\`1\`", value: vidNameArr[0] }]
+
+                          if (vidNameArr[1]) arr.push({ name: "\`2\`", value: vidNameArr[1]})
+                          if (vidNameArr[2]) arr.push({ name: "\`3\`", value: vidNameArr[2]})
+                          if (vidNameArr[3]) arr.push({ name: "\`4\`", value: vidNameArr[3]})
+                          if (vidNameArr[4]) arr.push({ name: "\`5\`", value: vidNameArr[4]})
+                          if (vidNameArr[5]) arr.push({ name: "\`6\`", value: vidNameArr[5]})
+                          if (vidNameArr[6]) arr.push({ name: "\`7\`", value: vidNameArr[6]})
+                          if (vidNameArr[7]) arr.push({ name: "\`8\`", value: vidNameArr[7]})
+                          if (vidNameArr[8]) arr.push({ name: "\`9\`", value: vidNameArr[8]})
+                          if (vidNameArr[9]) arr.push({ name: "\`10\`", value: vidNameArr[9]})
+
+                          embed.setFields(arr)
                          
 
                           var songEmbed = await message.channel.send({ embeds: [embed] });

@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 const { checkDays, perms } = require('../cmds/Moderacion/models/functions')
 
@@ -22,13 +22,21 @@ module.exports = async channel => {
       "UNKNOWN": "Desconocido"
     }
     
-    const embed = new Discord.MessageEmbed()
-      .setAuthor("Canal Eliminado", channel.guild.iconURL())
+    const embed = new EmbedBuilder()
+      .setAuthor({ name: "Canal Eliminado", iconURL: channel.guild.iconURL() })
       .setColor("#FF0000")
       .setDescription(`Se ha eliminado el canal **${channel.name}**`)
-      .addField("Creado", checkDays(channel.createdAt))
-      .addField("Tipo de canal", type[channel.type])
-      .setFooter(`${channel.name} | ${channel.id}`);
+      .setFields([
+        {
+          name: "Creado", 
+          value:checkDays(channel.createdAt)
+        },
+        {
+          name: "Tipo de canal",
+          value: type[channel.type]
+        }
+])
+      .setFooter({ text: `${channel.name} | ${channel.id}`});
 
   Channel.send({ embeds: [embed] })
   }

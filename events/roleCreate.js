@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async role => {
@@ -15,10 +15,10 @@ module.exports = async role => {
               "false": "No",
               "true": "Si"
           }
-          const embed = new Discord.MessageEmbed()
-          .setAuthor("Rol Creado", role.guild.iconURL())
+          const embed = new EmbedBuilder()
+          .setAuthor({ name: "Rol Creado", iconURL: role.guild.iconURL() })
           .setColor("#FF0000")
-          .setFooter(`${role.name} | ${role.id}`)
+          .setFooter({ text: `${role.name} | ${role.id}` })
           .setDescription(`<@&${role.id}> \n\n**Color:** ${role.hexColor}\n**Mencionable:** ${boolean[role.mentionable]}\n**Mostrar Separado:** ${boolean[role.hoist]}`)
 
           Channel.send({ embeds: [embed] })

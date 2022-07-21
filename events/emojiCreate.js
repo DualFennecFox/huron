@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 const { perms } = require('../cmds/Moderacion/models/functions')
 
@@ -17,12 +17,12 @@ module.exports = async emoji => {
           let animated = ""
           if (emoji.animated == true) animated = `https://cdn.discordapp.com/emojis/${emoji.id}.gif`
           else animated = `https://cdn.discordapp.com/emojis/${emoji.id}.png`
-        const embed = new Discord.MessageEmbed()
-        .setAuthor("Emoji Creado")
+        const embed = new EmbedBuilder()
+        .setAuthor({ name: "Emoji Creado" })
         .setColor("#FF0000")
         .setDescription(`<:${emoji.name}:${emoji.id}> | ${emoji.name}\n\nID: ${emoji.id}`)
         .setThumbnail(animated)
-        .setFooter(`Por: ${author.username} | ${author.id}`);
+        .setFooter({ text: `Por: ${author.username} | ${author.id}` });
   
         Channel.send({ embeds: [embed] })
     }

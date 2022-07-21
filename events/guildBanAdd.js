@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 const { checkDays } = require('../cmds/Moderacion/models/functions')
 
@@ -18,12 +18,20 @@ module.exports = async (guild, u) => {
         let ban = log.entries.first();
 
         if (ban.target.id === u.id) description = `<@!${u.id}> Ha sido baneado\n**ID:** ${u.id}\n\n**Por:** <@!${ban.executor.id}>\n**ID:** ${ban.executor.id}`
-        const embed = new Discord.MessageEmbed()
-        .setAuthor("Usuario Baneado", u.displayAvatarURL({ format: "png", dynamic: true}))
+        const embed = new EmbedBuilder()
+        .setAuthor({ name: "Usuario Baneado", iconURL: u.displayAvatarURL({ format: "png", dynamic: true})})
         .setColor("#FF0000")
         .setDescription(description)
-        .addField("Creado", checkDays(u.createdAt))
-        .addField("Razón", ban.reason || "No se ha proporcionado una Razón")
+        .setFields([
+          {
+            name: "Creado", 
+            value: checkDays(u.createdAt)
+          },
+          {
+            name: "Razón",
+            value: ban.reason || "No se ha proporcionado una Razón"
+          }
+])
   
         Channel.send({ embeds: [embed] })
       }

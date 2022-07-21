@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const Guild = require('../Moderacion/models/Guild')
 
 module.exports = {
@@ -25,8 +25,8 @@ module.exports = {
 
         let confession = args.join(" ")
         
-        const embed = new Discord.MessageEmbed()
-        .setAuthor(`Confesión #${level}`, message.guild.iconURL({ format: "png", dynamic: true, size: 2048}))
+        const embed = new EmbedBuilder()
+        .setAuthor({name: `Confesión #${level}`, iconURL: message.guild.iconURL({ format: "png", dynamic: true, size: 2048})})
         .setColor("#f7f749")
         .setDescription(confession)
 

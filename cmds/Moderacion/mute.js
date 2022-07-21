@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { getUser } = require('./models/functions');
 const Guild = require('./models/Guild')
     module.exports = {
@@ -43,11 +43,19 @@ if (mutee.roles.cache.some(r => r.id === muterole.id)) return message.channel.se
  await doc.save()
  }
 
-let muteEmbed = new Discord.MessageEmbed()
-    .setAuthor("Mute", mutee.user.displayAvatarURL({ format: "png", dynamic: true}))
+let muteEmbed = new EmbedBuilder()
+    .setAuthor({ name: "Mute", iconURL: mutee.user.displayAvatarURL({ format: "png", dynamic: true})})
     .setColor("#0088ff")
-    .addField("Usuario Muteado", `${mutee}\n**ID:** ${mutee.id}`)
-    .addField("Razón", mReason);
+    .setFields([
+        {
+            name: "Usuario Muteado", 
+            value: `${mutee}\n**ID:** ${mutee.id}`
+        },
+        {
+            name: "Razón",
+            value: mReason
+        }
+    ])
 
     message.channel.send({ embeds: [muteEmbed] })
     .catch(err => {

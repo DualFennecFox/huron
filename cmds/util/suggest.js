@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const Guild = require("../Moderacion/models/Guild")
 
 module.exports = {
@@ -23,11 +23,11 @@ module.exports = {
 
         let suggestion = args.join(" ")
         
-        const embed = new Discord.MessageEmbed()
-        .setAuthor(`Sugerencia #${level}`, message.author.displayAvatarURL({ format: "png", dynamic: true }))
+        const embed = new EmbedBuilder()
+        .setAuthor({ name: `Sugerencia #${level}`, iconURL: message.author.displayAvatarURL({ format: "png", dynamic: true })})
         .setColor("#7BA7FF")
         .setDescription(suggestion)
-        .setFooter(`Por: ${message.author.tag}`)
+        .setFooter({ text: `Por: ${message.author.tag}` })
 
         channel.send({ embeds: [embed] }).then(async msg => {
         if (message.guild.me.permissions.has("ADD_REACTIONS")) {

@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 const { checkDays, changeRole } = require('../cmds/Moderacion/models/functions')
 
@@ -20,10 +20,10 @@ module.exports = async role => {
                 }
             }
 
-          const embed = new Discord.MessageEmbed()
-          .setAuthor("Rol Eliminado", role.guild.iconURL())
+          const embed = new EmbedBuilder()
+          .setAuthor({ name: "Rol Eliminado", iconURL: role.guild.iconURL() })
           .setColor("#FF0000")
-          .setFooter(`${role.name} | ${role.id}`)
+          .setFooter({ text: `${role.name} | ${role.id}` })
           .setDescription(`${role.name} \n\n**Posición:** ${role.rawPosition}\n**Creado: **${checkDays(role.createdAt)}\n**Permisos:** ${perms.join(", ")}`)
           
           Channel.send({ embeds: [embed] })

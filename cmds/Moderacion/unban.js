@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { getUser, perms } = require('./models/functions')
 
 module.exports = {
@@ -42,11 +42,19 @@ module.exports = {
         return message.channel.send("Se ha ocurrido un error al desbanear a este usuario")
     }
 
-    let unbanEmbed = new Discord.MessageEmbed()
-    .setAuthor("UnBan", User.displayAvatarURL({ format: "png", dynamic: true}))
+    let unbanEmbed = new EmbedBuilder()
+    .setAuthor({ name: "UnBan", iconURL: User.displayAvatarURL({ format: "png", dynamic: true})})
     .setColor("#0088ff")
-    .addField("Usuario Desbaneado", `${User}\n**ID:** ${User.id}`)
-    .addField("Razón", bReason);
+    .setFields([
+        {
+            name: "Usuario Desbaneado", 
+            value: `${User}\n**ID:** ${User.id}`
+        },
+        {
+            name: "Razón",
+            value: bReason
+        }
+    ])
     
     message.channel.send({ embeds: [unbanEmbed] })
 }

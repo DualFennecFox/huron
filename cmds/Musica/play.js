@@ -1,10 +1,7 @@
-const Discord = require('discord.js');
-const ytdl = require('ytdl-core');
+const { EmbedBuilder } = require('discord.js');
 const musicData = require("./requirements/musicData");
 const { playSong } = require('./requirements/functions')
-const ytpl = require('ytpl')
-const ytsr = require('ytsr')
-const YT = require('scrape-yt')
+const { Client } = require('youtubei')
 const getVideoId = require('get-video-id')
 function search(nameKey, myArray) {
     for (var i = 0; i < myArray.length; i++) {
@@ -19,7 +16,7 @@ function search(nameKey, myArray) {
             category: "Musica",
             description : 'Este comando busca una musica en Youtube para escucharla en un chat de voz',
             usage: '!play <Busqueda, URL, Playlist>',
-            examples: ['!play Super-Canción', '!play ""'],
+            examples: ['!play never gonna give you up', '!play ""'],
             run: async(client, message, args) => {   
                       
                     if (!message.member.voice.channel) return message.channel.send({ content: "Debes estar en un canal de voz para usar este comando" })
@@ -45,6 +42,7 @@ function search(nameKey, myArray) {
                         musicData.server[message.guild.id].looped.length = 0
                         musicData.server[message.guild.id].lastEmbed = null
                     }
+                    const YT = new Client()
 
                     if (args[0].match(/^(?!.*\?.*\bv=)https:\/\/www\.youtube\.com\/.*\?.*\blist=.*$/)) {
                               try {
@@ -139,20 +137,24 @@ function search(nameKey, myArray) {
                              vidNameArr.push(`${v + 1}: ${videos[v].title}`);
                         }
             
-                          const embed = new Discord.MessageEmbed()
+                          const embed = new EmbedBuilder()
                           .setColor('#FF0000')
                           .setTitle("Elige la canción que quieres escuchar según el número")
-                          .setFooter('Escribe "exit" para salir')
-                          .addField("\`1\`", vidNameArr[0])
-                          if (vidNameArr[1]) embed.addField("\`2\`", vidNameArr[1])
-                          if (vidNameArr[2]) embed.addField("\`3\`", vidNameArr[2])
-                          if (vidNameArr[3]) embed.addField("\`4\`", vidNameArr[3])
-                          if (vidNameArr[4]) embed.addField("\`5\`", vidNameArr[4])
-                          if (vidNameArr[5]) embed.addField("\`6\`", vidNameArr[5])
-                          if (vidNameArr[6]) embed.addField("\`7\`", vidNameArr[6])
-                          if (vidNameArr[7]) embed.addField("\`8\`", vidNameArr[7])
-                          if (vidNameArr[8]) embed.addField("\`9\`", vidNameArr[8])
-                          if (vidNameArr[9]) embed.addField("\`10\`", vidNameArr[9])
+                          .setFooter({ text: 'Escribe "exit" para salir' })
+                          
+                          let arr = [{ name: "\`1\`", value: vidNameArr[0] }]
+
+                          if (vidNameArr[1]) arr.push({ name: "\`2\`", value: vidNameArr[1]})
+                          if (vidNameArr[2]) arr.push({ name: "\`3\`", value: vidNameArr[2]})
+                          if (vidNameArr[3]) arr.push({ name: "\`4\`", value: vidNameArr[3]})
+                          if (vidNameArr[4]) arr.push({ name: "\`5\`", value: vidNameArr[4]})
+                          if (vidNameArr[5]) arr.push({ name: "\`6\`", value: vidNameArr[5]})
+                          if (vidNameArr[6]) arr.push({ name: "\`7\`", value: vidNameArr[6]})
+                          if (vidNameArr[7]) arr.push({ name: "\`8\`", value: vidNameArr[7]})
+                          if (vidNameArr[8]) arr.push({ name: "\`9\`", value: vidNameArr[8]})
+                          if (vidNameArr[9]) arr.push({ name: "\`10\`", value: vidNameArr[9]})
+
+                          embed.setFields(arr)
 
                           var songEmbed = await message.channel.send({ embeds: [embed] });
                           musicData.server[message.guild.id].awaiting = true

@@ -14,9 +14,10 @@ module.exports = {
         let emoji = await message.guild.emojis.cache.find(em => `<:${em.name}:${em.id}>` === args[0] || `<a:${em.name}:${em.id}>` === args[0] || em.id === args[0])
         if (!emoji) return message.channel.send("Ese no parece ser un emoji valido")
 
-    const embed = new Discord.MessageEmbed()
-        .setAuthor(`Emoji ${emoji.name}`)
-        .addField('Link de Formato', `[png](https://cdn.discordapp.com/emojis/${emoji.id}.png) | [jpg](https://cdn.discordapp.com/emojis/${emoji.id}.jpg)`)
+    const embed = new Discord.EmbedBuilder()
+        .setAuthor({name: `Emoji ${emoji.name}`})
+        .setFields([{name: 'Link de Formato', 
+                     value: `[png](https://cdn.discordapp.com/emojis/${emoji.id}.png) | [jpg](https://cdn.discordapp.com/emojis/${emoji.id}.jpg)`}])
 		.setTimestamp()
 		.setImage(emoji.url)
         .setColor('RANDOM')

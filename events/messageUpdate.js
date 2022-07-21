@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async (oldMessage, newMessage) => {
@@ -21,11 +21,11 @@ module.exports = async (oldMessage, newMessage) => {
 
     if (content == false) return
 
-    const embed = new Discord.MessageEmbed()
-    .setAuthor("Mensaje Editado", newMessage.author.displayAvatarURL({ format: "png", dynamic: true}))
+    const embed = new EmbedBuilder()
+    .setAuthor({ name: "Mensaje Editado", value: newMessage.author.displayAvatarURL({ format: "png", dynamic: true}) })
     .setColor("#FF0000")
     .setDescription(`**De:** <@!${newMessage.author.id}>\n\n**Antes:** ${oldMessage.content}\n**Después:** ${newMessage.content}`)
-    .setFooter(`${newMessage.author.tag} | ${newMessage.author.id}`)
+    .setFooter({ text: `${newMessage.author.tag} | ${newMessage.author.id}` })
 
     Channel.send({ embeds: [embed] })
 }

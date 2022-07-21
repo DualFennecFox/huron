@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async (oldMember, newMember) => {
@@ -37,13 +37,13 @@ module.exports = async (oldMember, newMember) => {
   
     if (newRole == false && removeRole == false && nickname == false) return
   
-    const embed = new Discord.MessageEmbed()
-    .setAuthor(newMember.user.tag, newMember.user.displayAvatarURL({ format: "png", dynamic: true}))
-    .setFooter(`${newMember.user.username} | ${newMember.user.id}`)
+    const embed = new EmbedBuilder()
+    .setAuthor({ name: newMember.user.tag, iconURL: newMember.user.displayAvatarURL({ format: "png", dynamic: true})})
+    .setFooter({ text: `${newMember.user.username} | ${newMember.user.id}` })
     .setColor("#FF0000")
-    if (newRole == true) embed.addField("Nuevo Rol", `<@&${getNewRole.id}>`)
-    if (removeRole == true) embed.addField("Rol Removido",`<@&${getRemovedRole.id}>`)
-    if (nickname == true) embed.addField("Apodo Antes | Después", `${oldMember.displayName} | ${newMember.displayName}`)
+    if (newRole == true) embed.addFields([{ name: "Nuevo Rol", value: `<@&${getNewRole.id}>` }])
+    if (removeRole == true) embed.addFields([{ name: "Rol Removido", value: `<@&${getRemovedRole.id}>` }])
+    if (nickname == true) embed.addFields([{ name: "Apodo Antes | Después", value: `${oldMember.displayName} | ${newMember.displayName}`}])
   
     Channel.send({ embeds: [embed] })
   }

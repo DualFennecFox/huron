@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async (oldGuild, newGuild) => {
@@ -59,16 +59,19 @@ module.exports = async (oldGuild, newGuild) => {
         "VERY_HIGH": "Muy Alto"
     };
 
-    const embed = new Discord.MessageEmbed()
-    .setAuthor("Servidor Actualizado", iconURL)
-    .setFooter(`${newGuild.name} | ${newGuild.id}`)
+    let arr = []
+    const embed = new EmbedBuilder()
+    .setAuthor({ name: "Servidor Actualizado", iconURL: iconURL })
+    .setFooter({ text: `${newGuild.name} | ${newGuild.id}` })
     .setColor("#FF0000")
-    if (name == true) embed.addField("Nombre Antes | Después", `${oldGuild.name} | ${newGuild.name}`)
-    if (icon == true) embed.addField("Icono Actualizado",`[Antes](${oldGuild.iconURL()}) | [Después](${newGuild.iconURL()})`)
-    if (afk == true) embed.addField("Canal AFK Actualizado", `**De: ${oldGuild.name} | ${oldGuild.id}\n**A:** ${newGuild.name} | ${newGuild.id}`)
-    if (afkTime == true) embed.addField("Tiempo AFK Actualizado", `**De:** ${oldGuild.afkTimeout}\n**A:** ${newGuild.afkTimeout}`)
-    if (verification == true) embed.addField("Verificación Actualizada", `**De:** ${verifLevels[oldGuild.verificationLevel]}\n**A:** ${verifLevels[newGuild.verificationLevel]}`)
-    if (owner == true) embed.addField("Nuevo Dueño", `**De:** <@!${oldGuild.ownerId}>\n**A:** <@!${newGuild.ownerId}>`)
+    if (name == true) arr.push({ name: "Nombre Antes | Después", value: `${oldGuild.name} | ${newGuild.name}` })
+    if (icon == true) arr.push({ name: "Icono Actualizado", value: `[Antes](${oldGuild.iconURL()}) | [Después](${newGuild.iconURL()})` })
+    if (afk == true) arr.push({ name: "Canal AFK Actualizado", value: `**De: ${oldGuild.name} | ${oldGuild.id}\n**A:** ${newGuild.name} | ${newGuild.id}`})
+    if (afkTime == true) arr.push({ name: "Tiempo AFK Actualizado", value: `**De:** ${oldGuild.afkTimeout}\n**A:** ${newGuild.afkTimeout}`})
+    if (verification == true) arr.push({ name: "Verificación Actualizada", value: `**De:** ${verifLevels[oldGuild.verificationLevel]}\n**A:** ${verifLevels[newGuild.verificationLevel]}`})
+    if (owner == true) arr.push({ name: "Nuevo Dueño", value: `**De:** <@!${oldGuild.ownerId}>\n**A:** <@!${newGuild.ownerId}>`})
+    
+    embed.setFields(arr)
 
     Channel.send({ embeds: [embed] })
   }

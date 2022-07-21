@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { getUser, perms } = require('./models/functions');
 
     module.exports  = {
@@ -30,11 +30,20 @@ const { getUser, perms } = require('./models/functions');
     }
     
 
-    let kickEmbed = new Discord.MessageEmbed()
-    .setAuthor("Kick", kUser.user.displayAvatarURL({ format: "png", dynamic: true}))
+    let kickEmbed = new EmbedBuilder()
+    .setAuthor({name: "Kick", iconURL: kUser.user.displayAvatarURL({ format: "png", dynamic: true})})
     .setColor("#0088ff")
-    .addField("Usuario Expulsado", `${kUser}\n**ID:** ${kUser.id}`)
-    .addField("Razón", kReason);
+    .setFields([
+        {
+            name: "Usuario Expulsado",
+            value: `${kUser}\n**ID:** ${kUser.id}`
+        },
+        {
+            name: "Razón",
+            value: kReason
+        }
+    ])
+
     try {
     message.guild.members.cache.get(kUser?.id).kick(kReason);
     } catch (err) {

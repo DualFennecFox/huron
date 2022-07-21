@@ -1,15 +1,14 @@
-const Discord = require('discord.js');
-const { requiredIntent } = require('./cmds/Moderacion/models/functions')
+const { Client, GatewayIntentBits, Partials, Collection } = require('discord.js');
 const fs = require('fs');
 require('dotenv-flow').config();
-const client = new Discord.Client({ intents: requiredIntent });
-client.commands = new Discord.Collection();
-client.aliases = new Discord.Collection();
-client.log = new Discord.Collection();
-client.configs = new Discord.Collection();
-const mongoose = require("mongoose");
+const client = new Client({ intents: [GatewayIntentBits.Guilds], partials: [Partials.Channel] });
+client.commands = new Collection();
+client.aliases = new Collection();
+client.log = new Collection();
+client.configs = new Collection();
+const { connect } = require("mongoose");
 
-mongoose.connect(`${process.env.MONGOURI}/Guild`, { useNewUrlParser: true, useUnifiedTopology: true })
+connect(`${process.env.MONGOURI}/Guild`, { useNewUrlParser: true, useUnifiedTopology: true })
 require('./util/eventLoader')(client);
 
 client.categories = fs.readdirSync("./cmds/");

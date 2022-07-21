@@ -15,10 +15,10 @@ module.exports = {
     if (!message.guild.members.cache.get(user.id)) user = message.author 
     } else if (!user) user = message.author;
     
-    const embed = new Discord.MessageEmbed()
-    .setAuthor(`Avatar de ${user.tag}`) 
-    .setTitle('')
-    .addField('Formato de Imagen', `[png](${user.displayAvatarURL({ format: "png", size: 2048})}) | [jpg](${user.displayAvatarURL({ format: "jpg", size: 2048})}) | [webm](${user.displayAvatarURL({size: 2048})})`)
+    const embed = new Discord.EmbedBuilder()
+    .setAuthor({name: `Avatar de ${user.tag}`}) 
+    .setFields([{name: 'Formato de Imagen', value: `[png](${user.displayAvatarURL(
+        { format: "png", size: 2048})}) | [jpg](${user.displayAvatarURL({ format: "jpg", size: 2048})}) | [webm](${user.displayAvatarURL({size: 2048})})`}])
 		.setTimestamp()
 		.setImage(user.displayAvatarURL({ format: "png", dynamic: true, size: 2048}))
     .setColor('RANDOM')

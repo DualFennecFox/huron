@@ -2,7 +2,7 @@ const musicData = require("./requirements/musicData")
     module.exports = {
             name : 'loop',
             category: "Musica",
-            description : 'Este comando hace que se escuche una canción infinitamente hasta que se desactive',
+            description : 'Este comando hace que se escuche una canción indefinidamente hasta que se desactive',
             usage: '!loop',
             run: async(client, message, args) => {
 

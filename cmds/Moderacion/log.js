@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const Guild = require("./models/Guild")
 const { createGuild, updateGuild, changePerm, perms } = require("./models/functions")
 
@@ -110,13 +110,17 @@ module.exports = {
             }
         }
         if (!args.length >= 1) {
-            const embed = new Discord.MessageEmbed()
-                .setAuthor("Registros", client.user.displayAvatarURL())
+            const embed = new EmbedBuilder()
+                .setAuthor({ name: "Registros", iconURL: client.user.displayAvatarURL()})
                 .setColor("#FFFF00")
                 .setDescription(`Para que funcionen los registros se debe poner un canal con ${prefix}config logchannel enable #Canal-Mencionado, se pueden seleccionar todos los eventos con \"All\"\n\n**Eventos:**\nchannel, channelcreate, channeldelete, channelupdate, emoji, emojicreate, emojidelete, emojiupdate, bans, ban, unban, member, memberadd, memberremove, memberupdate, guildupdate, message, messagedelete, messageupdate, role, rolecreate, roledelete`)
-                embed.addField("Todos",  "Canal Creado\nCanal Eliminado\nEmoji Creado\nEmoji Eliminado\nEmoji Actualizado\nBaneo\nDesbaneo\nNuevo Miembro\nMiembro se va\nMiembro Actualizado\nServidor Actualizado\nMensaje Eliminado\nMensaje Editado\nRol Creado\nRol Eliminado")
-                if (active != undefined) embed.addField("Activados", active.replace(/undefined/g, ""))
-                if (unable != undefined) embed.addField("Desactivados", unable.replace(/undefined/g, ""));
+                embed.setFields([
+                    {
+                        name: "Todos",
+                        value: "Canal Creado\nCanal Eliminado\nEmoji Creado\nEmoji Eliminado\nEmoji Actualizado\nBaneo\nDesbaneo\nNuevo Miembro\nMiembro se va\nMiembro Actualizado\nServidor Actualizado\nMensaje Eliminado\nMensaje Editado\nRol Creado\nRol Eliminado"
+                    }])
+                if (active != undefined) embed.addFields([{ name: "Activados", value: active.replace(/undefined/g, "")}])
+                if (unable != undefined) embed.addFields([{ name: "Desactivados", value: unable.replace(/undefined/g, "")}]);
 
                 message.channel.send({ embeds: [embed] })
                 return

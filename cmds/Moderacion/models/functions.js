@@ -1,6 +1,6 @@
 const Guild = require('./Guild')
 const mongoose = require('mongoose');
-const { MessageEmbed, Intents, Permissions } = require('discord.js')
+const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 
 let snipe = []
 
@@ -24,50 +24,38 @@ let region = {
 
 const perms = {
 
-  administrator: Permissions.FLAGS.ADMINISTRATOR,
-  create_instant_invite: Permissions.FLAGS.CREATE_INSTANT_INVITE,
-  kick_members: Permissions.FLAGS.KICK_MEMBERS,
-  ban_members: Permissions.FLAGS.BAN_MEMBERS,
-  manage_channels: Permissions.FLAGS.MANAGE_CHANNELS,
-  manage_guild: Permissions.FLAGS.MANAGE_GUILD,
-  add_reactions: Permissions.FLAGS.ADD_REACTIONS,
-  view_audit_log: Permissions.FLAGS.VIEW_AUDIT_LOG,
-  priority_speaker: Permissions.FLAGS.PRIORITY_SPEAKER,
-  stream: Permissions.FLAGS.STREAM,
-  view_channel: Permissions.FLAGS.VIEW_CHANNEL,
-  send_messages: Permissions.FLAGS.SEND_MESSAGES,
-  send_tts_messages: Permissions.FLAGS.SEND_TTS_MESSAGES,
-  manage_messages: Permissions.FLAGS.MANAGE_MESSAGES, 
-  embed_links: Permissions.FLAGS.EMBED_LINKS,
-  attach_files: Permissions.FLAGS.ATTACH_FILES,
-  read_message_history: Permissions.FLAGS.READ_MESSAGE_HISTORY,
-  mention_everyone: Permissions.FLAGS.MENTION_EVERYONE,
-  use_external_emojis: Permissions.FLAGS.USE_EXTERNAL_EMOJIS,
-  view_guild_insights: Permissions.FLAGS.VIEW_GUILD_INSIGHTS,
-  connect: Permissions.FLAGS.CONNECT,
-  speak: Permissions.FLAGS.SPEAK,
-  mute_members : Permissions.FLAGS.MUTE_MEMBERS,
-  deafen_members: Permissions.FLAGS.DEAFEN_MEMBERS,
-  move_members: Permissions.FLAGS.MOVE_MEMBERS,
-  use_vad: Permissions.FLAGS.USE_VAD,
-  change_nickname: Permissions.FLAGS.CHANGE_NICKNAME,
-  manage_nicknames: Permissions.FLAGS.MANAGE_NICKNAMES, 
-  manage_roles: Permissions.FLAGS.MANAGE_ROLES,
-  manage_webhooks: Permissions.FLAGS.MANAGE_WEBHOOKS,
-  manage_emojis_and_stickers: Permissions.FLAGS.MANAGE_EMOJIS_AND_STICKERS
+  administrator: PermissionsBitField.Flags.Administrator,
+  create_instant_invite: PermissionsBitField.Flags.CreateInstantInvite,
+  kick_members: PermissionsBitField.Flags.KickMembers,
+  ban_members: PermissionsBitField.Flags.BanMembers,
+  manage_channels: PermissionsBitField.Flags.ManageChannels,
+  manage_guild: PermissionsBitField.Flags.ManageGuild,
+  add_reactions: PermissionsBitField.Flags.AddReactions,
+  view_audit_log: PermissionsBitField.Flags.ViewAuditLog,
+  priority_speaker: PermissionsBitField.Flags.PrioritySpeaker,
+  stream: PermissionsBitField.Flags.Stream,
+  view_channel: PermissionsBitField.Flags.ViewChannel,
+  send_messages: PermissionsBitField.Flags.SendMessages,
+  send_tts_messages: PermissionsBitField.Flags.SendTTSMessages,
+  manage_messages: PermissionsBitField.Flags.ManageMessages, 
+  embed_links: PermissionsBitField.Flags.EmbedLinks,
+  attach_files: PermissionsBitField.Flags.AttachFiles,
+  read_message_history: PermissionsBitField.Flags.ReadMessageHistory,
+  mention_everyone: PermissionsBitField.Flags.MentionEveryone,
+  use_external_emojis: PermissionsBitField.Flags.UseExternalEmojis,
+  view_guild_insights: PermissionsBitField.Flags.ViewGuildInsights,
+  connect: PermissionsBitField.Flags.Connect,
+  speak: PermissionsBitField.Flags.Speak,
+  mute_members : PermissionsBitField.Flags.MuteMembers,
+  deafen_members: PermissionsBitField.Flags.DeafenMembers,
+  move_members: PermissionsBitField.Flags.MoveMembers,
+  use_vad: PermissionsBitField.Flags.UseVAD,
+  change_nickname: PermissionsBitField.Flags.ChangeNickname,
+  manage_nicknames: PermissionsBitField.Flags.ManageNicknames, 
+  manage_roles: PermissionsBitField.Flags.ManageRoles,
+  manage_webhooks: PermissionsBitField.Flags.ManageWebhooks,
+  manage_emojis_and_stickers: PermissionsBitField.Flags.ManageEmojisAndStickers
 }
-
-const requiredIntent = [ 
-  Intents.FLAGS.GUILDS,
-  Intents.FLAGS.GUILD_BANS,
-  Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-  Intents.FLAGS.GUILD_INVITES,
-  Intents.FLAGS.GUILD_MEMBERS,
-  Intents.FLAGS.GUILD_VOICE_STATES,
-  Intents.FLAGS.GUILD_MEMBERS,
-  Intents.FLAGS.GUILD_MESSAGES,
-  Intents.FLAGS.GUILD_MESSAGE_REACTIONS
-]
 
 let getGuild = async (guild) => {
     var doc
@@ -246,10 +234,10 @@ const changePerm = {
 };
 
 function getAll(client, message, prefix) {
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
         .setColor("RANDOM")
         .setThumbnail(client.user.displayAvatarURL())
-        .setFooter(`Para información de un comando en especifico use ${prefix}help [comando]`)
+        .setFooter({text: `Para información de un comando en especifico use ${prefix}help [comando]`})
         
 const commands = (category) => {
     return client.commands
@@ -267,17 +255,35 @@ const configCommands = () => {
 }
 
     return message.channel.send({ embeds: [embed
-    .addField("Comandos de Información", commands("Info"))
-    .addField("Comandos de Moderación", commands("Moderacion"))
-    .addField("Comandos de Música", commands("Musica"))
-    .addField("Comandos Útiles", commands("Util"))
-    .addField("Comandos de Configuración", `Estos son comandos dentro del comando config, se deben usar despues de ${prefix}config.\n\n${configCommands()}`)]})
-
+    .setFields([
+      {
+        name: "Comandos de Información",
+        value: commands("Info")
+    },
+    {
+      name: "Comandos de Moderación",
+      value: commands("Moderacion")
+    },
+    {
+      name: "Comandos de Música",
+      value: commands("Musica")
+    },
+    {
+      name: "Comandos Útiles",
+      value: commands("Util")
+    },
+    {
+      name: "Comandos de Configuración",
+      value: `Estos son comandos dentro del comando config, se deben usar despues de ${prefix}config.\n\n${configCommands()}`
+    }
+  ])
+    ]
+  })
 }
 
 
 function getCMD(client, message, input) {
-  const embed = new MessageEmbed()
+  const embed = new EmbedBuilder()
 
   // Get the cmd by the name or alias
   const cmd = client.commands.get(input.toLowerCase()) || client.commands.get(client.aliases.get(input.toLowerCase()));
@@ -301,7 +307,7 @@ function getCMD(client, message, input) {
   if (cmd.examples) info += `\n**Ejemplos**: ${cmd.examples.map(a => `\`${a}\``).join(", ")}`;
   }
 
-  return message.channel.send({ embeds: [embed.setColor("#0088ff").setDescription(info).setFooter("<> es obligatorio, [] es opcional")]})
+  return message.channel.send({ embeds: [embed.setColor("#0088ff").setDescription(info).setFooter({text: "<> es obligatorio, [] es opcional"})]})
   .catch(err => {
       console.log(err)
   })
@@ -375,7 +381,6 @@ module.exports = {
     changeRole,
     changePerm,
     autoRoles,
-    requiredIntent,
     perms,
     region,
     snipe

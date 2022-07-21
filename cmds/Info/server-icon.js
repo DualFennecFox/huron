@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
   name : 'server-icon',
@@ -10,10 +10,13 @@ module.exports = {
     
     if (!message.guild.iconURL()) return message.channel.send({ content: "Este servidor no tiene ningún icono"})
 
-    const embed = new Discord.MessageEmbed()
+    const embed = new EmbedBuilder()
     .setAuthor(`Icono de ${message.guild.name}`)
     .setTitle('')
-    .addField('Formato de Imagen', `[png](${message.guild.iconURL({ format: "png", size: 2048})}) | [jpg](${message.guild.iconURL({ format: "jpg", size: 2048})}) | [webm](${message.guild.iconURL({size: 2048})})`)
+    .setFields({
+      name: 'Formato de Imagen', 
+      value: `[png](${message.guild.iconURL({ format: "png", size: 2048})}) | 
+              [jpg](${message.guild.iconURL({ format: "jpg", size: 2048})}) | [webm](${message.guild.iconURL({size: 2048})})`})
 	.setTimestamp()
 	.setImage(message.guild.iconURL({ format: "png", dynamic: true, size: 2048}))
     .setColor('RANDOM')

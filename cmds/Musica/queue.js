@@ -1,5 +1,5 @@
 const musicData = require("./requirements/musicData")
-const Discord = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 module.exports = {
     name : 'queue',
     category: "Musica",
@@ -21,7 +21,7 @@ module.exports = {
                   num = 15
                 }
 
-                const embed = new Discord.MessageEmbed()
+                const embed = new EmbedBuilder()
                 for (let v = 0; v < num; v++) {
                    Songs.push(`${v + 1}: ${musicData.server[message.guild.id].queue[v].title}`);
                 }      

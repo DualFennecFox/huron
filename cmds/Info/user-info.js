@@ -1,4 +1,5 @@
-const Discord = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
+const { trusted } = require("mongoose");
 const { getUser } = require('../Moderacion/models/functions')
 
 module.exports = {
@@ -30,24 +31,54 @@ module.exports = {
   if (args[0] === 'roles' || args[0] === 'r' || args[0] === 'role' || args[1] === 'roles' || args[1] === 'r' || args[1] === 'role') {
 
         if (memberMention.roles.cache.size == 1) return message.channel.send({ content: "Este usuario no tiene roles" })
-        let embed = new Discord.MessageEmbed()
+        let embed = new EmbedBuilder()
         let rolesOfTheMember = memberMention.roles.cache.filter(r => r.name !== '@everyone').map(role => `<@&${role.id}>`).join('\n')
-        await message.channel.send({ embeds: [embed.setColor("RANDOM").setDescription(rolesOfTheMember).setAuthor(`Roles de ${user.username}`, user.displayAvatarURL()).setThumbnail(user.displayAvatarURL())]})
+        await message.channel.send({ embeds: [embed.setColor("RANDOM")
+        .setDescription(rolesOfTheMember)
+        .setAuthor({name: `Roles de ${user.username}`, iconURL: user.displayAvatarURL()})
+        .setThumbnail(user.displayAvatarURL())]})
         return;
     }   else {
         
-    let myInfo = new Discord.MessageEmbed()
-        .setAuthor(user.username, user.displayAvatarURL({ format: "png", dynamic: true}))
+    let myInfo = new EmbedBuilder()
+        .setAuthor({name: user.username, iconURL: user.displayAvatarURL({ format: "png", dynamic: true})})
         .setColor('RANDOM')
-        .addField("Nombre y discriminador", user.tag, true)
-        .addField("Usuario", memberMention.toString(), true)    
-        .addField("Creado A las", `${user.createdAt.toUTCString().substr(0, 16)} (${checkDays(user.createdAt)})`, true)
-        .addField("Miembro desde", `${memberMention.joinedAt.toUTCString().substr(0, 16)} (${checkDays(memberMention.joinedAt)})`, true)
-        .addField("ID", user.id, true)
+        .setFields(
+        [
+            {
+                name: "Nombre y discriminador",
+                value: user.tag,
+                inline: true
+            },
+            {
+                name: "Usuario",
+                value: memberMention.toString(),
+                inline: true
+            },
+            {
+                name: "Creado a las",
+                value: `${user.createdAt.toUTCString().substr(0, 16)} (${checkDays(user.createdAt)})`,
+                inline: true
+            },
+            {
+                name: "Miembro Desde",
+                value: `${memberMention.joinedAt.toUTCString().substr(0, 16)} (${checkDays(memberMention.joinedAt)})`,
+                inline: true
+            },
+            {
+                name: "ID",
+                value: user.id,
+                inline: true
+            }
+        ])  
         .setThumbnail(user.displayAvatarURL({ format: "png", dynamic: true}))
 
         if (memberMention.roles.cache.size != 1) {
-        myInfo.addField("Roles", `${memberMention.roles.cache.size - 1}`, true)
+        myInfo.addFields([{
+            name: "Roles", 
+            value: `${memberMention.roles.cache.size - 1}`, 
+            inline: true
+        }])
     }
 
     message.channel.send({ embeds: [myInfo] })

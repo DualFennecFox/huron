@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 const { perms } = require('../cmds/Moderacion/models/functions')
 
@@ -18,12 +18,13 @@ module.exports = async (oldEmoji, newEmoji) => {
           let animated = ""
           if (newEmoji.animated == true) animated = `https://cdn.discordapp.com/emojis/${newEmoji.id}.gif`
           else animated = `https://cdn.discordapp.com/emojis/${newEmoji.id}.png`
-        const embed = new Discord.MessageEmbed()
-        .setAuthor("Emoji Actualizado")
+
+        const embed = new EmbedBuilder()
+        .setAuthor({ name: "Emoji Actualizado" })
         .setColor("#FF0000")
         .setDescription(`<:${newEmoji.name}:${newEmoji.id}> Ha sido Renombrado\n\n**De:** ${oldEmoji.name}\n**A:** ${newEmoji.name}`)
         .setThumbnail(animated)
-        .setFooter(`Por: ${author.username} | ${author.id}`);
+        .setFooter({ text: `Por: ${author.username} | ${author.id}` });
   
         Channel.send({ embeds: [embed] })
       }).catch(err => {

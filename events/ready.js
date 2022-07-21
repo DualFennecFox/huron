@@ -8,9 +8,10 @@ module.exports = async client => {
     client.user.setPresence({
       status: "online",
       activities: [{
-          name: `Trabajando`,
+          name: ``,
           type: "PLAYING",
-          url: "https://trovo.live/DualFennecFox"
-      }]
+          url: "https://twitch.tv/dualfennecfox"
+      }],
+      status: "online"
   }); 
 }

@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const Guild = require('../cmds/Moderacion/models/Guild')
 const  { changeRole } = require('../cmds/Moderacion/models/functions')
 
@@ -62,17 +62,20 @@ module.exports = async (oldRole, newRole) => {
         }
         if (name == false && newperm == false && position == false && removeperms == false && mentionable == false && hoist == false) return
 
-        const embed = new Discord.MessageEmbed()
-        .setAuthor("Rol Actualizado", newRole.guild.iconURL())
-        .setFooter(`${newRole.name} | ${newRole.id}`)
+        let arr = []
+        const embed = new EmbedBuilder()
+        .setAuthor({ name: "Rol Actualizado", iconURL: newRole.guild.iconURL() })
+        .setFooter({ text: `${newRole.name} | ${newRole.id}` })
         .setColor("#FF0000")
         .setDescription(`<@&${newRole.id}>`)
-        if (name == true) embed.addField("Nombre Antes | Después", `${oldRole.name} | ${newRole.name}`)
-        if (newperm == true) embed.addField("Permisos Agregados", `${getnewperm.join(", ")}`)
-        if (removeperms == true) embed.addField("Permisos Removidos", `${getremoveperm.join(", ")}`)
-        if (position == true) embed.addField("Posición", `**De:** ${oldRole.rawPosition}\n**A:** ${newRole.rawPosition}`)
-        if (mentionable == true) embed.addField("Mencionable", `**${boolean[newRole.mentionable]}**`)
-        if (hoist == true) embed.addField("Mostrar Separado", `**${boolean[newRole.hoist]}**`)
+        if (name == true) arr.push({ name: "Nombre Antes | Después", value: `${oldRole.name} | ${newRole.name}` })
+        if (newperm == true) arr.push({ name:  "Permisos Agregados", value: `${getnewperm.join(", ")}` })
+        if (removeperms == true) arr.push({ name: "Permisos Removidos", value: `${getremoveperm.join(", ")}` })
+        if (position == true) arr.push({ name: "Posición", value: `**De:** ${oldRole.rawPosition}\n**A:** ${newRole.rawPosition}` })
+        if (mentionable == true) arr.push({ name: "Mencionable", value: `**${boolean[newRole.mentionable]}**` })
+        if (hoist == true) arr.push({ name: "Mostrar Separado", value: `**${boolean[newRole.hoist]}**` })
+
+        embed.setFields(arr)
     
         Channel.send({ embeds: [embed] }) 
     }

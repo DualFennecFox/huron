@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const Guild = require('./models/Guild')
 const { search, getUser, perms } = require('./models/functions');
 
@@ -32,11 +32,11 @@ const { search, getUser, perms } = require('./models/functions');
     }
     let map = warns.join("\n\n")
 
-    const embed = new Discord.MessageEmbed()
-    .setAuthor(`Infracciones de: ${bUser.user.tag}`, bUser.user.displayAvatarURL({ format: "png", dynamic: true}))
+    const embed = new EmbedBuilder()
+    .setAuthor({ name: `Infracciones de: ${bUser.user.tag}`, iconURL: bUser.user.displayAvatarURL({ format: "png", dynamic: true})})
     .setColor("#FF0000")
     .setDescription(`**Este usuario tiene ${warns.length} advertencias.**\n\n${map}`)
-    .setFooter(`${bUser.user.username} | ${bUser.user.id}`)
+    .setFooter({ text: `${bUser.user.username} | ${bUser.user.id}`})
 
     message.channel.send({ embeds: [embed] })
     }

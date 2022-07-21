@@ -1,4 +1,4 @@
-const Discord = require("discord.js")
+const { EmbedBuilder } = require("discord.js")
 
   module.exports = {
     name : 'ping',
@@ -7,12 +7,22 @@ const Discord = require("discord.js")
     usage: '!ping',
    run: async (client, message, args) => {
 
-    const embed = new Discord.MessageEmbed()
-    .setAuthor("Pong!", message.author.displayAvatarURL({ size: 2048, format: "png", dynamic: true }))
+    const embed = new EmbedBuilder()
+    .setAuthor({name: "Pong!", iconURL: message.author.displayAvatarURL({ size: 2048, format: "png", dynamic: true })})
     .setColor("#FF0000")
-    .addField("Ping de mensajes", `${Date.now() - message.createdTimestamp}ms`, true)
-    .addField("Ping de DiscordAPI", `${Math.round(client.ws.ping)}ms`, true)
+    .setFields([
+      {
+      name: "Ping de mensajes", 
+      value: `${Date.now() - message.createdTimestamp}ms`,
+      inline: true
+      },
+      {
+        name: "Ping de API",
+        value: `${Math.round(client.ws.ping)}ms`,
+        inline: true
+      }
+    ])
 
-    message.channel.send({ embeds: [embed]})
+  message.channel.send({ embeds: [embed]})
 }
 }
