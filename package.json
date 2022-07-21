@@ -21,7 +21,6 @@
     "node-pre-gyp": "^0.17.0",
     "opusscript": "^0.0.8",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "soundcloud-scraper": "^5.0.2",
     "validate-color": "^2.1.1",
     "youtubei": "^1.0.0-rc.3",
@@ -32,13 +31,11 @@
     "node": "16.6.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/el-perro-bot-kawaii"
+    "url": "https://github.com/DualFennecFox/huron"
   },
   "license": "MIT",
   "keywords": [
-    "node",
-    "glitch",
-    "express"
+    "node"
   ],
   "optionalDependencies": {
     "@discordapp/erlpack": "^0.1.3",
