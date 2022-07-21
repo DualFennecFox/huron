@@ -1,7 +1,7 @@
 const { Client, GatewayIntentBits, Partials, Collection } = require('discord.js');
 const fs = require('fs');
 require('dotenv-flow').config();
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers], partials: [Partials.Channel, Partials.GuildMember] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.MessageContent], partials: [Partials.Channel, Partials.GuildMember, Partials.Message] });
 client.commands = new Collection();
 client.aliases = new Collection();
 client.log = new Collection();
