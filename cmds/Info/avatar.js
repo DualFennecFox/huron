@@ -18,7 +18,7 @@ module.exports = {
     const embed = new Discord.EmbedBuilder()
     .setAuthor({name: `Avatar de ${user.tag}`}) 
     .setFields([{name: 'Formato de Imagen', value: `[png](${user.displayAvatarURL(
-        { extension: "png", size: 2048})}) | [jpg](${user.displayAvatarURL({ extension: "jpg", size: 2048})}) | [webp](${user.displayAvatarURL({ extension: "webp", size: 2048})})`}])
+        { extension: "png", forceStatic: true, size: 2048})}) | [jpg](${user.displayAvatarURL({ extension: "jpg", forceStatic: true, size: 2048})}) | [webp](${user.displayAvatarURL({ extension: "webp", forceStatic: true, size: 2048})})`}])
 		.setTimestamp()
 		.setImage(user.displayAvatarURL({ size: 2048}))
     .setColor('Random')
