@@ -53,7 +53,7 @@ function search(nameKey, myArray) {
                                             url: `https://www.youtube.com/watch?v=${playlist.videos[i].id}`,
                                             title: playlist.videos[i].title.replace("@", "@\u200b"),
                                             duration: playlist.videos[i].duration,
-                                            thumbnail: playlist.videos[i].thumbnail,
+                                            thumbnail: playlist.videos[i].thumbnails.best,
                                             channel: playlist.videos[i].channel.name,
                                             channelURL: playlist.videos[i].channel.url,
                                             voiceChannel: message.member.voice.channel,
@@ -86,7 +86,7 @@ function search(nameKey, myArray) {
                             const url = `https://www.youtube.com/watch?v=${video.id}`
                             const title = video.title.replace("@", "@\u200b")
                             const duration = video.duration
-                            const thumbnail = video.thumbnail;
+                            const thumbnail = video.thumbnails.best;
                             const channel = video.channel.name
                             const channelURL = video.channel.url
                             if (duration == '0') duration = 'Transmitiendo en Vivo';
@@ -154,7 +154,6 @@ function search(nameKey, myArray) {
                           if (vidNameArr[8]) arr.push({ name: "\`9\`", value: vidNameArr[8]})
                           if (vidNameArr[9]) arr.push({ name: "\`10\`", value: vidNameArr[9]})
 
-                          console.log(arr)
                           embed.setFields(arr)
 
                           var songEmbed = await message.channel.send({ embeds: [embed] });
@@ -187,7 +186,7 @@ function search(nameKey, myArray) {
                           const url = `https://www.youtube.com/watch?v=${video.id}`;
                           const title = video.title.replace("@", "@\u200b")
                           let duration = video.duration;
-                          const thumbnail = video.thumbnail;
+                          const thumbnail = video.thumbnails.best;
                           const channel = video.channel.name;
                             const channelURL = video.channel.url
                             if (duration == '0') duration = 'Transmitiendo en Vivo';

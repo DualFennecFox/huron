@@ -43,7 +43,7 @@ const ytdl = require('ytdl-core')
             if (musicData.server[message.guild.id].lastEmbed) musicData.server[message.guild.id].lastEmbed.delete();
             
             const videoEmbed = new EmbedBuilder()
-            .setAuthor({name: "Música", iconURL: message.author.displayAvatarURL({ size: 2048, type: "png", dynamic: true })})
+            .setAuthor({name: "Música", iconURL: message.author.displayAvatarURL({ size: 2048 })})
             .setThumbnail(queue[0].thumbnail)
             .setColor('#FF0000')
             .setFields([

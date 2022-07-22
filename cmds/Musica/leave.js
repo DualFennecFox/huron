@@ -9,8 +9,8 @@ module.exports = {
     usage: '!leave',
     run: async(client, message, args) => {
 
-        if (!message.member.voice.channel) return message.channel.send({ content: "Debes estar en un canal de voz para usar este comando" })
-        if (!message.guild.members.me.voice.channel) return message.channel.send({ content: "No estoy en un canal de voz" })
+        if (!message.member.voice.channel?.type != 2) return message.channel.send({ content: "Debes estar en un canal de voz para usar este comando" })
+        if (message.guild.members.me.voice.channel?.type != 2) return message.channel.send({ content: "No estoy en un canal de voz" })
         if (message.guild.members.me.voice.channel.id !== message.member.voice.channel.id) return message.channel.send({ content: "Debes estar conectado a mi canal de voz para usar este comando" })
         if (!musicData.server[message.guild.id]) {
             message.guild.members.me.voice.channel.leave()
