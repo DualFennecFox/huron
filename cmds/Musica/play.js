@@ -154,6 +154,7 @@ function search(nameKey, myArray) {
                           if (vidNameArr[8]) arr.push({ name: "\`9\`", value: vidNameArr[8]})
                           if (vidNameArr[9]) arr.push({ name: "\`10\`", value: vidNameArr[9]})
 
+                          console.log(arr)
                           embed.setFields(arr)
 
                           var songEmbed = await message.channel.send({ embeds: [embed] });
