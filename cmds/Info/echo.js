@@ -19,10 +19,10 @@ module.exports = {
     id = true
 }
 
-    if (message.guild.me.permissions.has(perms.manage_messages || perms.administrator)) message.delete()
+    if (message.guild.members.me.permissions.has(perms.manage_messages || perms.administrator)) message.delete()
 
     if(!mChannel) return message.channel.send({ content: 'Debes mencionar un canal o darme su ID'})
-        if (!mChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send({ content: 'No tengo permisos para hablar en ese canal'})
+        if (!mChannel.permissionsFor(message.guild.members.me).has("SEND_MESSAGES")) return message.channel.send({ content: 'No tengo permisos para hablar en ese canal'})
         if (!mChannel.permissionsFor(message.member).has("SEND_MESSAGES")) return message.channel.send({ content: 'No tienes permisos para enviar mensajes en ese canal'})
         
         argsresult = args.join(" ")
