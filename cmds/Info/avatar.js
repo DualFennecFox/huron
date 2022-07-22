@@ -21,7 +21,7 @@ module.exports = {
         { format: "png", size: 2048})}) | [jpg](${user.displayAvatarURL({ format: "jpg", size: 2048})}) | [webm](${user.displayAvatarURL({size: 2048})})`}])
 		.setTimestamp()
 		.setImage(user.displayAvatarURL({ format: "png", dynamic: true, size: 2048}))
-    .setColor('RANDOM')
+    .setColor('Random')
     message.channel.send({ embeds: [embed] })
     .catch(err => {
       console.log(err);

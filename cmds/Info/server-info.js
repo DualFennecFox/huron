@@ -72,7 +72,7 @@ module.exports = {
 
     const embed = new Discord.EmbedBuilder()
         .setAuthor({name: message.guild.name, iconURL: message.guild.iconURL()})
-        .setColor("RANDOM")
+        .setColor("Random")
         .setFields([
             {
                 name: "Nombre",

@@ -20,7 +20,7 @@ module.exports = {
                      value: `[png](https://cdn.discordapp.com/emojis/${emoji.id}.png) | [jpg](https://cdn.discordapp.com/emojis/${emoji.id}.jpg)`}])
 		.setTimestamp()
 		.setImage(emoji.url)
-        .setColor('RANDOM')
+        .setColor('Random')
     message.channel.send({ embeds: [embed] })
     .catch(err => {
       console.log(err);

@@ -36,7 +36,7 @@ const { getUser, perms } = require('./models/functions')
 
         if (User.id === message.author.id) return message.channel.send("No te puedes banear a ti mismo")
         if (User.id === client.user.id) return message.channel.send("No me voy a banear 🙄")
-        if(!message.guild.me.permissions.has(perms.ban_members || perms.administrator)) return message.channel.send("No tengo permisos para Banear miembros");
+        if(!message.guild.members.me.permissions.has(perms.ban_members || perms.administrator)) return message.channel.send("No tengo permisos para Banear miembros");
 
     let bUser
     if (message.guild.members.cache.get(User?.id)) {

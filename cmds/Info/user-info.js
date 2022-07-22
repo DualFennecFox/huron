@@ -42,7 +42,7 @@ module.exports = {
         
     let myInfo = new EmbedBuilder()
         .setAuthor({name: user.username, iconURL: user.displayAvatarURL({ format: "png", dynamic: true})})
-        .setColor('RANDOM')
+        .setColor('Random')
         .setFields(
         [
             {

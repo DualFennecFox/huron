@@ -19,7 +19,7 @@ module.exports = {
               [jpg](${message.guild.iconURL({ format: "jpg", size: 2048})}) | [webm](${message.guild.iconURL({size: 2048})})`})
 	.setTimestamp()
 	.setImage(message.guild.iconURL({ format: "png", dynamic: true, size: 2048}))
-    .setColor('RANDOM')
+    .setColor('Random')
     message.channel.send({ embeds: [embed] })
     .catch(err => {
       console.log(err);
