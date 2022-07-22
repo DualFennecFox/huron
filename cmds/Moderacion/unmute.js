@@ -13,7 +13,7 @@ module.exports = {
     if(!message.member.permissions.has("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando!")
     if (!args.length >= 1) return message.channel.send("Debe mencionar un usuario muteado o darme su id")
 
-    if(!message.guild.me.permissions.has("MANAGE_ROLES" || "ADMINISTRATOR")) return message.channel.send("No tengo permisos para añadir roles");
+    if(!message.guild.members.me.permissions.has("MANAGE_ROLES" || "ADMINISTRATOR")) return message.channel.send("No tengo permisos para añadir roles");
 
     let unmutee = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
     if (contentPrefix !== prefix) unmutee = message.guild.members.cache.get(getUser(args[0], client))

@@ -10,7 +10,7 @@ const { getUser } = require("./models/functions");
     run: async (client , message, args, prefix, contentPrefix) => {
 
         if (!message.member.permissions.has("MANAGE_NICKNAMES" || "ADMINISTRATOR")) return message.channel.send("No tienes permisos para usar este comando")
-        if (!message.guild.me.permissions.has("MANAGE_NICKNAMES" || "ADMINISTRATOR")) return message.channel.send("No tengo permisos para cambiar apodos")
+        if (!message.guild.members.me.permissions.has("MANAGE_NICKNAMES" || "ADMINISTRATOR")) return message.channel.send("No tengo permisos para cambiar apodos")
         if (!args.length >= 1) return message.channel.send("Debes elegir un nombre para el usuario")
 
         let user = message.mentions.members.first() || message.guild.members.cache.get(args[0]);

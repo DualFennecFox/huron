@@ -34,7 +34,7 @@ module.exports = async channel => {
         "UNKNOWN": "Desconocido"
       }
       let muterole = channel.guild.roles.cache.get(doc.muterole)
-      if (muterole && channel.guild.me.permissions.has(perms.manage_channels)) {
+      if (muterole && channel.guild.members.me.permissions.has(perms.manage_channels)) {
       try {
         channel.guild.channels.cache.forEach(async (channel, id) => {
             await channel.permissionOverwrites.create(muterole,  {

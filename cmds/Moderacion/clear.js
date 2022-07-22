@@ -9,7 +9,7 @@ const { perms } = require("./models/functions")
     examples: ['!clear 50'],
     run: async (client, message, args) => {
     if(!message.member.permissions.has(perms.manage_messages)) return message.channel.send({ content: "No tienes permisos para usar este comando!"}).then(message => setTimeout(() => message.delete(), 5000)).catch(err => console.error(err))
-    if(!message.guild.me.permissions.has(perms.manage_messages)) return message.channel.send({ content: "No tengo permisos para borrar mensajes!"}).then(message => setTimeout(() => message.delete(), 5000)).catch(err => console.error(err))
+    if(!message.guild.members.me.permissions.has(perms.manage_messages)) return message.channel.send({ content: "No tengo permisos para borrar mensajes!"}).then(message => setTimeout(() => message.delete(), 5000)).catch(err => console.error(err))
     let amount = parseInt(args[0]);
     if (isNaN(amount)) return message.channel.send({ content: "Dime cuantos mensajes quieres borrar!"}).then(message => setTimeout(() => message.delete(), 5000)).catch(err => console.error(err))
     else if (amount <= 1 || amount > 100) {

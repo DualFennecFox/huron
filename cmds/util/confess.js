@@ -9,7 +9,7 @@ module.exports = {
     examples: ["!confess <confesión>"],
     run: async (client, message, args) => {
 
-        if (!message.guild.me.permissions.has("MANAGE_MESSAGES")) return message.channel.send("Por privacidad es necesario que yo pueda borrar mensajes")
+        if (!message.guild.members.me.permissions.has("MANAGE_MESSAGES")) return message.channel.send("Por privacidad es necesario que yo pueda borrar mensajes")
         message.delete()
         
         if (!args[0]) return message.channel.send("Dime que quieres confesar").then(message => setTimeout(() => message.delete(), 5000)).catch(err => console.error(err))
@@ -20,7 +20,7 @@ module.exports = {
         let channel = message.guild.channels.cache.get(doc.confessionChannel)
         if (!channel) return message.channel.send("El canal de confesiones no parece ser válido").then(message => setTimeout(() => message.delete(), 5000)).catch(err => console.error(err))
 
-        if (!channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para enviar mensajes en el canal de confesiones").then(message => setTimeout(() => message.delete(), 5000)).catch(err => console.error(err))
+        if (!channel.permissionsFor(message.guild.members.me).has("SEND_MESSAGES")) return message.channel.send("No tengo permisos para enviar mensajes en el canal de confesiones").then(message => setTimeout(() => message.delete(), 5000)).catch(err => console.error(err))
         let level = doc.confessionLevel
 
         let confession = args.join(" ")

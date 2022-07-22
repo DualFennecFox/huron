@@ -20,8 +20,8 @@ function search(nameKey, myArray) {
             run: async(client, message, args) => {   
                       
                     if (!message.member.voice.channel) return message.channel.send({ content: "Debes estar en un canal de voz para usar este comando" })
-                    if (message.guild.me.voice.channel) {
-                        if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.channel.send({ content: "Debes estar conectado a mi canal de voz para usar este comando" })
+                    if (message.guild.members.me.voice.channel) {
+                        if (message.member.voice.channel.id !== message.guild.members.me.voice.channel.id) return message.channel.send({ content: "Debes estar conectado a mi canal de voz para usar este comando" })
                         }
                     if (!args.length >= 1) return message.channel.send({ content: "Dime que canción quieres escuchar" })
                     if (!musicData.server[message.guild.id]) musicData.server[message.guild.id] = {
@@ -34,7 +34,7 @@ function search(nameKey, myArray) {
                         awaiting: false,
                         lastEmbed: null
                     }
-                    if (!message.guild.me.voice.channel) {
+                    if (!message.guild.members.me.voice.channel) {
                         musicData.server[message.guild.id].queue.length = 0
                         musicData.server[message.guild.id].songDispatcher = null
                         musicData.server[message.guild.id].isPlaying = false

@@ -35,7 +35,7 @@ const { getUser, perms } = require('./models/functions')
         }
 
         if (User.id === message.author.id) return message.channel.send("No te puedes banear a ti mismo")
-        if (User.id === client.user.id) return message.channel.send("No me voy a banear 🙄")
+        if (User.id === client.user.id) return message.channel.send("No me voy a banear.")
         if(!message.guild.members.me.permissions.has(perms.ban_members || perms.administrator)) return message.channel.send("No tengo permisos para Banear miembros");
 
     let bUser
@@ -44,7 +44,7 @@ const { getUser, perms } = require('./models/functions')
     let role = bUser.roles.highest;
     if(bUser.permissions.has(perms.ban_members || perms.administrator)) return message.channel.send("Esta persona no puede ser baneada!");
 
-    if (message.guild.me.roles.highest.comparePositionTo(role) < 1) {
+    if (message.guild.members.me.roles.highest.comparePositionTo(role) < 1) {
         return message.channel.send("Mi rol es muy bajo para banearlo!");
     }
     }

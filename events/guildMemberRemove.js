@@ -25,7 +25,7 @@ module.exports = async member => {
           if (!doc.LogChannel) return
           let Channel = member.guild.channels.cache.get(doc.LogChannel)
           if (!Channel) return
-          if (!Channel.permissionsFor(member.guild.me).has("SEND_MESSAGES")) return
+          if (!Channel.permissionsFor(member.guild.members.me).has("SEND_MESSAGES")) return
     
           const embed = new EmbedBuilder()
           .setAuthor({ name: member.user.tag, iconURL: member.user.displayAvatarURL({ format: "png", dynamic: true}) })

@@ -18,7 +18,7 @@ const Guild = require('./models/Guild')
 
     if(mutee.id === message.author.id) return message.channel.send("No te puedes mutear a ti mismo!");
     if (mutee.id === client.user.id) return message.channel.send("No me voy a mutear 🙄")
-    if(!message.guild.me.permissions.has("MANAGE_ROLES" || "ADMINISTRATOR")) return message.channel.send("No tengo permisos para añadir roles");
+    if(!message.guild.members.me.permissions.has("MANAGE_ROLES" || "ADMINISTRATOR")) return message.channel.send("No tengo permisos para añadir roles");
 
     if(mutee.permissions.has("KICK_MEMBERS" || "BAN_MEMBERS" || "ADMINISTRATOR")) return message.channel.send("Esta persona no puede ser muteada!");
     
@@ -44,7 +44,7 @@ if (mutee.roles.cache.some(r => r.id === muterole.id)) return message.channel.se
  }
 
 let muteEmbed = new EmbedBuilder()
-    .setAuthor({ name: "Mute", iconURL: mutee.user.displayAvatarURL({ format: "png", dynamic: true})})
+    .setAuthor({ name: "Mute", iconURL: mutee.user.displayAvatarURL()})
     .setColor("#0088ff")
     .setFields([
         {

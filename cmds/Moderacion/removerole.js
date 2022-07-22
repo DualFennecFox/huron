@@ -8,7 +8,7 @@ module.exports = {
     run: async (client, message, args, prefix, contentPrefix) => {
 
         if (!message.member.permissions.has("MANAGE_ROLES")) return message.channel.send("No tienes permisos para usar este comando!")
-        if (!message.guild.me.permissions.has("MANAGE_ROLES")) return message.channel.send("No tengo permisos para añadir roles")
+        if (!message.guild.members.me.permissions.has("MANAGE_ROLES")) return message.channel.send("No tengo permisos para añadir roles")
         let role = message.mentions.roles.first() || message.guild.roles.cache.get(args[0])
         if (!role) return message.channel.send("Debes mencionar un rol o darme su ID")
 

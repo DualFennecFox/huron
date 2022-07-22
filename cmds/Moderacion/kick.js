@@ -19,13 +19,13 @@ const { getUser, perms } = require('./models/functions');
     let kReason = `[${message.author.tag}]: ${args.slice(1).join(" ") || "No se específico una Razón"}`;
 
     if (kUser.id === client.user.id) return message.channel.send("No puedo expulsarme a mi mismo")
-    if(!message.guild.me.permissions.has(perms.kick_members || perms.administrator)) return message.channel.send("No tengo permisos para expulsar miembros");
+    if(!message.guild.members.me.permissions.has(perms.kick_members || perms.administrator)) return message.channel.send("No tengo permisos para expulsar miembros");
     if(kUser.permissions.has(perms.kick_members || perms.administrator)) return message.channel.send("Esta persona no puede ser expulsada!");
     if (kUser.id === message.author.id) return message.channel.send("No te puedes expulsar a ti mismo")
 
     let role = kUser.roles.highest;
 
-    if (message.guild.me.roles.highest.comparePositionTo(role) < 1) {
+    if (message.guild.members.me.roles.highest.comparePositionTo(role) < 1) {
         return message.channel.send("Mi rol es muy bajo para poder expulsarlo!");
     }
     
