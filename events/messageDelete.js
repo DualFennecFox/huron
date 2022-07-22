@@ -19,7 +19,7 @@ module.exports = async message => {
                 if (!doc.LogChannel) return
                 let Channel = message.guild.channels.cache.get(doc.LogChannel)
                 if (!Channel) return
-                if (!Channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return
+                if (!Channel.permissionsFor(message.guild.members.me).has("SEND_MESSAGES")) return
                 if (message.author.id === client.user.id) return
 
             if (!message.content && !message.attachments.first()) return 

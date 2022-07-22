@@ -9,7 +9,7 @@ module.exports = async (guild, user) => {
         if (!doc.LogChannel) return
         let Channel = guild.channels.cache.get(doc.LogChannel)
         if (!Channel) return
-        if (!Channel.permissionsFor(guild.me).has("SEND_MESSAGES")) return
+        if (!Channel.permissionsFor(guild.members.me).has("SEND_MESSAGES")) return
   
         let log = await guild.fetchAuditLogs({ limit: 1, type: "MEMBER_BAN_REMOVE"})
         

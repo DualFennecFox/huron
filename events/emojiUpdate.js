@@ -10,7 +10,7 @@ module.exports = async (oldEmoji, newEmoji) => {
         if (!doc.LogChannel) return
         let Channel = newEmoji.guild.channels.cache.get(doc.LogChannel)
         if (!Channel) return
-        if (!Channel.permissionsFor(newEmoji.guild.me).has(perms.send_messages)) return
+        if (!Channel.permissionsFor(newEmoji.guild.members.me).has(perms.send_messages)) return
         
         if (oldEmoji.name === newEmoji.name) return
         newEmoji.fetchAuthor().then(author => {

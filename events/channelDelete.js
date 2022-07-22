@@ -10,7 +10,7 @@ module.exports = async channel => {
     if (!doc.LogChannel) return
     let Channel = channel.guild.channels.cache.get(doc.LogChannel)
     if (!Channel) return
-    if (!Channel.permissionsFor(channel.guild.me).has(perms.send_messages)) return
+    if (!Channel.permissionsFor(channel.guild.members.me).has(perms.send_messages)) return
 
     let type = {
       "GUILD_CATEGORY": "Categoría",

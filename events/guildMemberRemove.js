@@ -11,7 +11,7 @@ module.exports = async member => {
         if (!doc.LeaveChannel) return
         let Channel = member.guild.channels.cache.get(doc.LeaveChannel)
         if (!Channel) return
-        if (!Channel.permissionsFor(member.guild.me).has("SEND_MESSAGES")) return
+        if (!Channel.permissionsFor(member.guild.members.me).has("SEND_MESSAGES")) return
     
         let msg = doc.LeaveMsg.replace(/{user}/g, member)
         .replace(/{server}/g, member.guild.name)

@@ -10,7 +10,7 @@ module.exports = async (guild, u) => {
         if (!doc.LogChannel) return
         let Channel = guild.channels.cache.get(doc.LogChannel)
         if (!Channel) return
-        if (!Channel.permissionsFor(guild.me).has("SEND_MESSAGES")) return
+        if (!Channel.permissionsFor(guild.members.me).has("SEND_MESSAGES")) return
 
         let description = `<@!${u.id}> Ha sido baneado\n**ID:** ${u.id}`
 

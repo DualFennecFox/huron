@@ -6,7 +6,7 @@ module.exports = async message => {
   
     if (message.channel.type === "dm") return
       
-    if (!message.channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return
+    if (!message.channel.permissionsFor(message.guild.members.me).has("SEND_MESSAGES")) return
 
 
       let prefixes;

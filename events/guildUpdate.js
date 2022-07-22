@@ -9,7 +9,7 @@ module.exports = async (oldGuild, newGuild) => {
       if (!doc.LogChannel) return
       let Channel = newGuild.channels.cache.get(doc.LogChannel)
       if (!Channel) return
-      if (!Channel.permissionsFor(newGuild.me).has("SEND_MESSAGES")) return
+      if (!Channel.permissionsFor(newGuild.members.me).has("SEND_MESSAGES")) return
   
     let client = newGuild.client
     let name = false
