@@ -14,8 +14,7 @@ module.exports = {
     .setAuthor({ name: `Icono de ${message.guild.name}` })
     .setFields({
       name: 'Formato de Imagen', 
-      value: `[png](${message.guild.iconURL({ extension: "png", forceStatic: true, size: 2048})}) | 
-              [jpg](${message.guild.iconURL({ extension: "jpg", forceStatic: true, size: 2048})}) | [webm](${message.guild.iconURL({extension: "webp", forceStatic: true, size: 2048})})`})
+      value: `[png](${message.guild.iconURL({ extension: "png", forceStatic: true, size: 2048})}) | [jpg](${message.guild.iconURL({ extension: "jpg", forceStatic: true, size: 2048})}) | [webm](${message.guild.iconURL({extension: "webp", forceStatic: true, size: 2048})})`})
 	.setTimestamp()
 	.setImage(message.guild.iconURL({ size: 2048}))
     .setColor('Random')
