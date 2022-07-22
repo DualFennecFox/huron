@@ -41,7 +41,7 @@ module.exports = {
     }   else {
         
     let myInfo = new EmbedBuilder()
-        .setAuthor({name: user.username, iconURL: user.displayAvatarURL({ format: "png", dynamic: true})})
+        .setAuthor({name: user.username, iconURL: user.displayAvatarURL({})})
         .setColor('Random')
         .setFields(
         [

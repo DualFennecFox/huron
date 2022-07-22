@@ -16,11 +16,11 @@ module.exports = {
         return `Hace ${days} ${days == 1 ? "día" : "días"}`;
     };
     let verifLevels = {
-        "NONE": "No Hay",
-        "LOW": "Bajo",
-        "MEDIUM": "Medio",
-        "HIGH": "Alto",
-        "VERY_HIGH": "Muy Alto"
+        0: "No Hay",
+        1: "Bajo",
+        2: "Medio",
+        3: "Alto",
+        4: "Muy Alto"
     };
 
     const roleEmbed = new Discord.EmbedBuilder()
@@ -106,7 +106,7 @@ module.exports = {
                 inline: true
             }
         ])
-        .setThumbnail(message.guild.iconURL({ format: "png", dynamic: true }))
+        .setThumbnail(message.guild.iconURL({}))
 
         if (message.guild.roles.cache.size != 1) {
             embed.addFields([{
