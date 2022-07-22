@@ -19,7 +19,7 @@ function search(nameKey, myArray) {
             examples: ['!play never gonna give you up', '!play ""'],
             run: async(client, message, args) => {   
                       
-                    if (!message.member.voice.channel) return message.channel.send({ content: "Debes estar en un canal de voz para usar este comando" })
+                    if (message.member.voice.channel?.type != 2) return message.channel.send({ content: "Debes estar en un canal de voz para usar este comando" })
                     if (message.guild.members.me.voice.channel) {
                         if (message.member.voice.channel.id !== message.guild.members.me.voice.channel.id) return message.channel.send({ content: "Debes estar conectado a mi canal de voz para usar este comando" })
                         }
