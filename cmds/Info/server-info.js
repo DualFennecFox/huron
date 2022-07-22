@@ -61,11 +61,10 @@ module.exports = {
 
     else {
        let channels = message.guild.channels.cache.size 
-       let textChannel = message.guild.channels.cache.filter(channel => channel.type === "GUILD_TEXT").size
-       let voiceChannel = message.guild.channels.cache.filter(channel => channel.type === "GUILD_VOICE").size
-       let newsChannel = message.guild.channels.cache.filter(channel => channel.type === "GUILD_NEWS").size
-       let storeChannel = message.guild.channels.cache.filter(channel => channel.type === "GUILD_STORE").size
-       let stageChannel = message.guild.channels.cache.filter(channel => channel.type === "GUILD_STAGE_VOICE").size 
+       let textChannel = message.guild.channels.cache.filter(channel => channel.type === 0).size
+       let voiceChannel = message.guild.channels.cache.filter(channel => channel.type === 2).size
+       let newsChannel = message.guild.channels.cache.filter(channel => channel.type === 5).size
+       let stageChannel = message.guild.channels.cache.filter(channel => channel.type === 13).size 
 
        let channelName = `Canales | ${textChannel == 0 ? "" : `Texto | `}${voiceChannel == 0 ? "" : `Voz | `}${newsChannel == 0 ? "" : `Noticias | `}${storeChannel == 0 ? "" : "Tienda | "}${stageChannel == 0 ? "" : "Estadios"}`
        let channelOrder = `${textChannel == 0 ? "" : `${textChannel} | `}${voiceChannel == 0 ? "" : `${voiceChannel} | `}${newsChannel == 0 ? "" : `${newsChannel} | `}${storeChannel == 0 ? "" : `${storeChannel} | `} ${stageChannel == 0 ? "" : stageChannel}`
@@ -86,8 +85,7 @@ module.exports = {
             },
             {
                 name: "Miembros | Usuarios | Bots",
-                value: `${message.guild.members.cache.size} | ${message.guild.members.cache.filter(member => !member.user.bot).size} | 
-                ${message.guild.members.cache.filter(member => member.user.bot).size}`,
+                value: `${message.guild.members.cache.size} | ${message.guild.members.cache.filter(member => !member.user.bot).size} | ${message.guild.members.cache.filter(member => member.user.bot).size}`,
                 inline: true
             },
             {
