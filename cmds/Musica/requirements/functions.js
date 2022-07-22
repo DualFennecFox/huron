@@ -27,10 +27,11 @@ const ytdl = require('ytdl-core')
        if (queue[0].provider === "Youtube" || musicData.server[message.guild.id].looped[0]) {
        const stream = ytdl(queue[0].url, { filter: 'audioonly', quality: 'highestaudio' });
        const voice = createAudioResource(stream, { inputType: StreamType.Arbitrary });
+        console.log(`${stream}\n\nSSS${voice}`)
 
        musicData.server[message.guild.id].songDispatcher.play(voice)
 
-       connection.subscribe(musicData.server[message.guild.id].songDispatcher)
+       const subscription = connection.subscribe(musicData.server[message.guild.id].songDispatcher)
     
        musicData.server[message.guild.id].songDispatcher.on(AudioPlayerStatus.Playing, async () => {
 
@@ -93,6 +94,7 @@ const ytdl = require('ytdl-core')
 
                    if (musicData.server[message.guild.id].pause == false && !musicData.server[message.guild.id].isPlaying) {
 
+                    subscription.unsubscribe()
                     setTimeout(() => {
                         if (musicData.server[message.guild.id].pause == false && !musicData.server[message.guild.id].isPlaying) {
                             getVoiceConnection(message.guild.id)?.destroy()
