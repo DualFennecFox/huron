@@ -235,7 +235,7 @@ const changePerm = {
 
 function getAll(client, message, prefix) {
     const embed = new EmbedBuilder()
-        .setColor("RANDOM")
+        .setColor("Random")
         .setThumbnail(client.user.displayAvatarURL())
         .setFooter({text: `Para información de un comando en especifico use ${prefix}help [comando]`})
         
