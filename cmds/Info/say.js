@@ -9,7 +9,7 @@ module.exports = {
     run: async (client, message, args) => {
         
     let argsresult;
-    if (message.guild.me.permissions.has(perms.manage_messages || perms.administrator)) message.delete()
+    if (message.guild.members.me.permissions.has(perms.manage_messages || perms.administrator)) message.delete()
         
 
         argsresult = args.join(" ")
