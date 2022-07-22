@@ -11,14 +11,13 @@ module.exports = {
     if (!message.guild.iconURL()) return message.channel.send({ content: "Este servidor no tiene ningún icono"})
 
     const embed = new EmbedBuilder()
-    .setAuthor(`Icono de ${message.guild.name}`)
-    .setTitle('')
+    .setAuthor({ name: `Icono de ${message.guild.name}` })
     .setFields({
       name: 'Formato de Imagen', 
-      value: `[png](${message.guild.iconURL({ format: "png", size: 2048})}) | 
-              [jpg](${message.guild.iconURL({ format: "jpg", size: 2048})}) | [webm](${message.guild.iconURL({size: 2048})})`})
+      value: `[png](${message.guild.iconURL({ extension: "png", forceStatic: true, size: 2048})}) | 
+              [jpg](${message.guild.iconURL({ extension: "jpg", forceStatic: true, size: 2048})}) | [webm](${message.guild.iconURL({extension: "webp", forceStatic: true, size: 2048})})`})
 	.setTimestamp()
-	.setImage(message.guild.iconURL({ format: "png", dynamic: true, size: 2048}))
+	.setImage(message.guild.iconURL({ size: 2048}))
     .setColor('Random')
     message.channel.send({ embeds: [embed] })
     .catch(err => {
