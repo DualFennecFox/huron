@@ -128,13 +128,13 @@ function search(nameKey, myArray) {
                        YT.search(argsresult, { type: "video", limit: 10 }).then(async (videos) => {
 
                         if (musicData.server[message.guild.id].awaiting == true) return message.channel.send({ content: "Ya se está esperando la respuesta" })
-                        if (videos.length < 1) return message.channel.send({ content: "No existe ningún resultado con ese nombre trate cambiando las palabras" })
+                        if (videos.items.length < 1) return message.channel.send({ content: "No existe ningún resultado con ese nombre trate cambiando las palabras" })
                         const vidNameArr = []
                         const videoID = []
 
-                        for (let v = 0; v < videos.length; v++) {
-                             videoID.push(`https://www.youtube.com/watch?v=${videos[v].id}`)
-                             vidNameArr.push(`${v + 1}: ${videos[v].title}`);
+                        for (let v = 0; v < videos.items.length; v++) {
+                             videoID.push(`https://www.youtube.com/watch?v=${videos.items[v].id}`)
+                             vidNameArr.push(`${v + 1}: ${videos.items[v].title}`);
                         }
             
                           const embed = new EmbedBuilder()
@@ -176,7 +176,7 @@ function search(nameKey, myArray) {
                                   return songEmbed.delete() 
                               }
                               try {
-                                var video = videos[videoIndex - 1]  
+                                var video = videos.items[videoIndex - 1]  
                                 response.first().delete()     
                               } catch (err) {
                                   console.error(err)
