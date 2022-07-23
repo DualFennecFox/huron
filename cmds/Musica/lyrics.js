@@ -25,7 +25,10 @@ module.exports = {
         auth: `Bearer ${process.env.OAUTH2_TOKEN}`,
         host: "api.genius.com",
         method: "GET",
-        path: "/account"
+        path: "/account",
+        headers: {
+            'Content-Type': 'application/json'
+        }
       }, res => {
 
         console.log(`statusCode: ${res.statusCode}`)
