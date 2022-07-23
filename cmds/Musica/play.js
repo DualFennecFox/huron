@@ -48,14 +48,14 @@ function search(nameKey, myArray) {
                               try {
                                 
                                 YT.getPlaylist(args[0].slice(38), { limit: 0 }).then(playlist => {
-                                    for (let i = 0; i < playlist.videos.length; i++) {
+                                    for (let i = 0; i < playlist.videos.items.length; i++) {
                                         musicData.server[message.guild.id].queue.push({
                                             url: `https://www.youtube.com/watch?v=${playlist.videos[i].id}`,
-                                            title: playlist.videos[i].title.replace("@", "@\u200b"),
-                                            duration: playlist.videos[i].duration,
-                                            thumbnail: playlist.videos[i].thumbnails.best,
-                                            channel: playlist.videos[i].channel.name,
-                                            channelURL: playlist.videos[i].channel.url,
+                                            title: playlist.videos.items[i].title.replace("@", "@\u200b"),
+                                            duration: playlist.videos.items[i].duration,
+                                            thumbnail: playlist.videos.items[i].thumbnails.best,
+                                            channel: playlist.videos.items[i].channel.name,
+                                            channelURL: playlist.videos.items[i].channel.url,
                                             voiceChannel: message.member.voice.channel,
                                             provider: "Youtube"
                                         });
@@ -63,11 +63,11 @@ function search(nameKey, myArray) {
                                     
                                   if (!musicData.server[message.guild.id].isPlaying) {
                                       musicData.server[message.guild.id].isPlaying = playlist.videos[0];
-                                      message.channel.send({ content: `Se han añadido a la cola **${playlist.videos.length}** canciones` })
+                                      message.channel.send({ content: `Se han añadido a la cola **${playlist.videos.items.length}** canciones` })
                                       return playSong(musicData.server[message.guild.id].queue, message);
                                   } else if (musicData.server[message.guild.id].isPlaying) {
                                     musicData.server[message.guild.id].loop = false
-                                      return message.channel.send({ content:`**${playlist.title}** Se ha añadido a la cola con ${playlist.videos.length} videos` })
+                                      return message.channel.send({ content:`**${playlist.title}** Se ha añadido a la cola con ${playlist.videos.items.length} videos` })
                                   };
                               }).catch(err => {
                                 console.error(err)
