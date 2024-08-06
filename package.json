@@ -9,11 +9,13 @@
   },
   "dependencies": {
     "@discordjs/voice": "^0.6.0",
+    "@distube/ytdl-core": "^4.14.3",
     "ascii-table": "0.0.9",
     "common-tags": "^1.8.0",
     "dblapi.js": "^2.4.1",
     "discord.js": "^14.0.3",
     "dotenv-flow": "^3.2.0",
+    "ffmpeg": "^0.0.4",
     "fs": "0.0.1-security",
     "get-video-id": "^3.1.9",
     "mongoose": "^6.0.4",
@@ -24,7 +26,6 @@
     "soundcloud-scraper": "^5.0.2",
     "validate-color": "^2.1.1",
     "youtubei": "^1.0.0-rc.3",
-    "ytdl-core": "^4.5.0",
     "ytdl-core-discord": "^1.2.3"
   },
   "engines": {
