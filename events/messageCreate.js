@@ -2,7 +2,7 @@ const Guild = require('../cmds/Moderacion/models/Guild')
 
 module.exports = async message => {
   let client = message.client
-  if (message.author.bot) return;
+  if (message.author.bot && message.author.id != "1225644162196701245") return;
   
     if (message.channel.type === "dm") return
       
@@ -12,6 +12,13 @@ module.exports = async message => {
       let prefixes;
       let contentPrefix;
       let prefix;
+      let currentmsg;
+      currentmsg = message.content
+
+      if (message.author.id === "1225644162196701245" && message.embeds[0]?.description != null) {
+        currentmsg = message.embeds[0]?.description
+      }
+
 
       const owner = process.env.OWNER
       
@@ -26,15 +33,15 @@ module.exports = async message => {
        } 
       
       for (const thePrefix of prefixes) {
-        if (message.content.startsWith(thePrefix)) contentPrefix = thePrefix
+        if (currentmsg.startsWith(thePrefix)) contentPrefix = thePrefix
       }
       if (!contentPrefix) return;
 
-      let args = message.content.slice(contentPrefix.length).trim().split(/ +/g);
+      let args = currentmsg.slice(contentPrefix.length).trim().split(/ +/g);
       let cmd = args.shift().toLowerCase();
       let command;
   
-      if (message.content === "Reset Status") {
+      if (currentmsg === "Reset Status") {
         if (message.author.id != owner) return
         
         const scount = client.guilds.cache.size
@@ -47,11 +54,11 @@ module.exports = async message => {
           }]
       });  
       }
-      if (message.content === `<@${client.user.id}>` || message.content === `<@!${client.user.id}>`) {
+      if (currentmsg === `<@${client.user.id}>` || currentmsg === `<@!${client.user.id}>`) {
        message.channel.send(`Mi prefix en este server es ${prefix} o una mención, si es la primera vez que me usa escriba ${prefix}help.`)
      }
      
-     if (!message.content.startsWith(contentPrefix)) return;
+     if (!currentmsg.startsWith(contentPrefix)) return;
   
        if (client.commands.has(cmd)) {
 

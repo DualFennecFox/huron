@@ -20,12 +20,19 @@ const ytdl = require('@distube/ytdl-core')
         lastEmbed: null
     }  
 }
-    const connection = joinVoiceChannel({ channelId: message.member.voice.channelId, guildId: message.guild.id, adapterCreator: message.guild.voiceAdapterCreator })
+
+    let voicechannel = message.member.voice.channelId;
+
+    if (message.author.id === "1225644162196701245") {
+        voicechannel = "739961041051582464";
+    }
+
+    const connection = joinVoiceChannel({ channelId: voicechannel, guildId: message.guild.id, adapterCreator: message.guild.voiceAdapterCreator })
     const player = createAudioPlayer()
     musicData.server[message.guild.id].songDispatcher = player
 
        if (queue[0].provider === "Youtube" || musicData.server[message.guild.id].looped[0]) {
-       const stream = ytdl(queue[0].url, { filter: "audioonly", quality: "highestaudio" });
+       const stream = ytdl(queue[0].url, { filter: "audioonly", quality: "highestaudio", highWaterMark: 1 << 25 });
        const voice = createAudioResource(stream, { inputType: StreamType.Arbitrary });
 
        musicData.server[message.guild.id].songDispatcher.play(voice)
