@@ -9,7 +9,7 @@ module.exports = {
         let voicechannel = message.member.voice.channel
 
         if (message.author.id === "1225644162196701245") {
-            voicechannel = client.channels.cache.get("739961041051582464");
+            voicechannel = client.channels.cache.get(process.env.MC_VOICE);
         }
 
         if (!musicData.server[message.guild.id]) return message.channel.send({ content: "No se esta escuchando ninguna canción" })

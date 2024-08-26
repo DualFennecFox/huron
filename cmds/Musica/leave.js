@@ -12,7 +12,7 @@ module.exports = {
         let voicechannel = message.member.voice.channel
 
         if (message.author.id === "1225644162196701245") {
-            voicechannel = client.channels.cache.get("739961041051582464");
+            voicechannel = client.channels.cache.get(process.env.MC_VOICE);
         }
 
         if (voicechannel?.type != 2) return message.channel.send({ content: "Debes estar en un canal de voz para usar este comando" })

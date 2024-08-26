@@ -1,9 +1,16 @@
 const { EmbedBuilder } = require('discord.js')
-const { joinVoiceChannel, createAudioPlayer, createAudioResource, StreamType, AudioPlayerStatus, getVoiceConnection } = require('@discordjs/voice')
+const { joinVoiceChannel, createAudioPlayer, createAudioResource, StreamType, AudioPlayerStatus, getVoiceConnection, VoiceConnectionStatus, entersState } = require('@discordjs/voice')
 const Scl = require('soundcloud-scraper')
 const SC = new Scl.Client()
 const musicData = require('./musicData')
 const ytdl = require('@distube/ytdl-core')
+
+function fmtMSS(s){return(s-(s%=60))/60+(9<s?':':':0')+s}
+function millisToMinutesAndSeconds(millis) {
+    var minutes = Math.floor(millis / 60000);
+    var seconds = ((millis % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+  }
 
  async function playSong(queue, message) {
     if (!musicData.server[message.guild.id]){
@@ -21,10 +28,11 @@ const ytdl = require('@distube/ytdl-core')
     }  
 }
 
+    let shouldsend = true;
     let voicechannel = message.member.voice.channelId;
 
     if (message.author.id === "1225644162196701245") {
-        voicechannel = "739961041051582464";
+        voicechannel = process.env.MC_VOICE;
     }
 
     const connection = joinVoiceChannel({ channelId: voicechannel, guildId: message.guild.id, adapterCreator: message.guild.voiceAdapterCreator })
@@ -42,16 +50,19 @@ const ytdl = require('@distube/ytdl-core')
        musicData.server[message.guild.id].songDispatcher.on(AudioPlayerStatus.Playing, async () => {
 
             musicData.server[message.guild.id].pause = false
-
+            
             if (musicData.server[message.guild.id].unPaused == true) {
             musicData.server[message.guild.id].unPaused = false
-
-            } else if(musicData.server[message.guild.id].loop == false) {
-            if (musicData.server[message.guild.id].lastEmbed) musicData.server[message.guild.id].lastEmbed.delete();
+            } 
             
+            if (queue[0]?.title) {
+            if(musicData.server[message.guild.id].loop == false) {
+            if (musicData.server[message.guild.id].lastEmbed) musicData.server[message.guild.id].lastEmbed.delete();
+
+
             const videoEmbed = new EmbedBuilder()
             .setAuthor({name: "Música", iconURL: message.author.displayAvatarURL({ size: 2048 })})
-            .setThumbnail(queue[0].thumbnail)
+            .setThumbnail(queue[0]?.thumbnail)
             .setColor('#FF0000')
             .setFields([
                 {
@@ -60,7 +71,7 @@ const ytdl = require('@distube/ytdl-core')
                 },
                 {
                     name: "Duración",
-                    value: `${queue[0].duration}`
+                    value: `${fmtMSS(queue[0].duration)}`
                 },
                 {
                     name: "Canal",
@@ -79,7 +90,20 @@ const ytdl = require('@distube/ytdl-core')
             musicData.server[message.guild.id].isPlaying = queue[0]
             musicData.server[message.guild.id].queue.shift();
             musicData.server[message.guild.id].lastEmbed = embed
-            
+        }
+            }
+        })
+        .on(VoiceConnectionStatus.Disconnected, async (oldState, newState) => {
+            try {
+                await Promise.race([
+                    entersState(connection, VoiceConnectionStatus.Signalling, 5_000),
+                    entersState(connection, VoiceConnectionStatus.Connecting, 5_000),
+                ]);
+                // Seems to be reconnecting to a new channel - ignore disconnect
+                shouldsend = false;
+            } catch (error) {
+                // Seems to be a real disconnect which SHOULDN'T be recovered from
+                connection.destroy();
             }
         })
         .on(AudioPlayerStatus.Idle, async () => {
@@ -144,7 +168,7 @@ const ytdl = require('@distube/ytdl-core')
     
             const videoEmbed = new EmbedBuilder()
             .setAuthor({name: "Música", iconURL: message.author.displayAvatarURL({ size: 2048, type: "png", dynamic: true })})
-            .setThumbnail(queue[0].thumbnail)
+            .setThumbnail(queue[0]?.thumbnail)
             .setColor('#F25B02')
             .setFields([
                 {
@@ -153,7 +177,7 @@ const ytdl = require('@distube/ytdl-core')
                 },
                 {
                     name: "Duración",
-                    value: `${queue[0].duration}`.substring(0, 3)
+                    value: `${millisToMinutesAndSeconds(queue[0].duration)}`
                 },
                 {
                     name: "Canal",

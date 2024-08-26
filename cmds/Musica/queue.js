@@ -10,7 +10,7 @@ module.exports = {
     let voicechannel = message.member.voice.channel
 
     if (message.author.id === "1225644162196701245") {
-      voicechannel = client.channels.cache.get("739961041051582464");
+      voicechannel = client.channels.cache.get(process.env.MC_VOICE);
     }
 
     if (!musicData.server[message.guild.id]) return message.channel.send("No se esta escuchando ninguna canción")
@@ -27,12 +27,17 @@ module.exports = {
       num = 15
     }
 
+    if (args[1]) {
+      let start = parseInt(args[0])
+      let end = parseInt(args[1])
+    }
+
     const embed = new EmbedBuilder()
     for (let v = 0; v < num; v++) {
       Songs.push(`${v + 1}: ${musicData.server[message.guild.id].queue[v].title}`);
     }
     const SongsMapped = Songs.join("\n\n")
 
-    message.channel.send({ embeds: [embed.setDescription(SongsMapped)] })
+    message.channel.send({ embeds: [embed.setDescription(`**Escuchando: ${musicData.server[message.guild.id].isPlaying.title}**\n\n${SongsMapped}`)] })
   }
 } 

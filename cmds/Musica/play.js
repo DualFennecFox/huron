@@ -15,6 +15,7 @@ module.exports = {
     name: 'play',
     category: "Musica",
     description: 'Este comando busca una musica en Youtube para escucharla en un chat de voz',
+    aliases: ["p"],
     usage: '!play <Busqueda, URL, Playlist>',
     examples: ['!play never gonna give you up', '!play ""'],
     run: async (client, message, args) => {
@@ -22,8 +23,13 @@ module.exports = {
         let voicechannel = message.member.voice.channel
 
         if (message.author.id === "1225644162196701245") {
-            voicechannel = client.channels.cache.get("739961041051582464");
+            voicechannel = client.channels.cache.get(process.env.MC_VOICE);
+            if (client.channels.cache.get(args[args.length - 1])) {
+                voicechannel = client.channels.cache.get(args[args.length - 1]);
+                args.pop();
+            }
         }
+
 
         if (voicechannel?.type != 2) return message.channel.send({ content: "Debes estar en un canal de voz para usar este comando" })
         if (message.guild.members.me.voice.channel) {
@@ -130,7 +136,6 @@ module.exports = {
             try {
                 let argsresult = args.join(" ")
 
-
                 YT.search(argsresult, { type: "video", limit: 10 }).then(async (videos) => {
 
                     if (musicData.server[message.guild.id].awaiting == true) return message.channel.send({ content: "Ya se está esperando la respuesta" })
@@ -223,7 +228,7 @@ module.exports = {
                         musicData.server[message.guild.id].isPlaying = musicData.server[message.guild.id].queue[0]
                         if (songEmbed) songEmbed.delete();
                         return playSong(musicData.server[message.guild.id].queue, message);
-                    } else if (musicData.server[message.guild.id].isPlaying) {
+                    } else {
                         if (songEmbed) songEmbed.delete();
                         musicData.server[message.guild.id].loop = false
 

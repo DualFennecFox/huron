@@ -1,6 +1,6 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, } = require('discord.js');
 const soundcloud = require('soundcloud-scraper')
-const SC = new soundcloud.Client(process.env.SOUNDCLOUD_API_KEY)
+const SC = new soundcloud.Client()
 const musicData = require("./requirements/musicData");
 const { playSong } = require('./requirements/functions')
 const getVideoId = require('get-video-id')
@@ -16,6 +16,7 @@ module.exports = {
     name: 'scplay',
     category: "Musica",
     description: 'Este comando busca una musica en SoundCloud para escucharla en un chat de voz',
+    aliases: ["scp"],
     usage: '!scplay <Busqueda, URL, Playlist>',
     examples: ['!scplay Super-Canción', '!scplay ""'],
     run: async (client, message, args) => {
@@ -23,7 +24,7 @@ module.exports = {
         let voicechannel = message.member.voice.channel
 
         if (message.author.id === "1225644162196701245") {
-            voicechannel = client.channels.cache.get("739961041051582464");
+            voicechannel = client.channels.cache.get(process.env.MC_VOICE);
         }
 
         if (!voicechannel) return message.channel.send("Debes estar en un canal de voz para usar este comando")
@@ -53,26 +54,26 @@ module.exports = {
         if (args[0].match(/https{0,1}:\/\/w{0,3}\.*soundcloud\.com\/([A-Za-z0-9_-]+)\/sets\/([A-Za-z0-9_-]+)[^< ]*/)) {
             try {
 
-                SC.getPlaylist(args[0], { removeUnknown: true }).then(playlist => {
+                SC.getPlaylist(args[0]).then(playlist => {
                     for (let i = 0; i < playlist.tracks.length; i++) {
                         musicData.server[message.guild.id].queue.push({
-                            url: playlist.tracks[i].permalink_url,
+                            url: playlist.tracks[i].url,
                             title: playlist.tracks[i].title,
                             duration: playlist.tracks[i].duration,
-                            thumbnail: playlist.thumbnail,
-                            channel: playlist.author.name,
-                            channelURL: playlist.author.profile,
+                            thumbnail: playlist.tracks[i].thumbnail,
+                            channel: playlist.tracks[i].author.name,
+                            channelURL: playlist.tracks[i].author.url,
                             voiceChannel: voicechannel,
                             provider: "SoundCloud",
                             SC
                         });
                     }
 
-                    if (musicData.server[message.guild.id].isPlaying == false) {
-                        musicData.server[message.guild.id].isPlaying = true;
+                    if (!musicData.server[message.guild.id].isPlaying) {
+                        musicData.server[message.guild.id].isPlaying = musicData.server[message.guild.id].queue[0];
                         message.channel.send(`Se han añadido a la cola **${playlist.tracks.length}** canciones`)
                         return playSong(musicData.server[message.guild.id].queue, message);
-                    } else if (musicData.server[message.guild.id].isPlaying == true) {
+                    } else {
                         musicData.server[message.guild.id].loop = false
                         return message.channel.send(`**${playlist.title}** Se ha añadido a la cola con ${playlist.tracks.length} videos`)
                     };
@@ -110,12 +111,10 @@ module.exports = {
                         SC
                     };
                     musicData.server[message.guild.id].queue.push(song);
-                    if (
-                        musicData.server[message.guild.id].isPlaying == false
-                    ) {
-                        musicData.server[message.guild.id].isPlaying = true;
+                    if (!musicData.server[message.guild.id].isPlaying) {
+                        musicData.server[message.guild.id].isPlaying = musicData.server[message.guild.id].queue[0];
                         return playSong(musicData.server[message.guild.id].queue, message);
-                    } else if (musicData.server[message.guild.id].isPlaying == true) {
+                    } else {
                         musicData.server[message.guild.id].loop = false
                         return message.channel.send(`**${song.title}** Se ha añadido a la cola`)
                     }
@@ -143,7 +142,7 @@ module.exports = {
                         vidNameArr.push(`${v + 1}: ${videos[v].name}`);
                     }
 
-                    const embed = new Discord.MessageEmbed()
+                    const embed = new EmbedBuilder()
                         .setColor('#F25B02')
                         .setTitle("Elige la canción que quieres escuchar según el número")
                         .setFooter({ text: 'Escribe "exit" para salir' })
@@ -214,11 +213,11 @@ module.exports = {
 
                         musicData.server[message.guild.id].queue.push(song);
 
-                        if (musicData.server[message.guild.id].isPlaying == false) {
-                            musicData.server[message.guild.id].isPlaying = true
+                        if (!musicData.server[message.guild.id].isPlaying) {
+                            musicData.server[message.guild.id].isPlaying = musicData.server[message.guild.id].queue[0]
                             if (songEmbed) songEmbed.delete();
                             return playSong(musicData.server[message.guild.id].queue, message);
-                        } else if (musicData.server[message.guild.id].isPlaying == true) {
+                        } else {
                             if (songEmbed) songEmbed.delete();
                             musicData.server[message.guild.id].loop = false
 
