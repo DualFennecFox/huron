@@ -20,7 +20,7 @@
     "ffmpeg-static": "^5.2.0",
     "fs": "0.0.1-security",
     "genius-lyrics": "^4.4.7",
-    "get-video-id": "^3.1.9",
+    "get-video-id": "^3.7.0",
     "lyrics-finder": "^21.7.0",
     "mongoose": "^6.0.4",
     "node-fetch": "^3.0.0",

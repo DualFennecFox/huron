@@ -90,10 +90,11 @@ module.exports = {
             }
         }
 
-        else if (/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(?:-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$/) {
+        else if (getVideoId(args[0])?.id && getVideoId(args[0])?.service === "youtube") {
             try {
 
-                YT.getVideo(args[0]).then(video => {
+                let ID = getVideoId(args[0]).id
+                YT.getVideo(ID).then(video => {
                     const url = `https://www.youtube.com/watch?v=${video.id}`
                     const title = video.title.replace("@", "@\u200b")
                     const duration = video.duration
