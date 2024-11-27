@@ -3,7 +3,7 @@ const { joinVoiceChannel, createAudioPlayer, createAudioResource, StreamType, Au
 const Scl = require('soundcloud-scraper')
 const SC = new Scl.Client()
 const musicData = require('./musicData')
-const ytdl = require('@distube/ytdl-core')
+const ytdl = require('youtube-dl-exec')
 
 function fmtMSS(s){return(s-(s%=60))/60+(9<s?':':':0')+s}
 function millisToMinutesAndSeconds(millis) {
@@ -40,8 +40,9 @@ function millisToMinutesAndSeconds(millis) {
     musicData.server[message.guild.id].songDispatcher = player
 
        if (queue[0].provider === "Youtube" || musicData.server[message.guild.id].looped[0]) {
-       const stream = ytdl(queue[0].url, { filter: "audioonly", quality: "highestaudio", highWaterMark: 1 << 25 });
-       const voice = createAudioResource(stream, { inputType: StreamType.Arbitrary });
+
+       const stream = ytdl.exec(queue[0].url, { format: "bestaudio", output: "-" });
+       const voice = createAudioResource(stream.stdout, { inputType: StreamType.Arbitrary });
 
        musicData.server[message.guild.id].songDispatcher.play(voice)
 
