@@ -41,7 +41,7 @@ function millisToMinutesAndSeconds(millis) {
 
        if (queue[0].provider === "Youtube" || musicData.server[message.guild.id].looped[0]) {
 
-       const stream = ytdl.exec(queue[0].url, { format: "bestaudio", output: "-" });
+       const stream = ytdl.exec(queue[0].url, { format: "bestaudio", output: "-", cookies: "cookies.txt" });
        const voice = createAudioResource(stream.stdout, { inputType: StreamType.Arbitrary });
 
        musicData.server[message.guild.id].songDispatcher.play(voice)
