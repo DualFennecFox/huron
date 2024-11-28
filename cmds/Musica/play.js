@@ -3,6 +3,8 @@ const musicData = require("./requirements/musicData");
 const { playSong } = require('./requirements/functions')
 const { Client } = require('youtubei')
 const getVideoId = require('get-video-id')
+const ytdl = require('youtube-dl-exec')
+
 function search(nameKey, myArray) {
     for (var i = 0; i < myArray.length; i++) {
         if (myArray[i].link.includes(nameKey)) {
@@ -94,7 +96,9 @@ module.exports = {
             try {
 
                 let ID = getVideoId(args[0]).id
-                YT.getVideo(ID).then(video => {
+                YT.search(ID, { type: "video", limit: 1 }).then(async (videos) => {
+
+                    let video = videos.items[0]
                     const url = `https://www.youtube.com/watch?v=${video.id}`
                     const title = video.title.replace("@", "@\u200b")
                     const duration = video.duration
@@ -154,52 +158,52 @@ module.exports = {
                         video = videos.items[0]
                     } else {
 
-                    const embed = new EmbedBuilder()
-                        .setColor('#FF0000')
-                        .setTitle("Elige la canción que quieres escuchar según el número")
-                        .setFooter({ text: 'Escribe "exit" para salir' })
+                        const embed = new EmbedBuilder()
+                            .setColor('#FF0000')
+                            .setTitle("Elige la canción que quieres escuchar según el número")
+                            .setFooter({ text: 'Escribe "exit" para salir' })
 
-                    let arr = [{ name: "\`1\`", value: vidNameArr[0] }]
+                        let arr = [{ name: "\`1\`", value: vidNameArr[0] }]
 
-                    if (vidNameArr[1]) arr.push({ name: "\`2\`", value: vidNameArr[1] })
-                    if (vidNameArr[2]) arr.push({ name: "\`3\`", value: vidNameArr[2] })
-                    if (vidNameArr[3]) arr.push({ name: "\`4\`", value: vidNameArr[3] })
-                    if (vidNameArr[4]) arr.push({ name: "\`5\`", value: vidNameArr[4] })
-                    if (vidNameArr[5]) arr.push({ name: "\`6\`", value: vidNameArr[5] })
-                    if (vidNameArr[6]) arr.push({ name: "\`7\`", value: vidNameArr[6] })
-                    if (vidNameArr[7]) arr.push({ name: "\`8\`", value: vidNameArr[7] })
-                    if (vidNameArr[8]) arr.push({ name: "\`9\`", value: vidNameArr[8] })
-                    if (vidNameArr[9]) arr.push({ name: "\`10\`", value: vidNameArr[9] })
+                        if (vidNameArr[1]) arr.push({ name: "\`2\`", value: vidNameArr[1] })
+                        if (vidNameArr[2]) arr.push({ name: "\`3\`", value: vidNameArr[2] })
+                        if (vidNameArr[3]) arr.push({ name: "\`4\`", value: vidNameArr[3] })
+                        if (vidNameArr[4]) arr.push({ name: "\`5\`", value: vidNameArr[4] })
+                        if (vidNameArr[5]) arr.push({ name: "\`6\`", value: vidNameArr[5] })
+                        if (vidNameArr[6]) arr.push({ name: "\`7\`", value: vidNameArr[6] })
+                        if (vidNameArr[7]) arr.push({ name: "\`8\`", value: vidNameArr[7] })
+                        if (vidNameArr[8]) arr.push({ name: "\`9\`", value: vidNameArr[8] })
+                        if (vidNameArr[9]) arr.push({ name: "\`10\`", value: vidNameArr[9] })
 
-                    embed.setFields(arr)
+                        embed.setFields(arr)
 
-                    var songEmbed = await message.channel.send({ embeds: [embed] });
-                    musicData.server[message.guild.id].awaiting = true
-                    try {
-                        const filter = msg => msg.content > 0 && msg.content < 11 || msg.content === 'exit' && msg.author.id === message.author.id
+                        var songEmbed = await message.channel.send({ embeds: [embed] });
+                        musicData.server[message.guild.id].awaiting = true
+                        try {
+                            const filter = msg => msg.content > 0 && msg.content < 11 || msg.content === 'exit' && msg.author.id === message.author.id
 
-                        var response = await message.channel.awaitMessages({ filter, max: 1, time: 30000, errors: ['time'] })
-                        if (response.first().content) musicData.server[message.guild.id].awaiting = false
-                        var videoIndex = parseInt(response.first().content);
-                    } catch (err) {
-                        console.error(err)
-                        musicData.server[message.guild.id].awaiting = false
-                        if (songEmbed) songEmbed.delete()
-                        return message.channel.send({ content: "No respondiste a tiempo, asegurate de elegir un número del 1 al 10" })
+                            var response = await message.channel.awaitMessages({ filter, max: 1, time: 30000, errors: ['time'] })
+                            if (response.first().content) musicData.server[message.guild.id].awaiting = false
+                            var videoIndex = parseInt(response.first().content);
+                        } catch (err) {
+                            console.error(err)
+                            musicData.server[message.guild.id].awaiting = false
+                            if (songEmbed) songEmbed.delete()
+                            return message.channel.send({ content: "No respondiste a tiempo, asegurate de elegir un número del 1 al 10" })
+                        }
+                        if (response.first().content === 'exit') {
+                            musicData.server[message.guild.id].awaiting = false
+                            return songEmbed.delete()
+                        }
+                        try {
+                            video = videos.items[videoIndex - 1]
+                            response.first().delete()
+                        } catch (err) {
+                            console.error(err)
+                            if (songEmbed) songEmbed.delete()
+                            return message.channel.send({ content: "Hubo un error al obtener el video de Youtube" })
+                        }
                     }
-                    if (response.first().content === 'exit') {
-                        musicData.server[message.guild.id].awaiting = false
-                        return songEmbed.delete()
-                    }
-                    try {
-                        video = videos.items[videoIndex - 1]
-                        response.first().delete()
-                    } catch (err) {
-                        console.error(err)
-                        if (songEmbed) songEmbed.delete()
-                        return message.channel.send({ content: "Hubo un error al obtener el video de Youtube" })
-                    }
-                }
 
                     const url = `https://www.youtube.com/watch?v=${video.id}`;
                     const title = video.title.replace("@", "@\u200b")
