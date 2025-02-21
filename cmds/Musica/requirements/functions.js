@@ -41,7 +41,7 @@ async function playSong(queue, message) {
 
     if (queue[0].provider === "Youtube" || musicData.server[message.guild.id].looped[0]) {
 
-        const stream = ytdl.exec(queue[0].url, { format: "bestaudio", output: "-", cookies: "cookies.txt" });
+        const stream = ytdl.exec(queue[0].url, { format: "bestaudio", output: "-", cookies: "cookies.txt", "concurrent-fragments": 2 },);
         const voice = createAudioResource(stream.stdout, { inputType: StreamType.Arbitrary });
 
         musicData.server[message.guild.id].songDispatcher.play(voice)
@@ -228,7 +228,7 @@ async function playSong(queue, message) {
             })
     } else if (queue[0].provider === "Spotify" || musicData.server[message.guild.id].looped[0]) {
 
-        const stream = ytdl.exec(queue[0].download, { format: "bestaudio", output: "-", cookies: "cookies.txt" });
+        const stream = ytdl.exec(queue[0].download, { format: "bestaudio", output: "-", cookies: "cookies.txt", "concurrent-fragments": 2   });
         const voice = createAudioResource(stream.stdout, { inputType: StreamType.Arbitrary });
 
         musicData.server[message.guild.id].songDispatcher.play(voice)
