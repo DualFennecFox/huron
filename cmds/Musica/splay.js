@@ -111,7 +111,7 @@ module.exports = {
         if (args[0].match(/(https?:\/\/open.spotify.com\/)/)) {
 
             try {
-                const spotdl = spawn("./spotdl", ["save", args[0], "--save-file", "-", "--log-level", "NOTSET", "--preload"])
+                const spotdl = spawn("./spotdl", ["save", args[0], "--save-file", "-", "--log-level", "NOTSET", "--preload", "--client-id", process.env.SPOTIFY_CLIENT_ID, "--client-secret", process.env.SPOTIFY_CLIENT_SECRET])
                 let spotOutput = []
                 let msg = await message.channel.send({ content: "Buscando sus canciones en Spotify..." })
                 spotdl.stdout.on("data", data => {
@@ -135,7 +135,7 @@ module.exports = {
             try {
                 let argsresult = args.join(" ")
 
-                const spotdl = spawn("./spotdl", ["save", argsresult, "--save-file", "-", "--log-level", "NOTSET", "--preload"])
+                const spotdl = spawn("./spotdl", ["save", argsresult, "--save-file", "-", "--log-level", "NOTSET", "--preload", "--client-id", process.env.SPOTIFY_CLIENT_ID, "--client-secret", process.env.SPOTIFY_CLIENT_SECRET])
                 let spotOutput = []
                 let msg = message.channel.send({ content: "Buscando sus canciones en Spotify..." })
                 spotdl.stdout.on("data", data => {
