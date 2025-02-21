@@ -113,7 +113,7 @@ module.exports = {
             try {
                 const spotdl = spawn("./spotdl", ["save", args[0], "--save-file", "-", "--log-level", "NOTSET", "--preload"])
                 let spotOutput = []
-                let msg = message.channel.send({ content: "Buscando sus canciones en Spotify..." })
+                let msg = await message.channel.send({ content: "Buscando sus canciones en Spotify..." })
                 spotdl.stdout.on("data", data => {
                     if (data.toString().startsWith("[")) {
                         spotOutput = JSON.parse(data.toString())
