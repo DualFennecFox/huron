@@ -75,7 +75,7 @@ module.exports = {
                         return playSong(musicData.server[message.guild.id].queue, message);
                     } else {
                         musicData.server[message.guild.id].loop = false
-                        return message.channel.send(`**${playlist.title}** Se ha añadido a la cola con ${playlist.tracks.length} videos`)
+                        return message.channel.send(`**${playlist.title}** Se ha añadido a la cola con ${playlist.tracks.length} canciones`)
                     };
                 }).catch(err => {
                     console.error(err)

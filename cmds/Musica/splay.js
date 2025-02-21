@@ -55,11 +55,11 @@ const sendCallback = (data, message, voicechannel) => {
 
         if (!musicData.server[message.guild.id].isPlaying) {
             musicData.server[message.guild.id].isPlaying = data[0];
-            message.channel.send({ content: `**${data[0].list_name}** Se ha añadido a la cola con ${data.length} videos` })
+            message.channel.send({ content: `**${data[0].list_name}** Se ha añadido a la cola con ${data.length} canciones` })
             return playSong(musicData.server[message.guild.id].queue, message);
         } else if (musicData.server[message.guild.id].isPlaying) {
             musicData.server[message.guild.id].loop = false
-            return message.channel.send({ content: `**${data[0].list_name}** Se ha añadido a la cola con ${data.length} videos` })
+            return message.channel.send({ content: `**${data[0].list_name}** Se ha añadido a la cola con ${data.length} canciones` })
         };
     }
 }
