@@ -259,7 +259,7 @@ async function playSong(queue, message) {
                         }
                     ])
 
-                let url = queue[0].url
+                let url = queue[0].download
                 const loopURL = {
                     url
                 };
