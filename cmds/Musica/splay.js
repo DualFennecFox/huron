@@ -113,16 +113,18 @@ module.exports = {
             try {
                 const spotdl = spawn("./spotdl", ["save", args[0], "--save-file", "-", "--log-level", "NOTSET", "--preload"])
                 let spotOutput = []
+                let msg = message.channel.send({ content: "Buscando sus canciones en Spotify..." })
                 spotdl.stdout.on("data", data => {
                     if (data.toString().startsWith("[")) {
                         spotOutput = JSON.parse(data.toString())
+                        if (msg) msg.delete()
+                        sendCallback(spotOutput, message, voicechannel)
                     }
                 })
                 spotdl.stderr.on("data", data => {
                     console.log("stderr: " + data)
+                    message.channel.send({ content: "Hubo un error al buscar sus canciones" })
                 })
-
-                spotdl.on("close", () => { sendCallback(spotOutput, message, voicechannel) })
 
             } catch (err) {
                 console.error(err)
@@ -133,18 +135,21 @@ module.exports = {
             try {
                 let argsresult = args.join(" ")
 
-                const spotdl = spawn("./spotdl", ["save", args[0], "--save-file", "-", "--log-level", "NOTSET", "--preload"])
+                const spotdl = spawn("./spotdl", ["save", argsresult, "--save-file", "-", "--log-level", "NOTSET", "--preload"])
                 let spotOutput = []
+                let msg = message.channel.send({ content: "Buscando sus canciones en Spotify..." })
                 spotdl.stdout.on("data", data => {
                     if (data.toString().startsWith("[")) {
                         spotOutput = JSON.parse(data.toString())
+                        if (msg) msg.delete()
+                        sendCallback(spotOutput, message, voicechannel)
                     }
                 })
                 spotdl.stderr.on("data", data => {
                     console.log("stderr: " + data)
+                    if (msg) msg.delete()
+                    message.channel.send({ content: "Hubo un error al buscar sus canciones" })
                 })
-
-                spotdl.on("close", () => { sendCallback(spotOutput, message, voicechannel) })
 
             } catch (err) {
                 console.error(err)
