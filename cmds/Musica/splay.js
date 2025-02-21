@@ -55,7 +55,7 @@ const sendCallback = (data, message, voicechannel) => {
 
         if (!musicData.server[message.guild.id].isPlaying) {
             musicData.server[message.guild.id].isPlaying = data[0];
-            message.channel.send({ content: `Se han añadido a la cola **${data.length}** canciones` })
+            message.channel.send({ content: `**${data[0].list_name}** Se ha añadido a la cola con ${data.length} videos` })
             return playSong(musicData.server[message.guild.id].queue, message);
         } else if (musicData.server[message.guild.id].isPlaying) {
             musicData.server[message.guild.id].loop = false
@@ -111,7 +111,7 @@ module.exports = {
         if (args[0].match(/(https?:\/\/open.spotify.com\/)/)) {
 
             try {
-                const spotdl = spawn("python", ["-m", "spotdl", "save", args[0], "--save-file", "-", "--log-level", "NOTSET", "--preload"])
+                const spotdl = spawn("./spotdl", ["save", args[0], "--save-file", "-", "--log-level", "NOTSET", "--preload"])
                 let spotOutput = []
                 spotdl.stdout.on("data", data => {
                     if (data.toString().startsWith("[")) {
@@ -123,7 +123,7 @@ module.exports = {
                 })
 
                 spotdl.on("close", () => { sendCallback(spotOutput, message, voicechannel) })
-                
+
             } catch (err) {
                 console.error(err)
                 message.channel.send({ content: "Algo salio mal vuelva a intentarlo" })
@@ -133,7 +133,7 @@ module.exports = {
             try {
                 let argsresult = args.join(" ")
 
-                const spotdl = spawn("python", ["-m", "spotdl", "save", argsresult, "--save-file", "-", "--log-level", "NOTSET", "--preload"])
+                const spotdl = spawn("./spotdl", ["save", args[0], "--save-file", "-", "--log-level", "NOTSET", "--preload"])
                 let spotOutput = []
                 spotdl.stdout.on("data", data => {
                     if (data.toString().startsWith("[")) {

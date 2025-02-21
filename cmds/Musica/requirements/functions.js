@@ -54,44 +54,40 @@ async function playSong(queue, message) {
 
             if (musicData.server[message.guild.id].unPaused == true) {
                 musicData.server[message.guild.id].unPaused = false
-            }
-
-            if (queue[0]?.title) {
-                if (musicData.server[message.guild.id].loop == false) {
-                    if (musicData.server[message.guild.id].lastEmbed) musicData.server[message.guild.id].lastEmbed.delete();
+            } else if (queue[0]?.title && musicData.server[message.guild.id].loop == false) {
+                if (musicData.server[message.guild.id].lastEmbed) musicData.server[message.guild.id].lastEmbed.delete();
 
 
-                    const videoEmbed = new EmbedBuilder()
-                        .setAuthor({ name: "Música", iconURL: message.author.displayAvatarURL({ size: 2048 }) })
-                        .setThumbnail(queue[0]?.thumbnail)
-                        .setColor('#FF0000')
-                        .setFields([
-                            {
-                                name: "Escuchando",
-                                value: `[${queue[0].title}](${queue[0].url})`
-                            },
-                            {
-                                name: "Duración",
-                                value: `${fmtMSS(queue[0].duration)}`
-                            },
-                            {
-                                name: "Canal",
-                                value: `[${queue[0].channel}](${queue[0].channelURL})`
-                            }
-                        ])
+                const videoEmbed = new EmbedBuilder()
+                    .setAuthor({ name: "Música", iconURL: message.author.displayAvatarURL({ size: 2048 }) })
+                    .setThumbnail(queue[0]?.thumbnail)
+                    .setColor('#FF0000')
+                    .setFields([
+                        {
+                            name: "Escuchando",
+                            value: `[${queue[0].title}](${queue[0].url})`
+                        },
+                        {
+                            name: "Duración",
+                            value: `${fmtMSS(queue[0].duration)}`
+                        },
+                        {
+                            name: "Canal",
+                            value: `[${queue[0].channel}](${queue[0].channelURL})`
+                        }
+                    ])
 
-                    let url = queue[0].url
-                    const loopURL = {
-                        url
-                    };
-                    musicData.server[message.guild.id].looped.push(loopURL)
+                let url = queue[0].url
+                const loopURL = {
+                    url
+                };
+                musicData.server[message.guild.id].looped.push(loopURL)
 
-                    if (queue[1]) videoEmbed.addFields([{ name: 'Siguiente Canción', value: `[${queue[1].title}](${queue[1].url})` }]);
-                    let embed = await message.channel.send({ embeds: [videoEmbed] })
-                    musicData.server[message.guild.id].isPlaying = queue[0]
-                    musicData.server[message.guild.id].queue.shift();
-                    musicData.server[message.guild.id].lastEmbed = embed
-                }
+                if (queue[1]) videoEmbed.addFields([{ name: 'Siguiente Canción', value: `[${queue[1].title}](${queue[1].url})` }]);
+                let embed = await message.channel.send({ embeds: [videoEmbed] })
+                musicData.server[message.guild.id].isPlaying = queue[0]
+                musicData.server[message.guild.id].queue.shift();
+                musicData.server[message.guild.id].lastEmbed = embed
             }
         })
             .on(VoiceConnectionStatus.Disconnected, async (oldState, newState) => {
@@ -164,7 +160,7 @@ async function playSong(queue, message) {
             if (musicData.server[message.guild.id].unPaused == true) {
                 musicData.server[message.guild.id].unPaused = false
 
-            } else if (musicData.server[message.guild.id].loop == false) {
+            } else if (queue[0]?.title && musicData.server[message.guild.id].loop == false) {
                 if (musicData.server[message.guild.id].lastEmbed) musicData.server[message.guild.id].lastEmbed.delete();
 
                 const videoEmbed = new EmbedBuilder()
@@ -228,7 +224,7 @@ async function playSong(queue, message) {
             })
     } else if (queue[0].provider === "Spotify" || musicData.server[message.guild.id].looped[0]) {
 
-        const stream = ytdl.exec(queue[0].download, { format: "bestaudio", output: "-", cookies: "cookies.txt", "concurrent-fragments": 2   });
+        const stream = ytdl.exec(queue[0].download, { format: "bestaudio", output: "-", cookies: "cookies.txt", "concurrent-fragments": 2 });
         const voice = createAudioResource(stream.stdout, { inputType: StreamType.Arbitrary });
 
         musicData.server[message.guild.id].songDispatcher.play(voice)
@@ -241,44 +237,39 @@ async function playSong(queue, message) {
 
             if (musicData.server[message.guild.id].unPaused == true) {
                 musicData.server[message.guild.id].unPaused = false
-            }
+            } else if (queue[0]?.title && musicData.server[message.guild.id].loop == false) {
+                if (musicData.server[message.guild.id].lastEmbed) musicData.server[message.guild.id].lastEmbed.delete();
 
-            if (queue[0]?.title) {
-                if (musicData.server[message.guild.id].loop == false) {
-                    if (musicData.server[message.guild.id].lastEmbed) musicData.server[message.guild.id].lastEmbed.delete();
+                const videoEmbed = new EmbedBuilder()
+                    .setAuthor({ name: "Música", iconURL: message.author.displayAvatarURL({ size: 2048 }) })
+                    .setThumbnail(queue[0]?.thumbnail)
+                    .setColor('#1DB954')
+                    .setFields([
+                        {
+                            name: "Escuchando",
+                            value: `[${queue[0].title}](${queue[0].url})`
+                        },
+                        {
+                            name: "Duración",
+                            value: `${fmtMSS(queue[0].duration)}`
+                        },
+                        {
+                            name: "Artista",
+                            value: `${queue[0].channel}`
+                        }
+                    ])
 
+                let url = queue[0].url
+                const loopURL = {
+                    url
+                };
+                musicData.server[message.guild.id].looped.push(loopURL)
 
-                    const videoEmbed = new EmbedBuilder()
-                        .setAuthor({ name: "Música", iconURL: message.author.displayAvatarURL({ size: 2048 }) })
-                        .setThumbnail(queue[0]?.thumbnail)
-                        .setColor('#1DB954')
-                        .setFields([
-                            {
-                                name: "Escuchando",
-                                value: `[${queue[0].title}](${queue[0].url})`
-                            },
-                            {
-                                name: "Duración",
-                                value: `${fmtMSS(queue[0].duration)}`
-                            },
-                            {
-                                name: "Artista",
-                                value: `${queue[0].channel}`
-                            }
-                        ])
-
-                    let url = queue[0].url
-                    const loopURL = {
-                        url
-                    };
-                    musicData.server[message.guild.id].looped.push(loopURL)
-
-                    if (queue[1]) videoEmbed.addFields([{ name: 'Siguiente Canción', value: `[${queue[1].title}](${queue[1].url})` }]);
-                    let embed = await message.channel.send({ embeds: [videoEmbed] })
-                    musicData.server[message.guild.id].isPlaying = queue[0]
-                    musicData.server[message.guild.id].queue.shift();
-                    musicData.server[message.guild.id].lastEmbed = embed
-                }
+                if (queue[1]) videoEmbed.addFields([{ name: 'Siguiente Canción', value: `[${queue[1].title}](${queue[1].url})` }]);
+                let embed = await message.channel.send({ embeds: [videoEmbed] })
+                musicData.server[message.guild.id].isPlaying = queue[0]
+                musicData.server[message.guild.id].queue.shift();
+                musicData.server[message.guild.id].lastEmbed = embed
             }
         })
             .on(VoiceConnectionStatus.Disconnected, async (oldState, newState) => {
