@@ -14,7 +14,7 @@ import path from "path";
 import { Cookie } from "@distube/ytdl-core";
 
 const youtubePlugin = new YouTubePlugin({
-    cookies: JSON.parse(readFileSync(path.join(__dirname, "../../cookies.txt")).toString()) as Cookie[]
+    cookies: JSON.parse(readFileSync(path.join(__dirname, "../../cookies.json")).toString()) as Cookie[]
 });
 
 export default class ExtendedClient extends Client {
