@@ -11,10 +11,9 @@ import { YtDlpPlugin } from "@distube/yt-dlp"
 import { DeezerPlugin } from "@distube/deezer"
 import { readFileSync } from "fs";
 import path from "path";
-import { Cookie } from "@distube/ytdl-core";
 
 const youtubePlugin = new YouTubePlugin({
-    cookies: JSON.parse(readFileSync(path.join(__dirname, "../../cookies.json"), 'utf-8')) as Cookie[]
+   cookies: JSON.parse(readFileSync(path.join(__dirname, "../../cookies.json"), "utf-8"))
 });
 
 export default class ExtendedClient extends Client {
