@@ -4,38 +4,42 @@
   "description": "solo soy un bot",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "test": "ts-node ./src/index.ts",
+    "build": "tsc",
+    "start": "node ./dist/index.js",
+    "run": "tsc && node ./dist/index.js",
+    "lint": "npx eslint ./src/**/*.ts"
   },
   "dependencies": {
-    "@discordjs/opus": "^0.9.0",
-    "@discordjs/voice": "^0.17.0",
-    "@distube/ytdl-core": "^4.15.1",
-    "ascii-table": "0.0.9",
+    "@discordjs/opus": "^0.10.0",
+    "@discordjs/voice": "^0.18.0",
+    "@distube/deezer": "^2.0.1",
+    "@distube/soundcloud": "^2.0.4",
+    "@distube/spotify": "^2.0.2",
+    "@distube/youtube": "^1.0.4",
+    "@distube/yt-dlp": "^2.0.1",
+    "@distube/ytdl-core": "^4.16.4",
+    "@mapbox/node-pre-gyp": "^2.0.0",
+    "ascii-table3": "^0.9.0",
     "common-tags": "^1.8.0",
     "dblapi.js": "^2.4.1",
     "discord.js": "^14.0.3",
-    "dotenv-flow": "^3.2.0",
-    "ffmpeg": "^0.0.4",
-    "ffmpeg-static": "^5.2.0",
+    "distube": "^5.0.6",
+    "distube-apple-music": "^0.1.0",
+    "dotenv-flow": "^4.1.0",
     "fs": "0.0.1-security",
     "genius-lyrics": "^4.4.7",
-    "get-video-id": "^3.7.0",
+    "get-video-id": "^4.1.7",
     "lyrics-finder": "^21.7.0",
-    "mongoose": "^6.0.4",
+    "mongoose": "^8.12.1",
     "node-fetch": "^3.0.0",
-    "node-pre-gyp": "^0.17.0",
-    "opusscript": "^0.0.8",
-    "simple-oauth2": "^4.3.0",
+    "opusscript": "^0.1.1",
+    "simple-oauth2": "^5.1.0",
     "soundcloud-scraper": "^5.0.2",
-    "soundcloud.ts": "^0.5.5",
+    "soundcloud.ts": "^0.6.3",
     "validate-color": "^2.1.1",
     "youtube-dl-exec": "^3.0.10",
-    "youtubei": "^1.0.0-rc.3",
-    "ytdl-core-discord": "^1.1.0"
-  },
-  "engines": {
-    "node": "16.9.x"
+    "youtubei": "^1.0.0-rc.3"
   },
   "repository": {
     "url": "https://github.com/DualFennecFox/huron"
@@ -51,7 +55,14 @@
     "libsodium-wrappers": "^0.7.9",
     "sodium": "^3.0.2",
     "tweetnacl": "^1.0.3",
-    "utf-8-validate": "^5.0.5",
+    "utf-8-validate": "^6.0.5",
     "zlib-sync": "^0.1.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@types/dotenv-flow": "^3.3.3",
+    "eslint": "^9.21.0",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.26.0"
   }
 }

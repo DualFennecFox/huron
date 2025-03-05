@@ -3,3 +3,4 @@ package-lock.json
 .env
 cookies.txt
 spotdl.exe
+dist/
