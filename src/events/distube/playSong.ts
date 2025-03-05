@@ -13,10 +13,7 @@ const sourceColor = {
 
 export default async function playSong(queue: Queue, song: Song) {
     if (queue.previousSongs.length != 0 &&  (queue.previousSongs[0].metadata as Metadata)?.msg?.deletable) {
-try {
-        (queue.previousSongs[0].metadata as Metadata)?.msg?.delete()
-} catch {
-}
+        (queue.previousSongs[0].metadata as Metadata)?.msg?.delete().catch(err => null)
     }
 
     const videoEmbed = new EmbedBuilder()
