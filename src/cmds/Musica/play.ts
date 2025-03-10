@@ -1,4 +1,4 @@
-import { EmbedBuilder, Message, TextChannel, VoiceChannel } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, Message, TextChannel, VoiceChannel } from 'discord.js';
 import ExtendedClient from '../../classes/extendedClient';
 import { isURL } from 'distube';
 import { YouTubePlugin } from '@distube/youtube';
@@ -33,9 +33,16 @@ export default {
             if (voicechannel.id !== message.guild.members.me.voice.channel.id) return (message.channel as TextChannel).send({ content: "Debes estar conectado a mi canal de voz para usar este comando" })
         }
         if (args.length == 0) return (message.channel as TextChannel).send({ content: "Dime que canción quieres escuchar" })
-        let argsresult = args.join(" ")
-        if (isURL(args[0])) argsresult = args[0]
-        else {
+        const argsresult = args.join(" ")
+        if (isURL(args[0])) {
+            return client.distube.play<Metadata>(voicechannel, args[0], {
+                textChannel: message.channel as TextChannel,
+                metadata: { user: message.author, msg: null }
+            }).catch(err => {
+                console.error(err);
+                return (message.channel as TextChannel).send({ content: "Algo salio mal vuelva a intentarlo" })
+            })
+        } else {
 
             const YTPlugin = client.distube.plugins[0] as YouTubePlugin
             const songs = await YTPlugin.search(argsresult, { limit: 10 })
@@ -53,51 +60,24 @@ export default {
                 .setColor('#F25B02')
                 .setTitle("Elige la canción que quieres escuchar según el número")
                 .setFooter({ text: 'Escribe "exit" para salir' })
-
-            const arr = [{ name: "`1`", value: vidNameArr[0] }]
-
-            if (vidNameArr[1]) arr.push({ name: "`2`", value: vidNameArr[1] })
-            if (vidNameArr[2]) arr.push({ name: "`3`", value: vidNameArr[2] })
-            if (vidNameArr[3]) arr.push({ name: "`4`", value: vidNameArr[3] })
-            if (vidNameArr[4]) arr.push({ name: "`5`", value: vidNameArr[4] })
-            if (vidNameArr[5]) arr.push({ name: "`6`", value: vidNameArr[5] })
-            if (vidNameArr[6]) arr.push({ name: "`7`", value: vidNameArr[6] })
-            if (vidNameArr[7]) arr.push({ name: "`8`", value: vidNameArr[7] })
-            if (vidNameArr[8]) arr.push({ name: "`9`", value: vidNameArr[8] })
-            if (vidNameArr[9]) arr.push({ name: "`10`", value: vidNameArr[9] })
+            const arr = []
+            const frow: ButtonBuilder[] = []
+            const srow: ButtonBuilder[] = []
+            for (let i = 0; i < vidNameArr.length; i++) {
+                if (vidNameArr[i]) arr.push({ name: `\`${i + 1}\``, value: vidNameArr[i] })
+                if (i < 5) frow.push(new ButtonBuilder().setCustomId(videoID[i] ?? i.toString()).setLabel(`${i + 1}`).setStyle(ButtonStyle.Secondary))
+                else srow.push(new ButtonBuilder().setCustomId(videoID[i] ?? i.toString()).setLabel(`${i + 1}`).setStyle(ButtonStyle.Secondary))
+            }
 
             embed.setFields(arr)
+            const faction = new ActionRowBuilder<ButtonBuilder>()
+                .addComponents(frow).toJSON()
 
-            let videoIndex
-            let response
-            const songEmbed = await (message.channel as TextChannel).send({ embeds: [embed] });
+            const saction = new ActionRowBuilder<ButtonBuilder>()
+                .addComponents(srow).toJSON()
 
-            try {
-                const filter = (msg: Message) => msg.content.length > 0 && msg.content.length < 11 || msg.content === 'exit' && msg.author.id === message.author.id
+            await (message.channel as TextChannel).send({ embeds: [embed], components: [faction, saction] });
 
-                response = await (message.channel as TextChannel).awaitMessages({ filter, max: 1, time: 30000, errors: ['time'] })
-                videoIndex = parseInt(response?.first()?.content ?? "");
-            } catch (err) {
-                console.error(err)
-                if (songEmbed) songEmbed.delete()
-                return (message.channel as TextChannel).send({ content: "No respondiste a tiempo, asegurate de elegir un número del 1 al 10" })
-            }
-            if (response?.first()?.content === 'exit') {
-                return songEmbed.delete()
-            }
-            const video = songs[videoIndex - 1]
-            response.first()?.delete()
-            if (video?.url == null) return await (message.channel as TextChannel).send({ content: "Algo salio mal vuelva a intentarlo" })
-            argsresult = video.url
-            songEmbed.delete()
         }
-
-        client.distube.play<Metadata>(voicechannel, argsresult, {
-            textChannel: message.channel as TextChannel,
-            metadata: { user: message.author, msg: null }
-        }).catch(err => {
-            console.error(err);
-            (message.channel as TextChannel).send({ content: "Algo salio mal vuelva a intentarlo" })
-        })
     }
 }

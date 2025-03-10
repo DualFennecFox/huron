@@ -12,5 +12,6 @@ export default function distubeLoader(client: ExtendedClient) {
   reqEvent(Events.ERROR, client);
   reqEvent(Events.DISCONNECT, client)
   reqEvent(Events.FINISH, client)
+  reqEvent(Events.NO_RELATED, client)
   //reqEvent(Events.FFMPEG_DEBUG, client)
 }
