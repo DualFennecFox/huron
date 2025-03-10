@@ -12,14 +12,14 @@ const sourceColor = {
 }
 
 export default async function playSong(queue: Queue, song: Song) {
-    if (queue.previousSongs.length != 0) {
-        (queue.previousSongs[0].metadata as Metadata)?.msg?.delete()
+    if (queue.previousSongs.length != 0 &&  (queue.previousSongs[queue.previousSongs.length - 1].metadata as Metadata)?.msg?.deletable) {
+        (queue.previousSongs[queue.previousSongs.length - 1].metadata as Metadata)?.msg?.delete().catch(err => null)
     }
 
     const videoEmbed = new EmbedBuilder()
         .setAuthor({ name: "Música", iconURL: (queue.songs[0].metadata as Metadata)?.user.displayAvatarURL({ size: 2048 }) })
         .setThumbnail(song.thumbnail ?? "")
-        .setColor(sourceColor[song.source as keyof typeof sourceColor] as ColorResolvable)
+        .setColor((sourceColor[song.source as keyof typeof sourceColor] ?? "#FF0000") as ColorResolvable)
         .addFields([
             {
                 name: "Escuchando",
