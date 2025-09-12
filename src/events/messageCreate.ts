@@ -6,16 +6,12 @@ import afkStatus from "../cmds/Info/req/afkStatus";
 
 export default async function messageCreate(message: Message) {
   const client = message.client as ExtendedClient
-  if (message.author.bot && message.author.id != "1225644162196701245") return;
+  if (message.author.bot && message.author.id != "1225644162196701245") return; 
 
   if (message.channel instanceof TextChannel) {
 
     if (!message.channel.permissionsFor(message.guild?.members.me as GuildMember).has(PermissionFlagsBits.SendMessages)) return
 
-    if (afkStatus[message.author.id] && afkStatus[message.author.id].status == true) {
-      afkStatus[message.author.id].status = false
-      await message.channel.send(`Bienvenido de vuelta ${message.author}, he desactivado tu estado AFK.`);
-    }
     if (message.mentions.members) message.mentions.members.forEach(member => {
       if (afkStatus[member.id] && member.id != message.author.id && afkStatus[member.id].status == true) {
         let time = afkStatus[member.id].minutes;
@@ -66,7 +62,10 @@ export default async function messageCreate(message: Message) {
     for (const thePrefix of prefixes) {
       if (currentmsg.startsWith(thePrefix)) contentPrefix = thePrefix
     }
-
+    if (afkStatus[message.author.id] && afkStatus[message.author.id].status == true && currentmsg != `${contentPrefix}afk`) {
+      afkStatus[message.author.id].status = false
+      await message.channel.send(`Bienvenido de vuelta ${message.author}, he desactivado tu estado AFK.`);
+    }
     if (!contentPrefix) return;
 
     const args = currentmsg.slice(contentPrefix.length).trim().split(/ +/g);

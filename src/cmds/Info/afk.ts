@@ -22,7 +22,6 @@ export default {
         if (time < 0) return await (message.channel as TextChannel).send("El tiempo debe ser positivo o 0 (indefinido)");
         currentStatus = { minutes: time, start: new Date(), status: currentStatus == null ? true : !currentStatus.status, customMessage: args.join(" ").replace(args[0], '').trim() };
         afkStatus[message.author.id] = currentStatus;
-        console.log(currentStatus);
 
         await (message.channel as TextChannel).send(`Se ha ${currentStatus!.status == false ? 'desactivado' : 'activado'} tu estado AFK${currentStatus!.status == true ? `${currentStatus!.minutes > 0 ? ` por **${currentStatus!.minutes} minutos*\*` : ' **indefinidamente**'}${currentStatus!.customMessage ? ` con el mensaje: **${currentStatus!.customMessage}**` : ''}` : ""}.`);
 
