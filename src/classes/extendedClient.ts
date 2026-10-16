@@ -12,14 +12,14 @@ import { DeezerPlugin } from "@distube/deezer"
 import { readFileSync } from "fs";
 import path from "path";
 
-const youtubePlugin = new YouTubePlugin({
-   cookies: JSON.parse(readFileSync(path.join(__dirname, "../../cookies.json"), "utf-8"))
-});
+//const youtubePlugin = new YouTubePlugin({
+  // cookies: JSON.parse(readFileSync(path.join(__dirname, "../../cookies.json"), "utf-8"))
+//});
 
 export default class ExtendedClient extends Client {
     distube = new Distube(this, {
         plugins: [
-            youtubePlugin,
+            new YouTubePlugin(),
             new SpotifyPlugin(),
             new AppleMusicPlugin(),
             new SoundCloudPlugin(),
